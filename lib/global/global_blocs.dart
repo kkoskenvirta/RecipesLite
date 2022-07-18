@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_e_commerce/global/blocks/profile/cubit/profile_cubit.dart';
-
+import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
 import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
 import 'package:flutter_e_commerce/modules/dio_module.dart';
 import 'package:flutter_e_commerce/modules/directus_module.dart';
 import 'package:flutter_e_commerce/repositorys/auth_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
-import 'package:flutter_e_commerce/views/home/cubit/recipe_search_cubit.dart';
+import 'package:flutter_e_commerce/repositorys/secure_storage_repository.dart';
+import 'package:flutter_e_commerce/repositorys/user_data_repository.dart';
 
 import 'blocks/auth/cubit/auth_cubit.dart';
 
@@ -26,12 +26,25 @@ class GlobalBlocs extends StatelessWidget {
         ),
         BlocProvider<AuthCubit>(
           create: (context) => AuthCubit(
-            authRepository: AuthRepository(dioModule: DioModule(), directus: DirectusModule()),
+            secureStorageRepository: SecureStorageRepository(),
+            authRepository: AuthRepository(
+              dioModule: DioModule(),
+              secureStorageRepository: SecureStorageRepository(),
+            ),
           ),
         ),
-        BlocProvider<ProfileCubit>(
+        BlocProvider<UserDataCubit>(
           lazy: true,
-          create: (context) => ProfileCubit()..getCurrentUser(),
+          create: (context) => UserDataCubit(
+            authRepository: AuthRepository(
+              dioModule: DioModule(),
+              secureStorageRepository: SecureStorageRepository(),
+            ),
+            userDataRepository: UserDataRepository(
+              dioModule: DioModule(),
+              directus: DirectusModule(),
+            ),
+          )..getUserData(),
         )
       ],
       child: child,

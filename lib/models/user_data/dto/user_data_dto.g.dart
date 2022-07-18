@@ -11,7 +11,7 @@ _$_UserDataDTO _$$_UserDataDTOFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       userId: json['user'] as String,
       favorites: (json['favorites'] as List<dynamic>)
-          .map((e) => FavoriteDataDTO.fromJson(e as Map<String, dynamic>))
+          .map((e) => RecipeIdDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

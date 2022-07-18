@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'user_data_dto.dart';
+part of 'user_data_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,42 +14,33 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-UserDataDTO _$UserDataDTOFromJson(Map<String, dynamic> json) {
-  return _UserDataDTO.fromJson(json);
-}
-
 /// @nodoc
-mixin _$UserDataDTO {
+mixin _$UserDataModel {
   String get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'user')
   String get userId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'favorites')
-  List<FavoriteDataDTO> get favorites => throw _privateConstructorUsedError;
+  List<RecipeModel> get favorites => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $UserDataDTOCopyWith<UserDataDTO> get copyWith =>
+  $UserDataModelCopyWith<UserDataModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UserDataDTOCopyWith<$Res> {
-  factory $UserDataDTOCopyWith(
-          UserDataDTO value, $Res Function(UserDataDTO) then) =
-      _$UserDataDTOCopyWithImpl<$Res>;
-  $Res call(
-      {String id,
-      @JsonKey(name: 'user') String userId,
-      @JsonKey(name: 'favorites') List<FavoriteDataDTO> favorites});
+abstract class $UserDataModelCopyWith<$Res> {
+  factory $UserDataModelCopyWith(
+          UserDataModel value, $Res Function(UserDataModel) then) =
+      _$UserDataModelCopyWithImpl<$Res>;
+  $Res call({String id, String userId, List<RecipeModel> favorites});
 }
 
 /// @nodoc
-class _$UserDataDTOCopyWithImpl<$Res> implements $UserDataDTOCopyWith<$Res> {
-  _$UserDataDTOCopyWithImpl(this._value, this._then);
+class _$UserDataModelCopyWithImpl<$Res>
+    implements $UserDataModelCopyWith<$Res> {
+  _$UserDataModelCopyWithImpl(this._value, this._then);
 
-  final UserDataDTO _value;
+  final UserDataModel _value;
   // ignore: unused_field
-  final $Res Function(UserDataDTO) _then;
+  final $Res Function(UserDataModel) _then;
 
   @override
   $Res call({
@@ -69,33 +60,31 @@ class _$UserDataDTOCopyWithImpl<$Res> implements $UserDataDTOCopyWith<$Res> {
       favorites: favorites == freezed
           ? _value.favorites
           : favorites // ignore: cast_nullable_to_non_nullable
-              as List<FavoriteDataDTO>,
+              as List<RecipeModel>,
     ));
   }
 }
 
 /// @nodoc
-abstract class _$$_UserDataDTOCopyWith<$Res>
-    implements $UserDataDTOCopyWith<$Res> {
-  factory _$$_UserDataDTOCopyWith(
-          _$_UserDataDTO value, $Res Function(_$_UserDataDTO) then) =
-      __$$_UserDataDTOCopyWithImpl<$Res>;
+abstract class _$$_UserDataModelCopyWith<$Res>
+    implements $UserDataModelCopyWith<$Res> {
+  factory _$$_UserDataModelCopyWith(
+          _$_UserDataModel value, $Res Function(_$_UserDataModel) then) =
+      __$$_UserDataModelCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {String id,
-      @JsonKey(name: 'user') String userId,
-      @JsonKey(name: 'favorites') List<FavoriteDataDTO> favorites});
+  $Res call({String id, String userId, List<RecipeModel> favorites});
 }
 
 /// @nodoc
-class __$$_UserDataDTOCopyWithImpl<$Res> extends _$UserDataDTOCopyWithImpl<$Res>
-    implements _$$_UserDataDTOCopyWith<$Res> {
-  __$$_UserDataDTOCopyWithImpl(
-      _$_UserDataDTO _value, $Res Function(_$_UserDataDTO) _then)
-      : super(_value, (v) => _then(v as _$_UserDataDTO));
+class __$$_UserDataModelCopyWithImpl<$Res>
+    extends _$UserDataModelCopyWithImpl<$Res>
+    implements _$$_UserDataModelCopyWith<$Res> {
+  __$$_UserDataModelCopyWithImpl(
+      _$_UserDataModel _value, $Res Function(_$_UserDataModel) _then)
+      : super(_value, (v) => _then(v as _$_UserDataModel));
 
   @override
-  _$_UserDataDTO get _value => super._value as _$_UserDataDTO;
+  _$_UserDataModel get _value => super._value as _$_UserDataModel;
 
   @override
   $Res call({
@@ -103,7 +92,7 @@ class __$$_UserDataDTOCopyWithImpl<$Res> extends _$UserDataDTOCopyWithImpl<$Res>
     Object? userId = freezed,
     Object? favorites = freezed,
   }) {
-    return _then(_$_UserDataDTO(
+    return _then(_$_UserDataModel(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -115,56 +104,47 @@ class __$$_UserDataDTOCopyWithImpl<$Res> extends _$UserDataDTOCopyWithImpl<$Res>
       favorites: favorites == freezed
           ? _value._favorites
           : favorites // ignore: cast_nullable_to_non_nullable
-              as List<FavoriteDataDTO>,
+              as List<RecipeModel>,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
-class _$_UserDataDTO extends _UserDataDTO {
-  _$_UserDataDTO(
-      {required this.id,
-      @JsonKey(name: 'user')
-          required this.userId,
-      @JsonKey(name: 'favorites')
-          required final List<FavoriteDataDTO> favorites})
-      : _favorites = favorites,
-        super._();
 
-  factory _$_UserDataDTO.fromJson(Map<String, dynamic> json) =>
-      _$$_UserDataDTOFromJson(json);
+class _$_UserDataModel implements _UserDataModel {
+  _$_UserDataModel(
+      {required this.id,
+      required this.userId,
+      required final List<RecipeModel> favorites})
+      : _favorites = favorites;
 
   @override
   final String id;
   @override
-  @JsonKey(name: 'user')
   final String userId;
-  final List<FavoriteDataDTO> _favorites;
+  final List<RecipeModel> _favorites;
   @override
-  @JsonKey(name: 'favorites')
-  List<FavoriteDataDTO> get favorites {
+  List<RecipeModel> get favorites {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_favorites);
   }
 
   @override
   String toString() {
-    return 'UserDataDTO(id: $id, userId: $userId, favorites: $favorites)';
+    return 'UserDataModel(id: $id, userId: $userId, favorites: $favorites)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UserDataDTO &&
+            other is _$_UserDataModel &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.userId, userId) &&
             const DeepCollectionEquality()
                 .equals(other._favorites, _favorites));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -174,37 +154,24 @@ class _$_UserDataDTO extends _UserDataDTO {
 
   @JsonKey(ignore: true)
   @override
-  _$$_UserDataDTOCopyWith<_$_UserDataDTO> get copyWith =>
-      __$$_UserDataDTOCopyWithImpl<_$_UserDataDTO>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_UserDataDTOToJson(this);
-  }
+  _$$_UserDataModelCopyWith<_$_UserDataModel> get copyWith =>
+      __$$_UserDataModelCopyWithImpl<_$_UserDataModel>(this, _$identity);
 }
 
-abstract class _UserDataDTO extends UserDataDTO {
-  factory _UserDataDTO(
+abstract class _UserDataModel implements UserDataModel {
+  factory _UserDataModel(
       {required final String id,
-      @JsonKey(name: 'user')
-          required final String userId,
-      @JsonKey(name: 'favorites')
-          required final List<FavoriteDataDTO> favorites}) = _$_UserDataDTO;
-  _UserDataDTO._() : super._();
-
-  factory _UserDataDTO.fromJson(Map<String, dynamic> json) =
-      _$_UserDataDTO.fromJson;
+      required final String userId,
+      required final List<RecipeModel> favorites}) = _$_UserDataModel;
 
   @override
   String get id => throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: 'user')
   String get userId => throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: 'favorites')
-  List<FavoriteDataDTO> get favorites => throw _privateConstructorUsedError;
+  List<RecipeModel> get favorites => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$$_UserDataDTOCopyWith<_$_UserDataDTO> get copyWith =>
+  _$$_UserDataModelCopyWith<_$_UserDataModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

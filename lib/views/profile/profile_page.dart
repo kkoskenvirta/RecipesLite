@@ -1,18 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:directus/directus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/config/api_config.dart';
 import 'package:flutter_e_commerce/global/blocks/auth/cubit/auth_cubit.dart';
-import 'package:flutter_e_commerce/global/blocks/auth/cubit/auth_cubit.dart';
-import 'package:flutter_e_commerce/global/blocks/profile/cubit/profile_cubit.dart';
+import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
 import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
-import 'package:flutter_e_commerce/modules/dio_module.dart';
-import 'package:flutter_e_commerce/modules/directus_module.dart';
-import 'package:flutter_e_commerce/repositorys/auth_repository.dart';
+import 'package:flutter_e_commerce/models/user/user_model.dart';
+
 import 'package:flutter_e_commerce/utils/dimensions.dart';
-import 'package:flutter_e_commerce/utils/scale_func.dart';
 import 'package:flutter_e_commerce/views/recipe/recipe_page.dart';
 import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
@@ -31,12 +27,12 @@ class ProfilePage extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {
+          BlocBuilder<UserDataCubit, UserDataState>(builder: (context, state) {
             switch (state.status) {
-              case ProfileStateStatus.loading:
+              case UserDataStateStatus.loading:
                 return CircularProgressIndicator();
 
-              case ProfileStateStatus.loaded:
+              case UserDataStateStatus.loaded:
                 return ProfileBody(
                   profile: state.currUser!,
                 );
@@ -90,11 +86,11 @@ class ProfileHeader extends StatelessWidget {
 
 class ProfileBody extends StatelessWidget {
   const ProfileBody({Key? key, required this.profile}) : super(key: key);
-  final DirectusUser profile;
+  final UserModel profile;
 
   @override
   Widget build(BuildContext context) {
-    final profileCubit = BlocProvider.of<ProfileCubit>(context);
+    final userDataCubit = BlocProvider.of<UserDataCubit>(context);
 
     return SingleChildScrollView(
       child: Column(children: [
@@ -126,49 +122,61 @@ class ProfileBody extends StatelessWidget {
                 height: 10,
               ),
               LargeText(
-                text: profile.firstName!,
+                text: profile.firstName,
                 size: 32,
               ),
+              SizedBox(
+                height: 20,
+              ),
               Padding(
-                padding: EdgeInsets.all(Dimensions.width20),
-                child: BlocBuilder<ProfileCubit, ProfileState>(
-                  builder: (context, state) {
-                    switch (state.status) {
-                      case ProfileStateStatus.loading:
-                        return CircularProgressIndicator();
+                padding: EdgeInsets.symmetric(horizontal: Dimensions.width20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    LargeText(text: "Favorite recipes"),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    BlocBuilder<UserDataCubit, UserDataState>(
+                      builder: (context, state) {
+                        switch (state.status) {
+                          case UserDataStateStatus.loading:
+                            return CircularProgressIndicator();
 
-                      case ProfileStateStatus.loaded:
-                      // return ListView.builder(
-                      //   shrinkWrap: true,
-                      //   physics: const NeverScrollableScrollPhysics(),
-                      //   itemCount: state.favorites.length,
-                      //   itemBuilder: (context, index) {
-                      //     final recipeFetchCubit = BlocProvider.of<RecipeFetchCubit>(context);
+                          case UserDataStateStatus.loaded:
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: state.favorites.length,
+                              itemBuilder: (context, index) {
+                                final recipeFetchCubit = BlocProvider.of<RecipeFetchCubit>(context);
 
-                      //     // final favoriteRecipesList = recipeFetchCubit.fetchMultiple(favorites);
-                      //     final RecipeModel singleRecipe = state.favorites[index].recipe;
-                      //     return PopularListItem(
-                      //       title: singleRecipe.name,
-                      //       difficulty: singleRecipe.difficulty,
-                      //       description: singleRecipe.shortDescription,
-                      //       timeEstimate: singleRecipe.preparationTime,
-                      //       imageUrl: singleRecipe.picture,
-                      //       onTap: () {
-                      //         Navigator.push(
-                      //           (context),
-                      //           MaterialPageRoute(
-                      //             builder: (context) => RecipePage(recipeModel: singleRecipe),
-                      //           ),
-                      //         );
-                      //       },
-                      //     );
-                      //   },
-                      // );
+                                // final favoriteRecipesList = recipeFetchCubit.fetchMultiple(favorites);
+                                final RecipeModel singleRecipe = state.favorites[index];
+                                return PopularListItem(
+                                  title: singleRecipe.name,
+                                  difficulty: singleRecipe.difficulty,
+                                  description: singleRecipe.shortDescription,
+                                  timeEstimate: singleRecipe.preparationTime,
+                                  imageUrl: singleRecipe.picture,
+                                  onTap: () {
+                                    Navigator.push(
+                                      (context),
+                                      MaterialPageRoute(
+                                        builder: (context) => RecipePage(recipeModel: singleRecipe),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            );
 
-                      default:
-                        return SizedBox();
-                    }
-                  },
+                          default:
+                            return SizedBox();
+                        }
+                      },
+                    ),
+                  ],
                 ),
               )
             ],

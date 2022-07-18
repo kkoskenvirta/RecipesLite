@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_e_commerce/global/blocks/profile/cubit/profile_cubit.dart';
+import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
 import 'package:flutter_e_commerce/modules/dio_module.dart';
 import 'package:flutter_e_commerce/modules/directus_module.dart';
-import 'package:flutter_e_commerce/repositorys/user_repository.dart';
+import 'package:flutter_e_commerce/repositorys/user_data_repository.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/scale_func.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
@@ -95,16 +95,16 @@ class _RecipePageState extends State<RecipePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       LargeText(text: widget.recipeModel.name),
-                      BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {
-                        final profileCubit = BlocProvider.of<ProfileCubit>(context);
+                      BlocBuilder<UserDataCubit, UserDataState>(builder: (context, state) {
+                        final userDataCubit = BlocProvider.of<UserDataCubit>(context);
 
-                        if (state.status == ProfileStateStatus.loaded) {
-                          final result = state.favorites.where((recipe) => recipe.recipeId == widget.recipeModel.id);
+                        if (state.status == UserDataStateStatus.loaded) {
+                          final result = state.favorites.where((recipe) => recipe.id == widget.recipeModel.id);
                           final bool favorited = result.isEmpty ? false : true;
 
                           return IconButton(
                               onPressed: () {
-                                profileCubit.toggleFavorites(widget.recipeModel.id);
+                                userDataCubit.toggleFavorites(widget.recipeModel);
                               },
                               icon: favorited ? Icon(Icons.favorite) : Icon(Icons.favorite_border_rounded));
                         }

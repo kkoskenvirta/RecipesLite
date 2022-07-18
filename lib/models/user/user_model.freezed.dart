@@ -17,8 +17,10 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$UserModel {
   String get id => throw _privateConstructorUsedError;
-  String get userId => throw _privateConstructorUsedError;
-  List<FavoriteModel> get favorites => throw _privateConstructorUsedError;
+  String get firstName => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
+  String? get role => throw _privateConstructorUsedError;
+  String? get avatar => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UserModelCopyWith<UserModel> get copyWith =>
@@ -29,7 +31,12 @@ mixin _$UserModel {
 abstract class $UserModelCopyWith<$Res> {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) then) =
       _$UserModelCopyWithImpl<$Res>;
-  $Res call({String id, String userId, List<FavoriteModel> favorites});
+  $Res call(
+      {String id,
+      String firstName,
+      String email,
+      String? role,
+      String? avatar});
 }
 
 /// @nodoc
@@ -43,22 +50,32 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
-    Object? userId = freezed,
-    Object? favorites = freezed,
+    Object? firstName = freezed,
+    Object? email = freezed,
+    Object? role = freezed,
+    Object? avatar = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: userId == freezed
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      firstName: firstName == freezed
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
               as String,
-      favorites: favorites == freezed
-          ? _value.favorites
-          : favorites // ignore: cast_nullable_to_non_nullable
-              as List<FavoriteModel>,
+      email: email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      role: role == freezed
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as String?,
+      avatar: avatar == freezed
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -69,7 +86,12 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
           _$_UserModel value, $Res Function(_$_UserModel) then) =
       __$$_UserModelCopyWithImpl<$Res>;
   @override
-  $Res call({String id, String userId, List<FavoriteModel> favorites});
+  $Res call(
+      {String id,
+      String firstName,
+      String email,
+      String? role,
+      String? avatar});
 }
 
 /// @nodoc
@@ -85,22 +107,32 @@ class __$$_UserModelCopyWithImpl<$Res> extends _$UserModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? userId = freezed,
-    Object? favorites = freezed,
+    Object? firstName = freezed,
+    Object? email = freezed,
+    Object? role = freezed,
+    Object? avatar = freezed,
   }) {
     return _then(_$_UserModel(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: userId == freezed
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      firstName: firstName == freezed
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
               as String,
-      favorites: favorites == freezed
-          ? _value._favorites
-          : favorites // ignore: cast_nullable_to_non_nullable
-              as List<FavoriteModel>,
+      email: email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      role: role == freezed
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as String?,
+      avatar: avatar == freezed
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -110,24 +142,25 @@ class __$$_UserModelCopyWithImpl<$Res> extends _$UserModelCopyWithImpl<$Res>
 class _$_UserModel implements _UserModel {
   _$_UserModel(
       {required this.id,
-      required this.userId,
-      required final List<FavoriteModel> favorites})
-      : _favorites = favorites;
+      required this.firstName,
+      required this.email,
+      this.role,
+      this.avatar});
 
   @override
   final String id;
   @override
-  final String userId;
-  final List<FavoriteModel> _favorites;
+  final String firstName;
   @override
-  List<FavoriteModel> get favorites {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_favorites);
-  }
+  final String email;
+  @override
+  final String? role;
+  @override
+  final String? avatar;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, userId: $userId, favorites: $favorites)';
+    return 'UserModel(id: $id, firstName: $firstName, email: $email, role: $role, avatar: $avatar)';
   }
 
   @override
@@ -136,17 +169,20 @@ class _$_UserModel implements _UserModel {
         (other.runtimeType == runtimeType &&
             other is _$_UserModel &&
             const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.userId, userId) &&
-            const DeepCollectionEquality()
-                .equals(other._favorites, _favorites));
+            const DeepCollectionEquality().equals(other.firstName, firstName) &&
+            const DeepCollectionEquality().equals(other.email, email) &&
+            const DeepCollectionEquality().equals(other.role, role) &&
+            const DeepCollectionEquality().equals(other.avatar, avatar));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(userId),
-      const DeepCollectionEquality().hash(_favorites));
+      const DeepCollectionEquality().hash(firstName),
+      const DeepCollectionEquality().hash(email),
+      const DeepCollectionEquality().hash(role),
+      const DeepCollectionEquality().hash(avatar));
 
   @JsonKey(ignore: true)
   @override
@@ -157,15 +193,21 @@ class _$_UserModel implements _UserModel {
 abstract class _UserModel implements UserModel {
   factory _UserModel(
       {required final String id,
-      required final String userId,
-      required final List<FavoriteModel> favorites}) = _$_UserModel;
+      required final String firstName,
+      required final String email,
+      final String? role,
+      final String? avatar}) = _$_UserModel;
 
   @override
   String get id => throw _privateConstructorUsedError;
   @override
-  String get userId => throw _privateConstructorUsedError;
+  String get firstName => throw _privateConstructorUsedError;
   @override
-  List<FavoriteModel> get favorites => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
+  @override
+  String? get role => throw _privateConstructorUsedError;
+  @override
+  String? get avatar => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_UserModelCopyWith<_$_UserModel> get copyWith =>

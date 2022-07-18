@@ -5,7 +5,8 @@ import 'package:flutter_e_commerce/modules/dio_module.dart';
 import 'package:flutter_e_commerce/modules/directus_module.dart';
 import 'package:flutter_e_commerce/repositorys/auth_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
-import 'package:flutter_e_commerce/repositorys/user_repository.dart';
+import 'package:flutter_e_commerce/repositorys/secure_storage_repository.dart';
+import 'package:flutter_e_commerce/repositorys/user_data_repository.dart';
 
 class GlobalRepos extends StatelessWidget {
   final Widget child;
@@ -16,8 +17,8 @@ class GlobalRepos extends StatelessWidget {
     return MultiRepositoryProvider(providers: [
       RepositoryProvider<AuthRepository>(
         create: (context) => AuthRepository(
+          secureStorageRepository: SecureStorageRepository(),
           dioModule: DioModule(),
-          directus: DirectusModule(),
         ),
       ),
       RepositoryProvider<RecipesRepository>(
@@ -26,8 +27,8 @@ class GlobalRepos extends StatelessWidget {
           directus: DirectusModule(),
         ),
       ),
-      RepositoryProvider<UserRepository>(
-        create: (context) => UserRepository(
+      RepositoryProvider<UserDataRepository>(
+        create: (context) => UserDataRepository(
           dioModule: DioModule(),
           directus: DirectusModule(),
         ),

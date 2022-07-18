@@ -1,7 +1,7 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_e_commerce/global/blocks/profile/cubit/profile_cubit.dart';
+import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/views/recipe/recipe_page.dart';
 import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
@@ -11,7 +11,6 @@ import 'package:flutter_e_commerce/widgets/ratings_bar.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
 
 import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
-import '../../models/recipe/recipe_model.dart';
 
 class FoodPageBody extends StatefulWidget {
   FoodPageBody({Key? key}) : super(key: key);
@@ -98,28 +97,24 @@ class _FoodPageBodyState extends State<FoodPageBody> {
               ),
               Padding(
                 padding: EdgeInsets.all(Dimensions.width20),
-                child: BlocBuilder<ProfileCubit, ProfileState>(
-                  builder: (context, state) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: recipeList.length,
-                      itemBuilder: (context, index) {
-                        final RecipeModel singleRecipe = recipeList[index];
-                        return PopularListItem(
-                          title: singleRecipe.name,
-                          difficulty: singleRecipe.difficulty,
-                          description: singleRecipe.shortDescription,
-                          timeEstimate: singleRecipe.preparationTime,
-                          imageUrl: singleRecipe.picture,
-                          onTap: () {
-                            Navigator.push(
-                              (context),
-                              MaterialPageRoute(
-                                builder: (context) => RecipePage(recipeModel: singleRecipe),
-                              ),
-                            );
-                          },
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: recipeList.length,
+                  itemBuilder: (context, index) {
+                    final RecipeModel singleRecipe = recipeList[index];
+                    return PopularListItem(
+                      title: singleRecipe.name,
+                      difficulty: singleRecipe.difficulty,
+                      description: singleRecipe.shortDescription,
+                      timeEstimate: singleRecipe.preparationTime,
+                      imageUrl: singleRecipe.picture,
+                      onTap: () {
+                        Navigator.push(
+                          (context),
+                          MaterialPageRoute(
+                            builder: (context) => RecipePage(recipeModel: singleRecipe),
+                          ),
                         );
                       },
                     );

@@ -3,80 +3,78 @@ import 'package:directus/directus.dart';
 import 'package:flutter_e_commerce/config/api_config.dart';
 import 'package:flutter_e_commerce/models/auth/auth_model.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter_e_commerce/models/user/dto/user_dto.dart';
+import 'package:flutter_e_commerce/models/user/dto/user_object_dto.dart';
+import 'package:flutter_e_commerce/models/user/user_model.dart';
 import 'package:flutter_e_commerce/modules/directus_module.dart';
+import 'package:flutter_e_commerce/repositorys/secure_storage_repository.dart';
 import '../models/auth/dto/auth_dto.dart';
 import '../modules/dio_module.dart';
 
 enum AuthError { userNotExist, invalidCredentials, userAlreadyExist, invalidPayload, roleNoteFound, unexpected }
-// await DirectusSingleton.init('http://localhost:8055')
-// final sdk = DirectusSingleton.instance;
 
 class AuthRepository {
   AuthRepository({
     required DioModule dioModule,
-    required DirectusModule directus,
+    required SecureStorageRepository secureStorageRepository,
   })  : _authDio = dioModule.tokenDio,
-        _directus = directus.getInstance();
+        _secureStorageRepository = secureStorageRepository,
+        _dio = dioModule.dio;
 
   final Dio _authDio;
-  final Future<Directus> _directus;
-
-  Future<Either<AuthError, bool>> loginSdk({required String email, required String password}) async {
-    final sdk = await _directus;
-    try {
-      await sdk.auth.login(email: email, password: password);
-      return right(true);
-    } catch (e) {
-      return left(AuthError.invalidCredentials);
-    }
-  }
-
-  Future<Either<AuthError, bool>> logoutSdk() async {
-    final sdk = await _directus;
-    try {
-      await sdk.auth.logout();
-      return right(true);
-    } catch (e) {
-      print(e);
-      return left(AuthError.unexpected);
-    }
-  }
-
-  Future<Either<AuthError, DirectusUser>> getCurrentUser() async {
-    final sdk = await _directus;
-    try {
-      final DirectusResponse<DirectusUser>? user = await sdk.auth.currentUser?.read();
-      if (user != null) {
-        print(user.data);
-
-        return right(user.data);
-      }
-    } catch (e) {
-      await Future.delayed(Duration(seconds: 2));
-      getCurrentUser();
-    }
-
-    return left(AuthError.userNotExist);
-  }
-
-  isUserLoggedIn() async {
-    final sdk = await _directus;
-
-    final isLoggedIn = sdk.auth.isLoggedIn;
-    return isLoggedIn;
-  }
+  final Dio _dio;
+  final SecureStorageRepository _secureStorageRepository;
 
   Future<Either<AuthError, AuthModel>> login({required String email, required String password}) async {
     try {
       final body = {'email': email, 'password': password};
-      final response = await _authDio.post('$baseUrl$loginPath', data: body);
+      final response = await _authDio.post('/auth/login', data: body);
       final authDTO = AuthDTO.fromJson(response.data);
       final auth = authDTO.data.toDomain();
       return right(auth);
     } catch (e) {
-      print(e);
-      return left(AuthError.invalidCredentials);
+      if (e is DioError && e.response?.statusCode == 400) return left(AuthError.userNotExist);
+      if (e is DioError && e.response?.statusCode == 401) return left(AuthError.invalidCredentials);
+      return left(AuthError.unexpected);
     }
+  }
+
+  Future<Either<AuthError, void>> logout({required String refreshToken}) async {
+    try {
+      final body = {'refresh_token': refreshToken};
+      final response = await _authDio.post('/auth/logout', data: body);
+
+      return right(null);
+    } catch (e) {
+      if (e is DioError && e.response?.statusCode == 400) return left(AuthError.userNotExist);
+      if (e is DioError && e.response?.statusCode == 401) return left(AuthError.invalidCredentials);
+      return left(AuthError.unexpected);
+    }
+  }
+
+  Future<Either<AuthError, UserModel>> getCurrentUser() async {
+    try {
+      final response = await _dio.get("users/me");
+
+      if (response != null) {
+        final userDTO = UserObjectDTO.fromJson(response.data);
+        final user = userDTO.data.toDomain();
+        return right(user);
+      }
+      return left(AuthError.userNotExist);
+    } catch (e) {
+      if (e is DioError && e.response?.statusCode == 400) return left(AuthError.invalidPayload);
+      if (e is DioError && e.response?.statusCode == 401) return left(AuthError.invalidCredentials);
+      return left(AuthError.unexpected);
+    }
+  }
+
+  isUserLoggedIn() async {
+    final accessToken = await _secureStorageRepository.getWithKey(StorageKeys.accessToken);
+    final refreshToken = await _secureStorageRepository.getWithKey(StorageKeys.refreshToken);
+
+    if (accessToken == null || refreshToken == null) return false;
+    return true;
   }
 
   Future<Either<AuthError, Unit>> signup({
@@ -92,6 +90,22 @@ class AuthRepository {
       if (e is DioError && e.response?.statusCode == 400) {
         return left(AuthError.userAlreadyExist);
       }
+      return left(AuthError.unexpected);
+    }
+  }
+
+  Future<Either<AuthError, AuthModel>> refreshAccessToken({required String refreshToken}) async {
+    try {
+      final body = {'refresh_token': refreshToken};
+      final response = await _authDio.post('/auth/refresh', data: body);
+      final authDTO = AuthDTO.fromJson(response.data);
+      final auth = authDTO.data.toDomain();
+      await _secureStorageRepository.setWithKey(StorageKeys.accessToken, auth.accessToken.toString());
+      await _secureStorageRepository.setWithKey(StorageKeys.refreshToken, auth.refreshToken.toString());
+      return right(auth);
+    } catch (e) {
+      if (e is DioError && e.response?.statusCode == 400) return left(AuthError.invalidPayload);
+      if (e is DioError && e.response?.statusCode == 401) return left(AuthError.invalidCredentials);
       return left(AuthError.unexpected);
     }
   }
