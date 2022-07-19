@@ -1,12 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:directus/directus.dart';
 import 'package:flutter_e_commerce/config/api_config.dart';
 import 'package:flutter_e_commerce/models/auth/auth_model.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter_e_commerce/models/user/dto/user_dto.dart';
 import 'package:flutter_e_commerce/models/user/dto/user_object_dto.dart';
 import 'package:flutter_e_commerce/models/user/user_model.dart';
-import 'package:flutter_e_commerce/modules/directus_module.dart';
 import 'package:flutter_e_commerce/repositorys/secure_storage_repository.dart';
 import '../models/auth/dto/auth_dto.dart';
 import '../modules/dio_module.dart';

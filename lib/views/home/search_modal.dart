@@ -17,7 +17,6 @@ class SearchModal extends StatelessWidget {
       create: (context) => RecipeSearchCubit(
         recipesRepository: RecipesRepository(
           dio: DioModule(),
-          directus: DirectusModule(),
         ),
       ),
       child: _Body(),

@@ -21,7 +21,7 @@ class GlobalBlocs extends StatelessWidget {
       providers: [
         BlocProvider<RecipeFetchCubit>(
           create: (context) => RecipeFetchCubit(
-            recipesRepository: RecipesRepository(directus: DirectusModule(), dio: DioModule()),
+            recipesRepository: RecipesRepository(dio: DioModule()),
           )..fetchRecipeApi(),
         ),
         BlocProvider<AuthCubit>(
@@ -42,7 +42,6 @@ class GlobalBlocs extends StatelessWidget {
             ),
             userDataRepository: UserDataRepository(
               dioModule: DioModule(),
-              directus: DirectusModule(),
             ),
           )..getUserData(),
         )

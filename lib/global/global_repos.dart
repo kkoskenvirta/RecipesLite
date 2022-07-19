@@ -24,15 +24,14 @@ class GlobalRepos extends StatelessWidget {
       RepositoryProvider<RecipesRepository>(
         create: (context) => RecipesRepository(
           dio: DioModule(),
-          directus: DirectusModule(),
         ),
       ),
       RepositoryProvider<UserDataRepository>(
         create: (context) => UserDataRepository(
           dioModule: DioModule(),
-          directus: DirectusModule(),
         ),
-      )
+      ),
+      RepositoryProvider<SecureStorageRepository>(create: (context) => SecureStorageRepository())
     ], child: child);
   }
 }

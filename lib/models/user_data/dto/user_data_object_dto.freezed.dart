@@ -20,7 +20,7 @@ UserDataObjectDTO _$UserDataObjectDTOFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserDataObjectDTO {
-  UserDataDTO get data => throw _privateConstructorUsedError;
+  List<UserDataDTO> get data => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,9 +33,7 @@ abstract class $UserDataObjectDTOCopyWith<$Res> {
   factory $UserDataObjectDTOCopyWith(
           UserDataObjectDTO value, $Res Function(UserDataObjectDTO) then) =
       _$UserDataObjectDTOCopyWithImpl<$Res>;
-  $Res call({UserDataDTO data});
-
-  $UserDataDTOCopyWith<$Res> get data;
+  $Res call({List<UserDataDTO> data});
 }
 
 /// @nodoc
@@ -55,15 +53,8 @@ class _$UserDataObjectDTOCopyWithImpl<$Res>
       data: data == freezed
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as UserDataDTO,
+              as List<UserDataDTO>,
     ));
-  }
-
-  @override
-  $UserDataDTOCopyWith<$Res> get data {
-    return $UserDataDTOCopyWith<$Res>(_value.data, (value) {
-      return _then(_value.copyWith(data: value));
-    });
   }
 }
 
@@ -74,10 +65,7 @@ abstract class _$$_UserDataObjectDTOCopyWith<$Res>
           $Res Function(_$_UserDataObjectDTO) then) =
       __$$_UserDataObjectDTOCopyWithImpl<$Res>;
   @override
-  $Res call({UserDataDTO data});
-
-  @override
-  $UserDataDTOCopyWith<$Res> get data;
+  $Res call({List<UserDataDTO> data});
 }
 
 /// @nodoc
@@ -97,9 +85,9 @@ class __$$_UserDataObjectDTOCopyWithImpl<$Res>
   }) {
     return _then(_$_UserDataObjectDTO(
       data: data == freezed
-          ? _value.data
+          ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
-              as UserDataDTO,
+              as List<UserDataDTO>,
     ));
   }
 }
@@ -107,13 +95,18 @@ class __$$_UserDataObjectDTOCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_UserDataObjectDTO implements _UserDataObjectDTO {
-  const _$_UserDataObjectDTO({required this.data});
+  const _$_UserDataObjectDTO({required final List<UserDataDTO> data})
+      : _data = data;
 
   factory _$_UserDataObjectDTO.fromJson(Map<String, dynamic> json) =>
       _$$_UserDataObjectDTOFromJson(json);
 
+  final List<UserDataDTO> _data;
   @override
-  final UserDataDTO data;
+  List<UserDataDTO> get data {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_data);
+  }
 
   @override
   String toString() {
@@ -125,13 +118,13 @@ class _$_UserDataObjectDTO implements _UserDataObjectDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UserDataObjectDTO &&
-            const DeepCollectionEquality().equals(other.data, data));
+            const DeepCollectionEquality().equals(other._data, _data));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_data));
 
   @JsonKey(ignore: true)
   @override
@@ -146,14 +139,14 @@ class _$_UserDataObjectDTO implements _UserDataObjectDTO {
 }
 
 abstract class _UserDataObjectDTO implements UserDataObjectDTO {
-  const factory _UserDataObjectDTO({required final UserDataDTO data}) =
+  const factory _UserDataObjectDTO({required final List<UserDataDTO> data}) =
       _$_UserDataObjectDTO;
 
   factory _UserDataObjectDTO.fromJson(Map<String, dynamic> json) =
       _$_UserDataObjectDTO.fromJson;
 
   @override
-  UserDataDTO get data => throw _privateConstructorUsedError;
+  List<UserDataDTO> get data => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_UserDataObjectDTOCopyWith<_$_UserDataObjectDTO> get copyWith =>

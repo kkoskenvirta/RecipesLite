@@ -8,7 +8,9 @@ part of 'user_data_object_dto.dart';
 
 _$_UserDataObjectDTO _$$_UserDataObjectDTOFromJson(Map<String, dynamic> json) =>
     _$_UserDataObjectDTO(
-      data: UserDataDTO.fromJson(json['data'] as Map<String, dynamic>),
+      data: (json['data'] as List<dynamic>)
+          .map((e) => UserDataDTO.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$_UserDataObjectDTOToJson(

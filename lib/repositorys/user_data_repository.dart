@@ -6,6 +6,7 @@ import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/models/user/dto/user_object_dto.dart';
 import 'package:flutter_e_commerce/models/user/user_model.dart';
 import 'package:flutter_e_commerce/models/user_data/dto/user_data_dto.dart';
+import 'package:flutter_e_commerce/models/user_data/dto/user_data_object_dto.dart';
 import 'package:flutter_e_commerce/models/user_data/user_data_model.dart';
 import 'package:flutter_e_commerce/modules/directus_module.dart';
 import '../modules/dio_module.dart';
@@ -24,12 +25,9 @@ enum UserDataError {
 class UserDataRepository {
   UserDataRepository({
     required DioModule dioModule,
-    required DirectusModule directus,
-  })  : _dio = dioModule.dio,
-        _directus = directus.getInstance();
+  }) : _dio = dioModule.dio;
 
   final Dio _dio;
-  final Future<Directus> _directus;
 
   UserModel? currentUser;
   UserDataModel? userData;
@@ -38,7 +36,14 @@ class UserDataRepository {
     try {
       currentUser ??= user;
       if (currentUser != null) {
-        userData ??= await loadUserData(currentUser!.id);
+        if (userData == null) {
+          final failureOrUserData = await loadUserData(currentUser!.id);
+
+          failureOrUserData.fold((error) => print(error), (data) {
+            userData = data;
+          });
+        }
+
         return right(userData!.favorites);
       }
       return left(UserDataError.noCurrentUser);
@@ -47,36 +52,30 @@ class UserDataRepository {
     }
   }
 
-  loadUserData(String userId) async {
+  Future<Either<UserDataError, UserDataModel>> loadUserData(String userId) async {
     try {
-      final sdk = await _directus;
-      final responseData;
+      final UserDataModel userData;
 
-      //Look for existing user data from directus user_data collection
-      final response = await sdk.items("user_data").readMany(
-            query: Query(limit: 1, fields: ['id', 'user', 'favorites.recipe_id.*']),
-            filters: Filters(
-              {'user': Filter.eq(currentUser?.id)},
-            ),
-          );
+      final response = await _dio
+          .get("items/user_data?filter[user][_eq]=${currentUser?.id}&fields=id,user,favorites.recipe_id.*&limit=1");
 
       if (response.data.isEmpty) {
         //If we cant find existing user_data with current user id, we create a new one
-        responseData = await createUserData(sdk);
+        userData = await createUserData();
       } else {
-        responseData = response.data[0];
+        final userDataDTO = UserDataObjectDTO.fromJson(response.data);
+        userData = userDataDTO.data[0].toDomain();
       }
-      print(response.data);
-      final userDataDTO = UserDataDTO.fromJson(responseData);
-      final userData = userDataDTO.toDomain();
 
-      return userData;
+      return right(userData);
     } catch (e) {
-      print(e);
+      if (e is DioError && e.response?.statusCode == 400) return left(UserDataError.invalidPayload);
+      if (e is DioError && e.response?.statusCode == 401) return left(UserDataError.invalidCredentials);
+      return left(UserDataError.unexpected);
     }
   }
 
-  Future<dynamic> createUserData(Directus sdk) async {
+  Future<dynamic> createUserData() async {
     try {
       final body = {'user': currentUser?.id, 'favorites': []};
       final response = await _dio.post("items/user_data", data: body);
