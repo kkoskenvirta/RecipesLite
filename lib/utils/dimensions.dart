@@ -28,5 +28,7 @@ class Dimensions {
 
   static double listViewImgSize = screenWidth / 3.5;
 
+  static double categoryListImgSize = screenWidth / 6.5;
+
   static double recipeImgSize = screenHeight / 2.1;
 }

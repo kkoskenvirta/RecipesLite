@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
-import 'package:flutter_e_commerce/views/recipe/recipe_page.dart';
+import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
@@ -12,14 +12,14 @@ import 'package:flutter_e_commerce/widgets/small_text.dart';
 
 import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
 
-class FoodPageBody extends StatefulWidget {
-  FoodPageBody({Key? key}) : super(key: key);
+class HomePageBody extends StatefulWidget {
+  HomePageBody({Key? key}) : super(key: key);
 
   @override
-  State<FoodPageBody> createState() => _FoodPageBodyState();
+  State<HomePageBody> createState() => _HomePageBodyState();
 }
 
-class _FoodPageBodyState extends State<FoodPageBody> {
+class _HomePageBodyState extends State<HomePageBody> {
   PageController pageController = PageController(viewportFraction: 0.9);
 
   var _currPageValue = 0.0;
@@ -48,13 +48,13 @@ class _FoodPageBodyState extends State<FoodPageBody> {
     return BlocBuilder<RecipeFetchCubit, RecipeFetchState>(
       builder: (context, state) {
         if (state is RecipeFetchInitial) {
-          return Center(child: const CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (state is RecipeFetchLoading) {
-          return Center(
-            child: const CircularProgressIndicator(),
+          return const Center(
+            child: CircularProgressIndicator(),
           );
         } else if (state is RecipeFetchError) {
-          return Text("Error happened");
+          return const Text("Error happened");
         } else if (state is RecipeFetchLoaded) {
           final recipeList = state.recipeList;
           return Column(
@@ -124,7 +124,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             ],
           );
         } else {
-          return Text("error");
+          return const Text("error");
         }
       },
     );
@@ -176,7 +176,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                   blurRadius: 26,
                 )
               ],
-              image: DecorationImage(
+              image: const DecorationImage(
                 image: AssetImage("assets/images/rice.jpg"),
                 fit: BoxFit.cover,
               ),
@@ -184,7 +184,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
           ),
           Column(
             children: [
-              Spacer(),
+              const Spacer(),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: Dimensions.width15),
                 child: Align(

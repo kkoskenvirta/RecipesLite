@@ -10,11 +10,7 @@ class LargeText extends StatelessWidget {
   TextOverflow overFlow;
 
   LargeText(
-      {Key? key,
-      this.color = Colors.black87,
-      required this.text,
-      this.overFlow = TextOverflow.ellipsis,
-      this.size = 0})
+      {Key? key, this.color = Colors.black87, required this.text, this.overFlow = TextOverflow.ellipsis, this.size = 0})
       : super(key: key);
 
   @override

@@ -20,14 +20,10 @@ class AuthGuard extends StatelessWidget {
       listener: (context, state) {
         print(state);
         state.maybeWhen(
-          authenticated: () => navigator.currentState
-              ?.pushNamedAndRemoveUntil(Routes.home.name, (route) => false),
+          authenticated: () => navigator.currentState?.pushNamedAndRemoveUntil(Routes.main.name, (route) => false),
           unauthenticated: () {
-            navigator.currentState
-                ?.pushNamedAndRemoveUntil(Routes.login.name, (route) => false);
-            context
-                .read<AuthCubit>()
-                .updateState(const AuthState.uninitialized(inProgress: false));
+            navigator.currentState?.pushNamedAndRemoveUntil(Routes.login.name, (route) => false);
+            context.read<AuthCubit>().updateState(const AuthState.uninitialized(inProgress: false));
           },
           orElse: () {},
         );

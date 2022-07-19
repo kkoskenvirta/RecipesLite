@@ -9,7 +9,7 @@ import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/models/user/user_model.dart';
 
 import 'package:flutter_e_commerce/utils/dimensions.dart';
-import 'package:flutter_e_commerce/views/recipe/recipe_page.dart';
+import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 
@@ -20,17 +20,17 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 252, 242, 246),
+      backgroundColor: const Color.fromARGB(255, 252, 242, 246),
       body: SafeArea(
         child: Column(children: [
-          ProfileHeader(),
-          SizedBox(
+          const ProfileHeader(),
+          const SizedBox(
             height: 20,
           ),
           BlocBuilder<UserDataCubit, UserDataState>(builder: (context, state) {
             switch (state.status) {
               case UserDataStateStatus.loading:
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
 
               case UserDataStateStatus.loaded:
                 return ProfileBody(
@@ -38,7 +38,7 @@ class ProfilePage extends StatelessWidget {
                 );
 
               default:
-                return SizedBox();
+                return const SizedBox();
             }
           })
         ]),
@@ -66,7 +66,7 @@ class ProfileHeader extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.chevron_left_rounded),
+            icon: const Icon(Icons.chevron_left_rounded),
           ),
           LargeText(text: "Profile"),
           IconButton(
@@ -76,7 +76,7 @@ class ProfileHeader extends StatelessWidget {
             onPressed: () {
               authCubit.logout();
             },
-            icon: Icon(Icons.logout_rounded),
+            icon: const Icon(Icons.logout_rounded),
           )
         ],
       ),
@@ -93,96 +93,87 @@ class ProfileBody extends StatelessWidget {
     final userDataCubit = BlocProvider.of<UserDataCubit>(context);
 
     return SingleChildScrollView(
-      child: Column(children: [
-        Container(
-          width: double.maxFinite,
-          child: Column(
-            children: [
-              CachedNetworkImage(
-                height: Dimensions.listViewImgSize,
-                width: Dimensions.listViewImgSize,
-                imageUrl: '$baseUrl$assetsPath${profile.avatar}',
-                imageBuilder: (context, imageProvider) => Container(
-                  height: Dimensions.listViewImgSize,
-                  width: Dimensions.listViewImgSize,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(Dimensions.radius20),
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                progressIndicatorBuilder: (context, url, downloadProgress) => Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: CircularProgressIndicator(value: downloadProgress.progress),
+      child: Column(
+        children: [
+          CachedNetworkImage(
+            height: Dimensions.listViewImgSize,
+            width: Dimensions.listViewImgSize,
+            imageUrl: '$baseUrl$assetsPath${profile.avatar}',
+            imageBuilder: (context, imageProvider) => Container(
+              height: Dimensions.listViewImgSize,
+              width: Dimensions.listViewImgSize,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(Dimensions.radius20),
+                image: DecorationImage(
+                  image: imageProvider,
+                  fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              LargeText(
-                text: profile.firstName,
-                size: 32,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: Dimensions.width20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    LargeText(text: "Favorite recipes"),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    BlocBuilder<UserDataCubit, UserDataState>(
-                      builder: (context, state) {
-                        switch (state.status) {
-                          case UserDataStateStatus.loading:
-                            return CircularProgressIndicator();
+            ),
+            progressIndicatorBuilder: (context, url, downloadProgress) => Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: CircularProgressIndicator(value: downloadProgress.progress),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          LargeText(
+            text: profile.firstName,
+            size: 32,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: Dimensions.width20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                LargeText(text: "Favorite recipes"),
+                const SizedBox(
+                  height: 10,
+                ),
+                BlocBuilder<UserDataCubit, UserDataState>(
+                  builder: (context, state) {
+                    switch (state.status) {
+                      case UserDataStateStatus.loading:
+                        return const CircularProgressIndicator();
 
-                          case UserDataStateStatus.loaded:
-                            return ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: state.favorites.length,
-                              itemBuilder: (context, index) {
-                                final recipeFetchCubit = BlocProvider.of<RecipeFetchCubit>(context);
-
-                                // final favoriteRecipesList = recipeFetchCubit.fetchMultiple(favorites);
-                                final RecipeModel singleRecipe = state.favorites[index];
-                                return PopularListItem(
-                                  title: singleRecipe.name,
-                                  difficulty: singleRecipe.difficulty,
-                                  description: singleRecipe.shortDescription,
-                                  timeEstimate: singleRecipe.preparationTime,
-                                  imageUrl: singleRecipe.picture,
-                                  onTap: () {
-                                    Navigator.push(
-                                      (context),
-                                      MaterialPageRoute(
-                                        builder: (context) => RecipePage(recipeModel: singleRecipe),
-                                      ),
-                                    );
-                                  },
+                      case UserDataStateStatus.loaded:
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: state.favorites.length,
+                          itemBuilder: (context, index) {
+                            final RecipeModel singleRecipe = state.favorites[index];
+                            return PopularListItem(
+                              title: singleRecipe.name,
+                              difficulty: singleRecipe.difficulty,
+                              description: singleRecipe.shortDescription,
+                              timeEstimate: singleRecipe.preparationTime,
+                              imageUrl: singleRecipe.picture,
+                              onTap: () {
+                                Navigator.push(
+                                  (context),
+                                  MaterialPageRoute(
+                                    builder: (context) => RecipePage(recipeModel: singleRecipe),
+                                  ),
                                 );
                               },
                             );
+                          },
+                        );
 
-                          default:
-                            return SizedBox();
-                        }
-                      },
-                    ),
-                  ],
+                      default:
+                        return const SizedBox();
+                    }
+                  },
                 ),
-              )
-            ],
-          ),
-        ),
-      ]),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

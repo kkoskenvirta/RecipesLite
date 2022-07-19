@@ -16,9 +16,17 @@ class RecipeFetchCubit extends Cubit<RecipeFetchState> {
   Future<void> fetchRecipeApi() async {
     emit(RecipeFetchLoading());
     try {
-      final List<RecipeModel>? recipeList = await recipesRepository.getRecipesList();
-
-      emit(RecipeFetchLoaded(recipeList: recipeList ?? []));
+      final failureOrRecipeList = await recipesRepository.getRecipesList();
+      failureOrRecipeList.fold(
+        (error) => emit(
+          RecipeFetchLoaded(
+            recipeList: const [],
+          ),
+        ),
+        (recipeList) => emit(
+          RecipeFetchLoaded(recipeList: recipeList ?? []),
+        ),
+      );
     } on Failure catch (err) {
       emit(RecipeFetchError());
     } catch (e) {

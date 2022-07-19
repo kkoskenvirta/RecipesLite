@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_e_commerce/modules/dio_module.dart';
-import 'package:flutter_e_commerce/modules/directus_module.dart';
+
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
-import 'package:flutter_e_commerce/views/home/cubit/recipe_search_cubit.dart';
-import 'package:flutter_e_commerce/views/home/search_modal_results.dart';
+import 'package:flutter_e_commerce/views/main/cubit/recipe_search_cubit.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
+import 'package:flutter_e_commerce/widgets/search_modal/search_modal_results.dart';
 
 class SearchModal extends StatelessWidget {
   const SearchModal({Key? key}) : super(key: key);

@@ -7,3 +7,7 @@ const String recipesPath = "items/recipe/";
 const String loginPath = "auth/login/";
 
 const String signupPath = "users/";
+
+const String categoryPath = "items/category/";
+
+const String userDataPath = "items/user_data/";

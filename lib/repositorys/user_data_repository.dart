@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:directus/directus.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter_e_commerce/config/api_config.dart';
 import 'package:flutter_e_commerce/models/favorite/dto/favorite_dto.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/models/user/dto/user_object_dto.dart';
@@ -57,7 +58,7 @@ class UserDataRepository {
       final UserDataModel userData;
 
       final response = await _dio
-          .get("items/user_data?filter[user][_eq]=${currentUser?.id}&fields=id,user,favorites.recipe_id.*&limit=1");
+          .get("$userDataPath?filter[user][_eq]=${currentUser?.id}&fields=id,user,favorites.recipe_id.*&limit=1");
 
       if (response.data.isEmpty) {
         //If we cant find existing user_data with current user id, we create a new one
@@ -78,7 +79,7 @@ class UserDataRepository {
   Future<dynamic> createUserData() async {
     try {
       final body = {'user': currentUser?.id, 'favorites': []};
-      final response = await _dio.post("items/user_data", data: body);
+      final response = await _dio.post(userDataPath, data: body);
 
       final userDataDTO = UserObjectDTO(data: response.data);
       final userData = userDataDTO.data.toDomain();
@@ -96,7 +97,7 @@ class UserDataRepository {
   Future<dynamic> updateFavoritesList(List<dynamic> newFavorites, UserModel user) async {
     try {
       final body = {'favorites': newFavorites};
-      final response = await _dio.patch("items/user_data/${userData!.id}", data: body);
+      final response = await _dio.patch("$userDataPath${userData!.id}", data: body);
 
       return response;
     } catch (e) {
