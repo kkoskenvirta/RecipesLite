@@ -15,9 +15,7 @@ class SearchModal extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<RecipeSearchCubit>(
       create: (context) => RecipeSearchCubit(
-        recipesRepository: RecipesRepository(
-          dio: DioModule(),
-        ),
+        recipesRepository: context.read<RecipesRepository>(),
       ),
       child: _Body(),
     );

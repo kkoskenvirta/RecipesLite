@@ -21,28 +21,20 @@ class GlobalBlocs extends StatelessWidget {
       providers: [
         BlocProvider<RecipeFetchCubit>(
           create: (context) => RecipeFetchCubit(
-            recipesRepository: RecipesRepository(dio: DioModule()),
+            recipesRepository: context.read<RecipesRepository>(),
           )..fetchRecipeApi(),
         ),
         BlocProvider<AuthCubit>(
           create: (context) => AuthCubit(
             secureStorageRepository: SecureStorageRepository(),
-            authRepository: AuthRepository(
-              dioModule: DioModule(),
-              secureStorageRepository: SecureStorageRepository(),
-            ),
+            authRepository: context.read<AuthRepository>(),
           ),
         ),
         BlocProvider<UserDataCubit>(
           lazy: true,
           create: (context) => UserDataCubit(
-            authRepository: AuthRepository(
-              dioModule: DioModule(),
-              secureStorageRepository: SecureStorageRepository(),
-            ),
-            userDataRepository: UserDataRepository(
-              dioModule: DioModule(),
-            ),
+            authRepository: context.read<AuthRepository>(),
+            userDataRepository: context.read<UserDataRepository>(),
           )..getUserData(),
         )
       ],

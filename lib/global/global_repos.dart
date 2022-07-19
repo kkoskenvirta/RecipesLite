@@ -22,14 +22,10 @@ class GlobalRepos extends StatelessWidget {
         ),
       ),
       RepositoryProvider<RecipesRepository>(
-        create: (context) => RecipesRepository(
-          dio: DioModule(),
-        ),
+        create: (context) => RecipesRepository(dioModule: DioModule()),
       ),
       RepositoryProvider<UserDataRepository>(
-        create: (context) => UserDataRepository(
-          dioModule: DioModule(),
-        ),
+        create: (context) => UserDataRepository(dioModule: DioModule()),
       ),
       RepositoryProvider<SecureStorageRepository>(create: (context) => SecureStorageRepository())
     ], child: child);

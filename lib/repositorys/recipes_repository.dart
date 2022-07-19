@@ -8,20 +8,18 @@ import '../modules/dio_module.dart';
 enum FetchError { permissionError, unexpected, noResults }
 
 class RecipesRepository {
-  RecipesRepository({required DioModule dio}) : _dio = dio.tokenDio;
+  RecipesRepository({required DioModule dioModule}) : _dio = dioModule.tokenDio;
 
   final Dio _dio;
 
   Future<List<RecipeModel>?> getRecipesList() async {
     try {
-      final Response? response = await _dio.get('$baseUrl$recipesPath');
+      final Response response = await _dio.get('$baseUrl$recipesPath');
 
-      if (response != null) {
-        final recipesDTO = RecipeDTO.fromJson(response.data);
-        final recipes = recipesDTO.data.map((recipeDataDTO) => recipeDataDTO.toDomain()).toList();
+      final recipesDTO = RecipeDTO.fromJson(response.data);
+      final recipes = recipesDTO.data.map((recipeDataDTO) => recipeDataDTO.toDomain()).toList();
 
-        return recipes;
-      }
+      return recipes;
     } catch (e) {
       print(e);
     }
@@ -35,7 +33,6 @@ class RecipesRepository {
       final recipes = recipesDTO.data.map((recipeDataDTO) => recipeDataDTO.toDomain()).toList();
 
       return right(recipes);
-      return left(FetchError.noResults);
     } catch (e) {
       return left(FetchError.unexpected);
     }
