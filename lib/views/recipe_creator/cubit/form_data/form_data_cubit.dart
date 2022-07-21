@@ -62,15 +62,16 @@ class FormDataCubit extends Cubit<FormDataState> {
   updateIncredientAmount(int index, String amount) {
     try {
       print('${index} ${amount}');
-
       List<IncredientModel> incredientList = [...state.incredients];
       final doubleAmount = double.parse(amount);
       incredientList[index] = incredientList[index].copyWith(amount: doubleAmount);
       emit(state.copyWith(incredients: incredientList));
-    } catch (e) {}
-    List<IncredientModel> incredientList = [...state.incredients];
-    incredientList[index] = incredientList[index].copyWith(amount: null);
-    emit(state.copyWith(incredients: incredientList));
+      print(incredientList);
+    } catch (e) {
+      List<IncredientModel> incredientList = [...state.incredients];
+      incredientList[index] = incredientList[index].copyWith(amount: null);
+      emit(state.copyWith(incredients: incredientList));
+    }
   }
 
   updateIncredientUnit(int index, String unit) {

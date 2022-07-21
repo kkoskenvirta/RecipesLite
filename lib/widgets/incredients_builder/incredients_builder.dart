@@ -20,8 +20,13 @@ class IncredientsBuilder extends StatelessWidget {
       children: [
         ListView.separated(
           shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            return Column(children: [IncredientRow(index: index)]);
+            return Column(
+              children: [
+                IncredientRow(index: index),
+              ],
+            );
           },
           separatorBuilder: ((context, index) {
             return const SizedBox(
@@ -33,25 +38,21 @@ class IncredientsBuilder extends StatelessWidget {
         SizedBox(
           height: 8,
         ),
-        ElevatedButton(
-            onPressed: () {
-              addIncredient(context);
-            },
-            child: const Text("Add incredients"))
+        GestureDetector(
+          onTap: () {
+            addIncredient(context);
+          },
+          child: Column(children: [AddIncredientRow()]),
+        )
       ],
     );
   }
 }
 
-class IncredientRow extends StatefulWidget {
+class IncredientRow extends StatelessWidget {
   IncredientRow({Key? key, required this.index}) : super(key: key);
   final int index;
 
-  @override
-  State<IncredientRow> createState() => _IncredientRowState();
-}
-
-class _IncredientRowState extends State<IncredientRow> {
   final List<String> unitOptions = [
     'gram',
     'kg',
@@ -64,36 +65,30 @@ class _IncredientRowState extends State<IncredientRow> {
 
   removeIncredient(context) {
     final formDataCubit = BlocProvider.of<FormDataCubit>(context);
-    formDataCubit.removeIncredient(widget.index);
+    formDataCubit.removeIncredient(index);
   }
 
   void updateName(context, String name) {
-    BlocProvider.of<FormDataCubit>(context).updateIncredientName(widget.index, name);
+    BlocProvider.of<FormDataCubit>(context).updateIncredientName(index, name);
   }
 
   void updateAmount(context, String amount) {
-    BlocProvider.of<FormDataCubit>(context).updateIncredientAmount(widget.index, amount);
+    BlocProvider.of<FormDataCubit>(context).updateIncredientAmount(index, amount);
   }
 
   void updateUnit(context, String unit) {
-    BlocProvider.of<FormDataCubit>(context).updateIncredientUnit(widget.index, unit);
+    BlocProvider.of<FormDataCubit>(context).updateIncredientUnit(index, unit);
   }
-
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _amountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<FormDataCubit, FormDataState>(
-        listener: (BuildContext context, FormDataState state) {
-          // if (state.incredients[widget.index] != _nameController.text) {
-          //   _nameController.text = state.incredients[widget.index].name!;
-          //   _nameController.selection = TextSelection.collapsed(offset: state.incredients[widget.index].name!.length);
-          // }
-        },
-        child: Dismissible(
-          key: Key('item ${widget.index}'),
-          direction: widget.index > 0 ? DismissDirection.endToStart : DismissDirection.none,
+    return BlocBuilder<FormDataCubit, FormDataState>(
+      builder: (context, state) {
+        final incredient = state.incredients[index];
+
+        return Dismissible(
+          key: Key("Item ${index}"),
+          direction: index > 0 ? DismissDirection.endToStart : DismissDirection.none,
           onDismissed: (_) => removeIncredient(context),
           dismissThresholds: const {DismissDirection.endToStart: 0.6},
           background: Container(
@@ -105,61 +100,134 @@ class _IncredientRowState extends State<IncredientRow> {
               color: Colors.white,
             ),
           ),
-          child: Container(
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: "Incredient",
+          child: Row(
+            children: [
+              SmallText(text: "${index + 1}."),
+              const SizedBox(
+                width: 8,
+              ),
+              Expanded(
+                flex: 3,
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: "Incredient",
+                    filled: false,
+                  ),
+                  initialValue: incredient.name,
+                  onChanged: (name) => updateName(context, name),
+                ),
+              ),
+              const SizedBox(
+                width: 6,
+              ),
+              Expanded(
+                flex: 1,
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: "amount",
+                    filled: false,
+                  ),
+                  initialValue: incredient.amount == null ? "" : incredient.amount.toString(),
+                  keyboardType: TextInputType.number,
+                  onChanged: (amount) => updateAmount(context, amount),
+                ),
+              ),
+              const SizedBox(
+                width: 6,
+              ),
+              Container(
+                  width: 70,
+                  child: DropdownButtonFormField<String>(
+                    decoration: InputDecoration(
                       filled: false,
                     ),
-                    controller: _nameController,
-                    onChanged: (name) => updateName(context, name),
-                  ),
-                ),
-                const SizedBox(
-                  width: 4,
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: "amount",
-                      filled: false,
-                    ),
-                    controller: _amountController,
-                    keyboardType: TextInputType.number,
-                    onChanged: (amount) => updateAmount(context, amount),
-                  ),
-                ),
-                const SizedBox(
-                  width: 4,
-                ),
-                BlocBuilder<FormDataCubit, FormDataState>(
-                  builder: (context, state) {
-                    return Container(
-                      width: 70,
-                      child: DropdownButtonFormField<String>(
-                        value: state.incredients[widget.index].unit,
-                        decoration: InputDecoration(
-                          filled: false,
-                        ),
-                        items: unitOptions
-                            .map((unit) => DropdownMenuItem(
-                                  value: unit,
-                                  child: Text(unit),
-                                ))
-                            .toList(),
-                        onChanged: (unit) => updateUnit(context, unit.toString()),
-                      ),
-                    );
-                  },
-                )
-              ],
-            ),
+                    value: incredient.unit,
+                    items: unitOptions
+                        .map((unit) => DropdownMenuItem(
+                              value: unit,
+                              child: Text(unit),
+                            ))
+                        .toList(),
+                    onChanged: (unit) => updateUnit(context, unit.toString()),
+                  ))
+            ],
           ),
-        ));
+        );
+      },
+    );
+  }
+}
+
+class AddIncredientRow extends StatelessWidget {
+  AddIncredientRow({
+    Key? key,
+  }) : super(key: key);
+
+  final List<String> unitOptions = [
+    'gram',
+    'kg',
+    'ml',
+    'dl',
+    'l',
+    'tbsp',
+    'tsp',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<FormDataCubit, FormDataState>(
+      builder: (context, state) {
+        final incredientCount = state.incredients.length;
+
+        return Row(
+          children: [
+            SmallText(text: "${incredientCount + 1}."),
+            const SizedBox(
+              width: 8,
+            ),
+            Expanded(
+              flex: 3,
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  hintText: "Incredient",
+                  filled: false,
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 6,
+            ),
+            Expanded(
+              flex: 1,
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  hintText: "amount",
+                  filled: false,
+                ),
+                keyboardType: TextInputType.number,
+              ),
+            ),
+            const SizedBox(
+              width: 6,
+            ),
+            Container(
+                width: 70,
+                child: DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                    filled: false,
+                  ),
+                  value: "gram",
+                  items: unitOptions
+                      .map((unit) => DropdownMenuItem(
+                            value: unit,
+                            child: Text(unit),
+                          ))
+                      .toList(),
+                  onChanged: (unit) => {},
+                ))
+          ],
+        );
+      },
+    );
   }
 }

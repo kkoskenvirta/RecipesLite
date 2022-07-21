@@ -20,25 +20,28 @@ class RecipeCreatorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            const FormFetchHeader(),
-            Flexible(
-              child: MultiBlocProvider(
-                providers: [
-                  BlocProvider(
-                    create: (context) => FormFetchCubit(categoryRepository: context.read<CategoryRepository>()),
-                  ),
-                  BlocProvider(
-                    create: (context) => FormDataCubit(recipesRepository: context.read<RecipesRepository>()),
-                  ),
-                ],
-                child: const FormFetchScreenBody(),
-              ),
-            )
-          ],
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        body: SafeArea(
+          child: Column(
+            children: [
+              const FormFetchHeader(),
+              Flexible(
+                child: MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                      create: (context) => FormFetchCubit(categoryRepository: context.read<CategoryRepository>()),
+                    ),
+                    BlocProvider(
+                      create: (context) => FormDataCubit(recipesRepository: context.read<RecipesRepository>()),
+                    ),
+                  ],
+                  child: const FormFetchScreenBody(),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -123,7 +126,10 @@ class FormFetchScreenBody extends StatelessWidget {
                               title: SmallText(text: 'Details'),
                               content: Column(
                                 children: <Widget>[
-                                  // Align(alignment: Alignment.centerLeft, child: SmallText(text: "Recipe name")),
+                                  Align(alignment: Alignment.centerLeft, child: SmallText(text: "Recipe name")),
+                                  const SizedBox(
+                                    height: 6,
+                                  ),
                                   TextFormField(
                                     decoration: InputDecoration(
                                       hintText: "Recipe name",
@@ -132,7 +138,10 @@ class FormFetchScreenBody extends StatelessWidget {
                                   const SizedBox(
                                     height: 20,
                                   ),
-                                  // Align(alignment: Alignment.centerLeft, child: SmallText(text: "Recipe description")),
+                                  Align(alignment: Alignment.centerLeft, child: SmallText(text: "Recipe description")),
+                                  const SizedBox(
+                                    height: 6,
+                                  ),
                                   TextFormField(
                                     decoration: const InputDecoration(
                                       hintText: "Short description of the recipe",
@@ -141,19 +150,25 @@ class FormFetchScreenBody extends StatelessWidget {
                                   const SizedBox(
                                     height: 20,
                                   ),
-                                  // Align(alignment: Alignment.centerLeft, child: SmallText(text: "Recipe incredients")),
-                                  IncredientsBuilder(incredients: [...formDataCubit.state.incredients]),
+                                  Align(alignment: Alignment.centerLeft, child: SmallText(text: "Instructions")),
                                   const SizedBox(
-                                    height: 20,
+                                    height: 6,
                                   ),
-                                  // Align(alignment: Alignment.centerLeft, child: SmallText(text: "Instructions")),
                                   TextFormField(
                                     maxLines: 8,
                                     keyboardType: TextInputType.multiline,
                                     decoration: const InputDecoration(
                                       hintText: "Instructions on how to prepare the recipe",
                                     ),
-                                  )
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Align(alignment: Alignment.centerLeft, child: SmallText(text: "Recipe incredients")),
+                                  const SizedBox(
+                                    height: 6,
+                                  ),
+                                  IncredientsBuilder(incredients: [...formDataCubit.state.incredients]),
                                 ],
                               ),
                               isActive: state.index >= 0,

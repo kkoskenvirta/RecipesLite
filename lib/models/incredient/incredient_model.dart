@@ -32,7 +32,7 @@ class IncredientModel with _$IncredientModel {
   factory IncredientModel.create() {
     return IncredientModel(
       name: "",
-      amount: 0,
+      amount: null,
       unit: "gram",
     );
   }
