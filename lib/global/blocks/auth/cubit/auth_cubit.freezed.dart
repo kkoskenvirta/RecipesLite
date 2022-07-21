@@ -225,8 +225,8 @@ abstract class _Uninitialized implements AuthState {
       {required final bool inProgress,
       final AuthError? authError}) = _$_Uninitialized;
 
-  bool get inProgress => throw _privateConstructorUsedError;
-  AuthError? get authError => throw _privateConstructorUsedError;
+  bool get inProgress;
+  AuthError? get authError;
   @JsonKey(ignore: true)
   _$$_UninitializedCopyWith<_$_Uninitialized> get copyWith =>
       throw _privateConstructorUsedError;

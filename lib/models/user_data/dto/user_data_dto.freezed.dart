@@ -177,7 +177,9 @@ class _$_UserDataDTO extends _UserDataDTO {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserDataDTOToJson(this);
+    return _$$_UserDataDTOToJson(
+      this,
+    );
   }
 }
 
@@ -194,13 +196,13 @@ abstract class _UserDataDTO extends UserDataDTO {
       _$_UserDataDTO.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
   @JsonKey(name: 'user')
-  String get userId => throw _privateConstructorUsedError;
+  String get userId;
   @override
   @JsonKey(name: 'favorites')
-  List<RecipeIdDTO> get favorites => throw _privateConstructorUsedError;
+  List<RecipeIdDTO> get favorites;
   @override
   @JsonKey(ignore: true)
   _$$_UserDataDTOCopyWith<_$_UserDataDTO> get copyWith =>

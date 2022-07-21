@@ -392,7 +392,9 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RecipeDataDTOToJson(this);
+    return _$$_RecipeDataDTOToJson(
+      this,
+    );
   }
 }
 
@@ -426,41 +428,41 @@ abstract class _RecipeDataDTO extends RecipeDataDTO {
       _$_RecipeDataDTO.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get status => throw _privateConstructorUsedError;
+  String get status;
   @override
-  String get difficulty => throw _privateConstructorUsedError;
+  String get difficulty;
   @override
-  double get rating => throw _privateConstructorUsedError;
+  double get rating;
   @override
-  String get picture => throw _privateConstructorUsedError;
+  String get picture;
   @override
-  String get instructions => throw _privateConstructorUsedError;
+  String get instructions;
   @override
   @JsonKey(name: 'Name')
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
   @JsonKey(name: 'Featured')
-  bool get featured => throw _privateConstructorUsedError;
+  bool get featured;
   @override
   @JsonKey(name: 'preparation_time')
-  int get preparationTime => throw _privateConstructorUsedError;
+  int get preparationTime;
   @override
   @JsonKey(name: 'short_description')
-  String get shortDescription => throw _privateConstructorUsedError;
+  String get shortDescription;
   @override
   @JsonKey(name: 'comment_count')
-  int get commentCount => throw _privateConstructorUsedError;
+  int get commentCount;
   @override
   @JsonKey(name: 'user_created')
-  String get userCreated => throw _privateConstructorUsedError;
+  String get userCreated;
   @override
   @JsonKey(name: 'date_created')
-  DateTime get dateCreated => throw _privateConstructorUsedError;
+  DateTime get dateCreated;
   @override
   @JsonKey(name: 'date_updated')
-  dynamic get dateUpdated => throw _privateConstructorUsedError;
+  dynamic get dateUpdated;
   @override
   @JsonKey(ignore: true)
   _$$_RecipeDataDTOCopyWith<_$_RecipeDataDTO> get copyWith =>

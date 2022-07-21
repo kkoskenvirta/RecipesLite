@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_e_commerce/models/category/category_model.dart';
-import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';

@@ -134,7 +134,9 @@ class _$_AuthDTO implements _AuthDTO {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AuthDTOToJson(this);
+    return _$$_AuthDTOToJson(
+      this,
+    );
   }
 }
 
@@ -144,7 +146,7 @@ abstract class _AuthDTO implements AuthDTO {
   factory _AuthDTO.fromJson(Map<String, dynamic> json) = _$_AuthDTO.fromJson;
 
   @override
-  AuthDataDTO get data => throw _privateConstructorUsedError;
+  AuthDataDTO get data;
   @override
   @JsonKey(ignore: true)
   _$$_AuthDTOCopyWith<_$_AuthDTO> get copyWith =>

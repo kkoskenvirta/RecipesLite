@@ -222,17 +222,17 @@ abstract class _CategoryModel implements CategoryModel {
       final String? sort}) = _$_CategoryModel;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  String? get picture => throw _privateConstructorUsedError;
+  String? get picture;
   @override
-  String? get status => throw _privateConstructorUsedError;
+  String? get status;
   @override
-  String? get icon => throw _privateConstructorUsedError;
+  String? get icon;
   @override
-  String? get sort => throw _privateConstructorUsedError;
+  String? get sort;
   @override
   @JsonKey(ignore: true)
   _$$_CategoryModelCopyWith<_$_CategoryModel> get copyWith =>

@@ -161,7 +161,9 @@ class _$_AuthModel extends _AuthModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AuthModelToJson(this);
+    return _$$_AuthModelToJson(
+      this,
+    );
   }
 }
 
@@ -176,11 +178,11 @@ abstract class _AuthModel extends AuthModel {
       _$_AuthModel.fromJson;
 
   @override
-  int get expires => throw _privateConstructorUsedError;
+  int get expires;
   @override
-  String get accessToken => throw _privateConstructorUsedError;
+  String get accessToken;
   @override
-  String get refreshToken => throw _privateConstructorUsedError;
+  String get refreshToken;
   @override
   @JsonKey(ignore: true)
   _$$_AuthModelCopyWith<_$_AuthModel> get copyWith =>

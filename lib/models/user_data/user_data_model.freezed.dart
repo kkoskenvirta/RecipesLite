@@ -165,11 +165,11 @@ abstract class _UserDataModel implements UserDataModel {
       required final List<RecipeModel> favorites}) = _$_UserDataModel;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get userId => throw _privateConstructorUsedError;
+  String get userId;
   @override
-  List<RecipeModel> get favorites => throw _privateConstructorUsedError;
+  List<RecipeModel> get favorites;
   @override
   @JsonKey(ignore: true)
   _$$_UserDataModelCopyWith<_$_UserDataModel> get copyWith =>

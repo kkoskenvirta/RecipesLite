@@ -175,7 +175,9 @@ class _$_AuthDataDTO extends _AuthDataDTO {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AuthDataDTOToJson(this);
+    return _$$_AuthDataDTOToJson(
+      this,
+    );
   }
 }
 
@@ -192,13 +194,13 @@ abstract class _AuthDataDTO extends AuthDataDTO {
 
   @override
   @JsonKey(name: 'expires')
-  int get expires => throw _privateConstructorUsedError;
+  int get expires;
   @override
   @JsonKey(name: 'access_token')
-  String get accessToken => throw _privateConstructorUsedError;
+  String get accessToken;
   @override
   @JsonKey(name: 'refresh_token')
-  String get refreshToken => throw _privateConstructorUsedError;
+  String get refreshToken;
   @override
   @JsonKey(ignore: true)
   _$$_AuthDataDTOCopyWith<_$_AuthDataDTO> get copyWith =>

@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/category/categories_cubit.dart';
 import 'package:flutter_e_commerce/models/category/category_model.dart';
-import 'package:flutter_e_commerce/routes/route_service.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
-import 'package:flutter_e_commerce/views/recipe_list/single_category_page.dart';
+import 'package:flutter_e_commerce/views/category_recipes/single_category_page.dart';
 import 'package:flutter_e_commerce/widgets/category_list_item.dart';
+import 'package:flutter_e_commerce/widgets/header/header.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
-import 'package:flutter_e_commerce/widgets/search_modal_button.dart';
+import 'package:flutter_e_commerce/widgets/search_modal/search_modal.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-class BrowseScreen extends StatelessWidget {
-  const BrowseScreen({
+class CategoriesScreen extends StatelessWidget {
+  const CategoriesScreen({
     Key? key,
   }) : super(key: key);
 
@@ -19,11 +20,13 @@ class BrowseScreen extends StatelessWidget {
     return SafeArea(
       child: Column(
         children: [
-          const BrowseHeader(),
+          const CategoriesHeader(),
           Flexible(
             child: SingleChildScrollView(
               child: Column(
-                children: [BrowseScreenBody()],
+                children: [
+                  CategoriesScreenBody(),
+                ],
               ),
             ),
           )
@@ -33,23 +36,24 @@ class BrowseScreen extends StatelessWidget {
   }
 }
 
-class BrowseHeader extends StatelessWidget {
-  const BrowseHeader({
+class CategoriesHeader extends StatelessWidget {
+  const CategoriesHeader({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: Dimensions.width20, right: Dimensions.width20),
-      padding: EdgeInsets.only(bottom: Dimensions.height10),
-      child: LargeText(text: "Categories"),
-    );
+        padding: const EdgeInsets.only(left: 16.0, right: 16, top: 0, bottom: 0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: Header(title: "Categories"));
   }
 }
 
-class BrowseScreenBody extends StatelessWidget {
-  const BrowseScreenBody({Key? key}) : super(key: key);
+class CategoriesScreenBody extends StatelessWidget {
+  const CategoriesScreenBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

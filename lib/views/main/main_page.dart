@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/navigation/navigation_cubit.dart';
 import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
-import 'package:flutter_e_commerce/views/main/browse/browse_screen.dart';
+import 'package:flutter_e_commerce/views/main/categories/categories_screen.dart';
+import 'package:flutter_e_commerce/views/main/categories/categories_screen.dart';
 import 'package:flutter_e_commerce/views/main/home/home_screen.dart';
+import 'package:flutter_e_commerce/views/profile/profile_screen.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -33,8 +35,10 @@ class MainPage extends StatelessWidget {
                       case NavBarItem.home:
                         return HomeScreen();
 
-                      case NavBarItem.browse:
-                        return BrowseScreen();
+                      case NavBarItem.categories:
+                        return CategoriesScreen();
+                      case NavBarItem.profile:
+                        return ProfileScreen();
 
                       default:
                         return SizedBox();
@@ -60,12 +64,18 @@ class MainPage extends StatelessWidget {
                     icon: Icon(Icons.library_books),
                     label: "Browse",
                   ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.account_circle),
+                    label: "Profile",
+                  ),
                 ],
                 onTap: (index) {
                   if (index == 0) {
                     navigationCubit.getNavigationItem(NavBarItem.home);
                   } else if (index == 1) {
-                    navigationCubit.getNavigationItem(NavBarItem.browse);
+                    navigationCubit.getNavigationItem(NavBarItem.categories);
+                  } else if (index == 2) {
+                    navigationCubit.getNavigationItem(NavBarItem.profile);
                   }
                 },
               );

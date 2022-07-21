@@ -14,8 +14,11 @@ class NavigationCubit extends Cubit<NavigationState> {
       case NavBarItem.home:
         emit(state.copyWith(index: 0, navBarItem: NavBarItem.home));
         break;
-      case NavBarItem.browse:
-        emit(state.copyWith(index: 1, navBarItem: NavBarItem.browse));
+      case NavBarItem.categories:
+        emit(state.copyWith(index: 1, navBarItem: NavBarItem.categories));
+        break;
+      case NavBarItem.profile:
+        emit(state.copyWith(index: 2, navBarItem: NavBarItem.profile));
         break;
       default:
         emit(state.copyWith(index: 0, navBarItem: NavBarItem.home));

@@ -9,7 +9,7 @@ import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:flutter_e_commerce/repositorys/secure_storage_repository.dart';
 import 'package:flutter_e_commerce/repositorys/user_data_repository.dart';
-import 'package:flutter_e_commerce/views/recipe_list/cubit/category_recipes_cubit.dart';
+import 'package:flutter_e_commerce/views/category_recipes/cubit/category_recipes_cubit.dart';
 
 import 'blocks/auth/cubit/auth_cubit.dart';
 

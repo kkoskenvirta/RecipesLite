@@ -141,7 +141,9 @@ class _$_RecipeIdDTO extends _RecipeIdDTO {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RecipeIdDTOToJson(this);
+    return _$$_RecipeIdDTOToJson(
+      this,
+    );
   }
 }
 
@@ -156,7 +158,7 @@ abstract class _RecipeIdDTO extends RecipeIdDTO {
 
   @override
   @JsonKey(name: "recipe_id")
-  RecipeDataDTO get recipe => throw _privateConstructorUsedError;
+  RecipeDataDTO get recipe;
   @override
   @JsonKey(ignore: true)
   _$$_RecipeIdDTOCopyWith<_$_RecipeIdDTO> get copyWith =>

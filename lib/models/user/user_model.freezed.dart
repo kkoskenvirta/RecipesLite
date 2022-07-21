@@ -199,15 +199,15 @@ abstract class _UserModel implements UserModel {
       final String? avatar}) = _$_UserModel;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get firstName => throw _privateConstructorUsedError;
+  String get firstName;
   @override
-  String get email => throw _privateConstructorUsedError;
+  String get email;
   @override
-  String? get role => throw _privateConstructorUsedError;
+  String? get role;
   @override
-  String? get avatar => throw _privateConstructorUsedError;
+  String? get avatar;
   @override
   @JsonKey(ignore: true)
   _$$_UserModelCopyWith<_$_UserModel> get copyWith =>

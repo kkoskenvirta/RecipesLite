@@ -14,7 +14,7 @@ class RecipeFetchLoading extends RecipeFetchState {}
 
 class RecipeFetchLoaded extends RecipeFetchState {
   final List<RecipeModel> recipeList;
-  RecipeFetchLoaded({required this.recipeList});
+  const RecipeFetchLoaded({required this.recipeList});
 
   @override
   List<Object> get props => [recipeList];

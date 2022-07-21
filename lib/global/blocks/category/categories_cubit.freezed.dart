@@ -158,9 +158,9 @@ abstract class _CategoriesState implements CategoriesState {
       required final List<CategoryModel> categories}) = _$_CategoriesState;
 
   @override
-  CategoriesStateStatus get status => throw _privateConstructorUsedError;
+  CategoriesStateStatus get status;
   @override
-  List<CategoryModel> get categories => throw _privateConstructorUsedError;
+  List<CategoryModel> get categories;
   @override
   @JsonKey(ignore: true)
   _$$_CategoriesStateCopyWith<_$_CategoriesState> get copyWith =>

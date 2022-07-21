@@ -153,7 +153,9 @@ class _$_FavoriteDTO extends _FavoriteDTO {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_FavoriteDTOToJson(this);
+    return _$$_FavoriteDTOToJson(
+      this,
+    );
   }
 }
 
@@ -168,10 +170,10 @@ abstract class _FavoriteDTO extends FavoriteDTO {
 
   @override
   @JsonKey(name: 'recipe_id')
-  String get recipeId => throw _privateConstructorUsedError;
+  String get recipeId;
   @override
   @JsonKey(name: 'user_id')
-  String get userId => throw _privateConstructorUsedError;
+  String get userId;
   @override
   @JsonKey(ignore: true)
   _$$_FavoriteDTOCopyWith<_$_FavoriteDTO> get copyWith =>

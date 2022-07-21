@@ -30,8 +30,9 @@ class RecipesRepository {
 
   Future<Either<FetchError, List<RecipeModel>?>> getRecipesListWithCategory(CategoryModel category) async {
     try {
-      final Response response =
-          await _dio.get('$baseUrl$recipesPath?deep[categories][_filter][category_id]=${category.id}');
+      final String filterQuery =
+          '?filter={"_and":[{"_and":[{"categories":{"category_category_id":{"category_id":{"_eq":"${category.id}"}}}}]},{"status":{"_neq":"archived"}}]}';
+      final Response response = await _dio.get('$baseUrl$recipesPath$filterQuery');
 
       final recipesDTO = RecipeDTO.fromJson(response.data);
       final recipes = recipesDTO.data.map((recipeDataDTO) => recipeDataDTO.toDomain()).toList();

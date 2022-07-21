@@ -131,7 +131,9 @@ class _$_CategoryDTO implements _CategoryDTO {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CategoryDTOToJson(this);
+    return _$$_CategoryDTOToJson(
+      this,
+    );
   }
 }
 
@@ -143,7 +145,7 @@ abstract class _CategoryDTO implements CategoryDTO {
       _$_CategoryDTO.fromJson;
 
   @override
-  List<CategoryDataDTO> get data => throw _privateConstructorUsedError;
+  List<CategoryDataDTO> get data;
   @override
   @JsonKey(ignore: true)
   _$$_CategoryDTOCopyWith<_$_CategoryDTO> get copyWith =>

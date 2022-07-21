@@ -159,9 +159,9 @@ abstract class _CategoryRecipesState implements CategoryRecipesState {
       required final List<RecipeModel> recipeList}) = _$_CategoryRecipesState;
 
   @override
-  CategoryRecipesStateStatus get status => throw _privateConstructorUsedError;
+  CategoryRecipesStateStatus get status;
   @override
-  List<RecipeModel> get recipeList => throw _privateConstructorUsedError;
+  List<RecipeModel> get recipeList;
   @override
   @JsonKey(ignore: true)
   _$$_CategoryRecipesStateCopyWith<_$_CategoryRecipesState> get copyWith =>

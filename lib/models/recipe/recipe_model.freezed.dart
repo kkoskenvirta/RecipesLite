@@ -21,9 +21,7 @@ RecipeModel _$RecipeModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$RecipeModel {
   String get id => throw _privateConstructorUsedError;
-  String get status => throw _privateConstructorUsedError;
   String get difficulty => throw _privateConstructorUsedError;
-  double get rating => throw _privateConstructorUsedError;
   String get picture => throw _privateConstructorUsedError;
   String get instructions => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
@@ -31,8 +29,10 @@ mixin _$RecipeModel {
   int get preparationTime => throw _privateConstructorUsedError;
   String get shortDescription => throw _privateConstructorUsedError;
   int get commentCount => throw _privateConstructorUsedError;
-  String get userCreated => throw _privateConstructorUsedError;
-  DateTime get dateCreated => throw _privateConstructorUsedError;
+  String? get status => throw _privateConstructorUsedError;
+  double? get rating => throw _privateConstructorUsedError;
+  String? get userCreated => throw _privateConstructorUsedError;
+  DateTime? get dateCreated => throw _privateConstructorUsedError;
   dynamic get dateUpdated => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,9 +48,7 @@ abstract class $RecipeModelCopyWith<$Res> {
       _$RecipeModelCopyWithImpl<$Res>;
   $Res call(
       {String id,
-      String status,
       String difficulty,
-      double rating,
       String picture,
       String instructions,
       String name,
@@ -58,8 +56,10 @@ abstract class $RecipeModelCopyWith<$Res> {
       int preparationTime,
       String shortDescription,
       int commentCount,
-      String userCreated,
-      DateTime dateCreated,
+      String? status,
+      double? rating,
+      String? userCreated,
+      DateTime? dateCreated,
       dynamic dateUpdated});
 }
 
@@ -74,9 +74,7 @@ class _$RecipeModelCopyWithImpl<$Res> implements $RecipeModelCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
-    Object? status = freezed,
     Object? difficulty = freezed,
-    Object? rating = freezed,
     Object? picture = freezed,
     Object? instructions = freezed,
     Object? name = freezed,
@@ -84,6 +82,8 @@ class _$RecipeModelCopyWithImpl<$Res> implements $RecipeModelCopyWith<$Res> {
     Object? preparationTime = freezed,
     Object? shortDescription = freezed,
     Object? commentCount = freezed,
+    Object? status = freezed,
+    Object? rating = freezed,
     Object? userCreated = freezed,
     Object? dateCreated = freezed,
     Object? dateUpdated = freezed,
@@ -93,18 +93,10 @@ class _$RecipeModelCopyWithImpl<$Res> implements $RecipeModelCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      status: status == freezed
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
       difficulty: difficulty == freezed
           ? _value.difficulty
           : difficulty // ignore: cast_nullable_to_non_nullable
               as String,
-      rating: rating == freezed
-          ? _value.rating
-          : rating // ignore: cast_nullable_to_non_nullable
-              as double,
       picture: picture == freezed
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
@@ -133,14 +125,22 @@ class _$RecipeModelCopyWithImpl<$Res> implements $RecipeModelCopyWith<$Res> {
           ? _value.commentCount
           : commentCount // ignore: cast_nullable_to_non_nullable
               as int,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rating: rating == freezed
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as double?,
       userCreated: userCreated == freezed
           ? _value.userCreated
           : userCreated // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       dateCreated: dateCreated == freezed
           ? _value.dateCreated
           : dateCreated // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       dateUpdated: dateUpdated == freezed
           ? _value.dateUpdated
           : dateUpdated // ignore: cast_nullable_to_non_nullable
@@ -158,9 +158,7 @@ abstract class _$$_RecipeModelCopyWith<$Res>
   @override
   $Res call(
       {String id,
-      String status,
       String difficulty,
-      double rating,
       String picture,
       String instructions,
       String name,
@@ -168,8 +166,10 @@ abstract class _$$_RecipeModelCopyWith<$Res>
       int preparationTime,
       String shortDescription,
       int commentCount,
-      String userCreated,
-      DateTime dateCreated,
+      String? status,
+      double? rating,
+      String? userCreated,
+      DateTime? dateCreated,
       dynamic dateUpdated});
 }
 
@@ -186,9 +186,7 @@ class __$$_RecipeModelCopyWithImpl<$Res> extends _$RecipeModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? status = freezed,
     Object? difficulty = freezed,
-    Object? rating = freezed,
     Object? picture = freezed,
     Object? instructions = freezed,
     Object? name = freezed,
@@ -196,6 +194,8 @@ class __$$_RecipeModelCopyWithImpl<$Res> extends _$RecipeModelCopyWithImpl<$Res>
     Object? preparationTime = freezed,
     Object? shortDescription = freezed,
     Object? commentCount = freezed,
+    Object? status = freezed,
+    Object? rating = freezed,
     Object? userCreated = freezed,
     Object? dateCreated = freezed,
     Object? dateUpdated = freezed,
@@ -205,18 +205,10 @@ class __$$_RecipeModelCopyWithImpl<$Res> extends _$RecipeModelCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      status: status == freezed
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
       difficulty: difficulty == freezed
           ? _value.difficulty
           : difficulty // ignore: cast_nullable_to_non_nullable
               as String,
-      rating: rating == freezed
-          ? _value.rating
-          : rating // ignore: cast_nullable_to_non_nullable
-              as double,
       picture: picture == freezed
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
@@ -245,14 +237,22 @@ class __$$_RecipeModelCopyWithImpl<$Res> extends _$RecipeModelCopyWithImpl<$Res>
           ? _value.commentCount
           : commentCount // ignore: cast_nullable_to_non_nullable
               as int,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rating: rating == freezed
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as double?,
       userCreated: userCreated == freezed
           ? _value.userCreated
           : userCreated // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       dateCreated: dateCreated == freezed
           ? _value.dateCreated
           : dateCreated // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       dateUpdated: dateUpdated == freezed
           ? _value.dateUpdated
           : dateUpdated // ignore: cast_nullable_to_non_nullable
@@ -266,9 +266,7 @@ class __$$_RecipeModelCopyWithImpl<$Res> extends _$RecipeModelCopyWithImpl<$Res>
 class _$_RecipeModel extends _RecipeModel {
   _$_RecipeModel(
       {required this.id,
-      required this.status,
       required this.difficulty,
-      required this.rating,
       required this.picture,
       required this.instructions,
       required this.name,
@@ -276,8 +274,10 @@ class _$_RecipeModel extends _RecipeModel {
       required this.preparationTime,
       required this.shortDescription,
       required this.commentCount,
-      required this.userCreated,
-      required this.dateCreated,
+      this.status,
+      this.rating,
+      this.userCreated,
+      this.dateCreated,
       this.dateUpdated})
       : super._();
 
@@ -287,11 +287,7 @@ class _$_RecipeModel extends _RecipeModel {
   @override
   final String id;
   @override
-  final String status;
-  @override
   final String difficulty;
-  @override
-  final double rating;
   @override
   final String picture;
   @override
@@ -307,15 +303,19 @@ class _$_RecipeModel extends _RecipeModel {
   @override
   final int commentCount;
   @override
-  final String userCreated;
+  final String? status;
   @override
-  final DateTime dateCreated;
+  final double? rating;
+  @override
+  final String? userCreated;
+  @override
+  final DateTime? dateCreated;
   @override
   final dynamic dateUpdated;
 
   @override
   String toString() {
-    return 'RecipeModel(id: $id, status: $status, difficulty: $difficulty, rating: $rating, picture: $picture, instructions: $instructions, name: $name, featured: $featured, preparationTime: $preparationTime, shortDescription: $shortDescription, commentCount: $commentCount, userCreated: $userCreated, dateCreated: $dateCreated, dateUpdated: $dateUpdated)';
+    return 'RecipeModel(id: $id, difficulty: $difficulty, picture: $picture, instructions: $instructions, name: $name, featured: $featured, preparationTime: $preparationTime, shortDescription: $shortDescription, commentCount: $commentCount, status: $status, rating: $rating, userCreated: $userCreated, dateCreated: $dateCreated, dateUpdated: $dateUpdated)';
   }
 
   @override
@@ -324,10 +324,8 @@ class _$_RecipeModel extends _RecipeModel {
         (other.runtimeType == runtimeType &&
             other is _$_RecipeModel &&
             const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality()
                 .equals(other.difficulty, difficulty) &&
-            const DeepCollectionEquality().equals(other.rating, rating) &&
             const DeepCollectionEquality().equals(other.picture, picture) &&
             const DeepCollectionEquality()
                 .equals(other.instructions, instructions) &&
@@ -339,6 +337,8 @@ class _$_RecipeModel extends _RecipeModel {
                 .equals(other.shortDescription, shortDescription) &&
             const DeepCollectionEquality()
                 .equals(other.commentCount, commentCount) &&
+            const DeepCollectionEquality().equals(other.status, status) &&
+            const DeepCollectionEquality().equals(other.rating, rating) &&
             const DeepCollectionEquality()
                 .equals(other.userCreated, userCreated) &&
             const DeepCollectionEquality()
@@ -352,9 +352,7 @@ class _$_RecipeModel extends _RecipeModel {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(difficulty),
-      const DeepCollectionEquality().hash(rating),
       const DeepCollectionEquality().hash(picture),
       const DeepCollectionEquality().hash(instructions),
       const DeepCollectionEquality().hash(name),
@@ -362,6 +360,8 @@ class _$_RecipeModel extends _RecipeModel {
       const DeepCollectionEquality().hash(preparationTime),
       const DeepCollectionEquality().hash(shortDescription),
       const DeepCollectionEquality().hash(commentCount),
+      const DeepCollectionEquality().hash(status),
+      const DeepCollectionEquality().hash(rating),
       const DeepCollectionEquality().hash(userCreated),
       const DeepCollectionEquality().hash(dateCreated),
       const DeepCollectionEquality().hash(dateUpdated));
@@ -373,16 +373,16 @@ class _$_RecipeModel extends _RecipeModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RecipeModelToJson(this);
+    return _$$_RecipeModelToJson(
+      this,
+    );
   }
 }
 
 abstract class _RecipeModel extends RecipeModel {
   factory _RecipeModel(
       {required final String id,
-      required final String status,
       required final String difficulty,
-      required final double rating,
       required final String picture,
       required final String instructions,
       required final String name,
@@ -390,8 +390,10 @@ abstract class _RecipeModel extends RecipeModel {
       required final int preparationTime,
       required final String shortDescription,
       required final int commentCount,
-      required final String userCreated,
-      required final DateTime dateCreated,
+      final String? status,
+      final double? rating,
+      final String? userCreated,
+      final DateTime? dateCreated,
       final dynamic dateUpdated}) = _$_RecipeModel;
   _RecipeModel._() : super._();
 
@@ -399,33 +401,33 @@ abstract class _RecipeModel extends RecipeModel {
       _$_RecipeModel.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get status => throw _privateConstructorUsedError;
+  String get difficulty;
   @override
-  String get difficulty => throw _privateConstructorUsedError;
+  String get picture;
   @override
-  double get rating => throw _privateConstructorUsedError;
+  String get instructions;
   @override
-  String get picture => throw _privateConstructorUsedError;
+  String get name;
   @override
-  String get instructions => throw _privateConstructorUsedError;
+  bool get featured;
   @override
-  String get name => throw _privateConstructorUsedError;
+  int get preparationTime;
   @override
-  bool get featured => throw _privateConstructorUsedError;
+  String get shortDescription;
   @override
-  int get preparationTime => throw _privateConstructorUsedError;
+  int get commentCount;
   @override
-  String get shortDescription => throw _privateConstructorUsedError;
+  String? get status;
   @override
-  int get commentCount => throw _privateConstructorUsedError;
+  double? get rating;
   @override
-  String get userCreated => throw _privateConstructorUsedError;
+  String? get userCreated;
   @override
-  DateTime get dateCreated => throw _privateConstructorUsedError;
+  DateTime? get dateCreated;
   @override
-  dynamic get dateUpdated => throw _privateConstructorUsedError;
+  dynamic get dateUpdated;
   @override
   @JsonKey(ignore: true)
   _$$_RecipeModelCopyWith<_$_RecipeModel> get copyWith =>

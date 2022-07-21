@@ -7,9 +7,7 @@ part 'recipe_model.g.dart';
 class RecipeModel with _$RecipeModel {
   factory RecipeModel({
     required String id,
-    required String status,
     required String difficulty,
-    required double rating,
     required String picture,
     required String instructions,
     required String name,
@@ -17,8 +15,10 @@ class RecipeModel with _$RecipeModel {
     required int preparationTime,
     required String shortDescription,
     required int commentCount,
-    required String userCreated,
-    required DateTime dateCreated,
+    String? status,
+    double? rating,
+    String? userCreated,
+    DateTime? dateCreated,
     dynamic dateUpdated,
   }) = _RecipeModel;
 

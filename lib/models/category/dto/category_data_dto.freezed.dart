@@ -231,7 +231,9 @@ class _$_CategoryDataDTO extends _CategoryDataDTO {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CategoryDataDTOToJson(this);
+    return _$$_CategoryDataDTOToJson(
+      this,
+    );
   }
 }
 
@@ -250,20 +252,20 @@ abstract class _CategoryDataDTO extends CategoryDataDTO {
 
   @override
   @JsonKey(name: 'category_id')
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
   @JsonKey(name: 'category_name')
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
   @JsonKey(name: 'category_picture')
-  String? get picture => throw _privateConstructorUsedError;
+  String? get picture;
   @override
   @JsonKey(name: 'category_icon')
-  String? get icon => throw _privateConstructorUsedError;
+  String? get icon;
   @override
-  String get status => throw _privateConstructorUsedError;
+  String get status;
   @override
-  String? get sort => throw _privateConstructorUsedError;
+  String? get sort;
   @override
   @JsonKey(ignore: true)
   _$$_CategoryDataDTOCopyWith<_$_CategoryDataDTO> get copyWith =>

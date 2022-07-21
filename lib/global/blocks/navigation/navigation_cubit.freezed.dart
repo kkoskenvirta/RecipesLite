@@ -152,9 +152,9 @@ abstract class _NavigationState implements NavigationState {
       required final int index}) = _$_NavigationState;
 
   @override
-  NavBarItem get navBarItem => throw _privateConstructorUsedError;
+  NavBarItem get navBarItem;
   @override
-  int get index => throw _privateConstructorUsedError;
+  int get index;
   @override
   @JsonKey(ignore: true)
   _$$_NavigationStateCopyWith<_$_NavigationState> get copyWith =>

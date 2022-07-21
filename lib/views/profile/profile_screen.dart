@@ -13,36 +13,37 @@ import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({Key? key}) : super(key: key);
   // final ProfileModel profileModel;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 252, 242, 246),
-      body: SafeArea(
-        child: Column(children: [
-          const ProfileHeader(),
-          const SizedBox(
-            height: 20,
+    return SafeArea(
+      child: Column(children: [
+        const ProfileHeader(),
+        const SizedBox(
+          height: 20,
+        ),
+        Flexible(
+          child: SingleChildScrollView(
+            child: BlocBuilder<UserDataCubit, UserDataState>(builder: (context, state) {
+              switch (state.status) {
+                case UserDataStateStatus.loading:
+                  return const CircularProgressIndicator();
+
+                case UserDataStateStatus.loaded:
+                  return ProfileBody(
+                    profile: state.currUser!,
+                  );
+
+                default:
+                  return const SizedBox();
+              }
+            }),
           ),
-          BlocBuilder<UserDataCubit, UserDataState>(builder: (context, state) {
-            switch (state.status) {
-              case UserDataStateStatus.loading:
-                return const CircularProgressIndicator();
-
-              case UserDataStateStatus.loaded:
-                return ProfileBody(
-                  profile: state.currUser!,
-                );
-
-              default:
-                return const SizedBox();
-            }
-          })
-        ]),
-      ),
+        )
+      ]),
     );
   }
 }
@@ -92,7 +93,8 @@ class ProfileBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final userDataCubit = BlocProvider.of<UserDataCubit>(context);
 
-    return SingleChildScrollView(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         children: [
           CachedNetworkImage(
@@ -125,53 +127,46 @@ class ProfileBody extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: Dimensions.width20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                LargeText(text: "Favorite recipes"),
-                const SizedBox(
-                  height: 10,
-                ),
-                BlocBuilder<UserDataCubit, UserDataState>(
-                  builder: (context, state) {
-                    switch (state.status) {
-                      case UserDataStateStatus.loading:
-                        return const CircularProgressIndicator();
+          Align(alignment: Alignment.centerLeft, child: LargeText(text: "Favorite recipes")),
+          const SizedBox(
+            height: 10,
+          ),
+          BlocBuilder<UserDataCubit, UserDataState>(
+            builder: (context, state) {
+              switch (state.status) {
+                case UserDataStateStatus.loading:
+                  return const CircularProgressIndicator();
 
-                      case UserDataStateStatus.loaded:
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: state.favorites.length,
-                          itemBuilder: (context, index) {
-                            final RecipeModel singleRecipe = state.favorites[index];
-                            return PopularListItem(
-                              title: singleRecipe.name,
-                              difficulty: singleRecipe.difficulty,
-                              description: singleRecipe.shortDescription,
-                              timeEstimate: singleRecipe.preparationTime,
-                              imageUrl: singleRecipe.picture,
-                              onTap: () {
-                                Navigator.push(
-                                  (context),
-                                  MaterialPageRoute(
-                                    builder: (context) => RecipePage(recipeModel: singleRecipe),
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        );
+                case UserDataStateStatus.loaded:
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: state.favorites.length,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final RecipeModel singleRecipe = state.favorites[index];
+                      return PopularListItem(
+                        title: singleRecipe.name,
+                        difficulty: singleRecipe.difficulty,
+                        description: singleRecipe.shortDescription,
+                        timeEstimate: singleRecipe.preparationTime,
+                        imageUrl: singleRecipe.picture,
+                        onTap: () {
+                          Navigator.push(
+                            (context),
+                            MaterialPageRoute(
+                              builder: (context) => RecipePage(recipeModel: singleRecipe),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
 
-                      default:
-                        return const SizedBox();
-                    }
-                  },
-                ),
-              ],
-            ),
-          )
+                default:
+                  return const SizedBox();
+              }
+            },
+          ),
         ],
       ),
     );

@@ -17,8 +17,8 @@ class CategoriesCubit extends Cubit<CategoriesState> {
   getCategories() async {
     try {
       emit(state.copyWith(status: CategoriesStateStatus.loading));
-      final errorOrCurrentUser = await _categoriesRepository.getCategoryList();
-      errorOrCurrentUser.fold(
+      final errorOrCategoryList = await _categoriesRepository.getCategoryList();
+      errorOrCategoryList.fold(
         (err) => emit(state.copyWith(status: CategoriesStateStatus.error)),
         (categoriesList) {
           emit(state.copyWith(status: CategoriesStateStatus.loaded, categories: categoriesList!));

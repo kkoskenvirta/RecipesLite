@@ -1,6 +1,6 @@
 part of 'navigation_cubit.dart';
 
-enum NavBarItem { home, browse }
+enum NavBarItem { home, categories, profile }
 
 @freezed
 class NavigationState with _$NavigationState {

@@ -374,7 +374,9 @@ class _$_UserDTO extends _UserDTO {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserDTOToJson(this);
+    return _$$_UserDTOToJson(
+      this,
+    );
   }
 }
 
@@ -399,35 +401,35 @@ abstract class _UserDTO extends UserDTO {
   factory _UserDTO.fromJson(Map<String, dynamic> json) = _$_UserDTO.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
   @JsonKey(name: "first_name")
-  String get firstName => throw _privateConstructorUsedError;
+  String get firstName;
   @override
-  String get email => throw _privateConstructorUsedError;
+  String get email;
   @override
   @JsonKey(name: "last_name")
-  String? get lastName => throw _privateConstructorUsedError;
+  String? get lastName;
   @override
-  String? get password => throw _privateConstructorUsedError;
+  String? get password;
   @override
-  String? get location => throw _privateConstructorUsedError;
+  String? get location;
   @override
-  String? get title => throw _privateConstructorUsedError;
+  String? get title;
   @override
-  String? get description => throw _privateConstructorUsedError;
+  String? get description;
   @override
-  List<String>? get tags => throw _privateConstructorUsedError;
+  List<String>? get tags;
   @override
-  String? get avatar => throw _privateConstructorUsedError;
+  String? get avatar;
   @override
-  String? get language => throw _privateConstructorUsedError;
+  String? get language;
   @override
-  String? get theme => throw _privateConstructorUsedError;
+  String? get theme;
   @override
-  String? get status => throw _privateConstructorUsedError;
+  String? get status;
   @override
-  String? get role => throw _privateConstructorUsedError;
+  String? get role;
   @override
   @JsonKey(ignore: true)
   _$$_UserDTOCopyWith<_$_UserDTO> get copyWith =>

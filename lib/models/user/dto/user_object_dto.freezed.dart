@@ -140,7 +140,9 @@ class _$_UserObjectDTO implements _UserObjectDTO {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserObjectDTOToJson(this);
+    return _$$_UserObjectDTOToJson(
+      this,
+    );
   }
 }
 
@@ -152,7 +154,7 @@ abstract class _UserObjectDTO implements UserObjectDTO {
       _$_UserObjectDTO.fromJson;
 
   @override
-  UserDTO get data => throw _privateConstructorUsedError;
+  UserDTO get data;
   @override
   @JsonKey(ignore: true)
   _$$_UserObjectDTOCopyWith<_$_UserObjectDTO> get copyWith =>

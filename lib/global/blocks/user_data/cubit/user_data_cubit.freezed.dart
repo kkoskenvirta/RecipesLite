@@ -197,11 +197,11 @@ abstract class _UserDataState implements UserDataState {
       required final List<RecipeModel> favorites}) = _$_UserDataState;
 
   @override
-  UserDataStateStatus get status => throw _privateConstructorUsedError;
+  UserDataStateStatus get status;
   @override
-  UserModel? get currUser => throw _privateConstructorUsedError;
+  UserModel? get currUser;
   @override
-  List<RecipeModel> get favorites => throw _privateConstructorUsedError;
+  List<RecipeModel> get favorites;
   @override
   @JsonKey(ignore: true)
   _$$_UserDataStateCopyWith<_$_UserDataState> get copyWith =>
