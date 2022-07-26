@@ -10,4 +10,6 @@ const String signupPath = "users/";
 
 const String categoryPath = "items/category/";
 
+const String tagPath = "items/tag/";
+
 const String userDataPath = "items/user_data/";

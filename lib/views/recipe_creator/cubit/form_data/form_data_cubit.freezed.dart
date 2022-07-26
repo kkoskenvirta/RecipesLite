@@ -17,17 +17,19 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$FormDataState {
   FormDataStateStatus get status => throw _privateConstructorUsedError;
+  BlurHashStatus get blurHashStatus => throw _privateConstructorUsedError;
   bool get featured => throw _privateConstructorUsedError;
-  int get preparationTime => throw _privateConstructorUsedError;
   String get instructions => throw _privateConstructorUsedError;
   List<IncredientModel> get incredients => throw _privateConstructorUsedError;
   List<CategoryModel> get categories => throw _privateConstructorUsedError;
-  List<CategoryModel> get tags => throw _privateConstructorUsedError;
-  RecipeModel? get recipe => throw _privateConstructorUsedError;
+  List<TagModel> get tags => throw _privateConstructorUsedError;
+  RecipeModel get recipe => throw _privateConstructorUsedError;
+  int? get preparationTime => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get shortDescription => throw _privateConstructorUsedError;
   String? get difficulty => throw _privateConstructorUsedError;
   File? get image => throw _privateConstructorUsedError;
+  String? get blurHash => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $FormDataStateCopyWith<FormDataState> get copyWith =>
@@ -41,19 +43,21 @@ abstract class $FormDataStateCopyWith<$Res> {
       _$FormDataStateCopyWithImpl<$Res>;
   $Res call(
       {FormDataStateStatus status,
+      BlurHashStatus blurHashStatus,
       bool featured,
-      int preparationTime,
       String instructions,
       List<IncredientModel> incredients,
       List<CategoryModel> categories,
-      List<CategoryModel> tags,
-      RecipeModel? recipe,
+      List<TagModel> tags,
+      RecipeModel recipe,
+      int? preparationTime,
       String? name,
       String? shortDescription,
       String? difficulty,
-      File? image});
+      File? image,
+      String? blurHash});
 
-  $RecipeModelCopyWith<$Res>? get recipe;
+  $RecipeModelCopyWith<$Res> get recipe;
 }
 
 /// @nodoc
@@ -68,31 +72,33 @@ class _$FormDataStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = freezed,
+    Object? blurHashStatus = freezed,
     Object? featured = freezed,
-    Object? preparationTime = freezed,
     Object? instructions = freezed,
     Object? incredients = freezed,
     Object? categories = freezed,
     Object? tags = freezed,
     Object? recipe = freezed,
+    Object? preparationTime = freezed,
     Object? name = freezed,
     Object? shortDescription = freezed,
     Object? difficulty = freezed,
     Object? image = freezed,
+    Object? blurHash = freezed,
   }) {
     return _then(_value.copyWith(
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormDataStateStatus,
+      blurHashStatus: blurHashStatus == freezed
+          ? _value.blurHashStatus
+          : blurHashStatus // ignore: cast_nullable_to_non_nullable
+              as BlurHashStatus,
       featured: featured == freezed
           ? _value.featured
           : featured // ignore: cast_nullable_to_non_nullable
               as bool,
-      preparationTime: preparationTime == freezed
-          ? _value.preparationTime
-          : preparationTime // ignore: cast_nullable_to_non_nullable
-              as int,
       instructions: instructions == freezed
           ? _value.instructions
           : instructions // ignore: cast_nullable_to_non_nullable
@@ -108,11 +114,15 @@ class _$FormDataStateCopyWithImpl<$Res>
       tags: tags == freezed
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<CategoryModel>,
+              as List<TagModel>,
       recipe: recipe == freezed
           ? _value.recipe
           : recipe // ignore: cast_nullable_to_non_nullable
-              as RecipeModel?,
+              as RecipeModel,
+      preparationTime: preparationTime == freezed
+          ? _value.preparationTime
+          : preparationTime // ignore: cast_nullable_to_non_nullable
+              as int?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -129,16 +139,16 @@ class _$FormDataStateCopyWithImpl<$Res>
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as File?,
+      blurHash: blurHash == freezed
+          ? _value.blurHash
+          : blurHash // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 
   @override
-  $RecipeModelCopyWith<$Res>? get recipe {
-    if (_value.recipe == null) {
-      return null;
-    }
-
-    return $RecipeModelCopyWith<$Res>(_value.recipe!, (value) {
+  $RecipeModelCopyWith<$Res> get recipe {
+    return $RecipeModelCopyWith<$Res>(_value.recipe, (value) {
       return _then(_value.copyWith(recipe: value));
     });
   }
@@ -153,20 +163,22 @@ abstract class _$$_FormDataStateCopyWith<$Res>
   @override
   $Res call(
       {FormDataStateStatus status,
+      BlurHashStatus blurHashStatus,
       bool featured,
-      int preparationTime,
       String instructions,
       List<IncredientModel> incredients,
       List<CategoryModel> categories,
-      List<CategoryModel> tags,
-      RecipeModel? recipe,
+      List<TagModel> tags,
+      RecipeModel recipe,
+      int? preparationTime,
       String? name,
       String? shortDescription,
       String? difficulty,
-      File? image});
+      File? image,
+      String? blurHash});
 
   @override
-  $RecipeModelCopyWith<$Res>? get recipe;
+  $RecipeModelCopyWith<$Res> get recipe;
 }
 
 /// @nodoc
@@ -183,31 +195,33 @@ class __$$_FormDataStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = freezed,
+    Object? blurHashStatus = freezed,
     Object? featured = freezed,
-    Object? preparationTime = freezed,
     Object? instructions = freezed,
     Object? incredients = freezed,
     Object? categories = freezed,
     Object? tags = freezed,
     Object? recipe = freezed,
+    Object? preparationTime = freezed,
     Object? name = freezed,
     Object? shortDescription = freezed,
     Object? difficulty = freezed,
     Object? image = freezed,
+    Object? blurHash = freezed,
   }) {
     return _then(_$_FormDataState(
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormDataStateStatus,
+      blurHashStatus: blurHashStatus == freezed
+          ? _value.blurHashStatus
+          : blurHashStatus // ignore: cast_nullable_to_non_nullable
+              as BlurHashStatus,
       featured: featured == freezed
           ? _value.featured
           : featured // ignore: cast_nullable_to_non_nullable
               as bool,
-      preparationTime: preparationTime == freezed
-          ? _value.preparationTime
-          : preparationTime // ignore: cast_nullable_to_non_nullable
-              as int,
       instructions: instructions == freezed
           ? _value.instructions
           : instructions // ignore: cast_nullable_to_non_nullable
@@ -223,11 +237,15 @@ class __$$_FormDataStateCopyWithImpl<$Res>
       tags: tags == freezed
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<CategoryModel>,
+              as List<TagModel>,
       recipe: recipe == freezed
           ? _value.recipe
           : recipe // ignore: cast_nullable_to_non_nullable
-              as RecipeModel?,
+              as RecipeModel,
+      preparationTime: preparationTime == freezed
+          ? _value.preparationTime
+          : preparationTime // ignore: cast_nullable_to_non_nullable
+              as int?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -244,6 +262,10 @@ class __$$_FormDataStateCopyWithImpl<$Res>
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as File?,
+      blurHash: blurHash == freezed
+          ? _value.blurHash
+          : blurHash // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -253,17 +275,19 @@ class __$$_FormDataStateCopyWithImpl<$Res>
 class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
   const _$_FormDataState(
       {required this.status,
+      required this.blurHashStatus,
       required this.featured,
-      required this.preparationTime,
       required this.instructions,
       required final List<IncredientModel> incredients,
       required final List<CategoryModel> categories,
-      required final List<CategoryModel> tags,
-      this.recipe,
+      required final List<TagModel> tags,
+      required this.recipe,
+      this.preparationTime,
       this.name,
       this.shortDescription,
       this.difficulty,
-      this.image})
+      this.image,
+      this.blurHash})
       : _incredients = incredients,
         _categories = categories,
         _tags = tags;
@@ -271,9 +295,9 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
   @override
   final FormDataStateStatus status;
   @override
-  final bool featured;
+  final BlurHashStatus blurHashStatus;
   @override
-  final int preparationTime;
+  final bool featured;
   @override
   final String instructions;
   final List<IncredientModel> _incredients;
@@ -290,15 +314,17 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
     return EqualUnmodifiableListView(_categories);
   }
 
-  final List<CategoryModel> _tags;
+  final List<TagModel> _tags;
   @override
-  List<CategoryModel> get tags {
+  List<TagModel> get tags {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_tags);
   }
 
   @override
-  final RecipeModel? recipe;
+  final RecipeModel recipe;
+  @override
+  final int? preparationTime;
   @override
   final String? name;
   @override
@@ -307,10 +333,12 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
   final String? difficulty;
   @override
   final File? image;
+  @override
+  final String? blurHash;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'FormDataState(status: $status, featured: $featured, preparationTime: $preparationTime, instructions: $instructions, incredients: $incredients, categories: $categories, tags: $tags, recipe: $recipe, name: $name, shortDescription: $shortDescription, difficulty: $difficulty, image: $image)';
+    return 'FormDataState(status: $status, blurHashStatus: $blurHashStatus, featured: $featured, instructions: $instructions, incredients: $incredients, categories: $categories, tags: $tags, recipe: $recipe, preparationTime: $preparationTime, name: $name, shortDescription: $shortDescription, difficulty: $difficulty, image: $image, blurHash: $blurHash)';
   }
 
   @override
@@ -319,17 +347,19 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
     properties
       ..add(DiagnosticsProperty('type', 'FormDataState'))
       ..add(DiagnosticsProperty('status', status))
+      ..add(DiagnosticsProperty('blurHashStatus', blurHashStatus))
       ..add(DiagnosticsProperty('featured', featured))
-      ..add(DiagnosticsProperty('preparationTime', preparationTime))
       ..add(DiagnosticsProperty('instructions', instructions))
       ..add(DiagnosticsProperty('incredients', incredients))
       ..add(DiagnosticsProperty('categories', categories))
       ..add(DiagnosticsProperty('tags', tags))
       ..add(DiagnosticsProperty('recipe', recipe))
+      ..add(DiagnosticsProperty('preparationTime', preparationTime))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('shortDescription', shortDescription))
       ..add(DiagnosticsProperty('difficulty', difficulty))
-      ..add(DiagnosticsProperty('image', image));
+      ..add(DiagnosticsProperty('image', image))
+      ..add(DiagnosticsProperty('blurHash', blurHash));
   }
 
   @override
@@ -338,9 +368,9 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
         (other.runtimeType == runtimeType &&
             other is _$_FormDataState &&
             const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality().equals(other.featured, featured) &&
             const DeepCollectionEquality()
-                .equals(other.preparationTime, preparationTime) &&
+                .equals(other.blurHashStatus, blurHashStatus) &&
+            const DeepCollectionEquality().equals(other.featured, featured) &&
             const DeepCollectionEquality()
                 .equals(other.instructions, instructions) &&
             const DeepCollectionEquality()
@@ -349,29 +379,34 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
                 .equals(other._categories, _categories) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
             const DeepCollectionEquality().equals(other.recipe, recipe) &&
+            const DeepCollectionEquality()
+                .equals(other.preparationTime, preparationTime) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality()
                 .equals(other.shortDescription, shortDescription) &&
             const DeepCollectionEquality()
                 .equals(other.difficulty, difficulty) &&
-            const DeepCollectionEquality().equals(other.image, image));
+            const DeepCollectionEquality().equals(other.image, image) &&
+            const DeepCollectionEquality().equals(other.blurHash, blurHash));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(status),
+      const DeepCollectionEquality().hash(blurHashStatus),
       const DeepCollectionEquality().hash(featured),
-      const DeepCollectionEquality().hash(preparationTime),
       const DeepCollectionEquality().hash(instructions),
       const DeepCollectionEquality().hash(_incredients),
       const DeepCollectionEquality().hash(_categories),
       const DeepCollectionEquality().hash(_tags),
       const DeepCollectionEquality().hash(recipe),
+      const DeepCollectionEquality().hash(preparationTime),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(shortDescription),
       const DeepCollectionEquality().hash(difficulty),
-      const DeepCollectionEquality().hash(image));
+      const DeepCollectionEquality().hash(image),
+      const DeepCollectionEquality().hash(blurHash));
 
   @JsonKey(ignore: true)
   @override
@@ -382,24 +417,26 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
 abstract class _FormDataState implements FormDataState {
   const factory _FormDataState(
       {required final FormDataStateStatus status,
+      required final BlurHashStatus blurHashStatus,
       required final bool featured,
-      required final int preparationTime,
       required final String instructions,
       required final List<IncredientModel> incredients,
       required final List<CategoryModel> categories,
-      required final List<CategoryModel> tags,
-      final RecipeModel? recipe,
+      required final List<TagModel> tags,
+      required final RecipeModel recipe,
+      final int? preparationTime,
       final String? name,
       final String? shortDescription,
       final String? difficulty,
-      final File? image}) = _$_FormDataState;
+      final File? image,
+      final String? blurHash}) = _$_FormDataState;
 
   @override
   FormDataStateStatus get status;
   @override
-  bool get featured;
+  BlurHashStatus get blurHashStatus;
   @override
-  int get preparationTime;
+  bool get featured;
   @override
   String get instructions;
   @override
@@ -407,9 +444,11 @@ abstract class _FormDataState implements FormDataState {
   @override
   List<CategoryModel> get categories;
   @override
-  List<CategoryModel> get tags;
+  List<TagModel> get tags;
   @override
-  RecipeModel? get recipe;
+  RecipeModel get recipe;
+  @override
+  int? get preparationTime;
   @override
   String? get name;
   @override
@@ -418,6 +457,8 @@ abstract class _FormDataState implements FormDataState {
   String? get difficulty;
   @override
   File? get image;
+  @override
+  String? get blurHash;
   @override
   @JsonKey(ignore: true)
   _$$_FormDataStateCopyWith<_$_FormDataState> get copyWith =>

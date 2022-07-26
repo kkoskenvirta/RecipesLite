@@ -60,7 +60,10 @@ class _Body extends StatelessWidget {
                         children: [
                           Expanded(
                             child: TextField(
-                              decoration: InputDecoration(border: InputBorder.none, hintText: "Search for recipes"),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Search for recipes",
+                              ),
                               controller: searchController,
                               onChanged: ((value) async {
                                 if (value.isNotEmpty) {

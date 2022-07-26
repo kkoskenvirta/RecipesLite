@@ -7,7 +7,7 @@ class FormFetchState with _$FormFetchState {
   const factory FormFetchState({
     required FormFetchStateStatus status,
     required List<CategoryModel> categories,
-    required List<CategoryModel> tags,
+    required List<TagModel> tags,
   }) = _FormFetchState;
 
   factory FormFetchState.initial() {

@@ -145,10 +145,10 @@ class ProfileBody extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final RecipeModel singleRecipe = state.favorites[index];
                       return PopularListItem(
-                        title: singleRecipe.name,
-                        difficulty: singleRecipe.difficulty,
-                        description: singleRecipe.shortDescription,
-                        timeEstimate: singleRecipe.preparationTime,
+                        title: singleRecipe.name!,
+                        difficulty: singleRecipe.difficulty!,
+                        description: singleRecipe.shortDescription!,
+                        timeEstimate: singleRecipe.preparationTime!,
                         imageUrl: singleRecipe.picture,
                         onTap: () {
                           Navigator.push(

@@ -20,26 +20,29 @@ RecipeDataDTO _$RecipeDataDTOFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$RecipeDataDTO {
-  String get id => throw _privateConstructorUsedError;
-  String get status => throw _privateConstructorUsedError;
-  String get difficulty => throw _privateConstructorUsedError;
-  double get rating => throw _privateConstructorUsedError;
-  String get picture => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  String? get status => throw _privateConstructorUsedError;
+  String? get difficulty => throw _privateConstructorUsedError;
+  double? get rating => throw _privateConstructorUsedError;
+  String? get picture => throw _privateConstructorUsedError;
   String get instructions => throw _privateConstructorUsedError;
+  List<CategoryIdDTO> get categories => throw _privateConstructorUsedError;
+  List<TagIdDTO>? get tags => throw _privateConstructorUsedError;
+  List<IncredientIdDTO> get incredients => throw _privateConstructorUsedError;
   @JsonKey(name: 'Name')
-  String get name => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'Featured')
-  bool get featured => throw _privateConstructorUsedError;
+  bool? get featured => throw _privateConstructorUsedError;
   @JsonKey(name: 'preparation_time')
-  int get preparationTime => throw _privateConstructorUsedError;
+  int? get preparationTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'short_description')
-  String get shortDescription => throw _privateConstructorUsedError;
+  String? get shortDescription => throw _privateConstructorUsedError;
   @JsonKey(name: 'comment_count')
-  int get commentCount => throw _privateConstructorUsedError;
+  int? get commentCount => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_created')
-  String get userCreated => throw _privateConstructorUsedError;
+  String? get userCreated => throw _privateConstructorUsedError;
   @JsonKey(name: 'date_created')
-  DateTime get dateCreated => throw _privateConstructorUsedError;
+  DateTime? get dateCreated => throw _privateConstructorUsedError;
   @JsonKey(name: 'date_updated')
   dynamic get dateUpdated => throw _privateConstructorUsedError;
 
@@ -55,19 +58,22 @@ abstract class $RecipeDataDTOCopyWith<$Res> {
           RecipeDataDTO value, $Res Function(RecipeDataDTO) then) =
       _$RecipeDataDTOCopyWithImpl<$Res>;
   $Res call(
-      {String id,
-      String status,
-      String difficulty,
-      double rating,
-      String picture,
+      {String? id,
+      String? status,
+      String? difficulty,
+      double? rating,
+      String? picture,
       String instructions,
-      @JsonKey(name: 'Name') String name,
-      @JsonKey(name: 'Featured') bool featured,
-      @JsonKey(name: 'preparation_time') int preparationTime,
-      @JsonKey(name: 'short_description') String shortDescription,
-      @JsonKey(name: 'comment_count') int commentCount,
-      @JsonKey(name: 'user_created') String userCreated,
-      @JsonKey(name: 'date_created') DateTime dateCreated,
+      List<CategoryIdDTO> categories,
+      List<TagIdDTO>? tags,
+      List<IncredientIdDTO> incredients,
+      @JsonKey(name: 'Name') String? name,
+      @JsonKey(name: 'Featured') bool? featured,
+      @JsonKey(name: 'preparation_time') int? preparationTime,
+      @JsonKey(name: 'short_description') String? shortDescription,
+      @JsonKey(name: 'comment_count') int? commentCount,
+      @JsonKey(name: 'user_created') String? userCreated,
+      @JsonKey(name: 'date_created') DateTime? dateCreated,
       @JsonKey(name: 'date_updated') dynamic dateUpdated});
 }
 
@@ -88,6 +94,9 @@ class _$RecipeDataDTOCopyWithImpl<$Res>
     Object? rating = freezed,
     Object? picture = freezed,
     Object? instructions = freezed,
+    Object? categories = freezed,
+    Object? tags = freezed,
+    Object? incredients = freezed,
     Object? name = freezed,
     Object? featured = freezed,
     Object? preparationTime = freezed,
@@ -101,55 +110,67 @@ class _$RecipeDataDTOCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       difficulty: difficulty == freezed
           ? _value.difficulty
           : difficulty // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       rating: rating == freezed
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
       picture: picture == freezed
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       instructions: instructions == freezed
           ? _value.instructions
           : instructions // ignore: cast_nullable_to_non_nullable
               as String,
+      categories: categories == freezed
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<CategoryIdDTO>,
+      tags: tags == freezed
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<TagIdDTO>?,
+      incredients: incredients == freezed
+          ? _value.incredients
+          : incredients // ignore: cast_nullable_to_non_nullable
+              as List<IncredientIdDTO>,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       featured: featured == freezed
           ? _value.featured
           : featured // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       preparationTime: preparationTime == freezed
           ? _value.preparationTime
           : preparationTime // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       shortDescription: shortDescription == freezed
           ? _value.shortDescription
           : shortDescription // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       commentCount: commentCount == freezed
           ? _value.commentCount
           : commentCount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       userCreated: userCreated == freezed
           ? _value.userCreated
           : userCreated // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       dateCreated: dateCreated == freezed
           ? _value.dateCreated
           : dateCreated // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       dateUpdated: dateUpdated == freezed
           ? _value.dateUpdated
           : dateUpdated // ignore: cast_nullable_to_non_nullable
@@ -166,19 +187,22 @@ abstract class _$$_RecipeDataDTOCopyWith<$Res>
       __$$_RecipeDataDTOCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id,
-      String status,
-      String difficulty,
-      double rating,
-      String picture,
+      {String? id,
+      String? status,
+      String? difficulty,
+      double? rating,
+      String? picture,
       String instructions,
-      @JsonKey(name: 'Name') String name,
-      @JsonKey(name: 'Featured') bool featured,
-      @JsonKey(name: 'preparation_time') int preparationTime,
-      @JsonKey(name: 'short_description') String shortDescription,
-      @JsonKey(name: 'comment_count') int commentCount,
-      @JsonKey(name: 'user_created') String userCreated,
-      @JsonKey(name: 'date_created') DateTime dateCreated,
+      List<CategoryIdDTO> categories,
+      List<TagIdDTO>? tags,
+      List<IncredientIdDTO> incredients,
+      @JsonKey(name: 'Name') String? name,
+      @JsonKey(name: 'Featured') bool? featured,
+      @JsonKey(name: 'preparation_time') int? preparationTime,
+      @JsonKey(name: 'short_description') String? shortDescription,
+      @JsonKey(name: 'comment_count') int? commentCount,
+      @JsonKey(name: 'user_created') String? userCreated,
+      @JsonKey(name: 'date_created') DateTime? dateCreated,
       @JsonKey(name: 'date_updated') dynamic dateUpdated});
 }
 
@@ -201,6 +225,9 @@ class __$$_RecipeDataDTOCopyWithImpl<$Res>
     Object? rating = freezed,
     Object? picture = freezed,
     Object? instructions = freezed,
+    Object? categories = freezed,
+    Object? tags = freezed,
+    Object? incredients = freezed,
     Object? name = freezed,
     Object? featured = freezed,
     Object? preparationTime = freezed,
@@ -214,55 +241,67 @@ class __$$_RecipeDataDTOCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       difficulty: difficulty == freezed
           ? _value.difficulty
           : difficulty // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       rating: rating == freezed
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
       picture: picture == freezed
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       instructions: instructions == freezed
           ? _value.instructions
           : instructions // ignore: cast_nullable_to_non_nullable
               as String,
+      categories: categories == freezed
+          ? _value._categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<CategoryIdDTO>,
+      tags: tags == freezed
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<TagIdDTO>?,
+      incredients: incredients == freezed
+          ? _value._incredients
+          : incredients // ignore: cast_nullable_to_non_nullable
+              as List<IncredientIdDTO>,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       featured: featured == freezed
           ? _value.featured
           : featured // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       preparationTime: preparationTime == freezed
           ? _value.preparationTime
           : preparationTime // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       shortDescription: shortDescription == freezed
           ? _value.shortDescription
           : shortDescription // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       commentCount: commentCount == freezed
           ? _value.commentCount
           : commentCount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       userCreated: userCreated == freezed
           ? _value.userCreated
           : userCreated // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       dateCreated: dateCreated == freezed
           ? _value.dateCreated
           : dateCreated // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       dateUpdated: dateUpdated == freezed
           ? _value.dateUpdated
           : dateUpdated // ignore: cast_nullable_to_non_nullable
@@ -275,66 +314,95 @@ class __$$_RecipeDataDTOCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_RecipeDataDTO extends _RecipeDataDTO {
   _$_RecipeDataDTO(
-      {required this.id,
-      required this.status,
-      required this.difficulty,
-      required this.rating,
-      required this.picture,
+      {this.id,
+      this.status,
+      this.difficulty,
+      this.rating,
+      this.picture,
       this.instructions = '',
-      @JsonKey(name: 'Name') required this.name,
-      @JsonKey(name: 'Featured') required this.featured,
-      @JsonKey(name: 'preparation_time') required this.preparationTime,
-      @JsonKey(name: 'short_description') required this.shortDescription,
-      @JsonKey(name: 'comment_count') required this.commentCount,
-      @JsonKey(name: 'user_created') required this.userCreated,
-      @JsonKey(name: 'date_created') required this.dateCreated,
+      required final List<CategoryIdDTO> categories,
+      required final List<TagIdDTO>? tags,
+      required final List<IncredientIdDTO> incredients,
+      @JsonKey(name: 'Name') this.name,
+      @JsonKey(name: 'Featured') this.featured,
+      @JsonKey(name: 'preparation_time') this.preparationTime,
+      @JsonKey(name: 'short_description') this.shortDescription,
+      @JsonKey(name: 'comment_count') this.commentCount,
+      @JsonKey(name: 'user_created') this.userCreated,
+      @JsonKey(name: 'date_created') this.dateCreated,
       @JsonKey(name: 'date_updated') this.dateUpdated})
-      : super._();
+      : _categories = categories,
+        _tags = tags,
+        _incredients = incredients,
+        super._();
 
   factory _$_RecipeDataDTO.fromJson(Map<String, dynamic> json) =>
       _$$_RecipeDataDTOFromJson(json);
 
   @override
-  final String id;
+  final String? id;
   @override
-  final String status;
+  final String? status;
   @override
-  final String difficulty;
+  final String? difficulty;
   @override
-  final double rating;
+  final double? rating;
   @override
-  final String picture;
+  final String? picture;
   @override
   @JsonKey()
   final String instructions;
+  final List<CategoryIdDTO> _categories;
+  @override
+  List<CategoryIdDTO> get categories {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_categories);
+  }
+
+  final List<TagIdDTO>? _tags;
+  @override
+  List<TagIdDTO>? get tags {
+    final value = _tags;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<IncredientIdDTO> _incredients;
+  @override
+  List<IncredientIdDTO> get incredients {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_incredients);
+  }
+
   @override
   @JsonKey(name: 'Name')
-  final String name;
+  final String? name;
   @override
   @JsonKey(name: 'Featured')
-  final bool featured;
+  final bool? featured;
   @override
   @JsonKey(name: 'preparation_time')
-  final int preparationTime;
+  final int? preparationTime;
   @override
   @JsonKey(name: 'short_description')
-  final String shortDescription;
+  final String? shortDescription;
   @override
   @JsonKey(name: 'comment_count')
-  final int commentCount;
+  final int? commentCount;
   @override
   @JsonKey(name: 'user_created')
-  final String userCreated;
+  final String? userCreated;
   @override
   @JsonKey(name: 'date_created')
-  final DateTime dateCreated;
+  final DateTime? dateCreated;
   @override
   @JsonKey(name: 'date_updated')
   final dynamic dateUpdated;
 
   @override
   String toString() {
-    return 'RecipeDataDTO(id: $id, status: $status, difficulty: $difficulty, rating: $rating, picture: $picture, instructions: $instructions, name: $name, featured: $featured, preparationTime: $preparationTime, shortDescription: $shortDescription, commentCount: $commentCount, userCreated: $userCreated, dateCreated: $dateCreated, dateUpdated: $dateUpdated)';
+    return 'RecipeDataDTO(id: $id, status: $status, difficulty: $difficulty, rating: $rating, picture: $picture, instructions: $instructions, categories: $categories, tags: $tags, incredients: $incredients, name: $name, featured: $featured, preparationTime: $preparationTime, shortDescription: $shortDescription, commentCount: $commentCount, userCreated: $userCreated, dateCreated: $dateCreated, dateUpdated: $dateUpdated)';
   }
 
   @override
@@ -350,6 +418,11 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
             const DeepCollectionEquality().equals(other.picture, picture) &&
             const DeepCollectionEquality()
                 .equals(other.instructions, instructions) &&
+            const DeepCollectionEquality()
+                .equals(other._categories, _categories) &&
+            const DeepCollectionEquality().equals(other._tags, _tags) &&
+            const DeepCollectionEquality()
+                .equals(other._incredients, _incredients) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.featured, featured) &&
             const DeepCollectionEquality()
@@ -376,6 +449,9 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
       const DeepCollectionEquality().hash(rating),
       const DeepCollectionEquality().hash(picture),
       const DeepCollectionEquality().hash(instructions),
+      const DeepCollectionEquality().hash(_categories),
+      const DeepCollectionEquality().hash(_tags),
+      const DeepCollectionEquality().hash(_incredients),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(featured),
       const DeepCollectionEquality().hash(preparationTime),
@@ -400,66 +476,68 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
 
 abstract class _RecipeDataDTO extends RecipeDataDTO {
   factory _RecipeDataDTO(
-      {required final String id,
-      required final String status,
-      required final String difficulty,
-      required final double rating,
-      required final String picture,
-      final String instructions,
-      @JsonKey(name: 'Name')
-          required final String name,
-      @JsonKey(name: 'Featured')
-          required final bool featured,
-      @JsonKey(name: 'preparation_time')
-          required final int preparationTime,
-      @JsonKey(name: 'short_description')
-          required final String shortDescription,
-      @JsonKey(name: 'comment_count')
-          required final int commentCount,
-      @JsonKey(name: 'user_created')
-          required final String userCreated,
-      @JsonKey(name: 'date_created')
-          required final DateTime dateCreated,
-      @JsonKey(name: 'date_updated')
-          final dynamic dateUpdated}) = _$_RecipeDataDTO;
+          {final String? id,
+          final String? status,
+          final String? difficulty,
+          final double? rating,
+          final String? picture,
+          final String instructions,
+          required final List<CategoryIdDTO> categories,
+          required final List<TagIdDTO>? tags,
+          required final List<IncredientIdDTO> incredients,
+          @JsonKey(name: 'Name') final String? name,
+          @JsonKey(name: 'Featured') final bool? featured,
+          @JsonKey(name: 'preparation_time') final int? preparationTime,
+          @JsonKey(name: 'short_description') final String? shortDescription,
+          @JsonKey(name: 'comment_count') final int? commentCount,
+          @JsonKey(name: 'user_created') final String? userCreated,
+          @JsonKey(name: 'date_created') final DateTime? dateCreated,
+          @JsonKey(name: 'date_updated') final dynamic dateUpdated}) =
+      _$_RecipeDataDTO;
   _RecipeDataDTO._() : super._();
 
   factory _RecipeDataDTO.fromJson(Map<String, dynamic> json) =
       _$_RecipeDataDTO.fromJson;
 
   @override
-  String get id;
+  String? get id;
   @override
-  String get status;
+  String? get status;
   @override
-  String get difficulty;
+  String? get difficulty;
   @override
-  double get rating;
+  double? get rating;
   @override
-  String get picture;
+  String? get picture;
   @override
   String get instructions;
   @override
+  List<CategoryIdDTO> get categories;
+  @override
+  List<TagIdDTO>? get tags;
+  @override
+  List<IncredientIdDTO> get incredients;
+  @override
   @JsonKey(name: 'Name')
-  String get name;
+  String? get name;
   @override
   @JsonKey(name: 'Featured')
-  bool get featured;
+  bool? get featured;
   @override
   @JsonKey(name: 'preparation_time')
-  int get preparationTime;
+  int? get preparationTime;
   @override
   @JsonKey(name: 'short_description')
-  String get shortDescription;
+  String? get shortDescription;
   @override
   @JsonKey(name: 'comment_count')
-  int get commentCount;
+  int? get commentCount;
   @override
   @JsonKey(name: 'user_created')
-  String get userCreated;
+  String? get userCreated;
   @override
   @JsonKey(name: 'date_created')
-  DateTime get dateCreated;
+  DateTime? get dateCreated;
   @override
   @JsonKey(name: 'date_updated')
   dynamic get dateUpdated;

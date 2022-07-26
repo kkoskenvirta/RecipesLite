@@ -14,28 +14,26 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-RecipeModel _$RecipeModelFromJson(Map<String, dynamic> json) {
-  return _RecipeModel.fromJson(json);
-}
-
 /// @nodoc
 mixin _$RecipeModel {
-  String get id => throw _privateConstructorUsedError;
-  String get difficulty => throw _privateConstructorUsedError;
-  String get picture => throw _privateConstructorUsedError;
-  String get instructions => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  bool get featured => throw _privateConstructorUsedError;
-  int get preparationTime => throw _privateConstructorUsedError;
-  String get shortDescription => throw _privateConstructorUsedError;
-  int get commentCount => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  String? get difficulty => throw _privateConstructorUsedError;
+  String? get picture => throw _privateConstructorUsedError;
+  String? get instructions => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  bool? get featured => throw _privateConstructorUsedError;
+  int? get preparationTime => throw _privateConstructorUsedError;
+  String? get shortDescription => throw _privateConstructorUsedError;
+  int? get commentCount => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   double? get rating => throw _privateConstructorUsedError;
   String? get userCreated => throw _privateConstructorUsedError;
+  List<IncredientModel>? get incredients => throw _privateConstructorUsedError;
+  List<TagModel>? get tags => throw _privateConstructorUsedError;
+  List<CategoryModel>? get categories => throw _privateConstructorUsedError;
   DateTime? get dateCreated => throw _privateConstructorUsedError;
   dynamic get dateUpdated => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $RecipeModelCopyWith<RecipeModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -47,18 +45,21 @@ abstract class $RecipeModelCopyWith<$Res> {
           RecipeModel value, $Res Function(RecipeModel) then) =
       _$RecipeModelCopyWithImpl<$Res>;
   $Res call(
-      {String id,
-      String difficulty,
-      String picture,
-      String instructions,
-      String name,
-      bool featured,
-      int preparationTime,
-      String shortDescription,
-      int commentCount,
+      {String? id,
+      String? difficulty,
+      String? picture,
+      String? instructions,
+      String? name,
+      bool? featured,
+      int? preparationTime,
+      String? shortDescription,
+      int? commentCount,
       String? status,
       double? rating,
       String? userCreated,
+      List<IncredientModel>? incredients,
+      List<TagModel>? tags,
+      List<CategoryModel>? categories,
       DateTime? dateCreated,
       dynamic dateUpdated});
 }
@@ -85,6 +86,9 @@ class _$RecipeModelCopyWithImpl<$Res> implements $RecipeModelCopyWith<$Res> {
     Object? status = freezed,
     Object? rating = freezed,
     Object? userCreated = freezed,
+    Object? incredients = freezed,
+    Object? tags = freezed,
+    Object? categories = freezed,
     Object? dateCreated = freezed,
     Object? dateUpdated = freezed,
   }) {
@@ -92,39 +96,39 @@ class _$RecipeModelCopyWithImpl<$Res> implements $RecipeModelCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       difficulty: difficulty == freezed
           ? _value.difficulty
           : difficulty // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       picture: picture == freezed
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       instructions: instructions == freezed
           ? _value.instructions
           : instructions // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       featured: featured == freezed
           ? _value.featured
           : featured // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       preparationTime: preparationTime == freezed
           ? _value.preparationTime
           : preparationTime // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       shortDescription: shortDescription == freezed
           ? _value.shortDescription
           : shortDescription // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       commentCount: commentCount == freezed
           ? _value.commentCount
           : commentCount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -137,6 +141,18 @@ class _$RecipeModelCopyWithImpl<$Res> implements $RecipeModelCopyWith<$Res> {
           ? _value.userCreated
           : userCreated // ignore: cast_nullable_to_non_nullable
               as String?,
+      incredients: incredients == freezed
+          ? _value.incredients
+          : incredients // ignore: cast_nullable_to_non_nullable
+              as List<IncredientModel>?,
+      tags: tags == freezed
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<TagModel>?,
+      categories: categories == freezed
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<CategoryModel>?,
       dateCreated: dateCreated == freezed
           ? _value.dateCreated
           : dateCreated // ignore: cast_nullable_to_non_nullable
@@ -157,18 +173,21 @@ abstract class _$$_RecipeModelCopyWith<$Res>
       __$$_RecipeModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id,
-      String difficulty,
-      String picture,
-      String instructions,
-      String name,
-      bool featured,
-      int preparationTime,
-      String shortDescription,
-      int commentCount,
+      {String? id,
+      String? difficulty,
+      String? picture,
+      String? instructions,
+      String? name,
+      bool? featured,
+      int? preparationTime,
+      String? shortDescription,
+      int? commentCount,
       String? status,
       double? rating,
       String? userCreated,
+      List<IncredientModel>? incredients,
+      List<TagModel>? tags,
+      List<CategoryModel>? categories,
       DateTime? dateCreated,
       dynamic dateUpdated});
 }
@@ -197,6 +216,9 @@ class __$$_RecipeModelCopyWithImpl<$Res> extends _$RecipeModelCopyWithImpl<$Res>
     Object? status = freezed,
     Object? rating = freezed,
     Object? userCreated = freezed,
+    Object? incredients = freezed,
+    Object? tags = freezed,
+    Object? categories = freezed,
     Object? dateCreated = freezed,
     Object? dateUpdated = freezed,
   }) {
@@ -204,39 +226,39 @@ class __$$_RecipeModelCopyWithImpl<$Res> extends _$RecipeModelCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       difficulty: difficulty == freezed
           ? _value.difficulty
           : difficulty // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       picture: picture == freezed
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       instructions: instructions == freezed
           ? _value.instructions
           : instructions // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       featured: featured == freezed
           ? _value.featured
           : featured // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       preparationTime: preparationTime == freezed
           ? _value.preparationTime
           : preparationTime // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       shortDescription: shortDescription == freezed
           ? _value.shortDescription
           : shortDescription // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       commentCount: commentCount == freezed
           ? _value.commentCount
           : commentCount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -249,6 +271,18 @@ class __$$_RecipeModelCopyWithImpl<$Res> extends _$RecipeModelCopyWithImpl<$Res>
           ? _value.userCreated
           : userCreated // ignore: cast_nullable_to_non_nullable
               as String?,
+      incredients: incredients == freezed
+          ? _value._incredients
+          : incredients // ignore: cast_nullable_to_non_nullable
+              as List<IncredientModel>?,
+      tags: tags == freezed
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<TagModel>?,
+      categories: categories == freezed
+          ? _value._categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<CategoryModel>?,
       dateCreated: dateCreated == freezed
           ? _value.dateCreated
           : dateCreated // ignore: cast_nullable_to_non_nullable
@@ -262,52 +296,82 @@ class __$$_RecipeModelCopyWithImpl<$Res> extends _$RecipeModelCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$_RecipeModel extends _RecipeModel {
   _$_RecipeModel(
-      {required this.id,
-      required this.difficulty,
-      required this.picture,
-      required this.instructions,
-      required this.name,
-      required this.featured,
-      required this.preparationTime,
-      required this.shortDescription,
-      required this.commentCount,
+      {this.id,
+      this.difficulty,
+      this.picture,
+      this.instructions,
+      this.name,
+      this.featured,
+      this.preparationTime,
+      this.shortDescription,
+      this.commentCount,
       this.status,
       this.rating,
       this.userCreated,
+      final List<IncredientModel>? incredients,
+      final List<TagModel>? tags,
+      final List<CategoryModel>? categories,
       this.dateCreated,
       this.dateUpdated})
-      : super._();
+      : _incredients = incredients,
+        _tags = tags,
+        _categories = categories,
+        super._();
 
-  factory _$_RecipeModel.fromJson(Map<String, dynamic> json) =>
-      _$$_RecipeModelFromJson(json);
-
   @override
-  final String id;
+  final String? id;
   @override
-  final String difficulty;
+  final String? difficulty;
   @override
-  final String picture;
+  final String? picture;
   @override
-  final String instructions;
+  final String? instructions;
   @override
-  final String name;
+  final String? name;
   @override
-  final bool featured;
+  final bool? featured;
   @override
-  final int preparationTime;
+  final int? preparationTime;
   @override
-  final String shortDescription;
+  final String? shortDescription;
   @override
-  final int commentCount;
+  final int? commentCount;
   @override
   final String? status;
   @override
   final double? rating;
   @override
   final String? userCreated;
+  final List<IncredientModel>? _incredients;
+  @override
+  List<IncredientModel>? get incredients {
+    final value = _incredients;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<TagModel>? _tags;
+  @override
+  List<TagModel>? get tags {
+    final value = _tags;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<CategoryModel>? _categories;
+  @override
+  List<CategoryModel>? get categories {
+    final value = _categories;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   final DateTime? dateCreated;
   @override
@@ -315,7 +379,7 @@ class _$_RecipeModel extends _RecipeModel {
 
   @override
   String toString() {
-    return 'RecipeModel(id: $id, difficulty: $difficulty, picture: $picture, instructions: $instructions, name: $name, featured: $featured, preparationTime: $preparationTime, shortDescription: $shortDescription, commentCount: $commentCount, status: $status, rating: $rating, userCreated: $userCreated, dateCreated: $dateCreated, dateUpdated: $dateUpdated)';
+    return 'RecipeModel(id: $id, difficulty: $difficulty, picture: $picture, instructions: $instructions, name: $name, featured: $featured, preparationTime: $preparationTime, shortDescription: $shortDescription, commentCount: $commentCount, status: $status, rating: $rating, userCreated: $userCreated, incredients: $incredients, tags: $tags, categories: $categories, dateCreated: $dateCreated, dateUpdated: $dateUpdated)';
   }
 
   @override
@@ -342,12 +406,16 @@ class _$_RecipeModel extends _RecipeModel {
             const DeepCollectionEquality()
                 .equals(other.userCreated, userCreated) &&
             const DeepCollectionEquality()
+                .equals(other._incredients, _incredients) &&
+            const DeepCollectionEquality().equals(other._tags, _tags) &&
+            const DeepCollectionEquality()
+                .equals(other._categories, _categories) &&
+            const DeepCollectionEquality()
                 .equals(other.dateCreated, dateCreated) &&
             const DeepCollectionEquality()
                 .equals(other.dateUpdated, dateUpdated));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -363,6 +431,9 @@ class _$_RecipeModel extends _RecipeModel {
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(rating),
       const DeepCollectionEquality().hash(userCreated),
+      const DeepCollectionEquality().hash(_incredients),
+      const DeepCollectionEquality().hash(_tags),
+      const DeepCollectionEquality().hash(_categories),
       const DeepCollectionEquality().hash(dateCreated),
       const DeepCollectionEquality().hash(dateUpdated));
 
@@ -370,60 +441,59 @@ class _$_RecipeModel extends _RecipeModel {
   @override
   _$$_RecipeModelCopyWith<_$_RecipeModel> get copyWith =>
       __$$_RecipeModelCopyWithImpl<_$_RecipeModel>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_RecipeModelToJson(
-      this,
-    );
-  }
 }
 
 abstract class _RecipeModel extends RecipeModel {
   factory _RecipeModel(
-      {required final String id,
-      required final String difficulty,
-      required final String picture,
-      required final String instructions,
-      required final String name,
-      required final bool featured,
-      required final int preparationTime,
-      required final String shortDescription,
-      required final int commentCount,
+      {final String? id,
+      final String? difficulty,
+      final String? picture,
+      final String? instructions,
+      final String? name,
+      final bool? featured,
+      final int? preparationTime,
+      final String? shortDescription,
+      final int? commentCount,
       final String? status,
       final double? rating,
       final String? userCreated,
+      final List<IncredientModel>? incredients,
+      final List<TagModel>? tags,
+      final List<CategoryModel>? categories,
       final DateTime? dateCreated,
       final dynamic dateUpdated}) = _$_RecipeModel;
   _RecipeModel._() : super._();
 
-  factory _RecipeModel.fromJson(Map<String, dynamic> json) =
-      _$_RecipeModel.fromJson;
-
   @override
-  String get id;
+  String? get id;
   @override
-  String get difficulty;
+  String? get difficulty;
   @override
-  String get picture;
+  String? get picture;
   @override
-  String get instructions;
+  String? get instructions;
   @override
-  String get name;
+  String? get name;
   @override
-  bool get featured;
+  bool? get featured;
   @override
-  int get preparationTime;
+  int? get preparationTime;
   @override
-  String get shortDescription;
+  String? get shortDescription;
   @override
-  int get commentCount;
+  int? get commentCount;
   @override
   String? get status;
   @override
   double? get rating;
   @override
   String? get userCreated;
+  @override
+  List<IncredientModel>? get incredients;
+  @override
+  List<TagModel>? get tags;
+  @override
+  List<CategoryModel>? get categories;
   @override
   DateTime? get dateCreated;
   @override

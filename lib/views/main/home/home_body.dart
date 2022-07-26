@@ -104,10 +104,10 @@ class _HomePageBodyState extends State<HomePageBody> {
                   itemBuilder: (context, index) {
                     final RecipeModel singleRecipe = recipeList[index];
                     return PopularListItem(
-                      title: singleRecipe.name,
-                      difficulty: singleRecipe.difficulty,
-                      description: singleRecipe.shortDescription,
-                      timeEstimate: singleRecipe.preparationTime,
+                      title: singleRecipe.name!,
+                      difficulty: singleRecipe.difficulty!,
+                      description: singleRecipe.shortDescription!,
+                      timeEstimate: singleRecipe.preparationTime!,
                       imageUrl: singleRecipe.picture,
                       onTap: () {
                         Navigator.push(

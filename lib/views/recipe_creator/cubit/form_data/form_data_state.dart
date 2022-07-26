@@ -2,37 +2,43 @@ part of 'form_data_cubit.dart';
 
 enum FormDataStateStatus { initial, loading, loaded, error }
 
+enum BlurHashStatus { initial, loading, loaded, error }
+
 @freezed
 class FormDataState with _$FormDataState {
   const factory FormDataState({
     required FormDataStateStatus status,
+    required BlurHashStatus blurHashStatus,
     required bool featured,
-    required int preparationTime,
     required String instructions,
     required List<IncredientModel> incredients,
     required List<CategoryModel> categories,
-    required List<CategoryModel> tags,
-    RecipeModel? recipe,
+    required List<TagModel> tags,
+    required RecipeModel recipe,
+    int? preparationTime,
     String? name,
     String? shortDescription,
     String? difficulty,
     File? image,
+    String? blurHash,
   }) = _FormDataState;
 
   factory FormDataState.initial() {
     return FormDataState(
       status: FormDataStateStatus.initial,
-      recipe: null,
+      recipe: RecipeModel(),
       featured: false,
-      preparationTime: 30,
+      preparationTime: null,
       instructions: "",
-      incredients: [IncredientModel.create()],
+      incredients: [],
       categories: [],
       tags: [],
       name: null,
       shortDescription: null,
-      difficulty: null,
+      difficulty: "easy",
       image: null,
+      blurHash: "",
+      blurHashStatus: BlurHashStatus.initial,
     );
   }
 }

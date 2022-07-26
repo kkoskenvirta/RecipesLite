@@ -1,6 +1,6 @@
 part of 'stepper_cubit.dart';
 
-enum StepperItem { start, photos, classification, review }
+enum StepperItem { details, incredients, classification, review }
 
 @freezed
 class StepperState with _$StepperState {
@@ -11,8 +11,8 @@ class StepperState with _$StepperState {
 
   factory StepperState.initial() {
     return const StepperState(
-      stepperItem: StepperItem.start,
-      index: 0,
+      stepperItem: StepperItem.review,
+      index: 3,
     );
   }
 }

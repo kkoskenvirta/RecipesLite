@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/global/global_blocs.dart';
 import 'package:flutter_e_commerce/global/global_repos.dart';
@@ -6,7 +8,8 @@ import 'package:flutter_e_commerce/routes/route_service.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:get/get.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 

@@ -99,6 +99,6 @@ class UserDataCubit extends Cubit<UserDataState> {
   }
 
   List<dynamic> _generateFavoritesToDirectus(List<RecipeModel> favorites) {
-    return favorites.map((recipe) => FavoriteDTO(recipeId: recipe.id, userId: currentUser!.id).toJson()).toList();
+    return favorites.map((recipe) => FavoriteDTO(recipeId: recipe.id!, userId: currentUser!.id).toJson()).toList();
   }
 }

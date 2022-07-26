@@ -25,10 +25,10 @@ mixin _$CategoryDataDTO {
   @JsonKey(name: 'category_name')
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'category_picture')
-  String? get picture => throw _privateConstructorUsedError;
+  String get picture => throw _privateConstructorUsedError;
   @JsonKey(name: 'category_icon')
-  String? get icon => throw _privateConstructorUsedError;
-  String get status => throw _privateConstructorUsedError;
+  String get icon => throw _privateConstructorUsedError;
+  String? get status => throw _privateConstructorUsedError;
   String? get sort => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -45,9 +45,9 @@ abstract class $CategoryDataDTOCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'category_id') String id,
       @JsonKey(name: 'category_name') String name,
-      @JsonKey(name: 'category_picture') String? picture,
-      @JsonKey(name: 'category_icon') String? icon,
-      String status,
+      @JsonKey(name: 'category_picture') String picture,
+      @JsonKey(name: 'category_icon') String icon,
+      String? status,
       String? sort});
 }
 
@@ -81,15 +81,15 @@ class _$CategoryDataDTOCopyWithImpl<$Res>
       picture: picture == freezed
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       icon: icon == freezed
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       sort: sort == freezed
           ? _value.sort
           : sort // ignore: cast_nullable_to_non_nullable
@@ -108,9 +108,9 @@ abstract class _$$_CategoryDataDTOCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'category_id') String id,
       @JsonKey(name: 'category_name') String name,
-      @JsonKey(name: 'category_picture') String? picture,
-      @JsonKey(name: 'category_icon') String? icon,
-      String status,
+      @JsonKey(name: 'category_picture') String picture,
+      @JsonKey(name: 'category_icon') String icon,
+      String? status,
       String? sort});
 }
 
@@ -146,15 +146,15 @@ class __$$_CategoryDataDTOCopyWithImpl<$Res>
       picture: picture == freezed
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       icon: icon == freezed
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       sort: sort == freezed
           ? _value.sort
           : sort // ignore: cast_nullable_to_non_nullable
@@ -168,10 +168,10 @@ class __$$_CategoryDataDTOCopyWithImpl<$Res>
 class _$_CategoryDataDTO extends _CategoryDataDTO {
   _$_CategoryDataDTO(
       {@JsonKey(name: 'category_id') required this.id,
-      @JsonKey(name: 'category_name') required this.name,
-      @JsonKey(name: 'category_picture') this.picture,
-      @JsonKey(name: 'category_icon') this.icon,
-      required this.status,
+      @JsonKey(name: 'category_name') this.name = '',
+      @JsonKey(name: 'category_picture') this.picture = '',
+      @JsonKey(name: 'category_icon') this.icon = '',
+      this.status,
       this.sort})
       : super._();
 
@@ -186,12 +186,12 @@ class _$_CategoryDataDTO extends _CategoryDataDTO {
   final String name;
   @override
   @JsonKey(name: 'category_picture')
-  final String? picture;
+  final String picture;
   @override
   @JsonKey(name: 'category_icon')
-  final String? icon;
+  final String icon;
   @override
-  final String status;
+  final String? status;
   @override
   final String? sort;
 
@@ -240,10 +240,10 @@ class _$_CategoryDataDTO extends _CategoryDataDTO {
 abstract class _CategoryDataDTO extends CategoryDataDTO {
   factory _CategoryDataDTO(
       {@JsonKey(name: 'category_id') required final String id,
-      @JsonKey(name: 'category_name') required final String name,
-      @JsonKey(name: 'category_picture') final String? picture,
-      @JsonKey(name: 'category_icon') final String? icon,
-      required final String status,
+      @JsonKey(name: 'category_name') final String name,
+      @JsonKey(name: 'category_picture') final String picture,
+      @JsonKey(name: 'category_icon') final String icon,
+      final String? status,
       final String? sort}) = _$_CategoryDataDTO;
   _CategoryDataDTO._() : super._();
 
@@ -258,12 +258,12 @@ abstract class _CategoryDataDTO extends CategoryDataDTO {
   String get name;
   @override
   @JsonKey(name: 'category_picture')
-  String? get picture;
+  String get picture;
   @override
   @JsonKey(name: 'category_icon')
-  String? get icon;
+  String get icon;
   @override
-  String get status;
+  String? get status;
   @override
   String? get sort;
   @override

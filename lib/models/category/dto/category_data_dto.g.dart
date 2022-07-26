@@ -9,10 +9,10 @@ part of 'category_data_dto.dart';
 _$_CategoryDataDTO _$$_CategoryDataDTOFromJson(Map<String, dynamic> json) =>
     _$_CategoryDataDTO(
       id: json['category_id'] as String,
-      name: json['category_name'] as String,
-      picture: json['category_picture'] as String?,
-      icon: json['category_icon'] as String?,
-      status: json['status'] as String,
+      name: json['category_name'] as String? ?? '',
+      picture: json['category_picture'] as String? ?? '',
+      icon: json['category_icon'] as String? ?? '',
+      status: json['status'] as String?,
       sort: json['sort'] as String?,
     );
 

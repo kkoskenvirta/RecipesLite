@@ -17,7 +17,6 @@ class MainPage extends StatelessWidget {
     return BlocBuilder<NavigationCubit, NavigationState>(
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: const Color.fromARGB(255, 252, 242, 246),
           body: BlocBuilder<RecipeFetchCubit, RecipeFetchState>(
             builder: (context, state) {
               if (state is RecipeFetchInitial) {

@@ -8,10 +8,10 @@ part 'category_data_dto.g.dart';
 class CategoryDataDTO with _$CategoryDataDTO {
   factory CategoryDataDTO({
     @JsonKey(name: 'category_id') required String id,
-    @JsonKey(name: 'category_name') required String name,
-    @JsonKey(name: 'category_picture') String? picture,
-    @JsonKey(name: 'category_icon') String? icon,
-    required String status,
+    @JsonKey(name: 'category_name') @Default('') String name,
+    @JsonKey(name: 'category_picture') @Default('') String picture,
+    @JsonKey(name: 'category_icon') @Default('') String icon,
+    String? status,
     String? sort,
   }) = _CategoryDataDTO;
 

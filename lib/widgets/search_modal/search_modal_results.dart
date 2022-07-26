@@ -50,10 +50,10 @@ class SearchResultList extends StatelessWidget {
                             ));
                       },
                       child: PopularListItem(
-                        title: resultRecipe.name,
-                        difficulty: resultRecipe.difficulty,
-                        description: resultRecipe.shortDescription,
-                        timeEstimate: resultRecipe.preparationTime,
+                        title: resultRecipe.name!,
+                        difficulty: resultRecipe.difficulty!,
+                        description: resultRecipe.shortDescription!,
+                        timeEstimate: resultRecipe.preparationTime!,
                         imageUrl: resultRecipe.picture,
                       ),
                     );

@@ -5,11 +5,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
+import 'package:flutter_e_commerce/views/recipe_creator/category_selector.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_data/form_data_cubit.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_fetch/form_fetch_cubit.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_stepper/stepper_cubit.dart';
+import 'package:flutter_e_commerce/views/recipe_creator/difficulty_selector.dart';
+import 'package:flutter_e_commerce/views/recipe_creator/incredients_selector.dart';
+import 'package:flutter_e_commerce/views/recipe_creator/review_slide.dart';
+import 'package:flutter_e_commerce/views/recipe_creator/tag_selector.dart';
+import 'package:flutter_e_commerce/widgets/custom_stepper/custom_stepper.dart';
 import 'package:flutter_e_commerce/widgets/header/header.dart';
-import 'package:flutter_e_commerce/widgets/incredients_builder/incredients_builder.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -27,6 +32,9 @@ class RecipeCreatorScreen extends StatelessWidget {
           child: Column(
             children: [
               const FormFetchHeader(),
+              const SizedBox(
+                height: 0,
+              ),
               Flexible(
                 child: MultiBlocProvider(
                   providers: [
@@ -55,16 +63,12 @@ class FormFetchHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: const EdgeInsets.only(left: 16.0, right: 16, top: 0, bottom: 0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: const Header(
-          title: "New recipe",
-          showLeftButton: false,
-          showRightButton: false,
-        ));
+    return Header(
+      title: "New recipe",
+      showTrailingButton: false,
+      onLeadingButtonPressed: () => Navigator.pop(context),
+      leadingButtonIcon: const Icon(Icons.chevron_left),
+    );
   }
 }
 
@@ -73,24 +77,34 @@ class FormFetchScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final QuillController _controller = QuillController.basic();
-    final ImagePicker imagePicker = ImagePicker();
     final formDataCubit = BlocProvider.of<FormDataCubit>(context);
 
-    Future pickImage() async {
-      try {
-        final XFile? image = await imagePicker.pickImage(source: ImageSource.gallery);
-        if (image == null) return;
-        final tempImage = File(image.path);
-        formDataCubit.updateRecipeImage(tempImage);
-      } on PlatformException catch (e) {
-        print("failed to pick an image" + e.toString());
-      }
-    }
+    final List<GlobalKey<FormState>> _stepKeys = [
+      GlobalKey<FormState>(),
+      GlobalKey<FormState>(),
+    ];
 
     return BlocBuilder<FormFetchCubit, FormFetchState>(
-      bloc: BlocProvider.of<FormFetchCubit>(context)..getFieldOptions(),
+      bloc: BlocProvider.of<FormFetchCubit>(context)
+        ..getCategoryOptions()
+        ..getTagOptions(),
       builder: (context, state) {
+        void updateName(String text) {
+          BlocProvider.of<FormDataCubit>(context).updateRecipeName(text);
+        }
+
+        void updateDescription(String text) {
+          BlocProvider.of<FormDataCubit>(context).updateRecipeDescription(text);
+        }
+
+        void updateInstructions(String text) {
+          BlocProvider.of<FormDataCubit>(context).updateRecipeInstructions(text);
+        }
+
+        void updateDifficulty(String text) {
+          BlocProvider.of<FormDataCubit>(context).updateRecipeDifficulty(text);
+        }
+
         switch (state.status) {
           case FormFetchStateStatus.loading:
             return const CircularProgressIndicator();
@@ -100,40 +114,79 @@ class FormFetchScreenBody extends StatelessWidget {
             final tags = state.tags;
             return BlocBuilder<FormDataCubit, FormDataState>(
               builder: (context, state) {
-                final image = state.image;
                 return BlocProvider(
                   create: (context) => StepperCubit(),
                   child: BlocBuilder<StepperCubit, StepperState>(
                     builder: (context, state) {
                       final stepperCubit = BlocProvider.of<StepperCubit>(context);
 
-                      return Center(
-                        child: Stepper(
-                          elevation: 1,
-                          type: StepperType.horizontal,
-                          currentStep: state.index,
-                          onStepContinue: () {
-                            stepperCubit.nextStep();
-                          },
-                          onStepCancel: () {
-                            if (state.index == 0) {
-                              Navigator.pop(context);
+                      return CustomStepper(
+                        elevation: 1,
+                        type: CustomStepperType.horizontal,
+                        currentStep: state.index,
+                        onStepTapped: (index) {
+                          if (index <= state.index) {
+                            stepperCubit.goToStep(index);
+                          }
+                        },
+                        onStepContinue: () {
+                          if (state.stepperItem == StepperItem.details) {
+                            final isValidForm = _stepKeys[state.index].currentState!.validate();
+                            if (isValidForm) {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              stepperCubit.nextStep();
                             }
-                            stepperCubit.previousStep();
-                          },
-                          steps: <Step>[
-                            Step(
-                              title: SmallText(text: 'Details'),
-                              content: Column(
+                          } else if (state.stepperItem == StepperItem.classification ||
+                              state.stepperItem == StepperItem.incredients) {
+                            stepperCubit.nextStep();
+                          }
+                          if (state.stepperItem == StepperItem.review) {
+                            BlocProvider.of<FormDataCubit>(context).submitRecipe();
+                          }
+                        },
+                        onStepCancel: () {
+                          if (state.index == 0) {
+                            Navigator.pop(context);
+                          }
+                          stepperCubit.previousStep();
+                        },
+                        controlsBuilder: (context, details) {
+                          final ColorScheme colorScheme = Theme.of(context).colorScheme;
+                          const OutlinedBorder buttonShape = RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(2)),
+                          );
+                          const EdgeInsets buttonPadding = EdgeInsets.symmetric(horizontal: 16.0);
+                          return CustomStepperControls(
+                            colorScheme: colorScheme,
+                            buttonPadding: buttonPadding,
+                            buttonShape: buttonShape,
+                            details: details,
+                          );
+                        },
+                        steps: <CustomStep>[
+                          CustomStep(
+                            title: SmallText(text: 'Details'),
+                            content: Form(
+                              key: _stepKeys[0],
+                              autovalidateMode: AutovalidateMode.disabled,
+                              child: Column(
                                 children: <Widget>[
                                   Align(alignment: Alignment.centerLeft, child: SmallText(text: "Recipe name")),
                                   const SizedBox(
                                     height: 6,
                                   ),
                                   TextFormField(
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       hintText: "Recipe name",
                                     ),
+                                    textInputAction: TextInputAction.next,
+                                    onChanged: (text) => updateName(text),
+                                    validator: (value) {
+                                      if (value != null && value.length < 4) {
+                                        return 'Minimun name length is 4 characters';
+                                      }
+                                      return null;
+                                    },
                                   ),
                                   const SizedBox(
                                     height: 20,
@@ -146,7 +199,23 @@ class FormFetchScreenBody extends StatelessWidget {
                                     decoration: const InputDecoration(
                                       hintText: "Short description of the recipe",
                                     ),
+                                    textInputAction: TextInputAction.next,
+                                    onChanged: (text) => updateDescription(text),
+                                    validator: (value) {
+                                      if (value != null && value.length < 4) {
+                                        return 'Minimun description length is 8 characters';
+                                      }
+                                      return null;
+                                    },
                                   ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Align(alignment: Alignment.centerLeft, child: SmallText(text: "Difficulty and time")),
+                                  const SizedBox(
+                                    height: 6,
+                                  ),
+                                  DifficultySelector(),
                                   const SizedBox(
                                     height: 20,
                                   ),
@@ -160,84 +229,77 @@ class FormFetchScreenBody extends StatelessWidget {
                                     decoration: const InputDecoration(
                                       hintText: "Instructions on how to prepare the recipe",
                                     ),
+                                    onChanged: (text) => updateInstructions(text),
+                                    validator: (value) {
+                                      if (value != null && value.length < 4) {
+                                        return 'Minimun instruction length is 20 characters';
+                                      }
+                                      return null;
+                                    },
                                   ),
                                   const SizedBox(
                                     height: 20,
                                   ),
-                                  Align(alignment: Alignment.centerLeft, child: SmallText(text: "Recipe incredients")),
+                                ],
+                              ),
+                            ),
+                            isActive: state.index >= 0,
+                            state: state.index >= 0 ? CustomStepState.complete : CustomStepState.disabled,
+                          ),
+                          CustomStep(
+                            title: SmallText(text: 'Incredients'),
+                            content: Form(
+                              key: _stepKeys[1],
+                              child: Column(
+                                children: [
+                                  Align(alignment: Alignment.centerLeft, child: SmallText(text: "Incredient list")),
                                   const SizedBox(
                                     height: 6,
                                   ),
-                                  IncredientsBuilder(incredients: [...formDataCubit.state.incredients]),
+                                  IncredientsSelector(incredients: [...formDataCubit.state.incredients]),
                                 ],
                               ),
-                              isActive: state.index >= 0,
-                              state: state.index >= 0 ? StepState.complete : StepState.disabled,
                             ),
-                            Step(
-                              title: SmallText(text: 'Photo'),
-                              content: Column(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () => pickImage(),
-                                    child: image != null
-                                        ? Container(
-                                            height: 280,
-                                            width: 280,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(20),
-                                              image: DecorationImage(
-                                                image: AssetImage(image.path),
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          )
-                                        : Container(
-                                            height: 250,
-                                            width: 250,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(20),
-                                              color: Colors.black12,
-                                            ),
-                                          ),
-                                  ),
-                                ],
-                              ),
-                              isActive: state.index >= 1,
-                              state: state.index >= 1 ? StepState.complete : StepState.disabled,
+                            isActive: state.index >= 1,
+                            state: state.index >= 1 ? CustomStepState.complete : CustomStepState.disabled,
+                          ),
+                          CustomStep(
+                            title: SmallText(text: 'Categories'),
+                            content: Column(
+                              children: [
+                                Align(alignment: Alignment.centerLeft, child: SmallText(text: "Special dietary")),
+                                const SizedBox(
+                                  height: 6,
+                                ),
+                                TagSelector(
+                                  tags: tags,
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Align(
+                                    alignment: Alignment.centerLeft, child: SmallText(text: "Categorize your recipe")),
+                                const SizedBox(
+                                  height: 6,
+                                ),
+                                CategorySelector(categories: categories),
+                              ],
                             ),
-                            Step(
-                              title: SmallText(text: 'Categories'),
-                              content: Column(
-                                children: [
-                                  TextFormField(
-                                    decoration: const InputDecoration(labelText: 'Photo'),
-                                  ),
-                                  // TextFormField(
-                                  //   decoration: InputDecoration(labelText: 'Password'),
-                                  // ),
-                                ],
-                              ),
-                              isActive: state.index >= 2,
-                              state: state.index >= 2 ? StepState.complete : StepState.disabled,
+                            isActive: state.index >= 2,
+                            state: state.index >= 2 ? CustomStepState.complete : CustomStepState.disabled,
+                          ),
+                          CustomStep(
+                            title: SmallText(text: 'Review'),
+                            content: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: const [
+                                ReviewSlide(),
+                              ],
                             ),
-                            Step(
-                              title: SmallText(text: 'Review'),
-                              content: Column(
-                                children: <Widget>[
-                                  TextFormField(
-                                    decoration: const InputDecoration(labelText: 'Photo'),
-                                  ),
-                                  // TextFormField(
-                                  //   decoration: InputDecoration(labelText: 'Password'),
-                                  // ),
-                                ],
-                              ),
-                              isActive: state.index >= 3,
-                              state: state.index >= 3 ? StepState.complete : StepState.disabled,
-                            )
-                          ],
-                        ),
+                            isActive: state.index >= 3,
+                            state: state.index >= 3 ? CustomStepState.complete : CustomStepState.disabled,
+                          )
+                        ],
                       );
                     },
                   ),
@@ -249,5 +311,133 @@ class FormFetchScreenBody extends StatelessWidget {
         }
       },
     );
+  }
+}
+
+class CustomStepperControls extends StatelessWidget {
+  const CustomStepperControls({
+    Key? key,
+    required this.colorScheme,
+    required this.buttonPadding,
+    required this.buttonShape,
+    required this.details,
+  }) : super(key: key);
+
+  final ColorScheme colorScheme;
+  final EdgeInsets buttonPadding;
+  final OutlinedBorder buttonShape;
+  final CustomControlsDetails details;
+
+  @override
+  Widget build(BuildContext context) {
+    bool _isDark() {
+      return Theme.of(context).brightness == Brightness.dark;
+    }
+
+    validateStep(int currentStep) {
+      final formDataState = BlocProvider.of<FormDataCubit>(context).state;
+      final incredients = formDataState.incredients;
+      final categories = formDataState.categories;
+      final tags = formDataState.tags;
+      final name = formDataState.name;
+      final description = formDataState.shortDescription;
+      final instructions = formDataState.instructions;
+      final time = formDataState.preparationTime;
+
+      switch (currentStep) {
+        case 0:
+          bool state = name != null &&
+              name.length >= 4 &&
+              description != null &&
+              description.length >= 8 &&
+              instructions.length >= 20 &&
+              time != null;
+
+          return state;
+        case 1:
+          bool state;
+          state = incredients.isNotEmpty;
+          return state;
+        case 2:
+          bool state;
+          state = categories.isNotEmpty;
+          return state;
+
+        default:
+          return false;
+      }
+    }
+
+    return Container(
+      decoration: BoxDecoration(
+          border: Border(
+        top: BorderSide(width: 1, color: Colors.black12),
+      )),
+      margin: const EdgeInsets.only(top: 0.0),
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 12),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          Container(
+            margin: const EdgeInsetsDirectional.only(start: 8.0),
+            child: TextButton(
+              onPressed: details.onStepCancel,
+              child: details.currentStep > 0 ? Text("Previous") : Text("Cancel"),
+            ),
+          ),
+          TextButton(
+            onPressed: validateStep(details.currentStep) ? details.onStepContinue : null,
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+                return states.contains(MaterialState.disabled)
+                    ? null
+                    : (_isDark() ? colorScheme.onSurface : colorScheme.onPrimary);
+              }),
+              backgroundColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+                return _isDark() || states.contains(MaterialState.disabled) ? null : colorScheme.primary;
+              }),
+              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(buttonPadding),
+              shape: MaterialStateProperty.all<OutlinedBorder>(buttonShape),
+            ),
+            child: details.currentStep < 3 ? Text("Continue") : Text("Submit"),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class StepperBottomBar extends StatelessWidget {
+  const StepperBottomBar({Key? key, required this.onStepCancel, required this.onStepContinue}) : super(key: key);
+
+  final VoidCallback onStepCancel;
+  final VoidCallback onStepContinue;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
+      ElevatedButton.icon(
+        style: ElevatedButton.styleFrom(
+          minimumSize: const Size.fromHeight(50),
+          elevation: 0,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          surfaceTintColor: Theme.of(context).primaryColor,
+        ),
+        label: const Text("ADD"),
+        icon: const Icon(Icons.add),
+        onPressed: () => onStepCancel(),
+      ),
+      ElevatedButton.icon(
+        style: ElevatedButton.styleFrom(
+          minimumSize: const Size.fromHeight(50),
+          elevation: 0,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          surfaceTintColor: Theme.of(context).primaryColor,
+        ),
+        label: const Text("ADD"),
+        icon: const Icon(Icons.add),
+        onPressed: () => onStepContinue(),
+      ),
+    ]);
   }
 }

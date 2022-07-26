@@ -110,10 +110,10 @@ class SingleCategoryScreenBody extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final RecipeModel recipe = recipeList[index];
                     return PopularListItem(
-                      title: recipe.name,
-                      difficulty: recipe.difficulty,
-                      description: recipe.shortDescription,
-                      timeEstimate: recipe.preparationTime,
+                      title: recipe.name!,
+                      difficulty: recipe.difficulty!,
+                      description: recipe.shortDescription!,
+                      timeEstimate: recipe.preparationTime!,
                       imageUrl: recipe.picture,
                       onTap: () {
                         Navigator.push(

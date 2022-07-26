@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/utils/int_extension.dart';
+import 'package:flutter_e_commerce/utils/string_extension.dart';
 import 'label_with_icon.dart';
 
 class InformationBar extends StatelessWidget {
   final String status;
   final int timeEstimate;
 
-  const InformationBar({Key? key, required this.status, this.timeEstimate = 0})
-      : super(key: key);
+  const InformationBar({Key? key, required this.status, this.timeEstimate = 0}) : super(key: key);
 
   difficultyColor(String status) {
-    if (status == "Easy") {
+    if (status.toLowerCase() == "easy") {
       return Colors.green.shade400;
-    } else if (status == "Normal") {
+    } else if (status.toLowerCase() == "normal") {
       return Colors.yellow.shade400;
-    } else if (status == "Hard") {
+    } else if (status.toLowerCase() == "hard") {
       return Colors.red.shade300;
     }
   }
@@ -25,7 +25,7 @@ class InformationBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         LabelAndIcon(
-          text: status,
+          text: status.capitalize(),
           icon: Icon(
             Icons.circle,
             color: difficultyColor(status),

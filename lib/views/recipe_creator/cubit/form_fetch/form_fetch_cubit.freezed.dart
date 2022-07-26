@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$FormFetchState {
   FormFetchStateStatus get status => throw _privateConstructorUsedError;
   List<CategoryModel> get categories => throw _privateConstructorUsedError;
-  List<CategoryModel> get tags => throw _privateConstructorUsedError;
+  List<TagModel> get tags => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $FormFetchStateCopyWith<FormFetchState> get copyWith =>
@@ -33,7 +33,7 @@ abstract class $FormFetchStateCopyWith<$Res> {
   $Res call(
       {FormFetchStateStatus status,
       List<CategoryModel> categories,
-      List<CategoryModel> tags});
+      List<TagModel> tags});
 }
 
 /// @nodoc
@@ -63,7 +63,7 @@ class _$FormFetchStateCopyWithImpl<$Res>
       tags: tags == freezed
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<CategoryModel>,
+              as List<TagModel>,
     ));
   }
 }
@@ -78,7 +78,7 @@ abstract class _$$_FormFetchStateCopyWith<$Res>
   $Res call(
       {FormFetchStateStatus status,
       List<CategoryModel> categories,
-      List<CategoryModel> tags});
+      List<TagModel> tags});
 }
 
 /// @nodoc
@@ -110,7 +110,7 @@ class __$$_FormFetchStateCopyWithImpl<$Res>
       tags: tags == freezed
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<CategoryModel>,
+              as List<TagModel>,
     ));
   }
 }
@@ -123,7 +123,7 @@ class _$_FormFetchState
   const _$_FormFetchState(
       {required this.status,
       required final List<CategoryModel> categories,
-      required final List<CategoryModel> tags})
+      required final List<TagModel> tags})
       : _categories = categories,
         _tags = tags;
 
@@ -136,9 +136,9 @@ class _$_FormFetchState
     return EqualUnmodifiableListView(_categories);
   }
 
-  final List<CategoryModel> _tags;
+  final List<TagModel> _tags;
   @override
-  List<CategoryModel> get tags {
+  List<TagModel> get tags {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_tags);
   }
@@ -186,14 +186,14 @@ abstract class _FormFetchState implements FormFetchState {
   const factory _FormFetchState(
       {required final FormFetchStateStatus status,
       required final List<CategoryModel> categories,
-      required final List<CategoryModel> tags}) = _$_FormFetchState;
+      required final List<TagModel> tags}) = _$_FormFetchState;
 
   @override
   FormFetchStateStatus get status;
   @override
   List<CategoryModel> get categories;
   @override
-  List<CategoryModel> get tags;
+  List<TagModel> get tags;
   @override
   @JsonKey(ignore: true)
   _$$_FormFetchStateCopyWith<_$_FormFetchState> get copyWith =>

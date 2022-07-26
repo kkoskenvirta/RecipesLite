@@ -45,12 +45,11 @@ class _RecipePageState extends State<RecipePage> {
     _scaleFactor = createScaling(_currScrollPosition);
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 252, 242, 246),
       body: Stack(children: [
         ClipRect(
           child: Transform.scale(
             scale: _scaleFactor,
-            child: Container(
+            child: SizedBox(
               width: double.maxFinite,
               height: Dimensions.recipeImgSize + 100,
               child: CachedNetworkImage(
@@ -87,14 +86,14 @@ class _RecipePageState extends State<RecipePage> {
                 padding: EdgeInsets.all(Dimensions.width15),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Dimensions.radius20),
-                  color: Color.fromARGB(255, 252, 242, 246),
+                  color: const Color.fromARGB(255, 252, 242, 246),
                 ),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      LargeText(text: widget.recipeModel.name),
+                      LargeText(text: widget.recipeModel.name!),
                       BlocBuilder<UserDataCubit, UserDataState>(builder: (context, state) {
                         final userDataCubit = BlocProvider.of<UserDataCubit>(context);
 
@@ -106,9 +105,9 @@ class _RecipePageState extends State<RecipePage> {
                               onPressed: () {
                                 userDataCubit.toggleFavorites(widget.recipeModel);
                               },
-                              icon: favorited ? Icon(Icons.favorite) : Icon(Icons.favorite_border_rounded));
+                              icon: favorited ? const Icon(Icons.favorite) : const Icon(Icons.favorite_border_rounded));
                         }
-                        return SizedBox();
+                        return const SizedBox();
                       }),
                     ],
                   ),
@@ -120,14 +119,14 @@ class _RecipePageState extends State<RecipePage> {
                     height: Dimensions.height10,
                   ),
                   InformationBar(
-                    status: widget.recipeModel.difficulty,
-                    timeEstimate: widget.recipeModel.preparationTime,
+                    status: widget.recipeModel.difficulty!,
+                    timeEstimate: widget.recipeModel.preparationTime!,
                   ),
                   SizedBox(
                     height: Dimensions.height20,
                   ),
                   MarkdownBody(
-                    data: widget.recipeModel.instructions,
+                    data: widget.recipeModel.instructions!,
                   ),
                   SizedBox(
                     height: Dimensions.height45,
@@ -155,8 +154,8 @@ class _RecipePageState extends State<RecipePage> {
               height: 42,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(Dimensions.radius20),
-                color: Color.fromARGB(255, 252, 242, 246),
-                boxShadow: [
+                color: const Color.fromARGB(255, 252, 242, 246),
+                boxShadow: const [
                   BoxShadow(
                     spreadRadius: 10,
                     blurRadius: 10,
@@ -164,7 +163,7 @@ class _RecipePageState extends State<RecipePage> {
                   ),
                 ],
               ),
-              child: Center(
+              child: const Center(
                 child: Icon(Icons.chevron_left_rounded),
               ),
             ),
