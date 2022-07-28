@@ -11,8 +11,8 @@ class StepperState with _$StepperState {
 
   factory StepperState.initial() {
     return const StepperState(
-      stepperItem: StepperItem.review,
-      index: 3,
+      stepperItem: StepperItem.details,
+      index: 0,
     );
   }
 }

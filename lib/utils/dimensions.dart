@@ -30,5 +30,6 @@ class Dimensions {
 
   static double categoryListImgSize = screenWidth / 6.5;
 
-  static double recipeImgSize = screenHeight / 3.25;
+  static double recipeImgSize = screenHeight / 2.5;
+  static double recipeCreatorImgSize = screenHeight / 3.25;
 }

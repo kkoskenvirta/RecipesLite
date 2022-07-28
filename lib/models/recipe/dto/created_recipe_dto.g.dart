@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'recipe_data_dto.dart';
+part of 'created_recipe_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_RecipeDataDTO _$$_RecipeDataDTOFromJson(Map<String, dynamic> json) =>
-    _$_RecipeDataDTO(
+_$_CreatedRecipeDTO _$$_CreatedRecipeDTOFromJson(Map<String, dynamic> json) =>
+    _$_CreatedRecipeDTO(
       id: json['id'] as String?,
       status: json['status'] as String?,
       difficulty: json['difficulty'] as String?,
@@ -36,7 +36,7 @@ _$_RecipeDataDTO _$$_RecipeDataDTOFromJson(Map<String, dynamic> json) =>
       dateUpdated: json['date_updated'],
     );
 
-Map<String, dynamic> _$$_RecipeDataDTOToJson(_$_RecipeDataDTO instance) =>
+Map<String, dynamic> _$$_CreatedRecipeDTOToJson(_$_CreatedRecipeDTO instance) =>
     <String, dynamic>{
       'id': instance.id,
       'status': instance.status,

@@ -33,7 +33,7 @@ class GlobalBlocs extends StatelessWidget {
           ),
         ),
         BlocProvider<UserDataCubit>(
-          lazy: true,
+          lazy: false,
           create: (context) => UserDataCubit(
             authRepository: context.read<AuthRepository>(),
             userDataRepository: context.read<UserDataRepository>(),

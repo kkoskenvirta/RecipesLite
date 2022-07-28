@@ -2,12 +2,15 @@ part of 'form_data_cubit.dart';
 
 enum FormDataStateStatus { initial, loading, loaded, error }
 
+enum DirectusRequestStatus { initial, loading, loaded, error }
+
 enum BlurHashStatus { initial, loading, loaded, error }
 
 @freezed
 class FormDataState with _$FormDataState {
   const factory FormDataState({
     required FormDataStateStatus status,
+    required DirectusRequestStatus requestStatus,
     required BlurHashStatus blurHashStatus,
     required bool featured,
     required String instructions,
@@ -26,6 +29,7 @@ class FormDataState with _$FormDataState {
   factory FormDataState.initial() {
     return FormDataState(
       status: FormDataStateStatus.initial,
+      requestStatus: DirectusRequestStatus.initial,
       recipe: RecipeModel(),
       featured: false,
       preparationTime: null,

@@ -1,24 +1,16 @@
-import 'package:blurhash_dart/blurhash_dart.dart';
-import 'package:flutter_e_commerce/models/category/category_model.dart';
-import 'package:flutter_e_commerce/models/category/dto/category_data_dto.dart';
-import 'package:flutter_e_commerce/models/category/dto/category_dto.dart';
 import 'package:flutter_e_commerce/models/category/dto/category_id_dto.dart';
-import 'package:flutter_e_commerce/models/incredient/dto/incredient_data_dto.dart';
 import 'package:flutter_e_commerce/models/incredient/dto/incredient_id_dto.dart';
-import 'package:flutter_e_commerce/models/incredient/incredient_model.dart';
-import 'package:flutter_e_commerce/models/tag/dto/tag_data_dto.dart';
-import 'package:flutter_e_commerce/models/tag/dto/tag_dto.dart';
+
 import 'package:flutter_e_commerce/models/tag/dto/tag_id_dto.dart';
-import 'package:flutter_e_commerce/models/tag/tag_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../recipe_model.dart';
 
-part 'recipe_data_dto.freezed.dart';
-part 'recipe_data_dto.g.dart';
+part 'created_recipe_dto.freezed.dart';
+part 'created_recipe_dto.g.dart';
 
 @freezed
-class RecipeDataDTO with _$RecipeDataDTO {
-  factory RecipeDataDTO({
+class CreatedRecipeDTO with _$CreatedRecipeDTO {
+  factory CreatedRecipeDTO({
     String? id,
     String? status,
     String? difficulty,
@@ -37,11 +29,11 @@ class RecipeDataDTO with _$RecipeDataDTO {
     @JsonKey(name: 'user_created') String? userCreated,
     @JsonKey(name: 'date_created') DateTime? dateCreated,
     @JsonKey(name: 'date_updated') dynamic dateUpdated,
-  }) = _RecipeDataDTO;
+  }) = _CreatedRecipeDTO;
 
-  const RecipeDataDTO._();
+  const CreatedRecipeDTO._();
 
-  factory RecipeDataDTO.fromJson(Map<String, dynamic> json) => _$RecipeDataDTOFromJson(json);
+  factory CreatedRecipeDTO.fromJson(Map<String, dynamic> json) => _$CreatedRecipeDTOFromJson(json);
 
   RecipeModel toDomain() {
     return RecipeModel(

@@ -119,7 +119,7 @@ class SingleCategoryScreenBody extends StatelessWidget {
                         Navigator.push(
                           (context),
                           MaterialPageRoute(
-                            builder: (context) => RecipePage(recipeModel: recipe),
+                            builder: (context) => RecipePage(recipe: recipe),
                           ),
                         );
                       },

@@ -60,6 +60,7 @@ dependencies:
   duration: ^3.0.11
   blurhash_dart: ^1.1.0
   flutter_image_compress: ^1.1.0
+  mime_type: ^1.0.0
 
 dev_dependencies:
   flutter_test:

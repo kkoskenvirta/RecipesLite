@@ -14,6 +14,10 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) {
+  return _CategoryModel.fromJson(json);
+}
+
 /// @nodoc
 mixin _$CategoryModel {
   String get id => throw _privateConstructorUsedError;
@@ -23,6 +27,7 @@ mixin _$CategoryModel {
   String? get icon => throw _privateConstructorUsedError;
   String? get sort => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $CategoryModelCopyWith<CategoryModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -155,15 +160,19 @@ class __$$_CategoryModelCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
-class _$_CategoryModel implements _CategoryModel {
+@JsonSerializable()
+class _$_CategoryModel extends _CategoryModel {
   _$_CategoryModel(
       {required this.id,
       required this.name,
       this.picture,
       this.status,
       this.icon,
-      this.sort});
+      this.sort})
+      : super._();
+
+  factory _$_CategoryModel.fromJson(Map<String, dynamic> json) =>
+      _$$_CategoryModelFromJson(json);
 
   @override
   final String id;
@@ -196,6 +205,7 @@ class _$_CategoryModel implements _CategoryModel {
             const DeepCollectionEquality().equals(other.sort, sort));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -210,9 +220,16 @@ class _$_CategoryModel implements _CategoryModel {
   @override
   _$$_CategoryModelCopyWith<_$_CategoryModel> get copyWith =>
       __$$_CategoryModelCopyWithImpl<_$_CategoryModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_CategoryModelToJson(
+      this,
+    );
+  }
 }
 
-abstract class _CategoryModel implements CategoryModel {
+abstract class _CategoryModel extends CategoryModel {
   factory _CategoryModel(
       {required final String id,
       required final String name,
@@ -220,6 +237,10 @@ abstract class _CategoryModel implements CategoryModel {
       final String? status,
       final String? icon,
       final String? sort}) = _$_CategoryModel;
+  _CategoryModel._() : super._();
+
+  factory _CategoryModel.fromJson(Map<String, dynamic> json) =
+      _$_CategoryModel.fromJson;
 
   @override
   String get id;

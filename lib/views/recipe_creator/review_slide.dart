@@ -1,21 +1,17 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_e_commerce/models/category/category_model.dart';
-import 'package:flutter_e_commerce/models/tag/tag_model.dart';
+
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_data/form_data_cubit.dart';
 import 'package:flutter_e_commerce/widgets/categorization_bar.dart';
 import 'package:flutter_e_commerce/widgets/incredients_table.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
-import 'package:flutter_e_commerce/widgets/ratings_bar.dart';
-import 'package:flutter_e_commerce/widgets/small_text.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:blurhash_dart/blurhash_dart.dart';
 import 'package:image/image.dart' as img;
@@ -50,7 +46,6 @@ class ReviewSlide extends StatelessWidget {
       formDataCubit.updateRecipeImage(tempImage);
 
       formDataCubit.updateBlurHashStatus(BlurHashStatus.loading);
-      // final blurHash = await generateBlurHash(tempImage);
       final blurHash = await compute(generateBlurHash, tempImage);
       formDataCubit.updateBlurHash(blurHash.hash);
       formDataCubit.updateBlurHashStatus(BlurHashStatus.loaded);
@@ -77,7 +72,7 @@ class ReviewSlide extends StatelessWidget {
               builder: (context, state) {
                 return SizedBox(
                   width: double.maxFinite,
-                  height: Dimensions.recipeImgSize + 0,
+                  height: Dimensions.recipeCreatorImgSize + 0,
                   child: GestureDetector(
                     onTap: () async => pickImage(context),
                     child: image != null

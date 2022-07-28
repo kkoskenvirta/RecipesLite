@@ -14,6 +14,10 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+TagModel _$TagModelFromJson(Map<String, dynamic> json) {
+  return _TagModel.fromJson(json);
+}
+
 /// @nodoc
 mixin _$TagModel {
   String get id => throw _privateConstructorUsedError;
@@ -21,6 +25,7 @@ mixin _$TagModel {
   String? get status => throw _privateConstructorUsedError;
   String? get sort => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $TagModelCopyWith<TagModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -117,9 +122,13 @@ class __$$_TagModelCopyWithImpl<$Res> extends _$TagModelCopyWithImpl<$Res>
 }
 
 /// @nodoc
+@JsonSerializable()
+class _$_TagModel extends _TagModel {
+  _$_TagModel({required this.id, required this.name, this.status, this.sort})
+      : super._();
 
-class _$_TagModel implements _TagModel {
-  _$_TagModel({required this.id, required this.name, this.status, this.sort});
+  factory _$_TagModel.fromJson(Map<String, dynamic> json) =>
+      _$$_TagModelFromJson(json);
 
   @override
   final String id;
@@ -146,6 +155,7 @@ class _$_TagModel implements _TagModel {
             const DeepCollectionEquality().equals(other.sort, sort));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -158,14 +168,24 @@ class _$_TagModel implements _TagModel {
   @override
   _$$_TagModelCopyWith<_$_TagModel> get copyWith =>
       __$$_TagModelCopyWithImpl<_$_TagModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_TagModelToJson(
+      this,
+    );
+  }
 }
 
-abstract class _TagModel implements TagModel {
+abstract class _TagModel extends TagModel {
   factory _TagModel(
       {required final String id,
       required final String name,
       final String? status,
       final String? sort}) = _$_TagModel;
+  _TagModel._() : super._();
+
+  factory _TagModel.fromJson(Map<String, dynamic> json) = _$_TagModel.fromJson;
 
   @override
   String get id;

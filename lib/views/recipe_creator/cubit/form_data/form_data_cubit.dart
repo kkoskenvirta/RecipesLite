@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_e_commerce/models/category/category_model.dart';
 import 'package:flutter_e_commerce/models/incredient/incredient_model.dart';
@@ -8,8 +9,11 @@ import 'package:flutter_e_commerce/models/recipe/dto/recipe_data_dto.dart';
 import 'package:flutter_e_commerce/models/recipe/dto/recipe_dto.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
+import 'package:flutter_e_commerce/utils/string_extension.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
+import 'package:mime_type/mime_type.dart';
+import 'package:http_parser/http_parser.dart';
 
 part 'form_data_cubit.freezed.dart';
 part 'form_data_state.dart';
@@ -17,10 +21,10 @@ part 'form_data_state.dart';
 class FormDataCubit extends Cubit<FormDataState> {
   FormDataCubit({
     required RecipesRepository recipesRepository,
-  })  : _recipeRepository = recipesRepository,
+  })  : _recipesRepository = recipesRepository,
         super(FormDataState.initial());
 
-  final RecipesRepository _recipeRepository;
+  final RecipesRepository _recipesRepository;
 
   updateRecipeImage(File tempImage) {
     try {
@@ -127,20 +131,70 @@ class FormDataCubit extends Cubit<FormDataState> {
     emit(state.copyWith(tags: tagList));
   }
 
-  submitRecipe() async {
-    final recipe = RecipeModel(
-      difficulty: state.difficulty,
-      name: state.name,
-      preparationTime: state.preparationTime,
-      shortDescription: state.shortDescription,
-      instructions: state.instructions,
-      categories: state.categories,
-      tags: state.tags,
-      incredients: state.incredients,
-    );
+  Future<bool> submitRecipe() async {
+    try {
+      emit(state.copyWith(requestStatus: DirectusRequestStatus.loading));
+      String? fileId;
+      if (state.image != null) {
+        String? mimeType = mime(state.image!.path);
+        String mimee = mimeType!.split('/')[0];
+        String type = mimeType.split('/')[1];
 
-    final recipeDataDTO = RecipeModel().fromDomain(recipe);
+        final image = FormData.fromMap({
+          'title': '${state.name}-${DateTime.now().toUtc().toString()}',
+          'file': await MultipartFile.fromFile(state.image!.path, contentType: MediaType(mimee, type)),
+        });
 
-    print(recipeDataDTO);
+        final failureOrFile = await _recipesRepository.uploadImage(image);
+        failureOrFile.fold(
+          (error) {
+            emit(state.copyWith(requestStatus: DirectusRequestStatus.error));
+          },
+          (file) {
+            fileId = file.id!;
+          },
+        );
+      }
+      await finalizeSubmit(fileId);
+
+      return true;
+    } catch (e) {
+      print(e);
+      emit(state.copyWith(requestStatus: DirectusRequestStatus.error));
+      print("ready to return");
+
+      return false;
+    }
+  }
+
+  finalizeSubmit(String? fileId) async {
+    try {
+      final recipe = RecipeModel(
+        difficulty: state.difficulty!.capitalize(),
+        name: state.name!.capitalize(),
+        preparationTime: state.preparationTime,
+        shortDescription: state.shortDescription,
+        instructions: state.instructions,
+        categories: state.categories,
+        tags: state.tags,
+        incredients: state.incredients,
+        blurhash: state.blurHash,
+        picture: fileId,
+        status: "draft",
+      );
+
+      final recipePostRequestDTO = RecipeModel().fromDomain(recipe);
+      final failureOrRecipe = await _recipesRepository.addRecipe(recipePostRequestDTO);
+      failureOrRecipe.fold(
+        (error) => emit(state.copyWith(requestStatus: DirectusRequestStatus.error)),
+        (recipe) {
+          print("recipe added");
+          emit(state.copyWith(requestStatus: DirectusRequestStatus.loaded));
+          return;
+        },
+      );
+    } catch (e) {
+      emit(state.copyWith(requestStatus: DirectusRequestStatus.error));
+    }
   }
 }

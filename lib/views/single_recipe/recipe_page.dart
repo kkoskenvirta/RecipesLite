@@ -7,6 +7,8 @@ import 'package:flutter_e_commerce/modules/directus_module.dart';
 import 'package:flutter_e_commerce/repositorys/user_data_repository.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/scale_func.dart';
+import 'package:flutter_e_commerce/widgets/categorization_bar.dart';
+import 'package:flutter_e_commerce/widgets/incredients_table.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/ratings_bar.dart';
@@ -17,11 +19,11 @@ import '../../config/api_config.dart';
 import '../../models/recipe/recipe_model.dart';
 
 class RecipePage extends StatefulWidget {
-  final RecipeModel recipeModel;
+  final RecipeModel recipe;
 
   const RecipePage({
     Key? key,
-    required this.recipeModel,
+    required this.recipe,
   }) : super(key: key);
 
   @override
@@ -33,7 +35,6 @@ class _RecipePageState extends State<RecipePage> {
 
   var _currScrollPosition = 0.0;
   double _scaleFactor = 0.85;
-
   @override
   void dispose() {
     scrollController.dispose();
@@ -43,6 +44,7 @@ class _RecipePageState extends State<RecipePage> {
   @override
   Widget build(BuildContext context) {
     _scaleFactor = createScaling(_currScrollPosition);
+    final recipe = widget.recipe;
 
     return Scaffold(
       body: Stack(children: [
@@ -55,7 +57,7 @@ class _RecipePageState extends State<RecipePage> {
               child: CachedNetworkImage(
                 height: Dimensions.listViewImgSize,
                 width: Dimensions.listViewImgSize,
-                imageUrl: '$baseUrl$assetsPath${widget.recipeModel.picture}',
+                imageUrl: '$baseUrl$assetsPath${widget.recipe.picture}',
                 imageBuilder: (context, imageProvider) => Container(
                   height: Dimensions.listViewImgSize,
                   width: Dimensions.listViewImgSize,
@@ -83,7 +85,7 @@ class _RecipePageState extends State<RecipePage> {
                 height: Dimensions.recipeImgSize - 40,
               ),
               Container(
-                padding: EdgeInsets.all(Dimensions.width15),
+                padding: EdgeInsets.symmetric(vertical: Dimensions.width20, horizontal: Dimensions.width20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Dimensions.radius20),
                   color: const Color.fromARGB(255, 252, 242, 246),
@@ -92,41 +94,48 @@ class _RecipePageState extends State<RecipePage> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      LargeText(text: widget.recipeModel.name!),
-                      BlocBuilder<UserDataCubit, UserDataState>(builder: (context, state) {
-                        final userDataCubit = BlocProvider.of<UserDataCubit>(context);
-
-                        if (state.status == UserDataStateStatus.loaded) {
-                          final result = state.favorites.where((recipe) => recipe.id == widget.recipeModel.id);
-                          final bool favorited = result.isEmpty ? false : true;
-
-                          return IconButton(
-                              onPressed: () {
-                                userDataCubit.toggleFavorites(widget.recipeModel);
-                              },
-                              icon: favorited ? const Icon(Icons.favorite) : const Icon(Icons.favorite_border_rounded));
-                        }
-                        return const SizedBox();
-                      }),
-                    ],
+                    children: [if (recipe.name != null) LargeText(text: recipe.name!)],
                   ),
                   SizedBox(
                     height: Dimensions.height10,
                   ),
-                  const RatingsRow(ratingScore: 4.5, commentCount: 173),
+                  if (recipe.difficulty != null && recipe.preparationTime != null)
+                    InformationBar(
+                      status: recipe.difficulty!,
+                      timeEstimate: recipe.preparationTime!,
+                    ),
                   SizedBox(
-                    height: Dimensions.height10,
+                    height: Dimensions.height20,
                   ),
-                  InformationBar(
-                    status: widget.recipeModel.difficulty!,
-                    timeEstimate: widget.recipeModel.preparationTime!,
+                  CategorizationBar(categories: recipe.categories!, tags: recipe.tags!),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Divider(
+                    height: 1,
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: LargeText(
+                        size: 16,
+                        text: "Incredients",
+                      )),
+                  IncredientsTable(incredients: recipe.incredients!),
+                  Divider(
+                    height: 1,
                   ),
                   SizedBox(
                     height: Dimensions.height20,
                   ),
-                  MarkdownBody(
-                    data: widget.recipeModel.instructions!,
+                  Align(alignment: Alignment.centerLeft, child: LargeText(size: 16, text: "Instructions")),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    recipe.instructions!,
                   ),
                   SizedBox(
                     height: Dimensions.height45,

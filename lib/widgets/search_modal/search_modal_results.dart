@@ -46,7 +46,7 @@ class SearchResultList extends StatelessWidget {
                         Navigator.push(
                             (context),
                             MaterialPageRoute(
-                              builder: (context) => RecipePage(recipeModel: resultRecipe),
+                              builder: (context) => RecipePage(recipe: resultRecipe),
                             ));
                       },
                       child: PopularListItem(

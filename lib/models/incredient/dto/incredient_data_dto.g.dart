@@ -12,7 +12,6 @@ _$_IncredientDataDTO _$$_IncredientDataDTOFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String? ?? '',
       amount: (json['amount'] as num?)?.toDouble(),
       unit: json['unit'] as String? ?? 'gram',
-      status: json['status'] as String?,
       sort: json['sort'] as String?,
     );
 
@@ -23,6 +22,5 @@ Map<String, dynamic> _$$_IncredientDataDTOToJson(
       'name': instance.name,
       'amount': instance.amount,
       'unit': instance.unit,
-      'status': instance.status,
       'sort': instance.sort,
     };

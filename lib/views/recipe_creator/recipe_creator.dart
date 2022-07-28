@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
+import 'package:flutter_e_commerce/routes/route_service.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/category_selector.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_data/form_data_cubit.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_fetch/form_fetch_cubit.dart';
@@ -16,6 +17,7 @@ import 'package:flutter_e_commerce/views/recipe_creator/tag_selector.dart';
 import 'package:flutter_e_commerce/widgets/custom_stepper/custom_stepper.dart';
 import 'package:flutter_e_commerce/widgets/header/header.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
+import 'package:get/route_manager.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RecipeCreatorScreen extends StatelessWidget {
@@ -79,6 +81,14 @@ class FormFetchScreenBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final formDataCubit = BlocProvider.of<FormDataCubit>(context);
 
+    final nameFieldController = TextEditingController();
+    final descriptionFieldController = TextEditingController();
+    final instructionFieldController = TextEditingController();
+
+    nameFieldController.text = formDataCubit.state.name ?? "";
+    descriptionFieldController.text = formDataCubit.state.shortDescription ?? "";
+    instructionFieldController.text = formDataCubit.state.instructions;
+
     final List<GlobalKey<FormState>> _stepKeys = [
       GlobalKey<FormState>(),
       GlobalKey<FormState>(),
@@ -129,7 +139,7 @@ class FormFetchScreenBody extends StatelessWidget {
                             stepperCubit.goToStep(index);
                           }
                         },
-                        onStepContinue: () {
+                        onStepContinue: () async {
                           if (state.stepperItem == StepperItem.details) {
                             final isValidForm = _stepKeys[state.index].currentState!.validate();
                             if (isValidForm) {
@@ -141,7 +151,14 @@ class FormFetchScreenBody extends StatelessWidget {
                             stepperCubit.nextStep();
                           }
                           if (state.stepperItem == StepperItem.review) {
-                            BlocProvider.of<FormDataCubit>(context).submitRecipe();
+                            final navigator = Navigator.of(context);
+                            final bool uploadCompleted = await BlocProvider.of<FormDataCubit>(context).submitRecipe();
+                            print(uploadCompleted);
+                            if (uploadCompleted) {
+                              navigator.pop();
+                              //Get new created recipe and route to the recipe
+                              // navigator.popAndPushNamed(Routes.recipe.name, arguments: )
+                            }
                           }
                         },
                         onStepCancel: () {
@@ -177,10 +194,11 @@ class FormFetchScreenBody extends StatelessWidget {
                                   ),
                                   TextFormField(
                                     decoration: const InputDecoration(
-                                      hintText: "Recipe name",
+                                      hintText: "Recipe name (min 4 characters)",
                                     ),
                                     textInputAction: TextInputAction.next,
                                     onChanged: (text) => updateName(text),
+                                    controller: nameFieldController,
                                     validator: (value) {
                                       if (value != null && value.length < 4) {
                                         return 'Minimun name length is 4 characters';
@@ -191,16 +209,19 @@ class FormFetchScreenBody extends StatelessWidget {
                                   const SizedBox(
                                     height: 20,
                                   ),
-                                  Align(alignment: Alignment.centerLeft, child: SmallText(text: "Recipe description")),
+                                  Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: SmallText(text: "Recipe description (min 8 characters)")),
                                   const SizedBox(
                                     height: 6,
                                   ),
                                   TextFormField(
                                     decoration: const InputDecoration(
-                                      hintText: "Short description of the recipe",
+                                      hintText: "Recipe description",
                                     ),
                                     textInputAction: TextInputAction.next,
                                     onChanged: (text) => updateDescription(text),
+                                    controller: descriptionFieldController,
                                     validator: (value) {
                                       if (value != null && value.length < 4) {
                                         return 'Minimun description length is 8 characters';
@@ -230,6 +251,7 @@ class FormFetchScreenBody extends StatelessWidget {
                                       hintText: "Instructions on how to prepare the recipe",
                                     ),
                                     onChanged: (text) => updateInstructions(text),
+                                    controller: instructionFieldController,
                                     validator: (value) {
                                       if (value != null && value.length < 4) {
                                         return 'Minimun instruction length is 20 characters';
@@ -362,7 +384,8 @@ class CustomStepperControls extends StatelessWidget {
           bool state;
           state = categories.isNotEmpty;
           return state;
-
+        case 3:
+          return true;
         default:
           return false;
       }
@@ -375,33 +398,70 @@ class CustomStepperControls extends StatelessWidget {
       )),
       margin: const EdgeInsets.only(top: 0.0),
       padding: const EdgeInsets.only(left: 16, right: 16, top: 12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          Container(
-            margin: const EdgeInsetsDirectional.only(start: 8.0),
-            child: TextButton(
-              onPressed: details.onStepCancel,
-              child: details.currentStep > 0 ? Text("Previous") : Text("Cancel"),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints.tightFor(
+          height: 48.0,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Container(
+              margin: const EdgeInsetsDirectional.only(start: 8.0),
+              child: TextButton(
+                onPressed: details.onStepCancel,
+                child: details.currentStep > 0 ? Text("Previous") : Text("Cancel"),
+              ),
             ),
-          ),
-          TextButton(
-            onPressed: validateStep(details.currentStep) ? details.onStepContinue : null,
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
-                return states.contains(MaterialState.disabled)
-                    ? null
-                    : (_isDark() ? colorScheme.onSurface : colorScheme.onPrimary);
-              }),
-              backgroundColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
-                return _isDark() || states.contains(MaterialState.disabled) ? null : colorScheme.primary;
-              }),
-              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(buttonPadding),
-              shape: MaterialStateProperty.all<OutlinedBorder>(buttonShape),
+            ConstrainedBox(
+              constraints: BoxConstraints(minHeight: 48, minWidth: 140),
+              child: TextButton(
+                onPressed: validateStep(details.currentStep) ? details.onStepContinue : null,
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+                    return states.contains(MaterialState.disabled)
+                        ? null
+                        : (_isDark() ? colorScheme.onSurface : colorScheme.onPrimary);
+                  }),
+                  backgroundColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+                    return _isDark() || states.contains(MaterialState.disabled) ? null : colorScheme.primary;
+                  }),
+                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(buttonPadding),
+                  shape: MaterialStateProperty.all<OutlinedBorder>(buttonShape),
+                ),
+                child: details.currentStep < 3
+                    ? Text("Continue")
+                    : BlocBuilder<FormDataCubit, FormDataState>(
+                        builder: (context, state) {
+                          switch (state.requestStatus) {
+                            case DirectusRequestStatus.initial:
+                              return Text("Submit");
+                            case DirectusRequestStatus.loading:
+                              return Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            case DirectusRequestStatus.loaded:
+                              return Center(
+                                child: Icon(Icons.check_circle_outline),
+                              );
+
+                            default:
+                              return SizedBox();
+                          }
+                        },
+                      ),
+              ),
             ),
-            child: details.currentStep < 3 ? Text("Continue") : Text("Submit"),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

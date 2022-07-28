@@ -13,11 +13,14 @@ class IncredientsTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(Dimensions.radius15),
-      ),
+          // borderRadius: BorderRadius.circular(Dimensions.radius15),
+          // color: Colors.red,
+          ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ListView.separated(
+            padding: EdgeInsets.symmetric(vertical: Dimensions.height10),
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
@@ -32,7 +35,7 @@ class IncredientsTable extends StatelessWidget {
             },
             separatorBuilder: ((context, index) {
               return const Divider(
-                height: 1,
+                height: 0,
               );
             }),
             itemCount: incredients.length,
@@ -51,11 +54,6 @@ class IncredientRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // decoration: BoxDecoration(
-      //     // color: index.isEven ? Color.fromARGB(255, 237, 235, 235) : Colors.transparent,
-      //     border: Border(
-      //   bottom: BorderSide(color: Colors.black12, width: 1),
-      // )),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -77,9 +75,6 @@ class IncredientRow extends StatelessWidget {
               '${incredient.amount.toString()} ${incredient.unit!}',
               textAlign: TextAlign.end,
             ),
-          ),
-          const SizedBox(
-            width: 6,
           ),
         ],
       ),

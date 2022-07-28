@@ -24,6 +24,7 @@ mixin _$RecipeDataDTO {
   String? get status => throw _privateConstructorUsedError;
   String? get difficulty => throw _privateConstructorUsedError;
   double? get rating => throw _privateConstructorUsedError;
+  String? get blurhash => throw _privateConstructorUsedError;
   String? get picture => throw _privateConstructorUsedError;
   String get instructions => throw _privateConstructorUsedError;
   List<CategoryIdDTO> get categories => throw _privateConstructorUsedError;
@@ -62,6 +63,7 @@ abstract class $RecipeDataDTOCopyWith<$Res> {
       String? status,
       String? difficulty,
       double? rating,
+      String? blurhash,
       String? picture,
       String instructions,
       List<CategoryIdDTO> categories,
@@ -92,6 +94,7 @@ class _$RecipeDataDTOCopyWithImpl<$Res>
     Object? status = freezed,
     Object? difficulty = freezed,
     Object? rating = freezed,
+    Object? blurhash = freezed,
     Object? picture = freezed,
     Object? instructions = freezed,
     Object? categories = freezed,
@@ -123,6 +126,10 @@ class _$RecipeDataDTOCopyWithImpl<$Res>
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as double?,
+      blurhash: blurhash == freezed
+          ? _value.blurhash
+          : blurhash // ignore: cast_nullable_to_non_nullable
+              as String?,
       picture: picture == freezed
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
@@ -191,6 +198,7 @@ abstract class _$$_RecipeDataDTOCopyWith<$Res>
       String? status,
       String? difficulty,
       double? rating,
+      String? blurhash,
       String? picture,
       String instructions,
       List<CategoryIdDTO> categories,
@@ -223,6 +231,7 @@ class __$$_RecipeDataDTOCopyWithImpl<$Res>
     Object? status = freezed,
     Object? difficulty = freezed,
     Object? rating = freezed,
+    Object? blurhash = freezed,
     Object? picture = freezed,
     Object? instructions = freezed,
     Object? categories = freezed,
@@ -254,6 +263,10 @@ class __$$_RecipeDataDTOCopyWithImpl<$Res>
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as double?,
+      blurhash: blurhash == freezed
+          ? _value.blurhash
+          : blurhash // ignore: cast_nullable_to_non_nullable
+              as String?,
       picture: picture == freezed
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
@@ -318,6 +331,7 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
       this.status,
       this.difficulty,
       this.rating,
+      this.blurhash,
       this.picture,
       this.instructions = '',
       required final List<CategoryIdDTO> categories,
@@ -347,6 +361,8 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
   final String? difficulty;
   @override
   final double? rating;
+  @override
+  final String? blurhash;
   @override
   final String? picture;
   @override
@@ -402,7 +418,7 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
 
   @override
   String toString() {
-    return 'RecipeDataDTO(id: $id, status: $status, difficulty: $difficulty, rating: $rating, picture: $picture, instructions: $instructions, categories: $categories, tags: $tags, incredients: $incredients, name: $name, featured: $featured, preparationTime: $preparationTime, shortDescription: $shortDescription, commentCount: $commentCount, userCreated: $userCreated, dateCreated: $dateCreated, dateUpdated: $dateUpdated)';
+    return 'RecipeDataDTO(id: $id, status: $status, difficulty: $difficulty, rating: $rating, blurhash: $blurhash, picture: $picture, instructions: $instructions, categories: $categories, tags: $tags, incredients: $incredients, name: $name, featured: $featured, preparationTime: $preparationTime, shortDescription: $shortDescription, commentCount: $commentCount, userCreated: $userCreated, dateCreated: $dateCreated, dateUpdated: $dateUpdated)';
   }
 
   @override
@@ -415,6 +431,7 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
             const DeepCollectionEquality()
                 .equals(other.difficulty, difficulty) &&
             const DeepCollectionEquality().equals(other.rating, rating) &&
+            const DeepCollectionEquality().equals(other.blurhash, blurhash) &&
             const DeepCollectionEquality().equals(other.picture, picture) &&
             const DeepCollectionEquality()
                 .equals(other.instructions, instructions) &&
@@ -447,6 +464,7 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(difficulty),
       const DeepCollectionEquality().hash(rating),
+      const DeepCollectionEquality().hash(blurhash),
       const DeepCollectionEquality().hash(picture),
       const DeepCollectionEquality().hash(instructions),
       const DeepCollectionEquality().hash(_categories),
@@ -480,6 +498,7 @@ abstract class _RecipeDataDTO extends RecipeDataDTO {
           final String? status,
           final String? difficulty,
           final double? rating,
+          final String? blurhash,
           final String? picture,
           final String instructions,
           required final List<CategoryIdDTO> categories,
@@ -507,6 +526,8 @@ abstract class _RecipeDataDTO extends RecipeDataDTO {
   String? get difficulty;
   @override
   double? get rating;
+  @override
+  String? get blurhash;
   @override
   String? get picture;
   @override

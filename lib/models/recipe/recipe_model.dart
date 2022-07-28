@@ -1,23 +1,19 @@
 import 'package:flutter_e_commerce/models/category/category_model.dart';
-import 'package:flutter_e_commerce/models/category/dto/category_data_dto.dart';
-import 'package:flutter_e_commerce/models/category/dto/category_id_dto.dart';
-import 'package:flutter_e_commerce/models/incredient/dto/incredient_data_dto.dart';
-import 'package:flutter_e_commerce/models/incredient/dto/incredient_id_dto.dart';
 import 'package:flutter_e_commerce/models/incredient/incredient_model.dart';
-import 'package:flutter_e_commerce/models/recipe/dto/recipe_data_dto.dart';
-import 'package:flutter_e_commerce/models/tag/dto/tag_data_dto.dart';
-import 'package:flutter_e_commerce/models/tag/dto/tag_id_dto.dart';
+import 'package:flutter_e_commerce/models/recipe/dto/recipe_post_request_dto.dart';
+import 'package:flutter_e_commerce/models/relation_details.dart/relation_details.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'recipe_model.freezed.dart';
-// part 'recipe_model.g.dart';
+part 'recipe_model.g.dart';
 
 @freezed
 class RecipeModel with _$RecipeModel {
   factory RecipeModel({
     String? id,
     String? difficulty,
+    String? blurhash,
     String? picture,
     String? instructions,
     String? name,
@@ -37,36 +33,50 @@ class RecipeModel with _$RecipeModel {
 
   const RecipeModel._();
 
-  // factory RecipeModel.fromJson(Map<String, dynamic> json) => _$RecipeModelFromJson(json);
+  factory RecipeModel.fromJson(Map<String, dynamic> json) => _$RecipeModelFromJson(json);
 
-  RecipeDataDTO fromDomain(RecipeModel recipe) {
-    return RecipeDataDTO(
-      dateCreated: DateTime.now().toUtc(),
-      dateUpdated: DateTime.now().toUtc(),
-      commentCount: 0,
+  RecipePostRequestDTO fromDomain(RecipeModel recipe) {
+    return RecipePostRequestDTO(
       difficulty: recipe.difficulty,
-      featured: false,
       name: recipe.name!,
-      picture: "",
+      blurhash: recipe.blurhash,
+      picture: recipe.picture,
       preparationTime: recipe.preparationTime,
-      rating: 0,
       shortDescription: recipe.shortDescription,
-      status: "draft",
       instructions: recipe.instructions!,
-      categories:
-          recipe.categories!.map((category) => CategoryIdDTO(category: CategoryDataDTO(id: category.id))).toList(),
-      tags: recipe.tags!.map((tag) => TagIdDTO(tag: TagDataDTO(id: tag.id))).toList(),
-      incredients: recipe.incredients!
-          .map(
-            (incredient) => IncredientIdDTO(
-              incredient: IncredientDataDTO(
-                name: incredient.name!,
-                amount: incredient.amount,
-                unit: incredient.unit!,
-              ),
-            ),
-          )
-          .toList(),
+      categories: RelationDetails(
+        create: recipe.categories!.map((category) {
+          final createObj = {};
+          final categoryObj = {};
+          categoryObj["category_id"] = category.id;
+          createObj["recipe_id"] = "+";
+          createObj["category_category_id"] = categoryObj;
+          return createObj;
+        }).toList(),
+      ).toJson(),
+      tags: RelationDetails(
+        create: recipe.tags!.map((tag) {
+          final createObj = {};
+          final tagObj = {};
+          tagObj["id"] = tag.id;
+          createObj["recipe_id"] = "+";
+          createObj["tag_id"] = tagObj;
+          return createObj;
+        }).toList(),
+      ).toJson(),
+      incredients: RelationDetails(
+        create: recipe.incredients!.map(
+          (incredient) {
+            final createObj = {};
+            final incredientObj = {};
+            incredientObj["name"] = incredient.name;
+            incredientObj["amount"] = incredient.amount;
+            incredientObj["unit"] = incredient.unit;
+            createObj["incredient_id"] = incredientObj;
+            return createObj;
+          },
+        ).toList(),
+      ).toJson(),
     );
   }
 }

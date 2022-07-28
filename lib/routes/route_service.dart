@@ -35,7 +35,7 @@ class RouterService {
 
       case Routes.recipe:
         final recipeData = settings.arguments as RecipeModel;
-        return RecipePage(recipeModel: recipeData);
+        return RecipePage(recipe: recipeData);
 
       case Routes.main:
         return const MainPage();

@@ -11,7 +11,6 @@ class IncredientDataDTO with _$IncredientDataDTO {
     @Default('') String name,
     double? amount,
     @Default('gram') String unit,
-    String? status,
     String? sort,
   }) = _IncredientDataDTO;
 

@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$FormDataState {
   FormDataStateStatus get status => throw _privateConstructorUsedError;
+  DirectusRequestStatus get requestStatus => throw _privateConstructorUsedError;
   BlurHashStatus get blurHashStatus => throw _privateConstructorUsedError;
   bool get featured => throw _privateConstructorUsedError;
   String get instructions => throw _privateConstructorUsedError;
@@ -43,6 +44,7 @@ abstract class $FormDataStateCopyWith<$Res> {
       _$FormDataStateCopyWithImpl<$Res>;
   $Res call(
       {FormDataStateStatus status,
+      DirectusRequestStatus requestStatus,
       BlurHashStatus blurHashStatus,
       bool featured,
       String instructions,
@@ -72,6 +74,7 @@ class _$FormDataStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = freezed,
+    Object? requestStatus = freezed,
     Object? blurHashStatus = freezed,
     Object? featured = freezed,
     Object? instructions = freezed,
@@ -91,6 +94,10 @@ class _$FormDataStateCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormDataStateStatus,
+      requestStatus: requestStatus == freezed
+          ? _value.requestStatus
+          : requestStatus // ignore: cast_nullable_to_non_nullable
+              as DirectusRequestStatus,
       blurHashStatus: blurHashStatus == freezed
           ? _value.blurHashStatus
           : blurHashStatus // ignore: cast_nullable_to_non_nullable
@@ -163,6 +170,7 @@ abstract class _$$_FormDataStateCopyWith<$Res>
   @override
   $Res call(
       {FormDataStateStatus status,
+      DirectusRequestStatus requestStatus,
       BlurHashStatus blurHashStatus,
       bool featured,
       String instructions,
@@ -195,6 +203,7 @@ class __$$_FormDataStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = freezed,
+    Object? requestStatus = freezed,
     Object? blurHashStatus = freezed,
     Object? featured = freezed,
     Object? instructions = freezed,
@@ -214,6 +223,10 @@ class __$$_FormDataStateCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormDataStateStatus,
+      requestStatus: requestStatus == freezed
+          ? _value.requestStatus
+          : requestStatus // ignore: cast_nullable_to_non_nullable
+              as DirectusRequestStatus,
       blurHashStatus: blurHashStatus == freezed
           ? _value.blurHashStatus
           : blurHashStatus // ignore: cast_nullable_to_non_nullable
@@ -275,6 +288,7 @@ class __$$_FormDataStateCopyWithImpl<$Res>
 class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
   const _$_FormDataState(
       {required this.status,
+      required this.requestStatus,
       required this.blurHashStatus,
       required this.featured,
       required this.instructions,
@@ -294,6 +308,8 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
 
   @override
   final FormDataStateStatus status;
+  @override
+  final DirectusRequestStatus requestStatus;
   @override
   final BlurHashStatus blurHashStatus;
   @override
@@ -338,7 +354,7 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'FormDataState(status: $status, blurHashStatus: $blurHashStatus, featured: $featured, instructions: $instructions, incredients: $incredients, categories: $categories, tags: $tags, recipe: $recipe, preparationTime: $preparationTime, name: $name, shortDescription: $shortDescription, difficulty: $difficulty, image: $image, blurHash: $blurHash)';
+    return 'FormDataState(status: $status, requestStatus: $requestStatus, blurHashStatus: $blurHashStatus, featured: $featured, instructions: $instructions, incredients: $incredients, categories: $categories, tags: $tags, recipe: $recipe, preparationTime: $preparationTime, name: $name, shortDescription: $shortDescription, difficulty: $difficulty, image: $image, blurHash: $blurHash)';
   }
 
   @override
@@ -347,6 +363,7 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
     properties
       ..add(DiagnosticsProperty('type', 'FormDataState'))
       ..add(DiagnosticsProperty('status', status))
+      ..add(DiagnosticsProperty('requestStatus', requestStatus))
       ..add(DiagnosticsProperty('blurHashStatus', blurHashStatus))
       ..add(DiagnosticsProperty('featured', featured))
       ..add(DiagnosticsProperty('instructions', instructions))
@@ -368,6 +385,8 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
         (other.runtimeType == runtimeType &&
             other is _$_FormDataState &&
             const DeepCollectionEquality().equals(other.status, status) &&
+            const DeepCollectionEquality()
+                .equals(other.requestStatus, requestStatus) &&
             const DeepCollectionEquality()
                 .equals(other.blurHashStatus, blurHashStatus) &&
             const DeepCollectionEquality().equals(other.featured, featured) &&
@@ -394,6 +413,7 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(status),
+      const DeepCollectionEquality().hash(requestStatus),
       const DeepCollectionEquality().hash(blurHashStatus),
       const DeepCollectionEquality().hash(featured),
       const DeepCollectionEquality().hash(instructions),
@@ -417,6 +437,7 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
 abstract class _FormDataState implements FormDataState {
   const factory _FormDataState(
       {required final FormDataStateStatus status,
+      required final DirectusRequestStatus requestStatus,
       required final BlurHashStatus blurHashStatus,
       required final bool featured,
       required final String instructions,
@@ -433,6 +454,8 @@ abstract class _FormDataState implements FormDataState {
 
   @override
   FormDataStateStatus get status;
+  @override
+  DirectusRequestStatus get requestStatus;
   @override
   BlurHashStatus get blurHashStatus;
   @override

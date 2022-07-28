@@ -25,7 +25,6 @@ mixin _$IncredientDataDTO {
   String get name => throw _privateConstructorUsedError;
   double? get amount => throw _privateConstructorUsedError;
   String get unit => throw _privateConstructorUsedError;
-  String? get status => throw _privateConstructorUsedError;
   String? get sort => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -44,7 +43,6 @@ abstract class $IncredientDataDTOCopyWith<$Res> {
       String name,
       double? amount,
       String unit,
-      String? status,
       String? sort});
 }
 
@@ -63,7 +61,6 @@ class _$IncredientDataDTOCopyWithImpl<$Res>
     Object? name = freezed,
     Object? amount = freezed,
     Object? unit = freezed,
-    Object? status = freezed,
     Object? sort = freezed,
   }) {
     return _then(_value.copyWith(
@@ -83,10 +80,6 @@ class _$IncredientDataDTOCopyWithImpl<$Res>
           ? _value.unit
           : unit // ignore: cast_nullable_to_non_nullable
               as String,
-      status: status == freezed
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String?,
       sort: sort == freezed
           ? _value.sort
           : sort // ignore: cast_nullable_to_non_nullable
@@ -107,7 +100,6 @@ abstract class _$$_IncredientDataDTOCopyWith<$Res>
       String name,
       double? amount,
       String unit,
-      String? status,
       String? sort});
 }
 
@@ -128,7 +120,6 @@ class __$$_IncredientDataDTOCopyWithImpl<$Res>
     Object? name = freezed,
     Object? amount = freezed,
     Object? unit = freezed,
-    Object? status = freezed,
     Object? sort = freezed,
   }) {
     return _then(_$_IncredientDataDTO(
@@ -148,10 +139,6 @@ class __$$_IncredientDataDTOCopyWithImpl<$Res>
           ? _value.unit
           : unit // ignore: cast_nullable_to_non_nullable
               as String,
-      status: status == freezed
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String?,
       sort: sort == freezed
           ? _value.sort
           : sort // ignore: cast_nullable_to_non_nullable
@@ -168,7 +155,6 @@ class _$_IncredientDataDTO extends _IncredientDataDTO {
       this.name = '',
       this.amount,
       this.unit = 'gram',
-      this.status,
       this.sort})
       : super._();
 
@@ -187,13 +173,11 @@ class _$_IncredientDataDTO extends _IncredientDataDTO {
   @JsonKey()
   final String unit;
   @override
-  final String? status;
-  @override
   final String? sort;
 
   @override
   String toString() {
-    return 'IncredientDataDTO(id: $id, name: $name, amount: $amount, unit: $unit, status: $status, sort: $sort)';
+    return 'IncredientDataDTO(id: $id, name: $name, amount: $amount, unit: $unit, sort: $sort)';
   }
 
   @override
@@ -205,7 +189,6 @@ class _$_IncredientDataDTO extends _IncredientDataDTO {
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.amount, amount) &&
             const DeepCollectionEquality().equals(other.unit, unit) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.sort, sort));
   }
 
@@ -217,7 +200,6 @@ class _$_IncredientDataDTO extends _IncredientDataDTO {
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(amount),
       const DeepCollectionEquality().hash(unit),
-      const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(sort));
 
   @JsonKey(ignore: true)
@@ -240,7 +222,6 @@ abstract class _IncredientDataDTO extends IncredientDataDTO {
       final String name,
       final double? amount,
       final String unit,
-      final String? status,
       final String? sort}) = _$_IncredientDataDTO;
   _IncredientDataDTO._() : super._();
 
@@ -256,8 +237,6 @@ abstract class _IncredientDataDTO extends IncredientDataDTO {
   double? get amount;
   @override
   String get unit;
-  @override
-  String? get status;
   @override
   String? get sort;
   @override

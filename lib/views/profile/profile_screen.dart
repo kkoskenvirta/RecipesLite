@@ -154,7 +154,7 @@ class ProfileBody extends StatelessWidget {
                           Navigator.push(
                             (context),
                             MaterialPageRoute(
-                              builder: (context) => RecipePage(recipeModel: singleRecipe),
+                              builder: (context) => RecipePage(recipe: singleRecipe),
                             ),
                           );
                         },
