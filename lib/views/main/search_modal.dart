@@ -5,6 +5,7 @@ import 'package:flutter_e_commerce/modules/directus_module.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/views/main/cubit/recipe_search_cubit.dart';
+import 'dart:async';
 
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/search_modal/search_modal_results.dart';
@@ -58,31 +59,7 @@ class _Body extends StatelessWidget {
                         left: Dimensions.width20,
                         right: Dimensions.width20,
                       ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              decoration: InputDecoration(border: InputBorder.none, hintText: "Search for recipes"),
-                              controller: searchController,
-                              onChanged: ((value) async {
-                                if (value.isNotEmpty) {
-                                  searchCubit.searchRecipes(value);
-                                }
-                              }),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              if (searchController.value.text.isEmpty) {
-                                Navigator.pop(context);
-                              } else {
-                                searchController.text = "";
-                              }
-                            },
-                            child: Icon(Icons.close_rounded),
-                          ),
-                        ],
-                      ),
+                      child: SearchField(searchController: searchController, searchCubit: searchCubit),
                     ),
                   ),
                   SizedBox(
@@ -93,6 +70,62 @@ class _Body extends StatelessWidget {
               ),
             ),
           )),
+    );
+  }
+}
+
+class SearchField extends StatefulWidget {
+  const SearchField({
+    Key? key,
+    required this.searchController,
+    required this.searchCubit,
+  }) : super(key: key);
+
+  final TextEditingController searchController;
+  final RecipeSearchCubit searchCubit;
+
+  @override
+  State<SearchField> createState() => _SearchFieldState();
+}
+
+class _SearchFieldState extends State<SearchField> {
+  Timer? _debounce;
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: TextField(
+            decoration: InputDecoration(border: InputBorder.none, hintText: "Search for recipes"),
+            controller: widget.searchController,
+            onChanged: ((value) async {
+              if (value.isNotEmpty) {
+                if (_debounce?.isActive ?? false) _debounce!.cancel();
+                _debounce = Timer(const Duration(milliseconds: 500), () {
+                  widget.searchCubit.searchRecipes(value);
+                });
+              }
+            }),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            if (widget.searchController.value.text.isEmpty) {
+              Navigator.pop(context);
+            } else {
+              widget.searchController.text = "";
+            }
+          },
+          child: Icon(Icons.close_rounded),
+        ),
+      ],
     );
   }
 }

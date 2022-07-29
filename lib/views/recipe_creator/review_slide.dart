@@ -108,7 +108,7 @@ class ReviewSlide extends StatelessWidget {
                                 height: 120,
                                 width: 180,
                                 color: Colors.pink.shade50,
-                                child: Icon(
+                                child: const Icon(
                                   Icons.add_a_photo_rounded,
                                   size: 48,
                                 ),
@@ -149,7 +149,7 @@ class ReviewSlide extends StatelessWidget {
                   const SizedBox(
                     height: 12,
                   ),
-                  Divider(
+                  const Divider(
                     height: 1,
                   ),
                   const SizedBox(
@@ -163,7 +163,7 @@ class ReviewSlide extends StatelessWidget {
                   const SizedBox(
                     height: 12,
                   ),
-                  Divider(
+                  const Divider(
                     height: 1,
                   ),
                   SizedBox(

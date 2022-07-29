@@ -1,15 +1,7 @@
-import 'package:blurhash_dart/blurhash_dart.dart';
-import 'package:flutter_e_commerce/models/category/category_model.dart';
-import 'package:flutter_e_commerce/models/category/dto/category_data_dto.dart';
-import 'package:flutter_e_commerce/models/category/dto/category_dto.dart';
 import 'package:flutter_e_commerce/models/category/dto/category_id_dto.dart';
-import 'package:flutter_e_commerce/models/incredient/dto/incredient_data_dto.dart';
 import 'package:flutter_e_commerce/models/incredient/dto/incredient_id_dto.dart';
-import 'package:flutter_e_commerce/models/incredient/incredient_model.dart';
-import 'package:flutter_e_commerce/models/tag/dto/tag_data_dto.dart';
-import 'package:flutter_e_commerce/models/tag/dto/tag_dto.dart';
+
 import 'package:flutter_e_commerce/models/tag/dto/tag_id_dto.dart';
-import 'package:flutter_e_commerce/models/tag/tag_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../recipe_model.dart';
 
@@ -27,7 +19,7 @@ class RecipeDataDTO with _$RecipeDataDTO {
     String? picture,
     @Default('') String instructions,
     required List<CategoryIdDTO> categories,
-    required List<TagIdDTO>? tags,
+    required List<TagIdDTO> tags,
     required List<IncredientIdDTO> incredients,
     @JsonKey(name: 'Name') String? name,
     @JsonKey(name: 'Featured') bool? featured,
@@ -61,7 +53,7 @@ class RecipeDataDTO with _$RecipeDataDTO {
       userCreated: userCreated,
       instructions: instructions,
       categories: categories.map((category) => category.toDomain()).toList(),
-      tags: tags?.map((tag) => tag.toDomain()).toList(),
+      tags: tags.map((tag) => tag.toDomain()).toList(),
       incredients: incredients.map((incredient) => incredient.toDomain()).toList(),
     );
   }

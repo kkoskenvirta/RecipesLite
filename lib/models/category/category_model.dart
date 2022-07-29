@@ -11,6 +11,7 @@ class CategoryModel with _$CategoryModel {
     String? picture,
     String? status,
     String? icon,
+    String? blurhash,
     String? sort,
   }) = _CategoryModel;
 

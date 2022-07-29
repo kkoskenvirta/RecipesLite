@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
+import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
 import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
@@ -47,90 +48,93 @@ class _HomePageBodyState extends State<HomePageBody> {
     //Home view horizontal slider
     return BlocBuilder<RecipeFetchCubit, RecipeFetchState>(
       builder: (context, state) {
-        if (state is RecipeFetchInitial) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (state is RecipeFetchLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (state is RecipeFetchError) {
-          return const Text("Error happened");
-        } else if (state is RecipeFetchLoaded) {
-          final recipeList = state.recipeList;
-          return Column(
-            children: [
-              Container(
-                clipBehavior: Clip.none,
-                height: Dimensions.pageView,
+        switch (state.status) {
+          case RecipeFetchStateStatus.initial:
+            return const Center(child: CircularProgressIndicator());
+          case RecipeFetchStateStatus.loading:
+            return const Center(child: CircularProgressIndicator());
+          case RecipeFetchStateStatus.error:
+            return const Text("Error happened");
+          case RecipeFetchStateStatus.loaded:
+            final featuredList = state.featured;
+            final popularList = state.popular;
+            return Column(
+              children: [
+                Container(
+                  clipBehavior: Clip.none,
+                  height: Dimensions.pageView,
 
-                //Build the slides for the slider
-                child: PageView.builder(
+                  //Build the slides for the slider
+                  child: PageView.builder(
                     clipBehavior: Clip.none,
                     controller: pageController,
-                    itemCount: 5,
-                    itemBuilder: (context, position) {
-                      return _buildPageItem(position);
-                    }),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              DotsIndicator(
-                dotsCount: 5,
-                position: _currPageValue,
-                decorator: DotsDecorator(
-                  activeColor: Colors.pink.shade300,
-                  size: const Size.square(9.0),
-                  activeSize: const Size(18.0, 9.0),
-                  activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+                    itemCount: featuredList.length,
+                    itemBuilder: (context, index) {
+                      RecipeModel featured = featuredList[index];
+                      return _buildPageItem(index, featured);
+                    },
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: Dimensions.height20,
-              ),
-              Container(
-                margin: EdgeInsets.only(left: Dimensions.width20, right: Dimensions.width20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [LargeText(text: "Popular recipes"), SmallText(text: "SHOW ALL")],
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(Dimensions.width20),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: recipeList.length,
-                  itemBuilder: (context, index) {
-                    final RecipeModel singleRecipe = recipeList[index];
-                    return PopularListItem(
-                      title: singleRecipe.name!,
-                      difficulty: singleRecipe.difficulty!,
-                      description: singleRecipe.shortDescription!,
-                      timeEstimate: singleRecipe.preparationTime!,
-                      imageUrl: singleRecipe.picture,
-                      onTap: () {
-                        Navigator.push(
-                          (context),
-                          MaterialPageRoute(
-                            builder: (context) => RecipePage(recipe: singleRecipe),
-                          ),
-                        );
-                      },
-                    );
-                  },
+                DotsIndicator(
+                  dotsCount: featuredList.length,
+                  position: _currPageValue,
+                  decorator: DotsDecorator(
+                    activeColor: Colors.pink.shade300,
+                    size: const Size.square(9.0),
+                    activeSize: const Size(18.0, 9.0),
+                    activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+                  ),
                 ),
-              )
-            ],
-          );
-        } else {
-          return const Text("error");
+                SizedBox(
+                  height: Dimensions.height20,
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: Dimensions.width20, right: Dimensions.width20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [LargeText(text: "Popular recipes"), SmallText(text: "SHOW ALL")],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(Dimensions.width20),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: popularList.length,
+                    itemBuilder: (context, index) {
+                      final RecipeModel recipe = popularList[index];
+                      return PopularListItem(
+                        title: recipe.name!,
+                        difficulty: recipe.difficulty!,
+                        description: recipe.shortDescription!,
+                        timeEstimate: recipe.preparationTime!,
+                        imageUrl: recipe.picture,
+                        blurhash: recipe.blurhash,
+                        onTap: () {
+                          Navigator.push(
+                            (context),
+                            MaterialPageRoute(
+                              builder: (context) => RecipePage(recipe: recipe),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                )
+              ],
+            );
+          default:
+            return const Text("error");
         }
       },
     );
   }
 
-  Widget _buildPageItem(int index) {
+  Widget _buildPageItem(int index, RecipeModel recipe) {
     //Mathematics for the scaling effect on slides
     createScalingMatrix() {
       Matrix4 matrix = new Matrix4.identity();
@@ -176,10 +180,19 @@ class _HomePageBodyState extends State<HomePageBody> {
                   blurRadius: 26,
                 )
               ],
-              image: const DecorationImage(
-                image: AssetImage("assets/images/rice.jpg"),
-                fit: BoxFit.cover,
-              ),
+            ),
+            child: BlurhashImage(
+              aspectRatio: 1.6,
+              image: recipe.picture,
+              blurhash: recipe.blurhash,
+              height: Dimensions.pageViewContainer,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12.withOpacity(0.025),
+                  spreadRadius: 10,
+                  blurRadius: 26,
+                )
+              ],
             ),
           ),
           Column(
@@ -210,9 +223,10 @@ class _HomePageBodyState extends State<HomePageBody> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          LargeText(text: "Food dish name"),
+                          LargeText(text: recipe.name!),
                           SizedBox(height: Dimensions.height10),
-                          const RatingsRow(ratingScore: 4.5, commentCount: 1245),
+                          SmallText(text: recipe.shortDescription!),
+                          // const RatingsRow(ratingScore: 4.5, commentCount: 1245),
                           SizedBox(
                             height: Dimensions.height15,
                           ),

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/routes/route_service.dart';
 import 'package:flutter_e_commerce/views/main/home/home_body.dart';
 import 'package:flutter_e_commerce/widgets/header/header.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+
+import '../../../widgets/search_modal/search_modal.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
@@ -40,7 +43,13 @@ class HomeHeader extends StatelessWidget {
       ),
       child: Header(
         title: "Home",
-        showLeadingButton: false,
+        leadingButtonIcon: Icon(Icons.search),
+        onLeadingButtonPressed: () => showBarModalBottomSheet(
+          expand: true,
+          context: context,
+          backgroundColor: Colors.white,
+          builder: (context) => const SearchModal(),
+        ),
         trailingButtonIcon: Icon(
           Icons.add_box,
         ),

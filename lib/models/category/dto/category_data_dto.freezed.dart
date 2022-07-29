@@ -28,6 +28,7 @@ mixin _$CategoryDataDTO {
   String get picture => throw _privateConstructorUsedError;
   @JsonKey(name: 'category_icon')
   String get icon => throw _privateConstructorUsedError;
+  String? get blurhash => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   String? get sort => throw _privateConstructorUsedError;
 
@@ -47,6 +48,7 @@ abstract class $CategoryDataDTOCopyWith<$Res> {
       @JsonKey(name: 'category_name') String name,
       @JsonKey(name: 'category_picture') String picture,
       @JsonKey(name: 'category_icon') String icon,
+      String? blurhash,
       String? status,
       String? sort});
 }
@@ -66,6 +68,7 @@ class _$CategoryDataDTOCopyWithImpl<$Res>
     Object? name = freezed,
     Object? picture = freezed,
     Object? icon = freezed,
+    Object? blurhash = freezed,
     Object? status = freezed,
     Object? sort = freezed,
   }) {
@@ -86,6 +89,10 @@ class _$CategoryDataDTOCopyWithImpl<$Res>
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
               as String,
+      blurhash: blurhash == freezed
+          ? _value.blurhash
+          : blurhash // ignore: cast_nullable_to_non_nullable
+              as String?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -110,6 +117,7 @@ abstract class _$$_CategoryDataDTOCopyWith<$Res>
       @JsonKey(name: 'category_name') String name,
       @JsonKey(name: 'category_picture') String picture,
       @JsonKey(name: 'category_icon') String icon,
+      String? blurhash,
       String? status,
       String? sort});
 }
@@ -131,6 +139,7 @@ class __$$_CategoryDataDTOCopyWithImpl<$Res>
     Object? name = freezed,
     Object? picture = freezed,
     Object? icon = freezed,
+    Object? blurhash = freezed,
     Object? status = freezed,
     Object? sort = freezed,
   }) {
@@ -151,6 +160,10 @@ class __$$_CategoryDataDTOCopyWithImpl<$Res>
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
               as String,
+      blurhash: blurhash == freezed
+          ? _value.blurhash
+          : blurhash // ignore: cast_nullable_to_non_nullable
+              as String?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -171,6 +184,7 @@ class _$_CategoryDataDTO extends _CategoryDataDTO {
       @JsonKey(name: 'category_name') this.name = '',
       @JsonKey(name: 'category_picture') this.picture = '',
       @JsonKey(name: 'category_icon') this.icon = '',
+      this.blurhash,
       this.status,
       this.sort})
       : super._();
@@ -191,13 +205,15 @@ class _$_CategoryDataDTO extends _CategoryDataDTO {
   @JsonKey(name: 'category_icon')
   final String icon;
   @override
+  final String? blurhash;
+  @override
   final String? status;
   @override
   final String? sort;
 
   @override
   String toString() {
-    return 'CategoryDataDTO(id: $id, name: $name, picture: $picture, icon: $icon, status: $status, sort: $sort)';
+    return 'CategoryDataDTO(id: $id, name: $name, picture: $picture, icon: $icon, blurhash: $blurhash, status: $status, sort: $sort)';
   }
 
   @override
@@ -209,6 +225,7 @@ class _$_CategoryDataDTO extends _CategoryDataDTO {
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.picture, picture) &&
             const DeepCollectionEquality().equals(other.icon, icon) &&
+            const DeepCollectionEquality().equals(other.blurhash, blurhash) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.sort, sort));
   }
@@ -221,6 +238,7 @@ class _$_CategoryDataDTO extends _CategoryDataDTO {
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(picture),
       const DeepCollectionEquality().hash(icon),
+      const DeepCollectionEquality().hash(blurhash),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(sort));
 
@@ -243,6 +261,7 @@ abstract class _CategoryDataDTO extends CategoryDataDTO {
       @JsonKey(name: 'category_name') final String name,
       @JsonKey(name: 'category_picture') final String picture,
       @JsonKey(name: 'category_icon') final String icon,
+      final String? blurhash,
       final String? status,
       final String? sort}) = _$_CategoryDataDTO;
   _CategoryDataDTO._() : super._();
@@ -262,6 +281,8 @@ abstract class _CategoryDataDTO extends CategoryDataDTO {
   @override
   @JsonKey(name: 'category_icon')
   String get icon;
+  @override
+  String? get blurhash;
   @override
   String? get status;
   @override

@@ -24,7 +24,7 @@ class GlobalBlocs extends StatelessWidget {
         BlocProvider<RecipeFetchCubit>(
           create: (context) => RecipeFetchCubit(
             recipesRepository: context.read<RecipesRepository>(),
-          )..fetchRecipeApi(),
+          )..fetchHomePageRecipes(),
         ),
         BlocProvider<AuthCubit>(
           create: (context) => AuthCubit(

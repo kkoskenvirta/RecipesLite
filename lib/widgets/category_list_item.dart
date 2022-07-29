@@ -2,11 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/config/api_config.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
+import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
 
 class CategoryListItem extends StatelessWidget {
   final String? imageUrl;
+  final String? blurhash;
   final String title;
 
   final VoidCallback? onTap;
@@ -16,6 +18,7 @@ class CategoryListItem extends StatelessWidget {
     this.imageUrl,
     this.title = "",
     this.onTap,
+    this.blurhash,
   }) : super(key: key);
 
   @override
@@ -38,24 +41,14 @@ class CategoryListItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            CachedNetworkImage(
-              height: 140,
-              imageUrl: '$baseUrl$assetsPath$imageUrl',
-              imageBuilder: (context, imageProvider) => Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                  image: DecorationImage(
-                    image: imageProvider,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              progressIndicatorBuilder: (context, url, downloadProgress) => Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: CircularProgressIndicator(value: downloadProgress.progress),
-              ),
-            ),
-            SizedBox(
+            BlurhashImage(
+                aspectRatio: 1.5,
+                image: imageUrl,
+                blurhash: blurhash,
+                height: 140,
+                borderRadius:
+                    const BorderRadius.only(topLeft: const Radius.circular(10), topRight: const Radius.circular(10))),
+            const SizedBox(
               height: 2,
             ),
             Padding(
@@ -67,7 +60,7 @@ class CategoryListItem extends StatelessWidget {
                     text: title,
                     size: 18,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 2,
                   ),
                   SmallText(text: "recipe amount")

@@ -22,12 +22,20 @@ class RecipesRepository {
   final Dio _tokenDio;
   final Dio _dio;
 
-  Future<Either<FetchError, List<RecipeModel>?>> getRecipesList() async {
+  Future<Either<FetchError, List<RecipeModel>?>> getRecipesList({int? limit, String? filters}) async {
     try {
-      const String fields = '?fields=*,incredients.incredient_id.*,categories.category_category_id.*,tags.tag_id.*';
+      String resultLimit = '&limit=-1';
+      String resultFilters = '';
+      if (limit != null) {
+        resultLimit = '&limit=$limit';
+      }
+      if (filters != null) {
+        resultFilters = filters;
+      }
+      print('$baseUrl$recipesPathFields$resultLimit$resultFilters');
 
-      final Response response = await _tokenDio.get('$baseUrl$recipesPath$fields');
-
+      final Response response = await _tokenDio.get('$baseUrl$recipesPathFields$resultLimit$resultFilters');
+      print(response);
       final recipesDTO = RecipeDTO.fromJson(response.data);
       final recipes = recipesDTO.data.map((recipeDataDTO) => recipeDataDTO.toDomain()).toList();
 
@@ -42,8 +50,9 @@ class RecipesRepository {
   Future<Either<FetchError, List<RecipeModel>?>> getRecipesListWithCategory(CategoryModel category) async {
     try {
       final String filterQuery =
-          '?filter={"_and":[{"_and":[{"categories":{"category_category_id":{"category_id":{"_eq":"${category.id}"}}}}]},{"status":{"_neq":"archived"}}]}';
-      final Response response = await _tokenDio.get('$baseUrl$recipesPath$filterQuery');
+          '&filter={"_and":[{"_and":[{"categories":{"category_category_id":{"category_id":{"_eq":"${category.id}"}}}}]},{"status":{"_neq":"archived"}}]}';
+      print('$baseUrl$recipesPathFields$filterQuery');
+      final Response response = await _tokenDio.get('$baseUrl$recipesPathFields$filterQuery');
 
       final recipesDTO = RecipeDTO.fromJson(response.data);
       final recipes = recipesDTO.data.map((recipeDataDTO) => recipeDataDTO.toDomain()).toList();
@@ -56,14 +65,18 @@ class RecipesRepository {
     }
   }
 
-  Future<Either<FetchError, List<RecipeModel>>> searchRecipes(String query) async {
+  Future<Either<FetchError, List<RecipeModel>>> searchRecipes({required String filters}) async {
     try {
       final Response? response;
-      response = await _tokenDio.get(query);
-      final recipesDTO = RecipeDTO.fromJson(response.data);
-      final recipes = recipesDTO.data.map((recipeDataDTO) => recipeDataDTO.toDomain()).toList();
+      print('$baseUrl$recipesPathFields$filters');
+      response = await _tokenDio.get('$baseUrl$recipesPathFields$filters');
 
-      return right(recipes);
+      if (response.data != null) {
+        final recipesDTO = RecipeDTO.fromJson(response.data);
+        final recipes = recipesDTO.data.map((recipeDataDTO) => recipeDataDTO.toDomain()).toList();
+        return right(recipes);
+      }
+      return right([]);
     } catch (e) {
       if (e is DioError && e.response?.statusCode == 400) return left(FetchError.invalidPayload);
       if (e is DioError && e.response?.statusCode == 401) return left(FetchError.permissionError);

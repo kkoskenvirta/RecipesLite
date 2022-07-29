@@ -20,6 +20,7 @@ TagDataDTO _$TagDataDTOFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TagDataDTO {
+  @JsonKey(name: 'id')
   String get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'tag_name')
   String get name => throw _privateConstructorUsedError;
@@ -38,7 +39,7 @@ abstract class $TagDataDTOCopyWith<$Res> {
           TagDataDTO value, $Res Function(TagDataDTO) then) =
       _$TagDataDTOCopyWithImpl<$Res>;
   $Res call(
-      {String id,
+      {@JsonKey(name: 'id') String id,
       @JsonKey(name: 'tag_name') String name,
       String? status,
       String? sort});
@@ -88,7 +89,7 @@ abstract class _$$_TagDataDTOCopyWith<$Res>
       __$$_TagDataDTOCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id,
+      {@JsonKey(name: 'id') String id,
       @JsonKey(name: 'tag_name') String name,
       String? status,
       String? sort});
@@ -136,7 +137,7 @@ class __$$_TagDataDTOCopyWithImpl<$Res> extends _$TagDataDTOCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_TagDataDTO extends _TagDataDTO {
   _$_TagDataDTO(
-      {required this.id,
+      {@JsonKey(name: 'id') required this.id,
       @JsonKey(name: 'tag_name') this.name = '',
       this.status,
       this.sort})
@@ -146,6 +147,7 @@ class _$_TagDataDTO extends _TagDataDTO {
       _$$_TagDataDTOFromJson(json);
 
   @override
+  @JsonKey(name: 'id')
   final String id;
   @override
   @JsonKey(name: 'tag_name')
@@ -195,7 +197,7 @@ class _$_TagDataDTO extends _TagDataDTO {
 
 abstract class _TagDataDTO extends TagDataDTO {
   factory _TagDataDTO(
-      {required final String id,
+      {@JsonKey(name: 'id') required final String id,
       @JsonKey(name: 'tag_name') final String name,
       final String? status,
       final String? sort}) = _$_TagDataDTO;
@@ -205,6 +207,7 @@ abstract class _TagDataDTO extends TagDataDTO {
       _$_TagDataDTO.fromJson;
 
   @override
+  @JsonKey(name: 'id')
   String get id;
   @override
   @JsonKey(name: 'tag_name')

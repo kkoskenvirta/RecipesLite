@@ -63,6 +63,7 @@ class _Body extends StatelessWidget {
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: "Search for recipes",
+                                fillColor: Colors.white,
                               ),
                               controller: searchController,
                               onChanged: ((value) async {

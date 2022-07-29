@@ -19,33 +19,33 @@ class MainPage extends StatelessWidget {
         return Scaffold(
           body: BlocBuilder<RecipeFetchCubit, RecipeFetchState>(
             builder: (context, state) {
-              if (state is RecipeFetchInitial) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is RecipeFetchLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (state is RecipeFetchError) {
-                return const Center(child: Text("Error happened"));
-              } else if (state is RecipeFetchLoaded) {
-                return BlocBuilder<NavigationCubit, NavigationState>(
-                  builder: (context, state) {
-                    switch (state.navBarItem) {
-                      case NavBarItem.home:
-                        return HomeScreen();
+              switch (state.status) {
+                case RecipeFetchStateStatus.initial:
+                  return const Center(child: CircularProgressIndicator());
+                case RecipeFetchStateStatus.loading:
+                  return const Center(child: CircularProgressIndicator());
+                case RecipeFetchStateStatus.error:
+                  return const Text("Error happened");
+                case RecipeFetchStateStatus.loaded:
+                  return BlocBuilder<NavigationCubit, NavigationState>(
+                    builder: (context, state) {
+                      switch (state.navBarItem) {
+                        case NavBarItem.home:
+                          return HomeScreen();
 
-                      case NavBarItem.categories:
-                        return CategoriesScreen();
-                      case NavBarItem.profile:
-                        return ProfileScreen();
+                        case NavBarItem.categories:
+                          return CategoriesScreen();
+                        case NavBarItem.profile:
+                          return ProfileScreen();
 
-                      default:
-                        return SizedBox();
-                    }
-                  },
-                );
+                        default:
+                          return SizedBox();
+                      }
+                    },
+                  );
+                default:
+                  return const Text("Error");
               }
-              return const Text("Error");
             },
           ),
           bottomNavigationBar: BlocBuilder<NavigationCubit, NavigationState>(

@@ -25,6 +25,7 @@ mixin _$CategoryModel {
   String? get picture => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   String? get icon => throw _privateConstructorUsedError;
+  String? get blurhash => throw _privateConstructorUsedError;
   String? get sort => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -44,6 +45,7 @@ abstract class $CategoryModelCopyWith<$Res> {
       String? picture,
       String? status,
       String? icon,
+      String? blurhash,
       String? sort});
 }
 
@@ -63,6 +65,7 @@ class _$CategoryModelCopyWithImpl<$Res>
     Object? picture = freezed,
     Object? status = freezed,
     Object? icon = freezed,
+    Object? blurhash = freezed,
     Object? sort = freezed,
   }) {
     return _then(_value.copyWith(
@@ -86,6 +89,10 @@ class _$CategoryModelCopyWithImpl<$Res>
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
               as String?,
+      blurhash: blurhash == freezed
+          ? _value.blurhash
+          : blurhash // ignore: cast_nullable_to_non_nullable
+              as String?,
       sort: sort == freezed
           ? _value.sort
           : sort // ignore: cast_nullable_to_non_nullable
@@ -107,6 +114,7 @@ abstract class _$$_CategoryModelCopyWith<$Res>
       String? picture,
       String? status,
       String? icon,
+      String? blurhash,
       String? sort});
 }
 
@@ -128,6 +136,7 @@ class __$$_CategoryModelCopyWithImpl<$Res>
     Object? picture = freezed,
     Object? status = freezed,
     Object? icon = freezed,
+    Object? blurhash = freezed,
     Object? sort = freezed,
   }) {
     return _then(_$_CategoryModel(
@@ -151,6 +160,10 @@ class __$$_CategoryModelCopyWithImpl<$Res>
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
               as String?,
+      blurhash: blurhash == freezed
+          ? _value.blurhash
+          : blurhash // ignore: cast_nullable_to_non_nullable
+              as String?,
       sort: sort == freezed
           ? _value.sort
           : sort // ignore: cast_nullable_to_non_nullable
@@ -168,6 +181,7 @@ class _$_CategoryModel extends _CategoryModel {
       this.picture,
       this.status,
       this.icon,
+      this.blurhash,
       this.sort})
       : super._();
 
@@ -185,11 +199,13 @@ class _$_CategoryModel extends _CategoryModel {
   @override
   final String? icon;
   @override
+  final String? blurhash;
+  @override
   final String? sort;
 
   @override
   String toString() {
-    return 'CategoryModel(id: $id, name: $name, picture: $picture, status: $status, icon: $icon, sort: $sort)';
+    return 'CategoryModel(id: $id, name: $name, picture: $picture, status: $status, icon: $icon, blurhash: $blurhash, sort: $sort)';
   }
 
   @override
@@ -202,6 +218,7 @@ class _$_CategoryModel extends _CategoryModel {
             const DeepCollectionEquality().equals(other.picture, picture) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.icon, icon) &&
+            const DeepCollectionEquality().equals(other.blurhash, blurhash) &&
             const DeepCollectionEquality().equals(other.sort, sort));
   }
 
@@ -214,6 +231,7 @@ class _$_CategoryModel extends _CategoryModel {
       const DeepCollectionEquality().hash(picture),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(icon),
+      const DeepCollectionEquality().hash(blurhash),
       const DeepCollectionEquality().hash(sort));
 
   @JsonKey(ignore: true)
@@ -236,6 +254,7 @@ abstract class _CategoryModel extends CategoryModel {
       final String? picture,
       final String? status,
       final String? icon,
+      final String? blurhash,
       final String? sort}) = _$_CategoryModel;
   _CategoryModel._() : super._();
 
@@ -252,6 +271,8 @@ abstract class _CategoryModel extends CategoryModel {
   String? get status;
   @override
   String? get icon;
+  @override
+  String? get blurhash;
   @override
   String? get sort;
   @override

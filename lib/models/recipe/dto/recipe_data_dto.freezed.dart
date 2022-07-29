@@ -28,7 +28,7 @@ mixin _$RecipeDataDTO {
   String? get picture => throw _privateConstructorUsedError;
   String get instructions => throw _privateConstructorUsedError;
   List<CategoryIdDTO> get categories => throw _privateConstructorUsedError;
-  List<TagIdDTO>? get tags => throw _privateConstructorUsedError;
+  List<TagIdDTO> get tags => throw _privateConstructorUsedError;
   List<IncredientIdDTO> get incredients => throw _privateConstructorUsedError;
   @JsonKey(name: 'Name')
   String? get name => throw _privateConstructorUsedError;
@@ -67,7 +67,7 @@ abstract class $RecipeDataDTOCopyWith<$Res> {
       String? picture,
       String instructions,
       List<CategoryIdDTO> categories,
-      List<TagIdDTO>? tags,
+      List<TagIdDTO> tags,
       List<IncredientIdDTO> incredients,
       @JsonKey(name: 'Name') String? name,
       @JsonKey(name: 'Featured') bool? featured,
@@ -145,7 +145,7 @@ class _$RecipeDataDTOCopyWithImpl<$Res>
       tags: tags == freezed
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<TagIdDTO>?,
+              as List<TagIdDTO>,
       incredients: incredients == freezed
           ? _value.incredients
           : incredients // ignore: cast_nullable_to_non_nullable
@@ -202,7 +202,7 @@ abstract class _$$_RecipeDataDTOCopyWith<$Res>
       String? picture,
       String instructions,
       List<CategoryIdDTO> categories,
-      List<TagIdDTO>? tags,
+      List<TagIdDTO> tags,
       List<IncredientIdDTO> incredients,
       @JsonKey(name: 'Name') String? name,
       @JsonKey(name: 'Featured') bool? featured,
@@ -282,7 +282,7 @@ class __$$_RecipeDataDTOCopyWithImpl<$Res>
       tags: tags == freezed
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<TagIdDTO>?,
+              as List<TagIdDTO>,
       incredients: incredients == freezed
           ? _value._incredients
           : incredients // ignore: cast_nullable_to_non_nullable
@@ -335,7 +335,7 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
       this.picture,
       this.instructions = '',
       required final List<CategoryIdDTO> categories,
-      required final List<TagIdDTO>? tags,
+      required final List<TagIdDTO> tags,
       required final List<IncredientIdDTO> incredients,
       @JsonKey(name: 'Name') this.name,
       @JsonKey(name: 'Featured') this.featured,
@@ -375,13 +375,11 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
     return EqualUnmodifiableListView(_categories);
   }
 
-  final List<TagIdDTO>? _tags;
+  final List<TagIdDTO> _tags;
   @override
-  List<TagIdDTO>? get tags {
-    final value = _tags;
-    if (value == null) return null;
+  List<TagIdDTO> get tags {
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableListView(_tags);
   }
 
   final List<IncredientIdDTO> _incredients;
@@ -502,7 +500,7 @@ abstract class _RecipeDataDTO extends RecipeDataDTO {
           final String? picture,
           final String instructions,
           required final List<CategoryIdDTO> categories,
-          required final List<TagIdDTO>? tags,
+          required final List<TagIdDTO> tags,
           required final List<IncredientIdDTO> incredients,
           @JsonKey(name: 'Name') final String? name,
           @JsonKey(name: 'Featured') final bool? featured,
@@ -535,7 +533,7 @@ abstract class _RecipeDataDTO extends RecipeDataDTO {
   @override
   List<CategoryIdDTO> get categories;
   @override
-  List<TagIdDTO>? get tags;
+  List<TagIdDTO> get tags;
   @override
   List<IncredientIdDTO> get incredients;
   @override

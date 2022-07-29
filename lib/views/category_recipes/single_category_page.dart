@@ -115,6 +115,7 @@ class SingleCategoryScreenBody extends StatelessWidget {
                       description: recipe.shortDescription!,
                       timeEstimate: recipe.preparationTime!,
                       imageUrl: recipe.picture,
+                      blurhash: recipe.blurhash,
                       onTap: () {
                         Navigator.push(
                           (context),

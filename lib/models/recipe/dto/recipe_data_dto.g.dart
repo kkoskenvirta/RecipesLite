@@ -18,8 +18,8 @@ _$_RecipeDataDTO _$$_RecipeDataDTOFromJson(Map<String, dynamic> json) =>
       categories: (json['categories'] as List<dynamic>)
           .map((e) => CategoryIdDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
-      tags: (json['tags'] as List<dynamic>?)
-          ?.map((e) => TagIdDTO.fromJson(e as Map<String, dynamic>))
+      tags: (json['tags'] as List<dynamic>)
+          .map((e) => TagIdDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
       incredients: (json['incredients'] as List<dynamic>)
           .map((e) => IncredientIdDTO.fromJson(e as Map<String, dynamic>))

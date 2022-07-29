@@ -79,6 +79,7 @@ class CategoriesScreenBody extends StatelessWidget {
                       return CategoryListItem(
                         title: category.name,
                         imageUrl: category.picture,
+                        blurhash: category.blurhash,
                         onTap: () {
                           Navigator.push(
                             (context),

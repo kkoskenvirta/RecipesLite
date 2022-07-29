@@ -153,7 +153,6 @@ class FormFetchScreenBody extends StatelessWidget {
                           if (state.stepperItem == StepperItem.review) {
                             final navigator = Navigator.of(context);
                             final bool uploadCompleted = await BlocProvider.of<FormDataCubit>(context).submitRecipe();
-                            print(uploadCompleted);
                             if (uploadCompleted) {
                               navigator.pop();
                               //Get new created recipe and route to the recipe
