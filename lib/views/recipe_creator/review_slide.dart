@@ -145,7 +145,7 @@ class ReviewSlide extends StatelessWidget {
                   SizedBox(
                     height: Dimensions.height20,
                   ),
-                  CategorizationBar(categories: state.categories, tags: state.tags),
+                  CategorizationBar(categories: state.categories, tags: state.tags, disableChipButtons: true),
                   const SizedBox(
                     height: 12,
                   ),

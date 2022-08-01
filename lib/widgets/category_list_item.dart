@@ -46,8 +46,7 @@ class CategoryListItem extends StatelessWidget {
                 image: imageUrl,
                 blurhash: blurhash,
                 height: 140,
-                borderRadius:
-                    const BorderRadius.only(topLeft: const Radius.circular(10), topRight: const Radius.circular(10))),
+                borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
             const SizedBox(
               height: 2,
             ),

@@ -94,7 +94,24 @@ class _RecipePageState extends State<RecipePage> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [if (recipe.name != null) LargeText(text: recipe.name!)],
+                    children: [
+                      if (recipe.name != null) LargeText(text: recipe.name!),
+                      BlocBuilder<UserDataCubit, UserDataState>(builder: (context, state) {
+                        final userDataCubit = BlocProvider.of<UserDataCubit>(context);
+
+                        if (state.status == UserDataStateStatus.loaded) {
+                          final result = state.favorites.where((recipe) => recipe.id == recipe.id);
+                          final bool favorited = result.isEmpty ? false : true;
+
+                          return IconButton(
+                              onPressed: () {
+                                userDataCubit.toggleFavorites(recipe);
+                              },
+                              icon: favorited ? const Icon(Icons.favorite) : const Icon(Icons.favorite_border_rounded));
+                        }
+                        return const SizedBox();
+                      }),
+                    ],
                   ),
                   SizedBox(
                     height: Dimensions.height10,

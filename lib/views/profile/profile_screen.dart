@@ -11,6 +11,7 @@ import 'package:flutter_e_commerce/models/user/user_model.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
+import 'package:flutter_e_commerce/widgets/header/header.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -54,34 +55,13 @@ class ProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authCubit = BlocProvider.of<AuthCubit>(context);
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            tooltip: "Return",
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.chevron_left_rounded),
-          ),
-          LargeText(text: "Profile"),
-          IconButton(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            tooltip: "Logout",
-            onPressed: () {
-              authCubit.logout();
-            },
-            icon: const Icon(Icons.logout_rounded),
-          )
-        ],
-      ),
-    );
+    return Header(
+        title: "Profile",
+        showLeadingButton: false,
+        trailingButtonIcon: Icon(Icons.logout_rounded),
+        onTrailingButtonPressed: () {
+          authCubit.logout();
+        });
   }
 }
 

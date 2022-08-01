@@ -36,27 +36,21 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(left: 16.0, right: 16, top: 0, bottom: 0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
+    return Header(
+      title: "Home",
+      leadingButtonIcon: Icon(Icons.search),
+      onLeadingButtonPressed: () => showBarModalBottomSheet(
+        expand: true,
+        context: context,
+        backgroundColor: Colors.white,
+        builder: (context) => const SearchModal(),
       ),
-      child: Header(
-        title: "Home",
-        leadingButtonIcon: Icon(Icons.search),
-        onLeadingButtonPressed: () => showBarModalBottomSheet(
-          expand: true,
-          context: context,
-          backgroundColor: Colors.white,
-          builder: (context) => const SearchModal(),
-        ),
-        trailingButtonIcon: Icon(
-          Icons.add_box,
-        ),
-        onTrailingButtonPressed: () {
-          Navigator.pushNamed(context, Routes.recipeCreator.name);
-        },
+      trailingButtonIcon: Icon(
+        Icons.add_box,
       ),
+      onTrailingButtonPressed: () {
+        Navigator.pushNamed(context, Routes.recipeCreator.name);
+      },
     );
   }
 }

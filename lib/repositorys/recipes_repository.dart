@@ -32,10 +32,8 @@ class RecipesRepository {
       if (filters != null) {
         resultFilters = filters;
       }
-      print('$baseUrl$recipesPathFields$resultLimit$resultFilters');
 
       final Response response = await _tokenDio.get('$baseUrl$recipesPathFields$resultLimit$resultFilters');
-      print(response);
       final recipesDTO = RecipeDTO.fromJson(response.data);
       final recipes = recipesDTO.data.map((recipeDataDTO) => recipeDataDTO.toDomain()).toList();
 
@@ -51,7 +49,6 @@ class RecipesRepository {
     try {
       final String filterQuery =
           '&filter={"_and":[{"_and":[{"categories":{"category_category_id":{"category_id":{"_eq":"${category.id}"}}}}]},{"status":{"_neq":"archived"}}]}';
-      print('$baseUrl$recipesPathFields$filterQuery');
       final Response response = await _tokenDio.get('$baseUrl$recipesPathFields$filterQuery');
 
       final recipesDTO = RecipeDTO.fromJson(response.data);
@@ -68,7 +65,6 @@ class RecipesRepository {
   Future<Either<FetchError, List<RecipeModel>>> searchRecipes({required String filters}) async {
     try {
       final Response? response;
-      print('$baseUrl$recipesPathFields$filters');
       response = await _tokenDio.get('$baseUrl$recipesPathFields$filters');
 
       if (response.data != null) {
@@ -104,7 +100,6 @@ class RecipesRepository {
 
       //Save default dio content type
       final dioContentType = _dio.options.headers['Content-Type'];
-      print(dioContentType);
       _dio.options.headers['Content-Type'] = "multipart/form-data";
 
       response = await _dio.post(

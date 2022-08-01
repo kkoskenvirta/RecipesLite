@@ -30,48 +30,51 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 58,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              if (showLeadingButton)
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: IconButton(
-                    iconSize: 38,
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    color: Colors.pink.shade300,
-                    onPressed: onLeadingButtonPressed,
-                    icon: leadingButtonIcon!,
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, right: 16, top: 0, bottom: 0),
+      child: SizedBox(
+        height: 58,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                if (showLeadingButton)
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: IconButton(
+                      iconSize: 38,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      color: Colors.pink.shade300,
+                      onPressed: onLeadingButtonPressed,
+                      icon: leadingButtonIcon!,
+                    ),
                   ),
-                ),
-              if (showTitle)
-                Align(
-                  alignment: Alignment.center,
-                  child: LargeText(text: title),
-                ),
-              if (showTrailingButton)
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: IconButton(
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    iconSize: 40,
-                    color: Colors.pink.shade300,
-                    onPressed: onTrailingButtonPressed,
-                    icon: trailingButtonIcon!,
+                if (showTitle)
+                  Align(
+                    alignment: Alignment.center,
+                    child: LargeText(text: title),
                   ),
-                )
-            ],
-          ),
-        ],
+                if (showTrailingButton)
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      iconSize: 40,
+                      color: Colors.pink.shade300,
+                      onPressed: onTrailingButtonPressed,
+                      icon: trailingButtonIcon!,
+                    ),
+                  )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

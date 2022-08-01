@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:flutter_e_commerce/routes/route_service.dart';
@@ -153,7 +154,10 @@ class FormFetchScreenBody extends StatelessWidget {
                           if (state.stepperItem == StepperItem.review) {
                             final navigator = Navigator.of(context);
                             final bool uploadCompleted = await BlocProvider.of<FormDataCubit>(context).submitRecipe();
+
                             if (uploadCompleted) {
+                              BlocProvider.of<RecipeFetchCubit>(context).fetchHomePageRecipes();
+
                               navigator.pop();
                               //Get new created recipe and route to the recipe
                               // navigator.popAndPushNamed(Routes.recipe.name, arguments: )
@@ -187,13 +191,15 @@ class FormFetchScreenBody extends StatelessWidget {
                               autovalidateMode: AutovalidateMode.disabled,
                               child: Column(
                                 children: <Widget>[
-                                  Align(alignment: Alignment.centerLeft, child: SmallText(text: "Recipe name")),
+                                  Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: SmallText(text: "Recipe name (min 4 characters)")),
                                   const SizedBox(
                                     height: 6,
                                   ),
                                   TextFormField(
                                     decoration: const InputDecoration(
-                                      hintText: "Recipe name (min 4 characters)",
+                                      hintText: "Recipe name",
                                     ),
                                     textInputAction: TextInputAction.next,
                                     onChanged: (text) => updateName(text),
@@ -239,7 +245,9 @@ class FormFetchScreenBody extends StatelessWidget {
                                   const SizedBox(
                                     height: 20,
                                   ),
-                                  Align(alignment: Alignment.centerLeft, child: SmallText(text: "Instructions")),
+                                  Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: SmallText(text: "Instructions (min 20 characters)")),
                                   const SizedBox(
                                     height: 6,
                                   ),

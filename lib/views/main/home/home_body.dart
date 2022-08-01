@@ -163,86 +163,96 @@ class _HomePageBodyState extends State<HomePageBody> {
     Matrix4 matrix = createScalingMatrix();
 
     // Slide item
-    return Transform(
-      transform: matrix,
-      child: Stack(
-        children: [
-          Container(
-            height: Dimensions.pageViewContainer,
-            margin: EdgeInsets.only(bottom: Dimensions.height10, left: Dimensions.width10, right: Dimensions.width10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(Dimensions.radius20),
-              color: Colors.pink.shade200,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12.withOpacity(0.025),
-                  spreadRadius: 10,
-                  blurRadius: 26,
-                )
-              ],
-            ),
-            child: BlurhashImage(
-              aspectRatio: 1.6,
-              image: recipe.picture,
-              blurhash: recipe.blurhash,
-              height: Dimensions.pageViewContainer,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12.withOpacity(0.025),
-                  spreadRadius: 10,
-                  blurRadius: 26,
-                )
-              ],
-            ),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          (context),
+          MaterialPageRoute(
+            builder: (context) => RecipePage(recipe: recipe),
           ),
-          Column(
-            children: [
-              const Spacer(),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: Dimensions.width15),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: Dimensions.width20),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(Dimensions.radius20),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12.withOpacity(0.025),
-                            spreadRadius: 10,
-                            blurRadius: 26,
-                          ),
-                        ]),
+        );
+      },
+      child: Transform(
+        transform: matrix,
+        child: Stack(
+          children: [
+            Container(
+              height: Dimensions.pageViewContainer,
+              margin: EdgeInsets.only(bottom: Dimensions.height10, left: Dimensions.width10, right: Dimensions.width10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(Dimensions.radius20),
+                color: Colors.pink.shade200,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12.withOpacity(0.025),
+                    spreadRadius: 10,
+                    blurRadius: 26,
+                  )
+                ],
+              ),
+              child: BlurhashImage(
+                aspectRatio: 1.6,
+                image: recipe.picture,
+                blurhash: recipe.blurhash,
+                height: Dimensions.pageViewContainer,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12.withOpacity(0.025),
+                    spreadRadius: 10,
+                    blurRadius: 26,
+                  )
+                ],
+              ),
+            ),
+            Column(
+              children: [
+                const Spacer(),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: Dimensions.width15),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
                     child: Container(
-                      padding: EdgeInsets.only(
-                          top: Dimensions.height10,
-                          bottom: Dimensions.height10,
-                          left: Dimensions.width15,
-                          right: Dimensions.width15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          LargeText(text: recipe.name!),
-                          SizedBox(height: Dimensions.height10),
-                          SmallText(text: recipe.shortDescription!),
-                          // const RatingsRow(ratingScore: 4.5, commentCount: 1245),
-                          SizedBox(
-                            height: Dimensions.height15,
-                          ),
-                          const InformationBar(
-                            status: "Normal",
-                            timeEstimate: 20,
-                          )
-                        ],
+                      margin: EdgeInsets.symmetric(horizontal: Dimensions.width20),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Dimensions.radius20),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12.withOpacity(0.025),
+                              spreadRadius: 10,
+                              blurRadius: 26,
+                            ),
+                          ]),
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            top: Dimensions.height10,
+                            bottom: Dimensions.height10,
+                            left: Dimensions.width15,
+                            right: Dimensions.width15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            LargeText(text: recipe.name!),
+                            SizedBox(height: Dimensions.height10),
+                            SmallText(text: recipe.shortDescription!),
+                            // const RatingsRow(ratingScore: 4.5, commentCount: 1245),
+                            SizedBox(
+                              height: Dimensions.height15,
+                            ),
+                            const InformationBar(
+                              status: "Normal",
+                              timeEstimate: 20,
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          )
-        ],
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
