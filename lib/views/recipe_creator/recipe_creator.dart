@@ -1,12 +1,11 @@
-import 'dart:io';
-
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
+import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
-import 'package:flutter_e_commerce/routes/route_service.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/category_selector.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_data/form_data_cubit.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_fetch/form_fetch_cubit.dart';
@@ -17,15 +16,18 @@ import 'package:flutter_e_commerce/views/recipe_creator/review_slide.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/tag_selector.dart';
 import 'package:flutter_e_commerce/widgets/custom_stepper/custom_stepper.dart';
 import 'package:flutter_e_commerce/widgets/header/header.dart';
+import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
-import 'package:get/route_manager.dart';
-import 'package:image_picker/image_picker.dart';
 
 class RecipeCreatorScreen extends StatelessWidget {
   const RecipeCreatorScreen({
     Key? key,
+    this.editableRecipe,
+    this.title = "New recipe",
   }) : super(key: key);
 
+  final RecipeModel? editableRecipe;
+  final String title;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -34,7 +36,7 @@ class RecipeCreatorScreen extends StatelessWidget {
         body: SafeArea(
           child: Column(
             children: [
-              const FormFetchHeader(),
+              FormFetchHeader(title: title),
               const SizedBox(
                 height: 0,
               ),
@@ -48,7 +50,7 @@ class RecipeCreatorScreen extends StatelessWidget {
                       create: (context) => FormDataCubit(recipesRepository: context.read<RecipesRepository>()),
                     ),
                   ],
-                  child: const FormFetchScreenBody(),
+                  child: FormFetchScreenBody(editableRecipe: editableRecipe),
                 ),
               )
             ],
@@ -62,12 +64,13 @@ class RecipeCreatorScreen extends StatelessWidget {
 class FormFetchHeader extends StatelessWidget {
   const FormFetchHeader({
     Key? key,
+    required this.title,
   }) : super(key: key);
-
+  final String title;
   @override
   Widget build(BuildContext context) {
     return Header(
-      title: "New recipe",
+      title: title,
       showTrailingButton: false,
       onLeadingButtonPressed: () => Navigator.pop(context),
       leadingButtonIcon: const Icon(Icons.chevron_left),
@@ -75,16 +78,58 @@ class FormFetchHeader extends StatelessWidget {
   }
 }
 
-class FormFetchScreenBody extends StatelessWidget {
-  const FormFetchScreenBody({Key? key}) : super(key: key);
+class FormFetchScreenBody extends StatefulWidget {
+  const FormFetchScreenBody({Key? key, this.editableRecipe}) : super(key: key);
+  final RecipeModel? editableRecipe;
 
+  @override
+  State<FormFetchScreenBody> createState() => _FormFetchScreenBodyState();
+}
+
+class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
+  void _showToast(BuildContext context) {
+    String message;
+    Icon icon;
+    Color backgroundColor;
+
+    message = "Recipe submitted for review!";
+    icon = const Icon(Icons.check_circle_outline_rounded, size: 28);
+    backgroundColor = Colors.pink.shade50;
+
+    Flushbar(
+      flushbarStyle: FlushbarStyle.FLOATING,
+      borderRadius: BorderRadius.circular(8),
+      margin: const EdgeInsets.all(8),
+      padding: const EdgeInsets.symmetric(vertical: 18),
+      boxShadows: [
+        BoxShadow(
+          color: Colors.black12.withOpacity(0.125),
+          spreadRadius: 4,
+          blurRadius: 4,
+        )
+      ],
+      icon: icon,
+      messageText: LargeText(
+        text: message,
+        size: 15,
+      ),
+      backgroundColor: backgroundColor,
+      duration: const Duration(seconds: 2, milliseconds: 500),
+    ).show(context);
+  }
+
+// If editable recipe model is passed initialize state with those values
+  final nameFieldController = TextEditingController();
+  final descriptionFieldController = TextEditingController();
+  final instructionFieldController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final formDataCubit = BlocProvider.of<FormDataCubit>(context);
-
-    final nameFieldController = TextEditingController();
-    final descriptionFieldController = TextEditingController();
-    final instructionFieldController = TextEditingController();
+    bool editMode = false;
+    if (widget.editableRecipe != null) {
+      formDataCubit.initializeEdit(widget.editableRecipe!);
+      editMode = true;
+    }
 
     nameFieldController.text = formDataCubit.state.name ?? "";
     descriptionFieldController.text = formDataCubit.state.shortDescription ?? "";
@@ -153,12 +198,17 @@ class FormFetchScreenBody extends StatelessWidget {
                           }
                           if (state.stepperItem == StepperItem.review) {
                             final navigator = Navigator.of(context);
-                            final bool uploadCompleted = await BlocProvider.of<FormDataCubit>(context).submitRecipe();
+                            final recipeFetchCubit = BlocProvider.of<RecipeFetchCubit>(context);
+
+                            //Send upload mode so we know if we need to update an existing or create a new recipe
+                            final bool uploadCompleted =
+                                await BlocProvider.of<FormDataCubit>(context).submitRecipe(editMode);
 
                             if (uploadCompleted) {
-                              BlocProvider.of<RecipeFetchCubit>(context).fetchHomePageRecipes();
-
+                              if (!mounted) return;
+                              recipeFetchCubit.fetchHomePageRecipes();
                               navigator.pop();
+                              _showToast(context);
                               //Get new created recipe and route to the recipe
                               // navigator.popAndPushNamed(Routes.recipe.name, arguments: )
                             }
@@ -181,6 +231,7 @@ class FormFetchScreenBody extends StatelessWidget {
                             buttonPadding: buttonPadding,
                             buttonShape: buttonShape,
                             details: details,
+                            editMode: editMode,
                           );
                         },
                         steps: <CustomStep>[
@@ -350,12 +401,14 @@ class CustomStepperControls extends StatelessWidget {
     required this.buttonPadding,
     required this.buttonShape,
     required this.details,
+    required this.editMode,
   }) : super(key: key);
 
   final ColorScheme colorScheme;
   final EdgeInsets buttonPadding;
   final OutlinedBorder buttonShape;
   final CustomControlsDetails details;
+  final bool editMode;
 
   @override
   Widget build(BuildContext context) {
@@ -367,7 +420,6 @@ class CustomStepperControls extends StatelessWidget {
       final formDataState = BlocProvider.of<FormDataCubit>(context).state;
       final incredients = formDataState.incredients;
       final categories = formDataState.categories;
-      final tags = formDataState.tags;
       final name = formDataState.name;
       final description = formDataState.shortDescription;
       final instructions = formDataState.instructions;
@@ -399,8 +451,8 @@ class CustomStepperControls extends StatelessWidget {
     }
 
     return Container(
-      decoration: BoxDecoration(
-          border: Border(
+      decoration: const BoxDecoration(
+          border: const Border(
         top: BorderSide(width: 1, color: Colors.black12),
       )),
       margin: const EdgeInsets.only(top: 0.0),
@@ -416,11 +468,11 @@ class CustomStepperControls extends StatelessWidget {
               margin: const EdgeInsetsDirectional.only(start: 8.0),
               child: TextButton(
                 onPressed: details.onStepCancel,
-                child: details.currentStep > 0 ? Text("Previous") : Text("Cancel"),
+                child: details.currentStep > 0 ? const Text("Previous") : const Text("Cancel"),
               ),
             ),
             ConstrainedBox(
-              constraints: BoxConstraints(minHeight: 48, minWidth: 140),
+              constraints: const BoxConstraints(minHeight: 48, minWidth: 140),
               child: TextButton(
                 onPressed: validateStep(details.currentStep) ? details.onStepContinue : null,
                 style: ButtonStyle(
@@ -436,16 +488,16 @@ class CustomStepperControls extends StatelessWidget {
                   shape: MaterialStateProperty.all<OutlinedBorder>(buttonShape),
                 ),
                 child: details.currentStep < 3
-                    ? Text("Continue")
+                    ? const Text("Continue")
                     : BlocBuilder<FormDataCubit, FormDataState>(
                         builder: (context, state) {
                           switch (state.requestStatus) {
                             case DirectusRequestStatus.initial:
-                              return Text("Submit");
+                              return editMode ? const Text("Save") : const Text("Submit");
                             case DirectusRequestStatus.loading:
-                              return Center(
+                              return const Center(
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: EdgeInsets.all(8.0),
                                   child: SizedBox(
                                     width: 20,
                                     height: 20,
@@ -456,12 +508,12 @@ class CustomStepperControls extends StatelessWidget {
                                 ),
                               );
                             case DirectusRequestStatus.loaded:
-                              return Center(
+                              return const Center(
                                 child: Icon(Icons.check_circle_outline),
                               );
 
                             default:
-                              return SizedBox();
+                              return const SizedBox();
                           }
                         },
                       ),

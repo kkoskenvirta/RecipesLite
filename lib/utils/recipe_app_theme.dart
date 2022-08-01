@@ -13,6 +13,10 @@ class RecipeAppTheme {
     ),
 
     canvasColor: Color.fromARGB(255, 252, 242, 246),
+    listTileTheme: ListTileThemeData(
+      visualDensity: VisualDensity(vertical: -3),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+    ),
     chipTheme: ChipThemeData(
       backgroundColor: Palette.pToLight.shade700,
       selectedColor: Palette.pToLight.shade500,

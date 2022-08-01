@@ -1,7 +1,3 @@
-import 'package:flutter_e_commerce/models/incredient/dto/incredient_data_dto.dart';
-import 'package:flutter_e_commerce/models/incredient/dto/incredient_post_request_dto.dart';
-import 'package:flutter_e_commerce/models/incredient/incredient_model.dart';
-import 'package:flutter_e_commerce/models/relation_details.dart/relation_details.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'recipe_post_request_dto.freezed.dart';

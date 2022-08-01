@@ -1,16 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_e_commerce/config/api_config.dart';
 import 'package:flutter_e_commerce/global/blocks/auth/cubit/auth_cubit.dart';
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
-import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
-import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/models/user/user_model.dart';
+import 'package:flutter_e_commerce/routes/route_service.dart';
 
-import 'package:flutter_e_commerce/utils/dimensions.dart';
-import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
-import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
 import 'package:flutter_e_commerce/widgets/header/header.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 
@@ -58,7 +52,10 @@ class ProfileHeader extends StatelessWidget {
     return Header(
         title: "Profile",
         showLeadingButton: false,
-        trailingButtonIcon: Icon(Icons.logout_rounded),
+        trailingButtonIcon: const Icon(
+          Icons.logout_rounded,
+          size: 28,
+        ),
         onTrailingButtonPressed: () {
           authCubit.logout();
         });
@@ -72,80 +69,66 @@ class ProfileBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userDataCubit = BlocProvider.of<UserDataCubit>(context);
-
+    final favorites = userDataCubit.state.favorites;
+    final ownRecipes = userDataCubit.state.recipes;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CachedNetworkImage(
-            height: Dimensions.listViewImgSize,
-            width: Dimensions.listViewImgSize,
-            imageUrl: '$baseUrl$assetsPath${profile.avatar}',
-            imageBuilder: (context, imageProvider) => Container(
-              height: Dimensions.listViewImgSize,
-              width: Dimensions.listViewImgSize,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(Dimensions.radius20),
-                image: DecorationImage(
-                  image: imageProvider,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            progressIndicatorBuilder: (context, url, downloadProgress) => Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: CircularProgressIndicator(value: downloadProgress.progress),
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
           LargeText(
             text: profile.firstName,
-            size: 32,
+            size: 22,
           ),
           const SizedBox(
-            height: 20,
+            height: 16,
           ),
-          Align(alignment: Alignment.centerLeft, child: LargeText(text: "Favorite recipes")),
           const SizedBox(
-            height: 10,
+            height: 8,
           ),
-          BlocBuilder<UserDataCubit, UserDataState>(
-            builder: (context, state) {
-              switch (state.status) {
-                case UserDataStateStatus.loading:
-                  return const CircularProgressIndicator();
-
-                case UserDataStateStatus.loaded:
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: state.favorites.length,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      final RecipeModel singleRecipe = state.favorites[index];
-                      return PopularListItem(
-                        title: singleRecipe.name!,
-                        difficulty: singleRecipe.difficulty!,
-                        description: singleRecipe.shortDescription!,
-                        timeEstimate: singleRecipe.preparationTime!,
-                        imageUrl: singleRecipe.picture,
-                        onTap: () {
-                          Navigator.push(
-                            (context),
-                            MaterialPageRoute(
-                              builder: (context) => RecipePage(recipe: singleRecipe),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  );
-
-                default:
-                  return const SizedBox();
-              }
-            },
+          ListTile(
+            title: const Text(
+              "Favorites",
+              textScaleFactor: 0.9,
+            ),
+            tileColor: Colors.pink.shade50,
+            trailing: const Icon(Icons.chevron_right_rounded),
+            onTap: (() {
+              Navigator.pushNamed(
+                context,
+                Routes.favorites.name,
+                arguments: RecipeListArgs("favorites", favorites),
+              );
+            }),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          ListTile(
+            title: const Text(
+              "Own recipes",
+              textScaleFactor: 0.9,
+            ),
+            tileColor: Colors.pink.shade50,
+            trailing: const Icon(Icons.chevron_right_rounded),
+            onTap: (() {
+              Navigator.pushNamed(
+                context,
+                Routes.ownRecipes.name,
+                arguments: RecipeListArgs("My recipes", ownRecipes),
+              );
+            }),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          ListTile(
+            title: const Text(
+              "Settings",
+              textScaleFactor: 0.9,
+            ),
+            tileColor: Colors.pink.shade50,
+            trailing: const Icon(Icons.chevron_right_rounded),
           ),
         ],
       ),

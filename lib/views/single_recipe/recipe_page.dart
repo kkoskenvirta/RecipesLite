@@ -1,19 +1,15 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
-import 'package:flutter_e_commerce/modules/dio_module.dart';
-import 'package:flutter_e_commerce/modules/directus_module.dart';
-import 'package:flutter_e_commerce/repositorys/user_data_repository.dart';
+import 'package:flutter_e_commerce/routes/route_service.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/scale_func.dart';
 import 'package:flutter_e_commerce/widgets/categorization_bar.dart';
 import 'package:flutter_e_commerce/widgets/incredients_table.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
-import 'package:flutter_e_commerce/widgets/ratings_bar.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../config/api_config.dart';
 import '../../models/recipe/recipe_model.dart';
@@ -41,10 +37,46 @@ class _RecipePageState extends State<RecipePage> {
     super.dispose();
   }
 
+  void _showToast(BuildContext context, bool favorited) {
+    String message;
+    Icon icon;
+    Color backgroundColor;
+    if (favorited) {
+      message = "Added to favorites";
+      icon = Icon(Icons.favorite_rounded, size: 28);
+      backgroundColor = Colors.pink.shade50;
+    } else {
+      message = "Removed from favorites";
+      icon = Icon(Icons.favorite_outline_rounded, size: 28);
+      backgroundColor = Colors.pink.shade50;
+    }
+    Flushbar(
+      flushbarStyle: FlushbarStyle.FLOATING,
+      borderRadius: BorderRadius.circular(8),
+      margin: EdgeInsets.all(8),
+      padding: EdgeInsets.symmetric(vertical: 18),
+      boxShadows: [
+        BoxShadow(
+          color: Colors.black12.withOpacity(0.125),
+          spreadRadius: 4,
+          blurRadius: 4,
+        )
+      ],
+      icon: icon,
+      messageText: LargeText(
+        text: message,
+        size: 15,
+      ),
+      backgroundColor: backgroundColor,
+      duration: const Duration(seconds: 1, milliseconds: 500),
+    ).show(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     _scaleFactor = createScaling(_currScrollPosition);
     final recipe = widget.recipe;
+    final currentUser = BlocProvider.of<UserDataCubit>(context).state.currUser;
 
     return Scaffold(
       body: Stack(children: [
@@ -85,7 +117,7 @@ class _RecipePageState extends State<RecipePage> {
                 height: Dimensions.recipeImgSize - 40,
               ),
               Container(
-                padding: EdgeInsets.symmetric(vertical: Dimensions.width20, horizontal: Dimensions.width20),
+                padding: EdgeInsets.symmetric(vertical: Dimensions.width15, horizontal: Dimensions.width20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Dimensions.radius20),
                   color: const Color.fromARGB(255, 252, 242, 246),
@@ -106,8 +138,17 @@ class _RecipePageState extends State<RecipePage> {
                           return IconButton(
                               onPressed: () {
                                 userDataCubit.toggleFavorites(recipe);
+                                _showToast(context, !favorited);
                               },
-                              icon: favorited ? const Icon(Icons.favorite) : const Icon(Icons.favorite_border_rounded));
+                              icon: favorited
+                                  ? const Icon(
+                                      Icons.favorite,
+                                      size: 30,
+                                    )
+                                  : const Icon(
+                                      Icons.favorite_border_rounded,
+                                      size: 30,
+                                    ));
                         }
                         return const SizedBox();
                       }),
@@ -132,7 +173,7 @@ class _RecipePageState extends State<RecipePage> {
                     height: 1,
                   ),
                   const SizedBox(
-                    height: 12,
+                    height: 14,
                   ),
                   Align(
                       alignment: Alignment.centerLeft,
@@ -190,11 +231,49 @@ class _RecipePageState extends State<RecipePage> {
                 ],
               ),
               child: const Center(
-                child: Icon(Icons.chevron_left_rounded),
+                child: Icon(
+                  Icons.chevron_left_rounded,
+                  size: 28,
+                ),
               ),
             ),
           ),
         ),
+        if (currentUser!.id == recipe.userCreated)
+          Positioned(
+            right: Dimensions.width20,
+            top: Dimensions.height45,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  Routes.recipeEditor.name,
+                  arguments: RecipeEditorArgs("Edit recipe", recipe),
+                );
+              },
+              child: Container(
+                width: 42,
+                height: 42,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(Dimensions.radius20),
+                  color: const Color.fromARGB(255, 252, 242, 246),
+                  boxShadow: const [
+                    BoxShadow(
+                      spreadRadius: 10,
+                      blurRadius: 10,
+                      color: Colors.black12,
+                    ),
+                  ],
+                ),
+                child: const Center(
+                  child: Icon(
+                    Icons.edit,
+                    size: 20,
+                  ),
+                ),
+              ),
+            ),
+          ),
       ]),
     );
   }

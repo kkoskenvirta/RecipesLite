@@ -4,6 +4,7 @@ import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/views/login/login_page.dart';
 import 'package:flutter_e_commerce/views/main/categories/categories_screen.dart';
 import 'package:flutter_e_commerce/views/main/main_page.dart';
+import 'package:flutter_e_commerce/views/profile/profile_recipe_view.dart';
 import 'package:flutter_e_commerce/views/profile/profile_screen.dart';
 import 'package:flutter_e_commerce/views/category_recipes/single_category_page.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/recipe_creator.dart';
@@ -14,12 +15,27 @@ enum Routes {
   recipe('/main/recipe'),
   main('/main'),
   profile('/main/profile'),
+  favorites('/main/profile/favorites'),
+  ownRecipes('/main/profile/recipes'),
   category('/main/category'),
   categories('/main/categories'),
-  recipeCreator('/recipeCreator');
+  recipeCreator('/recipeCreator'),
+  recipeEditor('/recipeEditor');
 
   const Routes(this.name);
   final String name;
+}
+
+class RecipeListArgs {
+  final String title;
+  final List<RecipeModel> recipes;
+  RecipeListArgs(this.title, this.recipes);
+}
+
+class RecipeEditorArgs {
+  final String title;
+  final RecipeModel recipe;
+  RecipeEditorArgs(this.title, this.recipe);
 }
 
 class RouterService {
@@ -44,6 +60,14 @@ class RouterService {
         // final profileData = settings.arguments as ProfileModel;
         return ProfileScreen();
 
+      case Routes.favorites:
+        final recipeListArgs = settings.arguments as RecipeListArgs;
+        return ProfileRecipeView(recipes: recipeListArgs.recipes, title: recipeListArgs.title);
+
+      case Routes.ownRecipes:
+        final recipeListArgs = settings.arguments as RecipeListArgs;
+        return ProfileRecipeView(recipes: recipeListArgs.recipes, title: recipeListArgs.title);
+
       case Routes.categories:
         return CategoriesScreen();
 
@@ -53,6 +77,13 @@ class RouterService {
 
       case Routes.recipeCreator:
         return RecipeCreatorScreen();
+
+      case Routes.recipeEditor:
+        final recipeEditorArgs = settings.arguments as RecipeEditorArgs;
+        return RecipeCreatorScreen(
+          editableRecipe: recipeEditorArgs.recipe,
+          title: recipeEditorArgs.title,
+        );
     }
   }
 }

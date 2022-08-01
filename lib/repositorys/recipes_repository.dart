@@ -120,4 +120,18 @@ class RecipesRepository {
       return left(FetchError.unexpected);
     }
   }
+
+  Future<Either<FetchError, dynamic>> modifyRecipe(RecipePostRequestDTO recipe, String id) async {
+    try {
+      final Response? response;
+      final body = recipe.toJson();
+      _dio.options.headers['Content-Type'] = "application/json; charset=utf-8";
+      response = await _dio.patch('$recipesPath/$id', data: body);
+      return right(Unit);
+    } catch (e) {
+      if (e is DioError && e.response?.statusCode == 400) return left(FetchError.invalidPayload);
+      if (e is DioError && e.response?.statusCode == 401) return left(FetchError.permissionError);
+      return left(FetchError.unexpected);
+    }
+  }
 }

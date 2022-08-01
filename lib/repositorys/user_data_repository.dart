@@ -44,7 +44,6 @@ class UserDataRepository {
             userData = data;
           });
         }
-        print(userData);
         return right(userData!.favorites);
       }
       return left(UserDataError.noCurrentUser);

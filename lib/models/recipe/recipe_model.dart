@@ -1,4 +1,5 @@
 import 'package:flutter_e_commerce/models/category/category_model.dart';
+import 'package:flutter_e_commerce/models/favorite/dto/favorite_dto.dart';
 import 'package:flutter_e_commerce/models/incredient/incredient_model.dart';
 import 'package:flutter_e_commerce/models/recipe/dto/recipe_post_request_dto.dart';
 import 'package:flutter_e_commerce/models/relation_details.dart/relation_details.dart';
@@ -78,5 +79,9 @@ class RecipeModel with _$RecipeModel {
         ).toList(),
       ).toJson(),
     );
+  }
+
+  FavoriteDTO fromDomainToFavorite(RecipeModel recipe, String currentUser) {
+    return FavoriteDTO(recipeId: recipe.id!, userId: currentUser);
   }
 }

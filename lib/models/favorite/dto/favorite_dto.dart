@@ -1,4 +1,3 @@
-import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'favorite_dto.freezed.dart';

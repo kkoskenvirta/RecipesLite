@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
 import 'package:flutter_e_commerce/models/category/category_model.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
+import 'package:flutter_e_commerce/routes/route_service.dart';
 import 'package:flutter_e_commerce/views/category_recipes/cubit/category_recipes_cubit.dart';
 import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
+import 'package:flutter_e_commerce/widgets/header/header.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 
-class SingleCategoryScreen extends StatelessWidget {
-  const SingleCategoryScreen({
+class ProfileRecipeView extends StatelessWidget {
+  const ProfileRecipeView({
     Key? key,
-    required this.category,
+    required this.title,
+    required this.recipes,
   }) : super(key: key);
 
-  final CategoryModel category;
-
+  final String title;
+  final List<RecipeModel> recipes;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,12 +26,12 @@ class SingleCategoryScreen extends StatelessWidget {
         child: Column(
           children: [
             SingleCategoryHeader(
-              category: category,
+              title: title,
             ),
             Flexible(
               child: SingleChildScrollView(
-                child: SingleCategoryScreenBody(
-                  category: category,
+                child: ProfileRecipeViewBody(
+                  recipes: recipes,
                 ),
               ),
             )
@@ -41,67 +45,41 @@ class SingleCategoryScreen extends StatelessWidget {
 class SingleCategoryHeader extends StatelessWidget {
   const SingleCategoryHeader({
     Key? key,
-    required this.category,
+    required this.title,
   }) : super(key: key);
-
-  final CategoryModel category;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: IconButton(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(Icons.chevron_left_rounded),
-                ),
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: LargeText(text: category.name),
-              )
-            ],
-          ),
-        ],
-      ),
+    return Header(
+      title: title,
+      leadingButtonIcon: Icon(Icons.chevron_left_rounded),
+      onLeadingButtonPressed: () => Navigator.pop(context),
+      showTrailingButton: false,
     );
   }
 }
 
-class SingleCategoryScreenBody extends StatelessWidget {
-  const SingleCategoryScreenBody({
+class ProfileRecipeViewBody extends StatelessWidget {
+  const ProfileRecipeViewBody({
     Key? key,
-    required this.category,
+    required this.recipes,
   }) : super(key: key);
 
-  final CategoryModel category;
-
+  final List<RecipeModel> recipes;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        BlocBuilder<CategoryRecipesCubit, CategoryRecipesState>(
-          bloc: BlocProvider.of<CategoryRecipesCubit>(context)..getCategoryRecipes(category),
+        BlocBuilder<UserDataCubit, UserDataState>(
           builder: (context, state) {
             switch (state.status) {
-              case CategoryRecipesStateStatus.initial:
+              case UserDataStateStatus.initial:
                 return const CircularProgressIndicator();
-              case CategoryRecipesStateStatus.loading:
+              case UserDataStateStatus.loading:
                 return const CircularProgressIndicator();
-              case CategoryRecipesStateStatus.loaded:
-                final recipeList = state.recipeList;
+              case UserDataStateStatus.loaded:
+                final recipeList = recipes;
                 return ListView.builder(
                   shrinkWrap: true,
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),

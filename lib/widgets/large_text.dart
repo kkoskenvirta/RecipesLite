@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,11 +5,17 @@ import 'package:google_fonts/google_fonts.dart';
 class LargeText extends StatelessWidget {
   final Color? color;
   final String text;
+  FontWeight? fontWeight;
   double size;
   TextOverflow overFlow;
 
   LargeText(
-      {Key? key, this.color = Colors.black87, required this.text, this.overFlow = TextOverflow.ellipsis, this.size = 0})
+      {Key? key,
+      this.color = Colors.black87,
+      required this.text,
+      this.overFlow = TextOverflow.ellipsis,
+      this.size = 0,
+      this.fontWeight = FontWeight.w600})
       : super(key: key);
 
   @override
@@ -23,7 +28,7 @@ class LargeText extends StatelessWidget {
         textStyle: TextStyle(
           color: color,
           fontSize: size == 0 ? Dimensions.font20 : size,
-          fontWeight: FontWeight.w600,
+          fontWeight: fontWeight,
         ),
       ),
     );

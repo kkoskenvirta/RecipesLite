@@ -25,10 +25,12 @@ mixin _$FormDataState {
   List<CategoryModel> get categories => throw _privateConstructorUsedError;
   List<TagModel> get tags => throw _privateConstructorUsedError;
   RecipeModel get recipe => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   int? get preparationTime => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get shortDescription => throw _privateConstructorUsedError;
   String? get difficulty => throw _privateConstructorUsedError;
+  String? get picture => throw _privateConstructorUsedError;
   File? get image => throw _privateConstructorUsedError;
   String? get blurHash => throw _privateConstructorUsedError;
 
@@ -52,10 +54,12 @@ abstract class $FormDataStateCopyWith<$Res> {
       List<CategoryModel> categories,
       List<TagModel> tags,
       RecipeModel recipe,
+      String? id,
       int? preparationTime,
       String? name,
       String? shortDescription,
       String? difficulty,
+      String? picture,
       File? image,
       String? blurHash});
 
@@ -82,10 +86,12 @@ class _$FormDataStateCopyWithImpl<$Res>
     Object? categories = freezed,
     Object? tags = freezed,
     Object? recipe = freezed,
+    Object? id = freezed,
     Object? preparationTime = freezed,
     Object? name = freezed,
     Object? shortDescription = freezed,
     Object? difficulty = freezed,
+    Object? picture = freezed,
     Object? image = freezed,
     Object? blurHash = freezed,
   }) {
@@ -126,6 +132,10 @@ class _$FormDataStateCopyWithImpl<$Res>
           ? _value.recipe
           : recipe // ignore: cast_nullable_to_non_nullable
               as RecipeModel,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       preparationTime: preparationTime == freezed
           ? _value.preparationTime
           : preparationTime // ignore: cast_nullable_to_non_nullable
@@ -141,6 +151,10 @@ class _$FormDataStateCopyWithImpl<$Res>
       difficulty: difficulty == freezed
           ? _value.difficulty
           : difficulty // ignore: cast_nullable_to_non_nullable
+              as String?,
+      picture: picture == freezed
+          ? _value.picture
+          : picture // ignore: cast_nullable_to_non_nullable
               as String?,
       image: image == freezed
           ? _value.image
@@ -178,10 +192,12 @@ abstract class _$$_FormDataStateCopyWith<$Res>
       List<CategoryModel> categories,
       List<TagModel> tags,
       RecipeModel recipe,
+      String? id,
       int? preparationTime,
       String? name,
       String? shortDescription,
       String? difficulty,
+      String? picture,
       File? image,
       String? blurHash});
 
@@ -211,10 +227,12 @@ class __$$_FormDataStateCopyWithImpl<$Res>
     Object? categories = freezed,
     Object? tags = freezed,
     Object? recipe = freezed,
+    Object? id = freezed,
     Object? preparationTime = freezed,
     Object? name = freezed,
     Object? shortDescription = freezed,
     Object? difficulty = freezed,
+    Object? picture = freezed,
     Object? image = freezed,
     Object? blurHash = freezed,
   }) {
@@ -255,6 +273,10 @@ class __$$_FormDataStateCopyWithImpl<$Res>
           ? _value.recipe
           : recipe // ignore: cast_nullable_to_non_nullable
               as RecipeModel,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       preparationTime: preparationTime == freezed
           ? _value.preparationTime
           : preparationTime // ignore: cast_nullable_to_non_nullable
@@ -270,6 +292,10 @@ class __$$_FormDataStateCopyWithImpl<$Res>
       difficulty: difficulty == freezed
           ? _value.difficulty
           : difficulty // ignore: cast_nullable_to_non_nullable
+              as String?,
+      picture: picture == freezed
+          ? _value.picture
+          : picture // ignore: cast_nullable_to_non_nullable
               as String?,
       image: image == freezed
           ? _value.image
@@ -296,10 +322,12 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
       required final List<CategoryModel> categories,
       required final List<TagModel> tags,
       required this.recipe,
+      this.id,
       this.preparationTime,
       this.name,
       this.shortDescription,
       this.difficulty,
+      this.picture,
       this.image,
       this.blurHash})
       : _incredients = incredients,
@@ -340,6 +368,8 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
   @override
   final RecipeModel recipe;
   @override
+  final String? id;
+  @override
   final int? preparationTime;
   @override
   final String? name;
@@ -348,13 +378,15 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
   @override
   final String? difficulty;
   @override
+  final String? picture;
+  @override
   final File? image;
   @override
   final String? blurHash;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'FormDataState(status: $status, requestStatus: $requestStatus, blurHashStatus: $blurHashStatus, featured: $featured, instructions: $instructions, incredients: $incredients, categories: $categories, tags: $tags, recipe: $recipe, preparationTime: $preparationTime, name: $name, shortDescription: $shortDescription, difficulty: $difficulty, image: $image, blurHash: $blurHash)';
+    return 'FormDataState(status: $status, requestStatus: $requestStatus, blurHashStatus: $blurHashStatus, featured: $featured, instructions: $instructions, incredients: $incredients, categories: $categories, tags: $tags, recipe: $recipe, id: $id, preparationTime: $preparationTime, name: $name, shortDescription: $shortDescription, difficulty: $difficulty, picture: $picture, image: $image, blurHash: $blurHash)';
   }
 
   @override
@@ -371,10 +403,12 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
       ..add(DiagnosticsProperty('categories', categories))
       ..add(DiagnosticsProperty('tags', tags))
       ..add(DiagnosticsProperty('recipe', recipe))
+      ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('preparationTime', preparationTime))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('shortDescription', shortDescription))
       ..add(DiagnosticsProperty('difficulty', difficulty))
+      ..add(DiagnosticsProperty('picture', picture))
       ..add(DiagnosticsProperty('image', image))
       ..add(DiagnosticsProperty('blurHash', blurHash));
   }
@@ -398,6 +432,7 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
                 .equals(other._categories, _categories) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
             const DeepCollectionEquality().equals(other.recipe, recipe) &&
+            const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality()
                 .equals(other.preparationTime, preparationTime) &&
             const DeepCollectionEquality().equals(other.name, name) &&
@@ -405,6 +440,7 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
                 .equals(other.shortDescription, shortDescription) &&
             const DeepCollectionEquality()
                 .equals(other.difficulty, difficulty) &&
+            const DeepCollectionEquality().equals(other.picture, picture) &&
             const DeepCollectionEquality().equals(other.image, image) &&
             const DeepCollectionEquality().equals(other.blurHash, blurHash));
   }
@@ -421,10 +457,12 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
       const DeepCollectionEquality().hash(_categories),
       const DeepCollectionEquality().hash(_tags),
       const DeepCollectionEquality().hash(recipe),
+      const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(preparationTime),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(shortDescription),
       const DeepCollectionEquality().hash(difficulty),
+      const DeepCollectionEquality().hash(picture),
       const DeepCollectionEquality().hash(image),
       const DeepCollectionEquality().hash(blurHash));
 
@@ -445,10 +483,12 @@ abstract class _FormDataState implements FormDataState {
       required final List<CategoryModel> categories,
       required final List<TagModel> tags,
       required final RecipeModel recipe,
+      final String? id,
       final int? preparationTime,
       final String? name,
       final String? shortDescription,
       final String? difficulty,
+      final String? picture,
       final File? image,
       final String? blurHash}) = _$_FormDataState;
 
@@ -471,6 +511,8 @@ abstract class _FormDataState implements FormDataState {
   @override
   RecipeModel get recipe;
   @override
+  String? get id;
+  @override
   int? get preparationTime;
   @override
   String? get name;
@@ -478,6 +520,8 @@ abstract class _FormDataState implements FormDataState {
   String? get shortDescription;
   @override
   String? get difficulty;
+  @override
+  String? get picture;
   @override
   File? get image;
   @override

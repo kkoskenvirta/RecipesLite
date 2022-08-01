@@ -26,6 +26,27 @@ class FormDataCubit extends Cubit<FormDataState> {
 
   final RecipesRepository _recipesRepository;
 
+  initializeEdit(RecipeModel recipe) {
+    try {
+      emit(
+        state.copyWith(
+          id: recipe.id,
+          name: recipe.name,
+          shortDescription: recipe.shortDescription,
+          instructions: recipe.instructions!,
+          categories: recipe.categories!,
+          tags: recipe.tags!,
+          blurHash: recipe.blurhash,
+          incredients: recipe.incredients!,
+          difficulty: recipe.difficulty!.toLowerCase(),
+          preparationTime: recipe.preparationTime,
+        ),
+      );
+    } catch (e) {
+      emit(state.copyWith(status: FormDataStateStatus.error));
+    }
+  }
+
   updateRecipeImage(File tempImage) {
     try {
       emit(state.copyWith(image: tempImage));
@@ -36,7 +57,6 @@ class FormDataCubit extends Cubit<FormDataState> {
 
   updateBlurHash(String hash) {
     emit(state.copyWith(blurHash: hash));
-    print(hash);
   }
 
   updateBlurHashStatus(BlurHashStatus status) {
@@ -44,14 +64,9 @@ class FormDataCubit extends Cubit<FormDataState> {
   }
 
   addIncredient(String name, String amount, String unit) {
-    print(name + amount.toString() + unit);
     List<IncredientModel> incredientList = [...state.incredients];
-    print(incredientList);
     incredientList.add(IncredientModel(name: name, amount: double.parse(amount), unit: unit));
-    print(incredientList);
     emit(state.copyWith(incredients: incredientList));
-
-    print(state.incredients);
   }
 
   removeIncredient(index) {
@@ -131,7 +146,7 @@ class FormDataCubit extends Cubit<FormDataState> {
     emit(state.copyWith(tags: tagList));
   }
 
-  Future<bool> submitRecipe() async {
+  Future<bool> submitRecipe(bool editMode) async {
     try {
       emit(state.copyWith(requestStatus: DirectusRequestStatus.loading));
       String? fileId;
@@ -155,21 +170,20 @@ class FormDataCubit extends Cubit<FormDataState> {
           },
         );
       }
-      await finalizeSubmit(fileId);
+      await finalizeSubmit(fileId, editMode);
 
       return true;
     } catch (e) {
-      print(e);
       emit(state.copyWith(requestStatus: DirectusRequestStatus.error));
-      print("ready to return");
 
       return false;
     }
   }
 
-  finalizeSubmit(String? fileId) async {
+  finalizeSubmit(String? fileId, bool editMode) async {
     try {
       final recipe = RecipeModel(
+        id: state.id,
         difficulty: state.difficulty!.capitalize(),
         name: state.name!.capitalize(),
         preparationTime: state.preparationTime,
@@ -184,15 +198,26 @@ class FormDataCubit extends Cubit<FormDataState> {
       );
 
       final recipePostRequestDTO = RecipeModel().fromDomain(recipe);
-      final failureOrRecipe = await _recipesRepository.addRecipe(recipePostRequestDTO);
-      failureOrRecipe.fold(
-        (error) => emit(state.copyWith(requestStatus: DirectusRequestStatus.error)),
-        (recipe) {
-          print("recipe added");
-          emit(state.copyWith(requestStatus: DirectusRequestStatus.loaded));
-          return;
-        },
-      );
+
+      if (editMode && recipe.id != null) {
+        final failureOrRecipe = await _recipesRepository.modifyRecipe(recipePostRequestDTO, recipe.id!);
+        failureOrRecipe.fold(
+          (error) => emit(state.copyWith(requestStatus: DirectusRequestStatus.error)),
+          (recipe) {
+            emit(state.copyWith(requestStatus: DirectusRequestStatus.loaded));
+            return;
+          },
+        );
+      } else {
+        final failureOrRecipe = await _recipesRepository.addRecipe(recipePostRequestDTO);
+        failureOrRecipe.fold(
+          (error) => emit(state.copyWith(requestStatus: DirectusRequestStatus.error)),
+          (recipe) {
+            emit(state.copyWith(requestStatus: DirectusRequestStatus.loaded));
+            return;
+          },
+        );
+      }
     } catch (e) {
       emit(state.copyWith(requestStatus: DirectusRequestStatus.error));
     }

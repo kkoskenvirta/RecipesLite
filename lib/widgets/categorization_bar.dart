@@ -20,7 +20,7 @@ class CategorizationBar extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Align(alignment: Alignment.centerLeft, child: LargeText(size: 16, text: "Categories:")),
+        Align(alignment: Alignment.centerLeft, child: LargeText(size: 16, text: "Categories")),
         SizedBox(
           height: 2,
         ),
@@ -50,7 +50,7 @@ class CategorizationBar extends StatelessWidget {
         SizedBox(
           height: 8,
         ),
-        if (tags.isNotEmpty) Align(alignment: Alignment.centerLeft, child: LargeText(size: 16, text: "Dietary tags:")),
+        if (tags.isNotEmpty) Align(alignment: Alignment.centerLeft, child: LargeText(size: 16, text: "Dietary tags")),
         SizedBox(
           height: 2,
         ),

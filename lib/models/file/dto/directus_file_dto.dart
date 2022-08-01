@@ -1,5 +1,4 @@
 import 'package:flutter_e_commerce/models/file/dto/directus_file_data_dto.dart';
-import 'package:flutter_e_commerce/models/incredient/dto/incredient_data_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'directus_file_dto.freezed.dart';

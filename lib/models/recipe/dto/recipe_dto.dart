@@ -1,5 +1,4 @@
 import 'package:flutter_e_commerce/models/recipe/dto/recipe_data_dto.dart';
-import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'recipe_dto.freezed.dart';
