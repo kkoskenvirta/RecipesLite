@@ -7,13 +7,25 @@ part 'category_id_dto.g.dart';
 
 @freezed
 class CategoryIdDTO with _$CategoryIdDTO {
-  factory CategoryIdDTO({@JsonKey(name: "category_category_id") required CategoryDataDTO category}) = _CategoryIdDTO;
+  factory CategoryIdDTO({
+    @JsonKey(name: "id") required int relationId,
+    @JsonKey(name: "category_category_id") required CategoryDataDTO category,
+  }) = _CategoryIdDTO;
 
   const CategoryIdDTO._();
 
   factory CategoryIdDTO.fromJson(Map<String, dynamic> json) => _$CategoryIdDTOFromJson(json);
 
   CategoryModel toDomain() {
-    return category.toDomain();
+    return CategoryModel(
+      id: category.id,
+      relationId: relationId,
+      name: category.name,
+      blurhash: category.blurhash,
+      picture: category.picture,
+      icon: category.icon,
+      status: category.sort,
+      sort: category.sort,
+    );
   }
 }

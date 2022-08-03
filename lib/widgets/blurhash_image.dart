@@ -8,7 +8,7 @@ class BlurhashImage extends StatelessWidget {
   const BlurhashImage(
       {Key? key,
       required this.aspectRatio,
-      required this.image,
+      this.image,
       required this.blurhash,
       this.height,
       this.width,

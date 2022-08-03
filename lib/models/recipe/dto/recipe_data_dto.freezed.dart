@@ -27,9 +27,9 @@ mixin _$RecipeDataDTO {
   String? get blurhash => throw _privateConstructorUsedError;
   String? get picture => throw _privateConstructorUsedError;
   String get instructions => throw _privateConstructorUsedError;
-  List<CategoryIdDTO> get categories => throw _privateConstructorUsedError;
-  List<TagIdDTO> get tags => throw _privateConstructorUsedError;
-  List<IncredientIdDTO> get incredients => throw _privateConstructorUsedError;
+  List<CategoryIdDTO>? get categories => throw _privateConstructorUsedError;
+  List<TagIdDTO>? get tags => throw _privateConstructorUsedError;
+  List<IngredientIdDTO>? get ingredients => throw _privateConstructorUsedError;
   @JsonKey(name: 'Name')
   String? get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'Featured')
@@ -66,9 +66,9 @@ abstract class $RecipeDataDTOCopyWith<$Res> {
       String? blurhash,
       String? picture,
       String instructions,
-      List<CategoryIdDTO> categories,
-      List<TagIdDTO> tags,
-      List<IncredientIdDTO> incredients,
+      List<CategoryIdDTO>? categories,
+      List<TagIdDTO>? tags,
+      List<IngredientIdDTO>? ingredients,
       @JsonKey(name: 'Name') String? name,
       @JsonKey(name: 'Featured') bool? featured,
       @JsonKey(name: 'preparation_time') int? preparationTime,
@@ -99,7 +99,7 @@ class _$RecipeDataDTOCopyWithImpl<$Res>
     Object? instructions = freezed,
     Object? categories = freezed,
     Object? tags = freezed,
-    Object? incredients = freezed,
+    Object? ingredients = freezed,
     Object? name = freezed,
     Object? featured = freezed,
     Object? preparationTime = freezed,
@@ -141,15 +141,15 @@ class _$RecipeDataDTOCopyWithImpl<$Res>
       categories: categories == freezed
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
-              as List<CategoryIdDTO>,
+              as List<CategoryIdDTO>?,
       tags: tags == freezed
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<TagIdDTO>,
-      incredients: incredients == freezed
-          ? _value.incredients
-          : incredients // ignore: cast_nullable_to_non_nullable
-              as List<IncredientIdDTO>,
+              as List<TagIdDTO>?,
+      ingredients: ingredients == freezed
+          ? _value.ingredients
+          : ingredients // ignore: cast_nullable_to_non_nullable
+              as List<IngredientIdDTO>?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -201,9 +201,9 @@ abstract class _$$_RecipeDataDTOCopyWith<$Res>
       String? blurhash,
       String? picture,
       String instructions,
-      List<CategoryIdDTO> categories,
-      List<TagIdDTO> tags,
-      List<IncredientIdDTO> incredients,
+      List<CategoryIdDTO>? categories,
+      List<TagIdDTO>? tags,
+      List<IngredientIdDTO>? ingredients,
       @JsonKey(name: 'Name') String? name,
       @JsonKey(name: 'Featured') bool? featured,
       @JsonKey(name: 'preparation_time') int? preparationTime,
@@ -236,7 +236,7 @@ class __$$_RecipeDataDTOCopyWithImpl<$Res>
     Object? instructions = freezed,
     Object? categories = freezed,
     Object? tags = freezed,
-    Object? incredients = freezed,
+    Object? ingredients = freezed,
     Object? name = freezed,
     Object? featured = freezed,
     Object? preparationTime = freezed,
@@ -278,15 +278,15 @@ class __$$_RecipeDataDTOCopyWithImpl<$Res>
       categories: categories == freezed
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
-              as List<CategoryIdDTO>,
+              as List<CategoryIdDTO>?,
       tags: tags == freezed
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<TagIdDTO>,
-      incredients: incredients == freezed
-          ? _value._incredients
-          : incredients // ignore: cast_nullable_to_non_nullable
-              as List<IncredientIdDTO>,
+              as List<TagIdDTO>?,
+      ingredients: ingredients == freezed
+          ? _value._ingredients
+          : ingredients // ignore: cast_nullable_to_non_nullable
+              as List<IngredientIdDTO>?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -334,9 +334,9 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
       this.blurhash,
       this.picture,
       this.instructions = '',
-      required final List<CategoryIdDTO> categories,
-      required final List<TagIdDTO> tags,
-      required final List<IncredientIdDTO> incredients,
+      final List<CategoryIdDTO>? categories,
+      final List<TagIdDTO>? tags,
+      final List<IngredientIdDTO>? ingredients,
       @JsonKey(name: 'Name') this.name,
       @JsonKey(name: 'Featured') this.featured,
       @JsonKey(name: 'preparation_time') this.preparationTime,
@@ -347,7 +347,7 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
       @JsonKey(name: 'date_updated') this.dateUpdated})
       : _categories = categories,
         _tags = tags,
-        _incredients = incredients,
+        _ingredients = ingredients,
         super._();
 
   factory _$_RecipeDataDTO.fromJson(Map<String, dynamic> json) =>
@@ -368,25 +368,31 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
   @override
   @JsonKey()
   final String instructions;
-  final List<CategoryIdDTO> _categories;
+  final List<CategoryIdDTO>? _categories;
   @override
-  List<CategoryIdDTO> get categories {
+  List<CategoryIdDTO>? get categories {
+    final value = _categories;
+    if (value == null) return null;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_categories);
+    return EqualUnmodifiableListView(value);
   }
 
-  final List<TagIdDTO> _tags;
+  final List<TagIdDTO>? _tags;
   @override
-  List<TagIdDTO> get tags {
+  List<TagIdDTO>? get tags {
+    final value = _tags;
+    if (value == null) return null;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_tags);
+    return EqualUnmodifiableListView(value);
   }
 
-  final List<IncredientIdDTO> _incredients;
+  final List<IngredientIdDTO>? _ingredients;
   @override
-  List<IncredientIdDTO> get incredients {
+  List<IngredientIdDTO>? get ingredients {
+    final value = _ingredients;
+    if (value == null) return null;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_incredients);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
@@ -416,7 +422,7 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
 
   @override
   String toString() {
-    return 'RecipeDataDTO(id: $id, status: $status, difficulty: $difficulty, rating: $rating, blurhash: $blurhash, picture: $picture, instructions: $instructions, categories: $categories, tags: $tags, incredients: $incredients, name: $name, featured: $featured, preparationTime: $preparationTime, shortDescription: $shortDescription, commentCount: $commentCount, userCreated: $userCreated, dateCreated: $dateCreated, dateUpdated: $dateUpdated)';
+    return 'RecipeDataDTO(id: $id, status: $status, difficulty: $difficulty, rating: $rating, blurhash: $blurhash, picture: $picture, instructions: $instructions, categories: $categories, tags: $tags, ingredients: $ingredients, name: $name, featured: $featured, preparationTime: $preparationTime, shortDescription: $shortDescription, commentCount: $commentCount, userCreated: $userCreated, dateCreated: $dateCreated, dateUpdated: $dateUpdated)';
   }
 
   @override
@@ -437,7 +443,7 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
                 .equals(other._categories, _categories) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
             const DeepCollectionEquality()
-                .equals(other._incredients, _incredients) &&
+                .equals(other._ingredients, _ingredients) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.featured, featured) &&
             const DeepCollectionEquality()
@@ -467,7 +473,7 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
       const DeepCollectionEquality().hash(instructions),
       const DeepCollectionEquality().hash(_categories),
       const DeepCollectionEquality().hash(_tags),
-      const DeepCollectionEquality().hash(_incredients),
+      const DeepCollectionEquality().hash(_ingredients),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(featured),
       const DeepCollectionEquality().hash(preparationTime),
@@ -499,9 +505,9 @@ abstract class _RecipeDataDTO extends RecipeDataDTO {
           final String? blurhash,
           final String? picture,
           final String instructions,
-          required final List<CategoryIdDTO> categories,
-          required final List<TagIdDTO> tags,
-          required final List<IncredientIdDTO> incredients,
+          final List<CategoryIdDTO>? categories,
+          final List<TagIdDTO>? tags,
+          final List<IngredientIdDTO>? ingredients,
           @JsonKey(name: 'Name') final String? name,
           @JsonKey(name: 'Featured') final bool? featured,
           @JsonKey(name: 'preparation_time') final int? preparationTime,
@@ -531,11 +537,11 @@ abstract class _RecipeDataDTO extends RecipeDataDTO {
   @override
   String get instructions;
   @override
-  List<CategoryIdDTO> get categories;
+  List<CategoryIdDTO>? get categories;
   @override
-  List<TagIdDTO> get tags;
+  List<TagIdDTO>? get tags;
   @override
-  List<IncredientIdDTO> get incredients;
+  List<IngredientIdDTO>? get ingredients;
   @override
   @JsonKey(name: 'Name')
   String? get name;

@@ -8,6 +8,7 @@ class TagModel with _$TagModel {
   factory TagModel({
     required String id,
     required String name,
+    int? relationId,
     String? status,
     String? sort,
   }) = _TagModel;

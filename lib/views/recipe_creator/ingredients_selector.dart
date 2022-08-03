@@ -1,18 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_e_commerce/models/incredient/incredient_model.dart';
-import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
+import 'package:flutter_e_commerce/models/ingredient/ingredient_model.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
-import 'package:flutter_e_commerce/views/main/search_modal.dart';
+import 'package:flutter_e_commerce/utils/string_extension.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_data/form_data_cubit.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-class IncredientsSelector extends StatelessWidget {
-  IncredientsSelector({Key? key, required this.incredients}) : super(key: key);
-  List<IncredientModel> incredients = [];
+class IngredientsSelector extends StatelessWidget {
+  const IngredientsSelector({Key? key, required this.ingredients}) : super(key: key);
+  final List<IngredientModel> ingredients;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,7 @@ class IncredientsSelector extends StatelessWidget {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         builder: (context) => BlocProvider.value(
           value: formDataCubit,
-          child: IncredientSheet(),
+          child: const IngredientSheet(),
         ),
       );
     }
@@ -32,14 +30,14 @@ class IncredientsSelector extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (incredients.isNotEmpty)
+        if (ingredients.isNotEmpty)
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return Column(
                 children: [
-                  IncredientRow(
+                  ingredientRow(
                     index: index,
                   ),
                 ],
@@ -50,9 +48,9 @@ class IncredientsSelector extends StatelessWidget {
                 height: 8,
               );
             }),
-            itemCount: incredients.length,
+            itemCount: ingredients.length,
           ),
-        SizedBox(
+        const SizedBox(
           height: 12,
         ),
         ElevatedButton(
@@ -63,41 +61,41 @@ class IncredientsSelector extends StatelessWidget {
             surfaceTintColor: Theme.of(context).primaryColor,
           ),
           onPressed: () => showBottomSheet(),
-          child: incredients.isEmpty ? const Text("ADD INCREDIENT") : const Text("ADD"),
+          child: ingredients.isEmpty ? const Text("ADD ingredient") : const Text("ADD"),
         ),
       ],
     );
   }
 }
 
-class IncredientRow extends StatelessWidget {
-  const IncredientRow({Key? key, required this.index}) : super(key: key);
+class ingredientRow extends StatelessWidget {
+  const ingredientRow({Key? key, required this.index}) : super(key: key);
   final int index;
 
-  removeIncredient(context) {
+  removeingredient(context) {
     final formDataCubit = BlocProvider.of<FormDataCubit>(context);
-    formDataCubit.removeIncredient(index);
+    formDataCubit.removeIngredient(index);
   }
 
   void updateName(context, String name) {
-    BlocProvider.of<FormDataCubit>(context).updateIncredientName(index, name);
+    BlocProvider.of<FormDataCubit>(context).updateIngredientName(index, name);
   }
 
   void updateAmount(context, String amount) {
-    BlocProvider.of<FormDataCubit>(context).updateIncredientAmount(index, amount);
+    BlocProvider.of<FormDataCubit>(context).updateIngredientAmount(index, amount);
   }
 
   void updateUnit(context, String unit) {
-    BlocProvider.of<FormDataCubit>(context).updateIncredientUnit(index, unit);
+    BlocProvider.of<FormDataCubit>(context).updateIngredientUnit(index, unit);
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FormDataCubit, FormDataState>(
       builder: (context, state) {
-        final incredient = state.incredients[index];
+        final ingredient = state.ingredients[index];
 
-        void showBottomSheet(int index, IncredientModel incredient) {
+        void showBottomSheet(int index, IngredientModel ingredient) {
           final formDataCubit = BlocProvider.of<FormDataCubit>(context);
           showBarModalBottomSheet(
             expand: false,
@@ -105,15 +103,15 @@ class IncredientRow extends StatelessWidget {
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             builder: (context) => BlocProvider.value(
               value: formDataCubit,
-              child: IncredientSheet(index: index, incredient: incredient),
+              child: IngredientSheet(index: index, ingredient: ingredient),
             ),
           );
         }
 
         return Dismissible(
-          key: Key("Item ${index}"),
+          key: UniqueKey(),
           direction: DismissDirection.endToStart,
-          onDismissed: (_) => removeIncredient(context),
+          onDismissed: (_) => removeingredient(context),
           dismissThresholds: const {DismissDirection.endToStart: 0.6},
           background: Container(
             color: Colors.pink.shade400,
@@ -131,12 +129,13 @@ class IncredientRow extends StatelessWidget {
             ),
             child: ListTile(
               title: LargeText(
-                text: incredient.name!,
+                text: ingredient.name.capitalize(),
                 size: 16,
               ),
-              subtitle: Text('${incredient.amount.toString()} ${incredient.unit}'),
-              trailing: Icon(Icons.edit),
-              onTap: () => showBottomSheet(index, incredient),
+              visualDensity: const VisualDensity(vertical: -1),
+              subtitle: Text('${ingredient.amount.toString()} ${ingredient.unit}'),
+              trailing: const Icon(Icons.edit),
+              onTap: () => showBottomSheet(index, ingredient),
             ),
           ),
         );
@@ -146,17 +145,17 @@ class IncredientRow extends StatelessWidget {
 }
 
 //Needs stateful for form validation
-class IncredientSheet extends StatefulWidget {
-  const IncredientSheet({Key? key, this.incredient, this.index}) : super(key: key);
+class IngredientSheet extends StatefulWidget {
+  const IngredientSheet({Key? key, this.ingredient, this.index}) : super(key: key);
 
-  final IncredientModel? incredient;
+  final IngredientModel? ingredient;
   final int? index;
 
   @override
-  State<IncredientSheet> createState() => _IncredientSheetState();
+  State<IngredientSheet> createState() => _IngredientSheetState();
 }
 
-class _IncredientSheetState extends State<IncredientSheet> {
+class _IngredientSheetState extends State<IngredientSheet> {
   final List<String> unitOptions = [
     'gram',
     'kg',
@@ -168,20 +167,25 @@ class _IncredientSheetState extends State<IncredientSheet> {
   ];
 
   String name = "";
-
   String amount = "";
-
   String unit = "gram";
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  final nameController = TextEditingController();
+  final amountController = TextEditingController();
   final unitController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FormDataCubit, FormDataState>(
       builder: (context, state) {
-        unitController.text = widget.incredient != null ? widget.incredient!.unit.toString() : "gram";
+        nameController.text = widget.ingredient != null ? widget.ingredient!.name : "";
+        amountController.text = widget.ingredient != null ? widget.ingredient!.amount.toString() : "";
+        unitController.text = widget.ingredient != null ? widget.ingredient!.unit.toString() : "gram";
+        name = widget.ingredient != null ? widget.ingredient!.name : "";
+        amount = widget.ingredient != null ? widget.ingredient!.amount.toString() : "";
+        unit = widget.ingredient != null ? widget.ingredient!.unit.toString() : "gram";
 
         return Form(
           key: formKey,
@@ -191,21 +195,21 @@ class _IncredientSheetState extends State<IncredientSheet> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
-                LargeText(text: "Add an incredient"),
-                SizedBox(
+                LargeText(text: "Add an ingredient"),
+                const SizedBox(
                   height: 16,
                 ),
-                Align(alignment: Alignment.centerLeft, child: SmallText(text: "Incredient name")),
+                Align(alignment: Alignment.centerLeft, child: SmallText(text: "Ingredient name")),
                 TextFormField(
                   style: const TextStyle(
                     fontSize: 16,
                   ),
-                  decoration: const InputDecoration(hintText: "Incredient", filled: false),
+                  decoration: const InputDecoration(hintText: "Ingredient", filled: false),
                   textInputAction: TextInputAction.next,
-                  initialValue: widget.incredient != null ? widget.incredient!.name : "",
+                  controller: nameController,
                   autofocus: true,
                   onChanged: (name) {
                     this.name = name;
@@ -220,7 +224,7 @@ class _IncredientSheetState extends State<IncredientSheet> {
                 const SizedBox(
                   height: 16,
                 ),
-                Align(alignment: Alignment.centerLeft, child: SmallText(text: "Incredient amount")),
+                Align(alignment: Alignment.centerLeft, child: SmallText(text: "Ingredient amount")),
                 Row(
                   children: [
                     Expanded(
@@ -229,11 +233,11 @@ class _IncredientSheetState extends State<IncredientSheet> {
                           fontSize: 16,
                         ),
                         decoration: const InputDecoration(
-                          hintText: "amount",
+                          hintText: "Amount",
                           filled: false,
                           helperText: "",
                         ),
-                        initialValue: widget.incredient != null ? widget.incredient!.amount.toString() : "",
+                        controller: amountController,
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.number,
                         onChanged: (amount) {
@@ -243,22 +247,28 @@ class _IncredientSheetState extends State<IncredientSheet> {
                           if (value != null && value.isEmpty) {
                             return "Amount can't be empty";
                           }
+                          try {
+                            double.parse(value!);
+                          } catch (e) {
+                            print(e);
+                            return "Invalid amount";
+                          }
                           return null;
                         },
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 16,
                     ),
                     Expanded(
                       child: Container(
                         width: 70,
-                        padding: EdgeInsets.only(bottom: 24),
+                        padding: const EdgeInsets.only(bottom: 24),
                         child: DropdownButtonFormField<String>(
                           decoration: const InputDecoration(
                             filled: false,
                           ),
-                          value: widget.incredient != null ? widget.incredient!.unit : "gram",
+                          value: widget.ingredient != null ? widget.ingredient!.unit : "gram",
                           items: unitOptions
                               .map((unit) => DropdownMenuItem(
                                     value: unit,
@@ -273,7 +283,7 @@ class _IncredientSheetState extends State<IncredientSheet> {
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 ConstrainedBox(
@@ -287,7 +297,7 @@ class _IncredientSheetState extends State<IncredientSheet> {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: Text("Cancel"),
+                          child: const Text("Cancel"),
                         ),
                       ),
                       ElevatedButton(
@@ -295,16 +305,16 @@ class _IncredientSheetState extends State<IncredientSheet> {
                           final isValidForm = formKey.currentState!.validate();
                           if (isValidForm) {
                             if (widget.index != null) {
-                              BlocProvider.of<FormDataCubit>(context).updateIncredientName(widget.index!, name);
-                              BlocProvider.of<FormDataCubit>(context).updateIncredientAmount(widget.index!, amount);
-                              BlocProvider.of<FormDataCubit>(context).updateIncredientUnit(widget.index!, unit);
+                              BlocProvider.of<FormDataCubit>(context).updateIngredientName(widget.index!, name);
+                              BlocProvider.of<FormDataCubit>(context).updateIngredientAmount(widget.index!, amount);
+                              BlocProvider.of<FormDataCubit>(context).updateIngredientUnit(widget.index!, unit);
                             } else {
-                              BlocProvider.of<FormDataCubit>(context).addIncredient(name, amount, unit);
+                              BlocProvider.of<FormDataCubit>(context).addIngredient(name, amount, unit);
                             }
                             Navigator.pop(context);
                           }
                         },
-                        child: Text("Save"),
+                        child: const Text("Save"),
                       ),
                     ],
                   ),

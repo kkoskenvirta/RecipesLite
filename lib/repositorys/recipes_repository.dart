@@ -9,6 +9,7 @@ import 'package:flutter_e_commerce/models/file/dto/directus_file_dto.dart';
 import 'package:flutter_e_commerce/models/recipe/dto/recipe_data_dto.dart';
 import 'package:flutter_e_commerce/models/recipe/dto/recipe_dto.dart';
 import 'package:flutter_e_commerce/models/recipe/dto/recipe_post_request_dto.dart';
+import 'package:flutter_e_commerce/models/recipe/dto/recipe_single_dto.dart';
 import '../models/recipe/recipe_model.dart';
 import '../modules/dio_module.dart';
 
@@ -73,6 +74,21 @@ class RecipesRepository {
         return right(recipes);
       }
       return right([]);
+    } catch (e) {
+      if (e is DioError && e.response?.statusCode == 400) return left(FetchError.invalidPayload);
+      if (e is DioError && e.response?.statusCode == 401) return left(FetchError.permissionError);
+      return left(FetchError.unexpected);
+    }
+  }
+
+  Future<Either<FetchError, RecipeModel>> getRecipeWithId({required String id}) async {
+    try {
+      final Response? response;
+      response = await _tokenDio.get('$baseUrl$recipesPath$id$recipeFields');
+
+      final recipesDTO = RecipeSingleDTO.fromJson(response.data);
+      final recipe = recipesDTO.data.toDomain();
+      return right(recipe);
     } catch (e) {
       if (e is DioError && e.response?.statusCode == 400) return left(FetchError.invalidPayload);
       if (e is DioError && e.response?.statusCode == 401) return left(FetchError.permissionError);

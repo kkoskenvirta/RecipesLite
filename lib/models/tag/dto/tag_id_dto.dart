@@ -7,13 +7,22 @@ part 'tag_id_dto.g.dart';
 
 @freezed
 class TagIdDTO with _$TagIdDTO {
-  factory TagIdDTO({@JsonKey(name: "tag_id") required TagDataDTO tag}) = _TagIdDTO;
+  factory TagIdDTO({
+    @JsonKey(name: "id") required int relationId,
+    @JsonKey(name: "tag_id") required TagDataDTO tag,
+  }) = _TagIdDTO;
 
   const TagIdDTO._();
 
   factory TagIdDTO.fromJson(Map<String, dynamic> json) => _$TagIdDTOFromJson(json);
 
   TagModel toDomain() {
-    return tag.toDomain();
+    return TagModel(
+      id: tag.id,
+      name: tag.name,
+      relationId: relationId,
+      sort: tag.sort,
+      status: tag.status,
+    );
   }
 }

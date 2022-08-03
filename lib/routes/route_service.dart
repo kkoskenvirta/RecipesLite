@@ -26,6 +26,8 @@ enum Routes {
   final String name;
 }
 
+enum ListMode { favorites, owned }
+
 class RecipeListArgs {
   final String title;
   final List<RecipeModel> recipes;
@@ -58,25 +60,25 @@ class RouterService {
 
       case Routes.profile:
         // final profileData = settings.arguments as ProfileModel;
-        return ProfileScreen();
+        return const ProfileScreen();
 
       case Routes.favorites:
         final recipeListArgs = settings.arguments as RecipeListArgs;
-        return ProfileRecipeView(recipes: recipeListArgs.recipes, title: recipeListArgs.title);
+        return ProfileRecipeView(mode: ListMode.favorites, title: recipeListArgs.title);
 
       case Routes.ownRecipes:
         final recipeListArgs = settings.arguments as RecipeListArgs;
-        return ProfileRecipeView(recipes: recipeListArgs.recipes, title: recipeListArgs.title);
+        return ProfileRecipeView(mode: ListMode.owned, title: recipeListArgs.title);
 
       case Routes.categories:
-        return CategoriesScreen();
+        return const CategoriesScreen();
 
       case Routes.category:
         final category = settings.arguments as CategoryModel;
         return SingleCategoryScreen(category: category);
 
       case Routes.recipeCreator:
-        return RecipeCreatorScreen();
+        return const RecipeCreatorScreen();
 
       case Routes.recipeEditor:
         final recipeEditorArgs = settings.arguments as RecipeEditorArgs;

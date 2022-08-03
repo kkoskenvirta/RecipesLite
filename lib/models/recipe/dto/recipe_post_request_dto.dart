@@ -12,7 +12,7 @@ class RecipePostRequestDTO with _$RecipePostRequestDTO {
     required String instructions,
     required Map<String, dynamic> categories,
     required Map<String, dynamic> tags,
-    required Map<String, dynamic> incredients,
+    required Map<String, dynamic> ingredients,
     @JsonKey(name: 'Name') String? name,
     @JsonKey(name: 'preparation_time') int? preparationTime,
     @JsonKey(name: 'short_description') String? shortDescription,

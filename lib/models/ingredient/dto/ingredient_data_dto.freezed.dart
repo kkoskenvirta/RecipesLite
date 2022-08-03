@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'incredient_data_dto.dart';
+part of 'ingredient_data_dto.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,13 +14,13 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-IncredientDataDTO _$IncredientDataDTOFromJson(Map<String, dynamic> json) {
-  return _IncredientDataDTO.fromJson(json);
+IngredientDataDTO _$IngredientDataDTOFromJson(Map<String, dynamic> json) {
+  return _IngredientDataDTO.fromJson(json);
 }
 
 /// @nodoc
-mixin _$IncredientDataDTO {
-  @JsonKey(name: 'incredient_id')
+mixin _$IngredientDataDTO {
+  @JsonKey(name: 'ingredient_id')
   String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   double? get amount => throw _privateConstructorUsedError;
@@ -29,17 +29,17 @@ mixin _$IncredientDataDTO {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $IncredientDataDTOCopyWith<IncredientDataDTO> get copyWith =>
+  $IngredientDataDTOCopyWith<IngredientDataDTO> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $IncredientDataDTOCopyWith<$Res> {
-  factory $IncredientDataDTOCopyWith(
-          IncredientDataDTO value, $Res Function(IncredientDataDTO) then) =
-      _$IncredientDataDTOCopyWithImpl<$Res>;
+abstract class $IngredientDataDTOCopyWith<$Res> {
+  factory $IngredientDataDTOCopyWith(
+          IngredientDataDTO value, $Res Function(IngredientDataDTO) then) =
+      _$IngredientDataDTOCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: 'incredient_id') String? id,
+      {@JsonKey(name: 'ingredient_id') String? id,
       String name,
       double? amount,
       String unit,
@@ -47,13 +47,13 @@ abstract class $IncredientDataDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$IncredientDataDTOCopyWithImpl<$Res>
-    implements $IncredientDataDTOCopyWith<$Res> {
-  _$IncredientDataDTOCopyWithImpl(this._value, this._then);
+class _$IngredientDataDTOCopyWithImpl<$Res>
+    implements $IngredientDataDTOCopyWith<$Res> {
+  _$IngredientDataDTOCopyWithImpl(this._value, this._then);
 
-  final IncredientDataDTO _value;
+  final IngredientDataDTO _value;
   // ignore: unused_field
-  final $Res Function(IncredientDataDTO) _then;
+  final $Res Function(IngredientDataDTO) _then;
 
   @override
   $Res call({
@@ -89,14 +89,14 @@ class _$IncredientDataDTOCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$_IncredientDataDTOCopyWith<$Res>
-    implements $IncredientDataDTOCopyWith<$Res> {
-  factory _$$_IncredientDataDTOCopyWith(_$_IncredientDataDTO value,
-          $Res Function(_$_IncredientDataDTO) then) =
-      __$$_IncredientDataDTOCopyWithImpl<$Res>;
+abstract class _$$_IngredientDataDTOCopyWith<$Res>
+    implements $IngredientDataDTOCopyWith<$Res> {
+  factory _$$_IngredientDataDTOCopyWith(_$_IngredientDataDTO value,
+          $Res Function(_$_IngredientDataDTO) then) =
+      __$$_IngredientDataDTOCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: 'incredient_id') String? id,
+      {@JsonKey(name: 'ingredient_id') String? id,
       String name,
       double? amount,
       String unit,
@@ -104,15 +104,15 @@ abstract class _$$_IncredientDataDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_IncredientDataDTOCopyWithImpl<$Res>
-    extends _$IncredientDataDTOCopyWithImpl<$Res>
-    implements _$$_IncredientDataDTOCopyWith<$Res> {
-  __$$_IncredientDataDTOCopyWithImpl(
-      _$_IncredientDataDTO _value, $Res Function(_$_IncredientDataDTO) _then)
-      : super(_value, (v) => _then(v as _$_IncredientDataDTO));
+class __$$_IngredientDataDTOCopyWithImpl<$Res>
+    extends _$IngredientDataDTOCopyWithImpl<$Res>
+    implements _$$_IngredientDataDTOCopyWith<$Res> {
+  __$$_IngredientDataDTOCopyWithImpl(
+      _$_IngredientDataDTO _value, $Res Function(_$_IngredientDataDTO) _then)
+      : super(_value, (v) => _then(v as _$_IngredientDataDTO));
 
   @override
-  _$_IncredientDataDTO get _value => super._value as _$_IncredientDataDTO;
+  _$_IngredientDataDTO get _value => super._value as _$_IngredientDataDTO;
 
   @override
   $Res call({
@@ -122,7 +122,7 @@ class __$$_IncredientDataDTOCopyWithImpl<$Res>
     Object? unit = freezed,
     Object? sort = freezed,
   }) {
-    return _then(_$_IncredientDataDTO(
+    return _then(_$_IngredientDataDTO(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -149,20 +149,20 @@ class __$$_IncredientDataDTOCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_IncredientDataDTO extends _IncredientDataDTO {
-  _$_IncredientDataDTO(
-      {@JsonKey(name: 'incredient_id') this.id,
+class _$_IngredientDataDTO extends _IngredientDataDTO {
+  _$_IngredientDataDTO(
+      {@JsonKey(name: 'ingredient_id') this.id,
       this.name = '',
       this.amount,
       this.unit = 'gram',
       this.sort})
       : super._();
 
-  factory _$_IncredientDataDTO.fromJson(Map<String, dynamic> json) =>
-      _$$_IncredientDataDTOFromJson(json);
+  factory _$_IngredientDataDTO.fromJson(Map<String, dynamic> json) =>
+      _$$_IngredientDataDTOFromJson(json);
 
   @override
-  @JsonKey(name: 'incredient_id')
+  @JsonKey(name: 'ingredient_id')
   final String? id;
   @override
   @JsonKey()
@@ -177,14 +177,14 @@ class _$_IncredientDataDTO extends _IncredientDataDTO {
 
   @override
   String toString() {
-    return 'IncredientDataDTO(id: $id, name: $name, amount: $amount, unit: $unit, sort: $sort)';
+    return 'IngredientDataDTO(id: $id, name: $name, amount: $amount, unit: $unit, sort: $sort)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_IncredientDataDTO &&
+            other is _$_IngredientDataDTO &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.amount, amount) &&
@@ -204,32 +204,32 @@ class _$_IncredientDataDTO extends _IncredientDataDTO {
 
   @JsonKey(ignore: true)
   @override
-  _$$_IncredientDataDTOCopyWith<_$_IncredientDataDTO> get copyWith =>
-      __$$_IncredientDataDTOCopyWithImpl<_$_IncredientDataDTO>(
+  _$$_IngredientDataDTOCopyWith<_$_IngredientDataDTO> get copyWith =>
+      __$$_IngredientDataDTOCopyWithImpl<_$_IngredientDataDTO>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_IncredientDataDTOToJson(
+    return _$$_IngredientDataDTOToJson(
       this,
     );
   }
 }
 
-abstract class _IncredientDataDTO extends IncredientDataDTO {
-  factory _IncredientDataDTO(
-      {@JsonKey(name: 'incredient_id') final String? id,
+abstract class _IngredientDataDTO extends IngredientDataDTO {
+  factory _IngredientDataDTO(
+      {@JsonKey(name: 'ingredient_id') final String? id,
       final String name,
       final double? amount,
       final String unit,
-      final String? sort}) = _$_IncredientDataDTO;
-  _IncredientDataDTO._() : super._();
+      final String? sort}) = _$_IngredientDataDTO;
+  _IngredientDataDTO._() : super._();
 
-  factory _IncredientDataDTO.fromJson(Map<String, dynamic> json) =
-      _$_IncredientDataDTO.fromJson;
+  factory _IngredientDataDTO.fromJson(Map<String, dynamic> json) =
+      _$_IngredientDataDTO.fromJson;
 
   @override
-  @JsonKey(name: 'incredient_id')
+  @JsonKey(name: 'ingredient_id')
   String? get id;
   @override
   String get name;
@@ -241,6 +241,6 @@ abstract class _IncredientDataDTO extends IncredientDataDTO {
   String? get sort;
   @override
   @JsonKey(ignore: true)
-  _$$_IncredientDataDTOCopyWith<_$_IncredientDataDTO> get copyWith =>
+  _$$_IngredientDataDTOCopyWith<_$_IngredientDataDTO> get copyWith =>
       throw _privateConstructorUsedError;
 }

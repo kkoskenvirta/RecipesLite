@@ -2,12 +2,15 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
+import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:flutter_e_commerce/routes/route_service.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/scale_func.dart';
+import 'package:flutter_e_commerce/views/single_recipe/cubit/single_recipe_cubit.dart';
 import 'package:flutter_e_commerce/widgets/categorization_bar.dart';
-import 'package:flutter_e_commerce/widgets/incredients_table.dart';
+import 'package:flutter_e_commerce/widgets/ingredients_table.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 
@@ -15,11 +18,12 @@ import '../../config/api_config.dart';
 import '../../models/recipe/recipe_model.dart';
 
 class RecipePage extends StatefulWidget {
-  final RecipeModel recipe;
-
+  final RecipeModel? recipe;
+  final String? recipeId;
   const RecipePage({
     Key? key,
     required this.recipe,
+    this.recipeId,
   }) : super(key: key);
 
   @override
@@ -75,206 +79,228 @@ class _RecipePageState extends State<RecipePage> {
   @override
   Widget build(BuildContext context) {
     _scaleFactor = createScaling(_currScrollPosition);
-    final recipe = widget.recipe;
+    final loadedRecipe = widget.recipe;
     final currentUser = BlocProvider.of<UserDataCubit>(context).state.currUser;
 
     return Scaffold(
-      body: Stack(children: [
-        ClipRect(
-          child: Transform.scale(
-            scale: _scaleFactor,
-            child: SizedBox(
-              width: double.maxFinite,
-              height: Dimensions.recipeImgSize + 100,
-              child: CachedNetworkImage(
-                height: Dimensions.listViewImgSize,
-                width: Dimensions.listViewImgSize,
-                imageUrl: '$baseUrl$assetsPath${widget.recipe.picture}',
-                imageBuilder: (context, imageProvider) => Container(
-                  height: Dimensions.listViewImgSize,
-                  width: Dimensions.listViewImgSize,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(Dimensions.radius20),
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
+      body: BlocProvider(
+        create: (context) => SingleRecipeCubit(
+          recipesRepository: context.read<RecipesRepository>(),
+        )..initializeRecipe(widget.recipeId, loadedRecipe),
+        child: BlocBuilder<SingleRecipeCubit, SingleRecipeState>(
+          builder: (context, state) {
+            switch (state.status) {
+              case SingleRecipeStateStatus.initial:
+                return CircularProgressIndicator();
+              case SingleRecipeStateStatus.loading:
+                return CircularProgressIndicator();
+              case SingleRecipeStateStatus.loaded:
+                final recipe = state.recipe;
+
+                return Stack(children: [
+                  ClipRect(
+                    child: Transform.scale(
+                      scale: _scaleFactor,
+                      child: SizedBox(
+                        width: double.maxFinite,
+                        height: Dimensions.recipeImgSize + 100,
+                        child: recipe!.picture != null
+                            ? CachedNetworkImage(
+                                height: Dimensions.listViewImgSize,
+                                width: Dimensions.listViewImgSize,
+                                imageUrl: '$baseUrl$assetsPath${recipe.picture}',
+                                imageBuilder: (context, imageProvider) => Container(
+                                  height: Dimensions.listViewImgSize,
+                                  width: Dimensions.listViewImgSize,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(Dimensions.radius20),
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                progressIndicatorBuilder: (context, url, downloadProgress) => Padding(
+                                  padding: const EdgeInsets.all(24.0),
+                                  child: CircularProgressIndicator(value: downloadProgress.progress),
+                                ),
+                              )
+                            : SizedBox(),
+                      ),
                     ),
                   ),
-                ),
-                progressIndicatorBuilder: (context, url, downloadProgress) => Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: CircularProgressIndicator(value: downloadProgress.progress),
-                ),
-              ),
-            ),
-          ),
-        ),
-        NotificationListener(
-          child: SingleChildScrollView(
-            controller: scrollController,
-            child: Column(children: [
-              SizedBox(
-                height: Dimensions.recipeImgSize - 40,
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: Dimensions.width15, horizontal: Dimensions.width20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Dimensions.radius20),
-                  color: const Color.fromARGB(255, 252, 242, 246),
-                ),
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      if (recipe.name != null) LargeText(text: recipe.name!),
-                      BlocBuilder<UserDataCubit, UserDataState>(builder: (context, state) {
-                        final userDataCubit = BlocProvider.of<UserDataCubit>(context);
+                  NotificationListener(
+                    child: SingleChildScrollView(
+                      controller: scrollController,
+                      child: Column(children: [
+                        SizedBox(
+                          height: Dimensions.recipeImgSize - 40,
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: Dimensions.width15, horizontal: Dimensions.width20),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(Dimensions.radius20),
+                            color: const Color.fromARGB(255, 252, 242, 246),
+                          ),
+                          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                if (recipe.name != null) LargeText(text: recipe.name!),
+                                BlocBuilder<UserDataCubit, UserDataState>(builder: (context, state) {
+                                  final userDataCubit = BlocProvider.of<UserDataCubit>(context);
 
-                        if (state.status == UserDataStateStatus.loaded) {
-                          final result = state.favorites.where((recipe) => recipe.id == recipe.id);
-                          final bool favorited = result.isEmpty ? false : true;
+                                  if (state.status == UserDataStateStatus.loaded) {
+                                    final result = state.favorites.where((recipe) => recipe.id == recipe.id);
+                                    final bool favorited = result.isEmpty ? false : true;
 
-                          return IconButton(
-                              onPressed: () {
-                                userDataCubit.toggleFavorites(recipe);
-                                _showToast(context, !favorited);
-                              },
-                              icon: favorited
-                                  ? const Icon(
-                                      Icons.favorite,
-                                      size: 30,
-                                    )
-                                  : const Icon(
-                                      Icons.favorite_border_rounded,
-                                      size: 30,
-                                    ));
-                        }
-                        return const SizedBox();
-                      }),
-                    ],
-                  ),
-                  SizedBox(
-                    height: Dimensions.height10,
-                  ),
-                  if (recipe.difficulty != null && recipe.preparationTime != null)
-                    InformationBar(
-                      status: recipe.difficulty!,
-                      timeEstimate: recipe.preparationTime!,
+                                    return IconButton(
+                                        onPressed: () {
+                                          userDataCubit.toggleFavorites(recipe);
+                                          _showToast(context, !favorited);
+                                        },
+                                        icon: favorited
+                                            ? const Icon(
+                                                Icons.favorite,
+                                                size: 30,
+                                              )
+                                            : const Icon(
+                                                Icons.favorite_border_rounded,
+                                                size: 30,
+                                              ));
+                                  }
+                                  return const SizedBox();
+                                }),
+                              ],
+                            ),
+                            SizedBox(
+                              height: Dimensions.height10,
+                            ),
+                            if (recipe.difficulty != null && recipe.preparationTime != null)
+                              InformationBar(
+                                status: recipe.difficulty!,
+                                timeEstimate: recipe.preparationTime!,
+                              ),
+                            SizedBox(
+                              height: Dimensions.height20,
+                            ),
+                            CategorizationBar(categories: recipe.categories!, tags: recipe.tags!),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            Divider(
+                              height: 1,
+                            ),
+                            const SizedBox(
+                              height: 14,
+                            ),
+                            Align(
+                                alignment: Alignment.centerLeft,
+                                child: LargeText(
+                                  size: 16,
+                                  text: "Ingredients",
+                                )),
+                            ingredientsTable(ingredients: recipe.ingredients),
+                            Divider(
+                              height: 1,
+                            ),
+                            SizedBox(
+                              height: Dimensions.height20,
+                            ),
+                            Align(alignment: Alignment.centerLeft, child: LargeText(size: 16, text: "Instructions")),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            Text(
+                              recipe.instructions!,
+                            ),
+                            SizedBox(
+                              height: Dimensions.height45,
+                            ),
+                          ]),
+                        )
+                      ]),
                     ),
-                  SizedBox(
-                    height: Dimensions.height20,
+                    onNotification: (notification) {
+                      setState(() {
+                        _currScrollPosition = scrollController.position.pixels;
+                      });
+                      return false;
+                    },
                   ),
-                  CategorizationBar(categories: recipe.categories!, tags: recipe.tags!),
-                  const SizedBox(
-                    height: 12,
+                  Positioned(
+                    left: Dimensions.width20,
+                    top: Dimensions.height45,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        width: 42,
+                        height: 42,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Dimensions.radius20),
+                          color: const Color.fromARGB(255, 252, 242, 246),
+                          boxShadow: const [
+                            BoxShadow(
+                              spreadRadius: 10,
+                              blurRadius: 10,
+                              color: Colors.black12,
+                            ),
+                          ],
+                        ),
+                        child: const Center(
+                          child: Icon(
+                            Icons.chevron_left_rounded,
+                            size: 28,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  Divider(
-                    height: 1,
-                  ),
-                  const SizedBox(
-                    height: 14,
-                  ),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: LargeText(
-                        size: 16,
-                        text: "Incredients",
-                      )),
-                  IncredientsTable(incredients: recipe.incredients!),
-                  Divider(
-                    height: 1,
-                  ),
-                  SizedBox(
-                    height: Dimensions.height20,
-                  ),
-                  Align(alignment: Alignment.centerLeft, child: LargeText(size: 16, text: "Instructions")),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  Text(
-                    recipe.instructions!,
-                  ),
-                  SizedBox(
-                    height: Dimensions.height45,
-                  ),
-                ]),
-              )
-            ]),
-          ),
-          onNotification: (notification) {
-            setState(() {
-              _currScrollPosition = scrollController.position.pixels;
-            });
-            return false;
+                  if (currentUser?.id == recipe.userCreated)
+                    Positioned(
+                      right: Dimensions.width20,
+                      top: Dimensions.height45,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            Routes.recipeEditor.name,
+                            arguments: RecipeEditorArgs("Edit recipe", recipe),
+                          );
+                        },
+                        child: Container(
+                          width: 42,
+                          height: 42,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(Dimensions.radius20),
+                            color: const Color.fromARGB(255, 252, 242, 246),
+                            boxShadow: const [
+                              BoxShadow(
+                                spreadRadius: 10,
+                                blurRadius: 10,
+                                color: Colors.black12,
+                              ),
+                            ],
+                          ),
+                          child: const Center(
+                            child: Icon(
+                              Icons.edit,
+                              size: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                ]);
+              default:
+                return SizedBox();
+            }
           },
         ),
-        Positioned(
-          left: Dimensions.width20,
-          top: Dimensions.height45,
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Container(
-              width: 42,
-              height: 42,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(Dimensions.radius20),
-                color: const Color.fromARGB(255, 252, 242, 246),
-                boxShadow: const [
-                  BoxShadow(
-                    spreadRadius: 10,
-                    blurRadius: 10,
-                    color: Colors.black12,
-                  ),
-                ],
-              ),
-              child: const Center(
-                child: Icon(
-                  Icons.chevron_left_rounded,
-                  size: 28,
-                ),
-              ),
-            ),
-          ),
-        ),
-        if (currentUser!.id == recipe.userCreated)
-          Positioned(
-            right: Dimensions.width20,
-            top: Dimensions.height45,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  Routes.recipeEditor.name,
-                  arguments: RecipeEditorArgs("Edit recipe", recipe),
-                );
-              },
-              child: Container(
-                width: 42,
-                height: 42,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Dimensions.radius20),
-                  color: const Color.fromARGB(255, 252, 242, 246),
-                  boxShadow: const [
-                    BoxShadow(
-                      spreadRadius: 10,
-                      blurRadius: 10,
-                      color: Colors.black12,
-                    ),
-                  ],
-                ),
-                child: const Center(
-                  child: Icon(
-                    Icons.edit,
-                    size: 20,
-                  ),
-                ),
-              ),
-            ),
-          ),
-      ]),
+      ),
     );
   }
 }

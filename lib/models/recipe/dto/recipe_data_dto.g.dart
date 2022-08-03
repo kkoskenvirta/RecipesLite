@@ -15,14 +15,14 @@ _$_RecipeDataDTO _$$_RecipeDataDTOFromJson(Map<String, dynamic> json) =>
       blurhash: json['blurhash'] as String?,
       picture: json['picture'] as String?,
       instructions: json['instructions'] as String? ?? '',
-      categories: (json['categories'] as List<dynamic>)
-          .map((e) => CategoryIdDTO.fromJson(e as Map<String, dynamic>))
+      categories: (json['categories'] as List<dynamic>?)
+          ?.map((e) => CategoryIdDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
-      tags: (json['tags'] as List<dynamic>)
-          .map((e) => TagIdDTO.fromJson(e as Map<String, dynamic>))
+      tags: (json['tags'] as List<dynamic>?)
+          ?.map((e) => TagIdDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
-      incredients: (json['incredients'] as List<dynamic>)
-          .map((e) => IncredientIdDTO.fromJson(e as Map<String, dynamic>))
+      ingredients: (json['ingredients'] as List<dynamic>?)
+          ?.map((e) => IngredientIdDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
       name: json['Name'] as String?,
       featured: json['Featured'] as bool?,
@@ -47,7 +47,7 @@ Map<String, dynamic> _$$_RecipeDataDTOToJson(_$_RecipeDataDTO instance) =>
       'instructions': instance.instructions,
       'categories': instance.categories,
       'tags': instance.tags,
-      'incredients': instance.incredients,
+      'ingredients': instance.ingredients,
       'Name': instance.name,
       'Featured': instance.featured,
       'preparation_time': instance.preparationTime,

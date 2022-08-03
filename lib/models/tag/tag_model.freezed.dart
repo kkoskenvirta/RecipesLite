@@ -22,6 +22,7 @@ TagModel _$TagModelFromJson(Map<String, dynamic> json) {
 mixin _$TagModel {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  int? get relationId => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   String? get sort => throw _privateConstructorUsedError;
 
@@ -35,7 +36,8 @@ mixin _$TagModel {
 abstract class $TagModelCopyWith<$Res> {
   factory $TagModelCopyWith(TagModel value, $Res Function(TagModel) then) =
       _$TagModelCopyWithImpl<$Res>;
-  $Res call({String id, String name, String? status, String? sort});
+  $Res call(
+      {String id, String name, int? relationId, String? status, String? sort});
 }
 
 /// @nodoc
@@ -50,6 +52,7 @@ class _$TagModelCopyWithImpl<$Res> implements $TagModelCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? relationId = freezed,
     Object? status = freezed,
     Object? sort = freezed,
   }) {
@@ -62,6 +65,10 @@ class _$TagModelCopyWithImpl<$Res> implements $TagModelCopyWith<$Res> {
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      relationId: relationId == freezed
+          ? _value.relationId
+          : relationId // ignore: cast_nullable_to_non_nullable
+              as int?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -80,7 +87,8 @@ abstract class _$$_TagModelCopyWith<$Res> implements $TagModelCopyWith<$Res> {
           _$_TagModel value, $Res Function(_$_TagModel) then) =
       __$$_TagModelCopyWithImpl<$Res>;
   @override
-  $Res call({String id, String name, String? status, String? sort});
+  $Res call(
+      {String id, String name, int? relationId, String? status, String? sort});
 }
 
 /// @nodoc
@@ -97,6 +105,7 @@ class __$$_TagModelCopyWithImpl<$Res> extends _$TagModelCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? relationId = freezed,
     Object? status = freezed,
     Object? sort = freezed,
   }) {
@@ -109,6 +118,10 @@ class __$$_TagModelCopyWithImpl<$Res> extends _$TagModelCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      relationId: relationId == freezed
+          ? _value.relationId
+          : relationId // ignore: cast_nullable_to_non_nullable
+              as int?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -124,7 +137,12 @@ class __$$_TagModelCopyWithImpl<$Res> extends _$TagModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_TagModel extends _TagModel {
-  _$_TagModel({required this.id, required this.name, this.status, this.sort})
+  _$_TagModel(
+      {required this.id,
+      required this.name,
+      this.relationId,
+      this.status,
+      this.sort})
       : super._();
 
   factory _$_TagModel.fromJson(Map<String, dynamic> json) =>
@@ -135,13 +153,15 @@ class _$_TagModel extends _TagModel {
   @override
   final String name;
   @override
+  final int? relationId;
+  @override
   final String? status;
   @override
   final String? sort;
 
   @override
   String toString() {
-    return 'TagModel(id: $id, name: $name, status: $status, sort: $sort)';
+    return 'TagModel(id: $id, name: $name, relationId: $relationId, status: $status, sort: $sort)';
   }
 
   @override
@@ -151,6 +171,8 @@ class _$_TagModel extends _TagModel {
             other is _$_TagModel &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality()
+                .equals(other.relationId, relationId) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.sort, sort));
   }
@@ -161,6 +183,7 @@ class _$_TagModel extends _TagModel {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(relationId),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(sort));
 
@@ -181,6 +204,7 @@ abstract class _TagModel extends TagModel {
   factory _TagModel(
       {required final String id,
       required final String name,
+      final int? relationId,
       final String? status,
       final String? sort}) = _$_TagModel;
   _TagModel._() : super._();
@@ -191,6 +215,8 @@ abstract class _TagModel extends TagModel {
   String get id;
   @override
   String get name;
+  @override
+  int? get relationId;
   @override
   String? get status;
   @override

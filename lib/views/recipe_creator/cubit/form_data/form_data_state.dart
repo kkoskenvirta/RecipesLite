@@ -9,12 +9,13 @@ enum BlurHashStatus { initial, loading, loaded, error }
 @freezed
 class FormDataState with _$FormDataState {
   const factory FormDataState({
+    bool? editMode,
     required FormDataStateStatus status,
     required DirectusRequestStatus requestStatus,
     required BlurHashStatus blurHashStatus,
     required bool featured,
     required String instructions,
-    required List<IncredientModel> incredients,
+    required List<IngredientModel> ingredients,
     required List<CategoryModel> categories,
     required List<TagModel> tags,
     required RecipeModel recipe,
@@ -30,6 +31,7 @@ class FormDataState with _$FormDataState {
 
   factory FormDataState.initial() {
     return FormDataState(
+      editMode: false,
       status: FormDataStateStatus.initial,
       requestStatus: DirectusRequestStatus.initial,
       recipe: RecipeModel(),
@@ -37,7 +39,7 @@ class FormDataState with _$FormDataState {
       preparationTime: null,
       id: null,
       instructions: "",
-      incredients: [],
+      ingredients: [],
       categories: [],
       tags: [],
       name: null,

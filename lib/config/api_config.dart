@@ -2,10 +2,13 @@ const String baseUrl = "https://jrcejhll.directus.app/";
 
 const String assetsPath = "assets/";
 
-const String recipesPath = "items/recipe";
+const String recipesPath = "items/recipe/";
+
+const String recipeFields =
+    "?fields=*,ingredients.ingredient_id.*,ingredients.id,categories.category_category_id.*,categories.id,tags.tag_id.*,tags.id";
 
 const String recipesPathFields =
-    "items/recipe/?fields=*,incredients.incredient_id.*,categories.category_category_id.*,tags.tag_id.*";
+    "items/recipe/?fields=*,ingredients.ingredient_id.*,ingredients.id,categories.category_category_id.*,categories.id,tags.tag_id.*,tags.id";
 
 const String loginPath = "auth/login/";
 

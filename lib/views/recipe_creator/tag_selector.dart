@@ -28,7 +28,8 @@ class TagSelector extends StatelessWidget {
           alignment: WrapAlignment.start,
           direction: Axis.horizontal,
           children: tagList.map((tag) {
-            final status = state.tags.contains(tag);
+            final match = state.tags.indexWhere((stateTag) => stateTag.id == tag.id);
+            final status = match == -1 ? false : true;
             return FilterChip(
                 showCheckmark: false,
                 label: SmallText(

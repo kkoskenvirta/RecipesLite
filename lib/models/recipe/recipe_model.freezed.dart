@@ -33,7 +33,7 @@ mixin _$RecipeModel {
   String? get status => throw _privateConstructorUsedError;
   double? get rating => throw _privateConstructorUsedError;
   String? get userCreated => throw _privateConstructorUsedError;
-  List<IncredientModel>? get incredients => throw _privateConstructorUsedError;
+  List<IngredientModel>? get ingredients => throw _privateConstructorUsedError;
   List<TagModel>? get tags => throw _privateConstructorUsedError;
   List<CategoryModel>? get categories => throw _privateConstructorUsedError;
   DateTime? get dateCreated => throw _privateConstructorUsedError;
@@ -64,7 +64,7 @@ abstract class $RecipeModelCopyWith<$Res> {
       String? status,
       double? rating,
       String? userCreated,
-      List<IncredientModel>? incredients,
+      List<IngredientModel>? ingredients,
       List<TagModel>? tags,
       List<CategoryModel>? categories,
       DateTime? dateCreated,
@@ -94,7 +94,7 @@ class _$RecipeModelCopyWithImpl<$Res> implements $RecipeModelCopyWith<$Res> {
     Object? status = freezed,
     Object? rating = freezed,
     Object? userCreated = freezed,
-    Object? incredients = freezed,
+    Object? ingredients = freezed,
     Object? tags = freezed,
     Object? categories = freezed,
     Object? dateCreated = freezed,
@@ -153,10 +153,10 @@ class _$RecipeModelCopyWithImpl<$Res> implements $RecipeModelCopyWith<$Res> {
           ? _value.userCreated
           : userCreated // ignore: cast_nullable_to_non_nullable
               as String?,
-      incredients: incredients == freezed
-          ? _value.incredients
-          : incredients // ignore: cast_nullable_to_non_nullable
-              as List<IncredientModel>?,
+      ingredients: ingredients == freezed
+          ? _value.ingredients
+          : ingredients // ignore: cast_nullable_to_non_nullable
+              as List<IngredientModel>?,
       tags: tags == freezed
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
@@ -198,7 +198,7 @@ abstract class _$$_RecipeModelCopyWith<$Res>
       String? status,
       double? rating,
       String? userCreated,
-      List<IncredientModel>? incredients,
+      List<IngredientModel>? ingredients,
       List<TagModel>? tags,
       List<CategoryModel>? categories,
       DateTime? dateCreated,
@@ -230,7 +230,7 @@ class __$$_RecipeModelCopyWithImpl<$Res> extends _$RecipeModelCopyWithImpl<$Res>
     Object? status = freezed,
     Object? rating = freezed,
     Object? userCreated = freezed,
-    Object? incredients = freezed,
+    Object? ingredients = freezed,
     Object? tags = freezed,
     Object? categories = freezed,
     Object? dateCreated = freezed,
@@ -289,10 +289,10 @@ class __$$_RecipeModelCopyWithImpl<$Res> extends _$RecipeModelCopyWithImpl<$Res>
           ? _value.userCreated
           : userCreated // ignore: cast_nullable_to_non_nullable
               as String?,
-      incredients: incredients == freezed
-          ? _value._incredients
-          : incredients // ignore: cast_nullable_to_non_nullable
-              as List<IncredientModel>?,
+      ingredients: ingredients == freezed
+          ? _value._ingredients
+          : ingredients // ignore: cast_nullable_to_non_nullable
+              as List<IngredientModel>?,
       tags: tags == freezed
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
@@ -330,12 +330,12 @@ class _$_RecipeModel extends _RecipeModel {
       this.status,
       this.rating,
       this.userCreated,
-      final List<IncredientModel>? incredients,
+      final List<IngredientModel>? ingredients,
       final List<TagModel>? tags,
       final List<CategoryModel>? categories,
       this.dateCreated,
       this.dateUpdated})
-      : _incredients = incredients,
+      : _ingredients = ingredients,
         _tags = tags,
         _categories = categories,
         super._();
@@ -369,10 +369,10 @@ class _$_RecipeModel extends _RecipeModel {
   final double? rating;
   @override
   final String? userCreated;
-  final List<IncredientModel>? _incredients;
+  final List<IngredientModel>? _ingredients;
   @override
-  List<IncredientModel>? get incredients {
-    final value = _incredients;
+  List<IngredientModel>? get ingredients {
+    final value = _ingredients;
     if (value == null) return null;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
@@ -403,7 +403,7 @@ class _$_RecipeModel extends _RecipeModel {
 
   @override
   String toString() {
-    return 'RecipeModel(id: $id, difficulty: $difficulty, blurhash: $blurhash, picture: $picture, instructions: $instructions, name: $name, featured: $featured, preparationTime: $preparationTime, shortDescription: $shortDescription, commentCount: $commentCount, status: $status, rating: $rating, userCreated: $userCreated, incredients: $incredients, tags: $tags, categories: $categories, dateCreated: $dateCreated, dateUpdated: $dateUpdated)';
+    return 'RecipeModel(id: $id, difficulty: $difficulty, blurhash: $blurhash, picture: $picture, instructions: $instructions, name: $name, featured: $featured, preparationTime: $preparationTime, shortDescription: $shortDescription, commentCount: $commentCount, status: $status, rating: $rating, userCreated: $userCreated, ingredients: $ingredients, tags: $tags, categories: $categories, dateCreated: $dateCreated, dateUpdated: $dateUpdated)';
   }
 
   @override
@@ -431,7 +431,7 @@ class _$_RecipeModel extends _RecipeModel {
             const DeepCollectionEquality()
                 .equals(other.userCreated, userCreated) &&
             const DeepCollectionEquality()
-                .equals(other._incredients, _incredients) &&
+                .equals(other._ingredients, _ingredients) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
@@ -458,7 +458,7 @@ class _$_RecipeModel extends _RecipeModel {
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(rating),
       const DeepCollectionEquality().hash(userCreated),
-      const DeepCollectionEquality().hash(_incredients),
+      const DeepCollectionEquality().hash(_ingredients),
       const DeepCollectionEquality().hash(_tags),
       const DeepCollectionEquality().hash(_categories),
       const DeepCollectionEquality().hash(dateCreated),
@@ -492,7 +492,7 @@ abstract class _RecipeModel extends RecipeModel {
       final String? status,
       final double? rating,
       final String? userCreated,
-      final List<IncredientModel>? incredients,
+      final List<IngredientModel>? ingredients,
       final List<TagModel>? tags,
       final List<CategoryModel>? categories,
       final DateTime? dateCreated,
@@ -529,7 +529,7 @@ abstract class _RecipeModel extends RecipeModel {
   @override
   String? get userCreated;
   @override
-  List<IncredientModel>? get incredients;
+  List<IngredientModel>? get ingredients;
   @override
   List<TagModel>? get tags;
   @override

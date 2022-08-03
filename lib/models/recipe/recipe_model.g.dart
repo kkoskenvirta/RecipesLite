@@ -21,8 +21,8 @@ _$_RecipeModel _$$_RecipeModelFromJson(Map<String, dynamic> json) =>
       status: json['status'] as String?,
       rating: (json['rating'] as num?)?.toDouble(),
       userCreated: json['userCreated'] as String?,
-      incredients: (json['incredients'] as List<dynamic>?)
-          ?.map((e) => IncredientModel.fromJson(e as Map<String, dynamic>))
+      ingredients: (json['ingredients'] as List<dynamic>?)
+          ?.map((e) => IngredientModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       tags: (json['tags'] as List<dynamic>?)
           ?.map((e) => TagModel.fromJson(e as Map<String, dynamic>))
@@ -51,7 +51,7 @@ Map<String, dynamic> _$$_RecipeModelToJson(_$_RecipeModel instance) =>
       'status': instance.status,
       'rating': instance.rating,
       'userCreated': instance.userCreated,
-      'incredients': instance.incredients,
+      'ingredients': instance.ingredients,
       'tags': instance.tags,
       'categories': instance.categories,
       'dateCreated': instance.dateCreated?.toIso8601String(),

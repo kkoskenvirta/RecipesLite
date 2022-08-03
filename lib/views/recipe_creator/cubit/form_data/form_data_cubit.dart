@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_e_commerce/models/category/category_model.dart';
-import 'package:flutter_e_commerce/models/incredient/incredient_model.dart';
+import 'package:flutter_e_commerce/models/ingredient/ingredient_model.dart';
 import 'package:flutter_e_commerce/models/recipe/dto/recipe_data_dto.dart';
 import 'package:flutter_e_commerce/models/recipe/dto/recipe_dto.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
@@ -26,8 +26,9 @@ class FormDataCubit extends Cubit<FormDataState> {
 
   final RecipesRepository _recipesRepository;
 
-  initializeEdit(RecipeModel recipe) {
+  initializeEdit(RecipeModel? recipe) {
     try {
+      if (recipe == null) return;
       emit(
         state.copyWith(
           id: recipe.id,
@@ -37,9 +38,10 @@ class FormDataCubit extends Cubit<FormDataState> {
           categories: recipe.categories!,
           tags: recipe.tags!,
           blurHash: recipe.blurhash,
-          incredients: recipe.incredients!,
+          ingredients: recipe.ingredients!,
           difficulty: recipe.difficulty!.toLowerCase(),
           preparationTime: recipe.preparationTime,
+          editMode: true,
         ),
       );
     } catch (e) {
@@ -63,16 +65,16 @@ class FormDataCubit extends Cubit<FormDataState> {
     emit(state.copyWith(blurHashStatus: status));
   }
 
-  addIncredient(String name, String amount, String unit) {
-    List<IncredientModel> incredientList = [...state.incredients];
-    incredientList.add(IncredientModel(name: name, amount: double.parse(amount), unit: unit));
-    emit(state.copyWith(incredients: incredientList));
+  addIngredient(String name, String amount, String unit) {
+    List<IngredientModel> ingredientList = [...state.ingredients];
+    ingredientList.add(IngredientModel(name: name.capitalize(), amount: double.parse(amount), unit: unit));
+    emit(state.copyWith(ingredients: ingredientList));
   }
 
-  removeIncredient(index) {
-    List<IncredientModel> incredientList = [...state.incredients];
-    incredientList.removeAt(index);
-    emit(state.copyWith(incredients: incredientList));
+  removeIngredient(index) {
+    List<IngredientModel> ingredientList = [...state.ingredients];
+    ingredientList.removeAt(index);
+    emit(state.copyWith(ingredients: ingredientList));
   }
 
   updateRecipeName(String name) {
@@ -99,29 +101,29 @@ class FormDataCubit extends Cubit<FormDataState> {
     emit(state.copyWith(shortDescription: shortDescription));
   }
 
-  updateIncredientName(int index, String name) {
-    List<IncredientModel> incredientList = [...state.incredients];
-    incredientList[index] = incredientList[index].copyWith(name: name);
-    emit(state.copyWith(incredients: incredientList));
+  updateIngredientName(int index, String name) {
+    List<IngredientModel> ingredientList = [...state.ingredients];
+    ingredientList[index] = ingredientList[index].copyWith(name: name);
+    emit(state.copyWith(ingredients: ingredientList));
   }
 
-  updateIncredientAmount(int index, String amount) {
+  updateIngredientAmount(int index, String amount) {
     try {
-      List<IncredientModel> incredientList = [...state.incredients];
+      List<IngredientModel> ingredientList = [...state.ingredients];
       final doubleAmount = double.parse(amount);
-      incredientList[index] = incredientList[index].copyWith(amount: doubleAmount);
-      emit(state.copyWith(incredients: incredientList));
+      ingredientList[index] = ingredientList[index].copyWith(amount: doubleAmount);
+      emit(state.copyWith(ingredients: ingredientList));
     } catch (e) {
-      List<IncredientModel> incredientList = [...state.incredients];
-      incredientList[index] = incredientList[index].copyWith(amount: null);
-      emit(state.copyWith(incredients: incredientList));
+      List<IngredientModel> ingredientList = [...state.ingredients];
+      ingredientList[index] = ingredientList[index].copyWith(amount: null);
+      emit(state.copyWith(ingredients: ingredientList));
     }
   }
 
-  updateIncredientUnit(int index, String unit) {
-    List<IncredientModel> incredientList = [...state.incredients];
-    incredientList[index] = incredientList[index].copyWith(unit: unit);
-    emit(state.copyWith(incredients: incredientList));
+  updateIngredientUnit(int index, String unit) {
+    List<IngredientModel> ingredientList = [...state.ingredients];
+    ingredientList[index] = ingredientList[index].copyWith(unit: unit);
+    emit(state.copyWith(ingredients: ingredientList));
   }
 
   updateCategoryList(CategoryModel newCategory, bool status) {
@@ -146,7 +148,7 @@ class FormDataCubit extends Cubit<FormDataState> {
     emit(state.copyWith(tags: tagList));
   }
 
-  Future<bool> submitRecipe(bool editMode) async {
+  Future<bool> submitRecipe(bool editMode, RecipeModel? editableRecipe) async {
     try {
       emit(state.copyWith(requestStatus: DirectusRequestStatus.loading));
       String? fileId;
@@ -170,7 +172,7 @@ class FormDataCubit extends Cubit<FormDataState> {
           },
         );
       }
-      await finalizeSubmit(fileId, editMode);
+      await finalizeSubmit(fileId, editMode, editableRecipe);
 
       return true;
     } catch (e) {
@@ -180,8 +182,9 @@ class FormDataCubit extends Cubit<FormDataState> {
     }
   }
 
-  finalizeSubmit(String? fileId, bool editMode) async {
+  finalizeSubmit(String? fileId, bool editMode, RecipeModel? editableRecipe) async {
     try {
+      final pictureId = fileId ?? editableRecipe?.picture;
       final recipe = RecipeModel(
         id: state.id,
         difficulty: state.difficulty!.capitalize(),
@@ -191,13 +194,15 @@ class FormDataCubit extends Cubit<FormDataState> {
         instructions: state.instructions,
         categories: state.categories,
         tags: state.tags,
-        incredients: state.incredients,
+        ingredients: state.ingredients,
         blurhash: state.blurHash,
-        picture: fileId,
+        picture: pictureId,
         status: "draft",
       );
 
-      final recipePostRequestDTO = RecipeModel().fromDomain(recipe);
+      final recipePostRequestDTO = RecipeModel().fromDomain(recipe, editableRecipe);
+
+      print(recipePostRequestDTO);
 
       if (editMode && recipe.id != null) {
         final failureOrRecipe = await _recipesRepository.modifyRecipe(recipePostRequestDTO, recipe.id!);

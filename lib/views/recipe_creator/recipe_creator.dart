@@ -1,6 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
@@ -11,7 +10,7 @@ import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_data/form_dat
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_fetch/form_fetch_cubit.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_stepper/stepper_cubit.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/difficulty_selector.dart';
-import 'package:flutter_e_commerce/views/recipe_creator/incredients_selector.dart';
+import 'package:flutter_e_commerce/views/recipe_creator/ingredients_selector.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/review_slide.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/tag_selector.dart';
 import 'package:flutter_e_commerce/widgets/custom_stepper/custom_stepper.dart';
@@ -50,7 +49,9 @@ class RecipeCreatorScreen extends StatelessWidget {
                       create: (context) => FormDataCubit(recipesRepository: context.read<RecipesRepository>()),
                     ),
                   ],
-                  child: FormFetchScreenBody(editableRecipe: editableRecipe),
+                  child: FormFetchScreenBody(
+                    editableRecipe: editableRecipe,
+                  ),
                 ),
               )
             ],
@@ -79,7 +80,10 @@ class FormFetchHeader extends StatelessWidget {
 }
 
 class FormFetchScreenBody extends StatefulWidget {
-  const FormFetchScreenBody({Key? key, this.editableRecipe}) : super(key: key);
+  const FormFetchScreenBody({
+    Key? key,
+    this.editableRecipe,
+  }) : super(key: key);
   final RecipeModel? editableRecipe;
 
   @override
@@ -87,6 +91,14 @@ class FormFetchScreenBody extends StatefulWidget {
 }
 
 class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
+  final nameFieldController = TextEditingController();
+  final descriptionFieldController = TextEditingController();
+  final instructionFieldController = TextEditingController();
+
+  //Form validation keys
+  final detailsKey = GlobalKey<FormState>();
+  final ingredientsKey = GlobalKey<FormState>();
+
   void _showToast(BuildContext context) {
     String message;
     Icon icon;
@@ -118,49 +130,28 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
     ).show(context);
   }
 
-// If editable recipe model is passed initialize state with those values
-  final nameFieldController = TextEditingController();
-  final descriptionFieldController = TextEditingController();
-  final instructionFieldController = TextEditingController();
+  @override
+  void dispose() {
+    nameFieldController.dispose();
+    descriptionFieldController.dispose();
+    instructionFieldController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final formDataCubit = BlocProvider.of<FormDataCubit>(context);
-    bool editMode = false;
-    if (widget.editableRecipe != null) {
-      formDataCubit.initializeEdit(widget.editableRecipe!);
-      editMode = true;
-    }
-
-    nameFieldController.text = formDataCubit.state.name ?? "";
-    descriptionFieldController.text = formDataCubit.state.shortDescription ?? "";
-    instructionFieldController.text = formDataCubit.state.instructions;
-
-    final List<GlobalKey<FormState>> _stepKeys = [
-      GlobalKey<FormState>(),
-      GlobalKey<FormState>(),
-    ];
-
     return BlocBuilder<FormFetchCubit, FormFetchState>(
       bloc: BlocProvider.of<FormFetchCubit>(context)
         ..getCategoryOptions()
         ..getTagOptions(),
       builder: (context, state) {
-        void updateName(String text) {
-          BlocProvider.of<FormDataCubit>(context).updateRecipeName(text);
-        }
+        final formDataCubit = BlocProvider.of<FormDataCubit>(context);
+        // If editable recipe model is passed initialize state with that recipe
+        formDataCubit.initializeEdit(widget.editableRecipe);
 
-        void updateDescription(String text) {
-          BlocProvider.of<FormDataCubit>(context).updateRecipeDescription(text);
-        }
-
-        void updateInstructions(String text) {
-          BlocProvider.of<FormDataCubit>(context).updateRecipeInstructions(text);
-        }
-
-        void updateDifficulty(String text) {
-          BlocProvider.of<FormDataCubit>(context).updateRecipeDifficulty(text);
-        }
-
+        nameFieldController.text = formDataCubit.state.name ?? "";
+        descriptionFieldController.text = formDataCubit.state.shortDescription ?? "";
+        instructionFieldController.text = formDataCubit.state.instructions;
         switch (state.status) {
           case FormFetchStateStatus.loading:
             return const CircularProgressIndicator();
@@ -170,6 +161,9 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
             final tags = state.tags;
             return BlocBuilder<FormDataCubit, FormDataState>(
               builder: (context, state) {
+                final formDataCubit = BlocProvider.of<FormDataCubit>(context);
+                final editMode = formDataCubit.state.editMode;
+
                 return BlocProvider(
                   create: (context) => StepperCubit(),
                   child: BlocBuilder<StepperCubit, StepperState>(
@@ -187,13 +181,13 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                         },
                         onStepContinue: () async {
                           if (state.stepperItem == StepperItem.details) {
-                            final isValidForm = _stepKeys[state.index].currentState!.validate();
+                            final isValidForm = detailsKey.currentState!.validate();
                             if (isValidForm) {
                               FocusManager.instance.primaryFocus?.unfocus();
                               stepperCubit.nextStep();
                             }
                           } else if (state.stepperItem == StepperItem.classification ||
-                              state.stepperItem == StepperItem.incredients) {
+                              state.stepperItem == StepperItem.ingredients) {
                             stepperCubit.nextStep();
                           }
                           if (state.stepperItem == StepperItem.review) {
@@ -201,13 +195,13 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                             final recipeFetchCubit = BlocProvider.of<RecipeFetchCubit>(context);
 
                             //Send upload mode so we know if we need to update an existing or create a new recipe
-                            final bool uploadCompleted =
-                                await BlocProvider.of<FormDataCubit>(context).submitRecipe(editMode);
+                            final bool uploadCompleted = await BlocProvider.of<FormDataCubit>(context)
+                                .submitRecipe(editMode!, widget.editableRecipe);
 
                             if (uploadCompleted) {
                               if (!mounted) return;
                               recipeFetchCubit.fetchHomePageRecipes();
-                              navigator.pop();
+                              navigator.popUntil((route) => route.isFirst);
                               _showToast(context);
                               //Get new created recipe and route to the recipe
                               // navigator.popAndPushNamed(Routes.recipe.name, arguments: )
@@ -231,14 +225,14 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                             buttonPadding: buttonPadding,
                             buttonShape: buttonShape,
                             details: details,
-                            editMode: editMode,
+                            editMode: editMode!,
                           );
                         },
                         steps: <CustomStep>[
                           CustomStep(
                             title: SmallText(text: 'Details'),
                             content: Form(
-                              key: _stepKeys[0],
+                              key: detailsKey,
                               autovalidateMode: AutovalidateMode.disabled,
                               child: Column(
                                 children: <Widget>[
@@ -253,7 +247,7 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                                       hintText: "Recipe name",
                                     ),
                                     textInputAction: TextInputAction.next,
-                                    onChanged: (text) => updateName(text),
+                                    onChanged: (text) => BlocProvider.of<FormDataCubit>(context).updateRecipeName(text),
                                     controller: nameFieldController,
                                     validator: (value) {
                                       if (value != null && value.length < 4) {
@@ -276,7 +270,8 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                                       hintText: "Recipe description",
                                     ),
                                     textInputAction: TextInputAction.next,
-                                    onChanged: (text) => updateDescription(text),
+                                    onChanged: (text) =>
+                                        BlocProvider.of<FormDataCubit>(context).updateRecipeDescription(text),
                                     controller: descriptionFieldController,
                                     validator: (value) {
                                       if (value != null && value.length < 4) {
@@ -308,7 +303,8 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                                     decoration: const InputDecoration(
                                       hintText: "Instructions on how to prepare the recipe",
                                     ),
-                                    onChanged: (text) => updateInstructions(text),
+                                    onChanged: (text) =>
+                                        BlocProvider.of<FormDataCubit>(context).updateRecipeInstructions(text),
                                     controller: instructionFieldController,
                                     validator: (value) {
                                       if (value != null && value.length < 4) {
@@ -327,16 +323,16 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                             state: state.index >= 0 ? CustomStepState.complete : CustomStepState.disabled,
                           ),
                           CustomStep(
-                            title: SmallText(text: 'Incredients'),
+                            title: SmallText(text: 'Ingredients'),
                             content: Form(
-                              key: _stepKeys[1],
+                              key: ingredientsKey,
                               child: Column(
                                 children: [
-                                  Align(alignment: Alignment.centerLeft, child: SmallText(text: "Incredient list")),
+                                  Align(alignment: Alignment.centerLeft, child: SmallText(text: "Ingredient list")),
                                   const SizedBox(
                                     height: 6,
                                   ),
-                                  IncredientsSelector(incredients: [...formDataCubit.state.incredients]),
+                                  IngredientsSelector(ingredients: [...formDataCubit.state.ingredients]),
                                 ],
                               ),
                             ),
@@ -372,8 +368,10 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                             title: SmallText(text: 'Review'),
                             content: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              children: const [
-                                ReviewSlide(),
+                              children: [
+                                ReviewSlide(
+                                  editableRecipe: widget.editableRecipe,
+                                ),
                               ],
                             ),
                             isActive: state.index >= 3,
@@ -418,7 +416,7 @@ class CustomStepperControls extends StatelessWidget {
 
     validateStep(int currentStep) {
       final formDataState = BlocProvider.of<FormDataCubit>(context).state;
-      final incredients = formDataState.incredients;
+      final ingredients = formDataState.ingredients;
       final categories = formDataState.categories;
       final name = formDataState.name;
       final description = formDataState.shortDescription;
@@ -437,7 +435,7 @@ class CustomStepperControls extends StatelessWidget {
           return state;
         case 1:
           bool state;
-          state = incredients.isNotEmpty;
+          state = ingredients.isNotEmpty;
           return state;
         case 2:
           bool state;

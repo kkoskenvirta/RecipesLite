@@ -14,11 +14,12 @@ class ProfileRecipeView extends StatelessWidget {
   const ProfileRecipeView({
     Key? key,
     required this.title,
-    required this.recipes,
+    required this.mode,
   }) : super(key: key);
 
   final String title;
-  final List<RecipeModel> recipes;
+  final ListMode mode;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,12 +29,19 @@ class ProfileRecipeView extends StatelessWidget {
             SingleCategoryHeader(
               title: title,
             ),
-            Flexible(
-              child: SingleChildScrollView(
-                child: ProfileRecipeViewBody(
-                  recipes: recipes,
-                ),
-              ),
+            BlocBuilder<UserDataCubit, UserDataState>(
+              builder: (context, state) {
+                List<RecipeModel> recipes;
+                recipes = mode == ListMode.favorites ? state.favorites : state.recipes;
+
+                return Flexible(
+                  child: SingleChildScrollView(
+                    child: ProfileRecipeViewBody(
+                      recipes: recipes,
+                    ),
+                  ),
+                );
+              },
             )
           ],
         ),

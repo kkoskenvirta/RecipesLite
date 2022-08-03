@@ -20,6 +20,8 @@ TagIdDTO _$TagIdDTOFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TagIdDTO {
+  @JsonKey(name: "id")
+  int get relationId => throw _privateConstructorUsedError;
   @JsonKey(name: "tag_id")
   TagDataDTO get tag => throw _privateConstructorUsedError;
 
@@ -33,7 +35,9 @@ mixin _$TagIdDTO {
 abstract class $TagIdDTOCopyWith<$Res> {
   factory $TagIdDTOCopyWith(TagIdDTO value, $Res Function(TagIdDTO) then) =
       _$TagIdDTOCopyWithImpl<$Res>;
-  $Res call({@JsonKey(name: "tag_id") TagDataDTO tag});
+  $Res call(
+      {@JsonKey(name: "id") int relationId,
+      @JsonKey(name: "tag_id") TagDataDTO tag});
 
   $TagDataDTOCopyWith<$Res> get tag;
 }
@@ -48,9 +52,14 @@ class _$TagIdDTOCopyWithImpl<$Res> implements $TagIdDTOCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? relationId = freezed,
     Object? tag = freezed,
   }) {
     return _then(_value.copyWith(
+      relationId: relationId == freezed
+          ? _value.relationId
+          : relationId // ignore: cast_nullable_to_non_nullable
+              as int,
       tag: tag == freezed
           ? _value.tag
           : tag // ignore: cast_nullable_to_non_nullable
@@ -72,7 +81,9 @@ abstract class _$$_TagIdDTOCopyWith<$Res> implements $TagIdDTOCopyWith<$Res> {
           _$_TagIdDTO value, $Res Function(_$_TagIdDTO) then) =
       __$$_TagIdDTOCopyWithImpl<$Res>;
   @override
-  $Res call({@JsonKey(name: "tag_id") TagDataDTO tag});
+  $Res call(
+      {@JsonKey(name: "id") int relationId,
+      @JsonKey(name: "tag_id") TagDataDTO tag});
 
   @override
   $TagDataDTOCopyWith<$Res> get tag;
@@ -90,9 +101,14 @@ class __$$_TagIdDTOCopyWithImpl<$Res> extends _$TagIdDTOCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? relationId = freezed,
     Object? tag = freezed,
   }) {
     return _then(_$_TagIdDTO(
+      relationId: relationId == freezed
+          ? _value.relationId
+          : relationId // ignore: cast_nullable_to_non_nullable
+              as int,
       tag: tag == freezed
           ? _value.tag
           : tag // ignore: cast_nullable_to_non_nullable
@@ -104,18 +120,24 @@ class __$$_TagIdDTOCopyWithImpl<$Res> extends _$TagIdDTOCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_TagIdDTO extends _TagIdDTO {
-  _$_TagIdDTO({@JsonKey(name: "tag_id") required this.tag}) : super._();
+  _$_TagIdDTO(
+      {@JsonKey(name: "id") required this.relationId,
+      @JsonKey(name: "tag_id") required this.tag})
+      : super._();
 
   factory _$_TagIdDTO.fromJson(Map<String, dynamic> json) =>
       _$$_TagIdDTOFromJson(json);
 
+  @override
+  @JsonKey(name: "id")
+  final int relationId;
   @override
   @JsonKey(name: "tag_id")
   final TagDataDTO tag;
 
   @override
   String toString() {
-    return 'TagIdDTO(tag: $tag)';
+    return 'TagIdDTO(relationId: $relationId, tag: $tag)';
   }
 
   @override
@@ -123,13 +145,17 @@ class _$_TagIdDTO extends _TagIdDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TagIdDTO &&
+            const DeepCollectionEquality()
+                .equals(other.relationId, relationId) &&
             const DeepCollectionEquality().equals(other.tag, tag));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(tag));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(relationId),
+      const DeepCollectionEquality().hash(tag));
 
   @JsonKey(ignore: true)
   @override
@@ -145,12 +171,16 @@ class _$_TagIdDTO extends _TagIdDTO {
 }
 
 abstract class _TagIdDTO extends TagIdDTO {
-  factory _TagIdDTO({@JsonKey(name: "tag_id") required final TagDataDTO tag}) =
-      _$_TagIdDTO;
+  factory _TagIdDTO(
+      {@JsonKey(name: "id") required final int relationId,
+      @JsonKey(name: "tag_id") required final TagDataDTO tag}) = _$_TagIdDTO;
   _TagIdDTO._() : super._();
 
   factory _TagIdDTO.fromJson(Map<String, dynamic> json) = _$_TagIdDTO.fromJson;
 
+  @override
+  @JsonKey(name: "id")
+  int get relationId;
   @override
   @JsonKey(name: "tag_id")
   TagDataDTO get tag;

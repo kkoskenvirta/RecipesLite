@@ -1,22 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'incredient_post_request_dto.dart';
+part of 'ingredient_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_IncredientPostRequestDTO _$$_IncredientPostRequestDTOFromJson(
-        Map<String, dynamic> json) =>
-    _$_IncredientPostRequestDTO(
-      name: json['name'] as String?,
+_$_IngredientModel _$$_IngredientModelFromJson(Map<String, dynamic> json) =>
+    _$_IngredientModel(
+      id: json['id'] as String?,
+      relationId: json['relationId'] as int?,
+      name: json['name'] as String,
       amount: (json['amount'] as num?)?.toDouble(),
       unit: json['unit'] as String?,
     );
 
-Map<String, dynamic> _$$_IncredientPostRequestDTOToJson(
-        _$_IncredientPostRequestDTO instance) =>
+Map<String, dynamic> _$$_IngredientModelToJson(_$_IngredientModel instance) =>
     <String, dynamic>{
+      'id': instance.id,
+      'relationId': instance.relationId,
       'name': instance.name,
       'amount': instance.amount,
       'unit': instance.unit,

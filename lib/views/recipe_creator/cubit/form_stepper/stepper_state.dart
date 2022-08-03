@@ -1,6 +1,6 @@
 part of 'stepper_cubit.dart';
 
-enum StepperItem { details, incredients, classification, review }
+enum StepperItem { details, ingredients, classification, review }
 
 @freezed
 class StepperState with _$StepperState {

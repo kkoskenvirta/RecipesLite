@@ -16,12 +16,13 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$FormDataState {
+  bool? get editMode => throw _privateConstructorUsedError;
   FormDataStateStatus get status => throw _privateConstructorUsedError;
   DirectusRequestStatus get requestStatus => throw _privateConstructorUsedError;
   BlurHashStatus get blurHashStatus => throw _privateConstructorUsedError;
   bool get featured => throw _privateConstructorUsedError;
   String get instructions => throw _privateConstructorUsedError;
-  List<IncredientModel> get incredients => throw _privateConstructorUsedError;
+  List<IngredientModel> get ingredients => throw _privateConstructorUsedError;
   List<CategoryModel> get categories => throw _privateConstructorUsedError;
   List<TagModel> get tags => throw _privateConstructorUsedError;
   RecipeModel get recipe => throw _privateConstructorUsedError;
@@ -45,12 +46,13 @@ abstract class $FormDataStateCopyWith<$Res> {
           FormDataState value, $Res Function(FormDataState) then) =
       _$FormDataStateCopyWithImpl<$Res>;
   $Res call(
-      {FormDataStateStatus status,
+      {bool? editMode,
+      FormDataStateStatus status,
       DirectusRequestStatus requestStatus,
       BlurHashStatus blurHashStatus,
       bool featured,
       String instructions,
-      List<IncredientModel> incredients,
+      List<IngredientModel> ingredients,
       List<CategoryModel> categories,
       List<TagModel> tags,
       RecipeModel recipe,
@@ -77,12 +79,13 @@ class _$FormDataStateCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? editMode = freezed,
     Object? status = freezed,
     Object? requestStatus = freezed,
     Object? blurHashStatus = freezed,
     Object? featured = freezed,
     Object? instructions = freezed,
-    Object? incredients = freezed,
+    Object? ingredients = freezed,
     Object? categories = freezed,
     Object? tags = freezed,
     Object? recipe = freezed,
@@ -96,6 +99,10 @@ class _$FormDataStateCopyWithImpl<$Res>
     Object? blurHash = freezed,
   }) {
     return _then(_value.copyWith(
+      editMode: editMode == freezed
+          ? _value.editMode
+          : editMode // ignore: cast_nullable_to_non_nullable
+              as bool?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -116,10 +123,10 @@ class _$FormDataStateCopyWithImpl<$Res>
           ? _value.instructions
           : instructions // ignore: cast_nullable_to_non_nullable
               as String,
-      incredients: incredients == freezed
-          ? _value.incredients
-          : incredients // ignore: cast_nullable_to_non_nullable
-              as List<IncredientModel>,
+      ingredients: ingredients == freezed
+          ? _value.ingredients
+          : ingredients // ignore: cast_nullable_to_non_nullable
+              as List<IngredientModel>,
       categories: categories == freezed
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
@@ -183,12 +190,13 @@ abstract class _$$_FormDataStateCopyWith<$Res>
       __$$_FormDataStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {FormDataStateStatus status,
+      {bool? editMode,
+      FormDataStateStatus status,
       DirectusRequestStatus requestStatus,
       BlurHashStatus blurHashStatus,
       bool featured,
       String instructions,
-      List<IncredientModel> incredients,
+      List<IngredientModel> ingredients,
       List<CategoryModel> categories,
       List<TagModel> tags,
       RecipeModel recipe,
@@ -218,12 +226,13 @@ class __$$_FormDataStateCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? editMode = freezed,
     Object? status = freezed,
     Object? requestStatus = freezed,
     Object? blurHashStatus = freezed,
     Object? featured = freezed,
     Object? instructions = freezed,
-    Object? incredients = freezed,
+    Object? ingredients = freezed,
     Object? categories = freezed,
     Object? tags = freezed,
     Object? recipe = freezed,
@@ -237,6 +246,10 @@ class __$$_FormDataStateCopyWithImpl<$Res>
     Object? blurHash = freezed,
   }) {
     return _then(_$_FormDataState(
+      editMode: editMode == freezed
+          ? _value.editMode
+          : editMode // ignore: cast_nullable_to_non_nullable
+              as bool?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -257,10 +270,10 @@ class __$$_FormDataStateCopyWithImpl<$Res>
           ? _value.instructions
           : instructions // ignore: cast_nullable_to_non_nullable
               as String,
-      incredients: incredients == freezed
-          ? _value._incredients
-          : incredients // ignore: cast_nullable_to_non_nullable
-              as List<IncredientModel>,
+      ingredients: ingredients == freezed
+          ? _value._ingredients
+          : ingredients // ignore: cast_nullable_to_non_nullable
+              as List<IngredientModel>,
       categories: categories == freezed
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
@@ -313,12 +326,13 @@ class __$$_FormDataStateCopyWithImpl<$Res>
 
 class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
   const _$_FormDataState(
-      {required this.status,
+      {this.editMode,
+      required this.status,
       required this.requestStatus,
       required this.blurHashStatus,
       required this.featured,
       required this.instructions,
-      required final List<IncredientModel> incredients,
+      required final List<IngredientModel> ingredients,
       required final List<CategoryModel> categories,
       required final List<TagModel> tags,
       required this.recipe,
@@ -330,10 +344,12 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
       this.picture,
       this.image,
       this.blurHash})
-      : _incredients = incredients,
+      : _ingredients = ingredients,
         _categories = categories,
         _tags = tags;
 
+  @override
+  final bool? editMode;
   @override
   final FormDataStateStatus status;
   @override
@@ -344,11 +360,11 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
   final bool featured;
   @override
   final String instructions;
-  final List<IncredientModel> _incredients;
+  final List<IngredientModel> _ingredients;
   @override
-  List<IncredientModel> get incredients {
+  List<IngredientModel> get ingredients {
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_incredients);
+    return EqualUnmodifiableListView(_ingredients);
   }
 
   final List<CategoryModel> _categories;
@@ -386,7 +402,7 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'FormDataState(status: $status, requestStatus: $requestStatus, blurHashStatus: $blurHashStatus, featured: $featured, instructions: $instructions, incredients: $incredients, categories: $categories, tags: $tags, recipe: $recipe, id: $id, preparationTime: $preparationTime, name: $name, shortDescription: $shortDescription, difficulty: $difficulty, picture: $picture, image: $image, blurHash: $blurHash)';
+    return 'FormDataState(editMode: $editMode, status: $status, requestStatus: $requestStatus, blurHashStatus: $blurHashStatus, featured: $featured, instructions: $instructions, ingredients: $ingredients, categories: $categories, tags: $tags, recipe: $recipe, id: $id, preparationTime: $preparationTime, name: $name, shortDescription: $shortDescription, difficulty: $difficulty, picture: $picture, image: $image, blurHash: $blurHash)';
   }
 
   @override
@@ -394,12 +410,13 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'FormDataState'))
+      ..add(DiagnosticsProperty('editMode', editMode))
       ..add(DiagnosticsProperty('status', status))
       ..add(DiagnosticsProperty('requestStatus', requestStatus))
       ..add(DiagnosticsProperty('blurHashStatus', blurHashStatus))
       ..add(DiagnosticsProperty('featured', featured))
       ..add(DiagnosticsProperty('instructions', instructions))
-      ..add(DiagnosticsProperty('incredients', incredients))
+      ..add(DiagnosticsProperty('ingredients', ingredients))
       ..add(DiagnosticsProperty('categories', categories))
       ..add(DiagnosticsProperty('tags', tags))
       ..add(DiagnosticsProperty('recipe', recipe))
@@ -418,6 +435,7 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_FormDataState &&
+            const DeepCollectionEquality().equals(other.editMode, editMode) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality()
                 .equals(other.requestStatus, requestStatus) &&
@@ -427,7 +445,7 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
             const DeepCollectionEquality()
                 .equals(other.instructions, instructions) &&
             const DeepCollectionEquality()
-                .equals(other._incredients, _incredients) &&
+                .equals(other._ingredients, _ingredients) &&
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
@@ -448,12 +466,13 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(editMode),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(requestStatus),
       const DeepCollectionEquality().hash(blurHashStatus),
       const DeepCollectionEquality().hash(featured),
       const DeepCollectionEquality().hash(instructions),
-      const DeepCollectionEquality().hash(_incredients),
+      const DeepCollectionEquality().hash(_ingredients),
       const DeepCollectionEquality().hash(_categories),
       const DeepCollectionEquality().hash(_tags),
       const DeepCollectionEquality().hash(recipe),
@@ -474,12 +493,13 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
 
 abstract class _FormDataState implements FormDataState {
   const factory _FormDataState(
-      {required final FormDataStateStatus status,
+      {final bool? editMode,
+      required final FormDataStateStatus status,
       required final DirectusRequestStatus requestStatus,
       required final BlurHashStatus blurHashStatus,
       required final bool featured,
       required final String instructions,
-      required final List<IncredientModel> incredients,
+      required final List<IngredientModel> ingredients,
       required final List<CategoryModel> categories,
       required final List<TagModel> tags,
       required final RecipeModel recipe,
@@ -493,6 +513,8 @@ abstract class _FormDataState implements FormDataState {
       final String? blurHash}) = _$_FormDataState;
 
   @override
+  bool? get editMode;
+  @override
   FormDataStateStatus get status;
   @override
   DirectusRequestStatus get requestStatus;
@@ -503,7 +525,7 @@ abstract class _FormDataState implements FormDataState {
   @override
   String get instructions;
   @override
-  List<IncredientModel> get incredients;
+  List<IngredientModel> get ingredients;
   @override
   List<CategoryModel> get categories;
   @override

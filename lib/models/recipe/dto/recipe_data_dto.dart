@@ -1,5 +1,5 @@
 import 'package:flutter_e_commerce/models/category/dto/category_id_dto.dart';
-import 'package:flutter_e_commerce/models/incredient/dto/incredient_id_dto.dart';
+import 'package:flutter_e_commerce/models/ingredient/dto/ingredient_id_dto.dart';
 
 import 'package:flutter_e_commerce/models/tag/dto/tag_id_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -18,9 +18,9 @@ class RecipeDataDTO with _$RecipeDataDTO {
     String? blurhash,
     String? picture,
     @Default('') String instructions,
-    required List<CategoryIdDTO> categories,
-    required List<TagIdDTO> tags,
-    required List<IncredientIdDTO> incredients,
+    List<CategoryIdDTO>? categories,
+    List<TagIdDTO>? tags,
+    List<IngredientIdDTO>? ingredients,
     @JsonKey(name: 'Name') String? name,
     @JsonKey(name: 'Featured') bool? featured,
     @JsonKey(name: 'preparation_time') int? preparationTime,
@@ -52,9 +52,9 @@ class RecipeDataDTO with _$RecipeDataDTO {
       status: status,
       userCreated: userCreated,
       instructions: instructions,
-      categories: categories.map((category) => category.toDomain()).toList(),
-      tags: tags.map((tag) => tag.toDomain()).toList(),
-      incredients: incredients.map((incredient) => incredient.toDomain()).toList(),
+      categories: categories != null ? categories!.map((category) => category.toDomain()).toList() : [],
+      tags: tags != null ? tags!.map((tag) => tag.toDomain()).toList() : [],
+      ingredients: ingredients != null ? ingredients!.map((ingredient) => ingredient.toDomain()).toList() : [],
     );
   }
 }

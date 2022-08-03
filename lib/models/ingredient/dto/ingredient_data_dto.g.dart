@@ -1,24 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'incredient_data_dto.dart';
+part of 'ingredient_data_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_IncredientDataDTO _$$_IncredientDataDTOFromJson(Map<String, dynamic> json) =>
-    _$_IncredientDataDTO(
-      id: json['incredient_id'] as String?,
+_$_IngredientDataDTO _$$_IngredientDataDTOFromJson(Map<String, dynamic> json) =>
+    _$_IngredientDataDTO(
+      id: json['ingredient_id'] as String?,
       name: json['name'] as String? ?? '',
       amount: (json['amount'] as num?)?.toDouble(),
       unit: json['unit'] as String? ?? 'gram',
       sort: json['sort'] as String?,
     );
 
-Map<String, dynamic> _$$_IncredientDataDTOToJson(
-        _$_IncredientDataDTO instance) =>
+Map<String, dynamic> _$$_IngredientDataDTOToJson(
+        _$_IngredientDataDTO instance) =>
     <String, dynamic>{
-      'incredient_id': instance.id,
+      'ingredient_id': instance.id,
       'name': instance.name,
       'amount': instance.amount,
       'unit': instance.unit,

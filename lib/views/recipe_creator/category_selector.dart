@@ -26,8 +26,8 @@ class CategorySelector extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                final status = state.categories.contains(categories[index]);
-
+                final match = state.categories.indexWhere((stateCategory) => stateCategory.id == categories[index].id);
+                final status = match == -1 ? false : true;
                 return Column(
                   children: [
                     CheckboxListTile(

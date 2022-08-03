@@ -12,9 +12,9 @@ class StepperCubit extends Cubit<StepperState> {
   nextStep() {
     switch (state.stepperItem) {
       case StepperItem.details:
-        emit(state.copyWith(index: 1, stepperItem: StepperItem.incredients));
+        emit(state.copyWith(index: 1, stepperItem: StepperItem.ingredients));
         break;
-      case StepperItem.incredients:
+      case StepperItem.ingredients:
         emit(state.copyWith(index: 2, stepperItem: StepperItem.classification));
         break;
       case StepperItem.classification:
@@ -34,7 +34,7 @@ class StepperCubit extends Cubit<StepperState> {
         emit(state.copyWith(index: 0, stepperItem: StepperItem.details));
         break;
       case 1:
-        emit(state.copyWith(index: 1, stepperItem: StepperItem.incredients));
+        emit(state.copyWith(index: 1, stepperItem: StepperItem.ingredients));
 
         break;
       case 2:
@@ -54,13 +54,13 @@ class StepperCubit extends Cubit<StepperState> {
   previousStep() {
     switch (state.stepperItem) {
       case StepperItem.details:
-        // emit(state.copyWith(index: 1, stepperItem: StepperItem.incredients));
+        // emit(state.copyWith(index: 1, stepperItem: StepperItem.ingredients));
         break;
-      case StepperItem.incredients:
+      case StepperItem.ingredients:
         emit(state.copyWith(index: 0, stepperItem: StepperItem.details));
         break;
       case StepperItem.classification:
-        emit(state.copyWith(index: 1, stepperItem: StepperItem.incredients));
+        emit(state.copyWith(index: 1, stepperItem: StepperItem.ingredients));
         break;
       case StepperItem.review:
         emit(state.copyWith(index: 2, stepperItem: StepperItem.classification));

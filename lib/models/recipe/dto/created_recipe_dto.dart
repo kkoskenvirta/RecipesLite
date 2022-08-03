@@ -1,5 +1,5 @@
 import 'package:flutter_e_commerce/models/category/dto/category_id_dto.dart';
-import 'package:flutter_e_commerce/models/incredient/dto/incredient_id_dto.dart';
+import 'package:flutter_e_commerce/models/ingredient/dto/ingredient_id_dto.dart';
 
 import 'package:flutter_e_commerce/models/tag/dto/tag_id_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -20,7 +20,7 @@ class CreatedRecipeDTO with _$CreatedRecipeDTO {
     @Default('') String instructions,
     required List<CategoryIdDTO> categories,
     required List<TagIdDTO>? tags,
-    required List<IncredientIdDTO> incredients,
+    required List<IngredientIdDTO> ingredients,
     @JsonKey(name: 'Name') String? name,
     @JsonKey(name: 'Featured') bool? featured,
     @JsonKey(name: 'preparation_time') int? preparationTime,
@@ -54,7 +54,7 @@ class CreatedRecipeDTO with _$CreatedRecipeDTO {
       instructions: instructions,
       categories: categories.map((category) => category.toDomain()).toList(),
       tags: tags?.map((tag) => tag.toDomain()).toList(),
-      incredients: incredients.map((incredient) => incredient.toDomain()).toList(),
+      ingredients: ingredients.map((ingredient) => ingredient.toDomain()).toList(),
     );
   }
 }

@@ -4,11 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_data/form_data_cubit.dart';
+import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
 import 'package:flutter_e_commerce/widgets/categorization_bar.dart';
-import 'package:flutter_e_commerce/widgets/incredients_table.dart';
+import 'package:flutter_e_commerce/widgets/ingredients_table.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 
@@ -19,7 +21,10 @@ import 'package:image/image.dart' as img;
 class ReviewSlide extends StatelessWidget {
   const ReviewSlide({
     Key? key,
+    this.editableRecipe,
   }) : super(key: key);
+
+  final RecipeModel? editableRecipe;
 
   Future generateBlurHash(File tempImage) async {
     var data = await tempImage.readAsBytes();
@@ -58,10 +63,11 @@ class ReviewSlide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(editableRecipe);
     return BlocBuilder<FormDataCubit, FormDataState>(
       builder: (context, state) {
         final recipe = state;
-        final incredients = state.incredients;
+        final ingredients = state.ingredients;
         final categories = state.categories;
         final tags = state.tags;
         final image = state.image;
@@ -95,26 +101,32 @@ class ReviewSlide extends StatelessWidget {
                               ),
                             ),
                           )
-                        : Container(
-                            height: 200,
-                            width: 250,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.pink.shade50,
-                              border: Border.all(color: Colors.pink.shade100, width: 1),
-                            ),
-                            child: Center(
-                              child: Container(
-                                height: 120,
-                                width: 180,
-                                color: Colors.pink.shade50,
-                                child: const Icon(
-                                  Icons.add_a_photo_rounded,
-                                  size: 48,
+                        : editableRecipe == null
+                            ? Container(
+                                height: 200,
+                                width: 250,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.pink.shade50,
+                                  border: Border.all(color: Colors.pink.shade100, width: 1),
                                 ),
+                                child: Center(
+                                  child: Container(
+                                    height: 120,
+                                    width: 180,
+                                    color: Colors.pink.shade50,
+                                    child: const Icon(
+                                      Icons.add_a_photo_rounded,
+                                      size: 48,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : BlurhashImage(
+                                aspectRatio: 1.5,
+                                blurhash: editableRecipe!.blurhash,
+                                image: editableRecipe!.picture,
                               ),
-                            ),
-                          ),
                   ),
                 );
               },
@@ -155,11 +167,11 @@ class ReviewSlide extends StatelessWidget {
                   const SizedBox(
                     height: 12,
                   ),
-                  Align(alignment: Alignment.centerLeft, child: LargeText(size: 16, text: "Incredients")),
+                  Align(alignment: Alignment.centerLeft, child: LargeText(size: 16, text: "ingredients")),
                   const SizedBox(
                     height: 12,
                   ),
-                  IncredientsTable(incredients: state.incredients),
+                  ingredientsTable(ingredients: state.ingredients),
                   const SizedBox(
                     height: 12,
                   ),

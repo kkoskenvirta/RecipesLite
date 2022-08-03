@@ -70,7 +70,7 @@ class PopularListItem extends StatelessWidget {
             //     child: CircularProgressIndicator(value: downloadProgress.progress),
             //   ),
             // ),
-            BlurhashImage(aspectRatio: 1, image: imageUrl!, blurhash: blurhash!),
+            BlurhashImage(aspectRatio: 1, image: imageUrl, blurhash: blurhash!),
             SizedBox(
               width: Dimensions.width15,
             ),
