@@ -31,4 +31,12 @@ class SingleRecipeCubit extends Cubit<SingleRecipeState> {
       emit(state.copyWith(status: SingleRecipeStateStatus.error));
     }
   }
+
+  emitUpdatedRecipe(RecipeModel? recipe) {
+    try {
+      emit(state.copyWith(recipe: recipe));
+    } catch (e) {
+      emit(state.copyWith(status: SingleRecipeStateStatus.error));
+    }
+  }
 }

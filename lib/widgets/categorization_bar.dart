@@ -6,16 +6,15 @@ import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
 
 class CategorizationBar extends StatelessWidget {
-  const CategorizationBar({Key? key, required this.tags, required this.categories, this.disableChipButtons = false})
-      : super(key: key);
-  final List<TagModel> tags;
-  final List<CategoryModel> categories;
+  const CategorizationBar({Key? key, this.tags, this.categories, this.disableChipButtons = false}) : super(key: key);
+  final List<TagModel>? tags;
+  final List<CategoryModel>? categories;
   final bool disableChipButtons;
 
   @override
   Widget build(BuildContext context) {
-    final List tagList = Set.from(tags).toList();
-    final List categoryList = Set.from(categories).toList();
+    final List tagList = tags != null ? Set.from(tags!).toList() : [];
+    final List categoryList = categories != null ? Set.from(categories!).toList() : [];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +49,8 @@ class CategorizationBar extends StatelessWidget {
         SizedBox(
           height: 8,
         ),
-        if (tags.isNotEmpty) Align(alignment: Alignment.centerLeft, child: LargeText(size: 16, text: "Dietary tags")),
+        if (tagList.isNotEmpty)
+          Align(alignment: Alignment.centerLeft, child: LargeText(size: 16, text: "Dietary tags")),
         SizedBox(
           height: 2,
         ),

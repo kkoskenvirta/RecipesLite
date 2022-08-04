@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$NavigationState {
   NavBarItem get navBarItem => throw _privateConstructorUsedError;
   int get index => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $NavigationStateCopyWith<NavigationState> get copyWith =>
@@ -29,7 +30,7 @@ abstract class $NavigationStateCopyWith<$Res> {
   factory $NavigationStateCopyWith(
           NavigationState value, $Res Function(NavigationState) then) =
       _$NavigationStateCopyWithImpl<$Res>;
-  $Res call({NavBarItem navBarItem, int index});
+  $Res call({NavBarItem navBarItem, int index, String title});
 }
 
 /// @nodoc
@@ -45,6 +46,7 @@ class _$NavigationStateCopyWithImpl<$Res>
   $Res call({
     Object? navBarItem = freezed,
     Object? index = freezed,
+    Object? title = freezed,
   }) {
     return _then(_value.copyWith(
       navBarItem: navBarItem == freezed
@@ -55,6 +57,10 @@ class _$NavigationStateCopyWithImpl<$Res>
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
               as int,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -66,7 +72,7 @@ abstract class _$$_NavigationStateCopyWith<$Res>
           _$_NavigationState value, $Res Function(_$_NavigationState) then) =
       __$$_NavigationStateCopyWithImpl<$Res>;
   @override
-  $Res call({NavBarItem navBarItem, int index});
+  $Res call({NavBarItem navBarItem, int index, String title});
 }
 
 /// @nodoc
@@ -84,6 +90,7 @@ class __$$_NavigationStateCopyWithImpl<$Res>
   $Res call({
     Object? navBarItem = freezed,
     Object? index = freezed,
+    Object? title = freezed,
   }) {
     return _then(_$_NavigationState(
       navBarItem: navBarItem == freezed
@@ -94,6 +101,10 @@ class __$$_NavigationStateCopyWithImpl<$Res>
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
               as int,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -103,16 +114,19 @@ class __$$_NavigationStateCopyWithImpl<$Res>
 class _$_NavigationState
     with DiagnosticableTreeMixin
     implements _NavigationState {
-  const _$_NavigationState({required this.navBarItem, required this.index});
+  const _$_NavigationState(
+      {required this.navBarItem, required this.index, required this.title});
 
   @override
   final NavBarItem navBarItem;
   @override
   final int index;
+  @override
+  final String title;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'NavigationState(navBarItem: $navBarItem, index: $index)';
+    return 'NavigationState(navBarItem: $navBarItem, index: $index, title: $title)';
   }
 
   @override
@@ -121,7 +135,8 @@ class _$_NavigationState
     properties
       ..add(DiagnosticsProperty('type', 'NavigationState'))
       ..add(DiagnosticsProperty('navBarItem', navBarItem))
-      ..add(DiagnosticsProperty('index', index));
+      ..add(DiagnosticsProperty('index', index))
+      ..add(DiagnosticsProperty('title', title));
   }
 
   @override
@@ -131,14 +146,16 @@ class _$_NavigationState
             other is _$_NavigationState &&
             const DeepCollectionEquality()
                 .equals(other.navBarItem, navBarItem) &&
-            const DeepCollectionEquality().equals(other.index, index));
+            const DeepCollectionEquality().equals(other.index, index) &&
+            const DeepCollectionEquality().equals(other.title, title));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(navBarItem),
-      const DeepCollectionEquality().hash(index));
+      const DeepCollectionEquality().hash(index),
+      const DeepCollectionEquality().hash(title));
 
   @JsonKey(ignore: true)
   @override
@@ -149,12 +166,15 @@ class _$_NavigationState
 abstract class _NavigationState implements NavigationState {
   const factory _NavigationState(
       {required final NavBarItem navBarItem,
-      required final int index}) = _$_NavigationState;
+      required final int index,
+      required final String title}) = _$_NavigationState;
 
   @override
   NavBarItem get navBarItem;
   @override
   int get index;
+  @override
+  String get title;
   @override
   @JsonKey(ignore: true)
   _$$_NavigationStateCopyWith<_$_NavigationState> get copyWith =>

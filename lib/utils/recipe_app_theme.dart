@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class RecipeAppTheme {
   ThemeData themeData = ThemeData(
+    splashFactory: NoSplash.splashFactory,
     inputDecorationTheme: InputDecorationTheme(
       labelStyle: TextStyle(
         decorationColor: Colors.pink.shade600,
@@ -11,17 +12,29 @@ class RecipeAppTheme {
       fillColor: Palette.pToLight.shade700,
       // contentPadding: EdgeInsets.only(left: 4),
     ),
+    appBarTheme: AppBarTheme(
+      centerTitle: true,
+      backgroundColor: Palette.pToLight.shade800,
+      scrolledUnderElevation: 3,
+      elevation: 0,
+      titleTextStyle: TextStyle(
+        color: Colors.black87,
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
+      ),
+      iconTheme: IconThemeData(color: Palette.pToLight.shade50),
+    ),
 
-    canvasColor: Color.fromARGB(255, 252, 242, 246),
+    canvasColor: const Color.fromARGB(255, 252, 242, 246),
     listTileTheme: ListTileThemeData(
-      visualDensity: VisualDensity(vertical: -3),
+      visualDensity: const VisualDensity(vertical: -3),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
     ),
     chipTheme: ChipThemeData(
       backgroundColor: Palette.pToLight.shade700,
       selectedColor: Palette.pToLight.shade500,
     ),
-    buttonTheme: ButtonThemeData(
+    buttonTheme: const ButtonThemeData(
       buttonColor: Colors.pink,
       textTheme: ButtonTextTheme.primary,
     ),
@@ -58,19 +71,19 @@ class RecipeAppTheme {
 
 //palette.dart
 class Palette {
-  static const MaterialColor pToLight = const MaterialColor(
+  static const MaterialColor pToLight = MaterialColor(
     0xfff06292, // 0% comes in here, this will be color picked if no shade is selected when defining a Color property which doesn’t require a swatch.
-    const <int, Color>{
-      50: const Color(0xfff2729d), //10%
-      100: const Color(0xfff381a8), //20%
-      200: const Color(0xfff591b3), //30%
-      300: const Color(0xfff6a1be), //40%
-      400: const Color(0xfff6a1be), //50%
-      500: const Color(0xfff9c0d3), //60%
-      600: const Color(0xfffbd0de), //70%
-      700: const Color(0xfffce0e9), //80%
-      800: const Color(0xfffeeff4), //90%
-      900: const Color(0xffffffff), //100%
+    <int, Color>{
+      50: Color(0xfff2729d), //10%
+      100: Color(0xfff381a8), //20%
+      200: Color(0xfff591b3), //30%
+      300: Color(0xfff6a1be), //40%
+      400: Color(0xfff6a1be), //50%
+      500: Color(0xfff9c0d3), //60%
+      600: Color(0xfffbd0de), //70%
+      700: Color(0xfffce0e9), //80%
+      800: Color(0xfffeeff4), //90%
+      900: Color(0xffffffff), //100%
     },
   );
 }

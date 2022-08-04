@@ -63,12 +63,10 @@ class RouterService {
         return const ProfileScreen();
 
       case Routes.favorites:
-        final recipeListArgs = settings.arguments as RecipeListArgs;
-        return ProfileRecipeView(mode: ListMode.favorites, title: recipeListArgs.title);
+        return const ProfileRecipeView(mode: ListMode.favorites, title: "Favorites");
 
       case Routes.ownRecipes:
-        final recipeListArgs = settings.arguments as RecipeListArgs;
-        return ProfileRecipeView(mode: ListMode.owned, title: recipeListArgs.title);
+        return const ProfileRecipeView(mode: ListMode.owned, title: "Own recipes");
 
       case Routes.categories:
         return const CategoriesScreen();

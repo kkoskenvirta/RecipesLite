@@ -26,7 +26,7 @@ class ProfileRecipeView extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            SingleCategoryHeader(
+            ProfileRecipeViewHeader(
               title: title,
             ),
             BlocBuilder<UserDataCubit, UserDataState>(
@@ -50,8 +50,8 @@ class ProfileRecipeView extends StatelessWidget {
   }
 }
 
-class SingleCategoryHeader extends StatelessWidget {
-  const SingleCategoryHeader({
+class ProfileRecipeViewHeader extends StatelessWidget {
+  const ProfileRecipeViewHeader({
     Key? key,
     required this.title,
   }) : super(key: key);
@@ -61,7 +61,7 @@ class SingleCategoryHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Header(
       title: title,
-      leadingButtonIcon: Icon(Icons.chevron_left_rounded),
+      leadingButtonIcon: const Icon(Icons.chevron_left_rounded),
       onLeadingButtonPressed: () => Navigator.pop(context),
       showTrailingButton: false,
     );

@@ -21,11 +21,10 @@ class CategoriesScreen extends StatelessWidget {
     return SafeArea(
       child: Column(
         children: [
-          const CategoriesHeader(),
           Flexible(
             child: SingleChildScrollView(
               child: Column(
-                children: [
+                children: const [
                   CategoriesScreenBody(),
                 ],
               ),
@@ -34,33 +33,6 @@ class CategoriesScreen extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class CategoriesHeader extends StatelessWidget {
-  const CategoriesHeader({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Header(
-      title: "Categories",
-      leadingButtonIcon: Icon(Icons.search),
-      onLeadingButtonPressed: () => showBarModalBottomSheet(
-        expand: true,
-        context: context,
-        backgroundColor: Colors.white,
-        builder: (context) => const SearchModal(),
-      ),
-      trailingButtonIcon: Icon(
-        Icons.add_box,
-      ),
-      onTrailingButtonPressed: () {
-        Navigator.pushNamed(context, Routes.recipeCreator.name);
-      },
-    );
-    ;
   }
 }
 

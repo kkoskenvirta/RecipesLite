@@ -173,7 +173,9 @@ class FormDataCubit extends Cubit<FormDataState> {
         );
       }
       await finalizeSubmit(fileId, editMode, editableRecipe);
-
+      if (editMode) {
+        await fetchRecipeData(state.id);
+      }
       return true;
     } catch (e) {
       emit(state.copyWith(requestStatus: DirectusRequestStatus.error));
@@ -202,13 +204,11 @@ class FormDataCubit extends Cubit<FormDataState> {
 
       final recipePostRequestDTO = RecipeModel().fromDomain(recipe, editableRecipe);
 
-      print(recipePostRequestDTO);
-
       if (editMode && recipe.id != null) {
         final failureOrRecipe = await _recipesRepository.modifyRecipe(recipePostRequestDTO, recipe.id!);
         failureOrRecipe.fold(
           (error) => emit(state.copyWith(requestStatus: DirectusRequestStatus.error)),
-          (recipe) {
+          (recipe) async {
             emit(state.copyWith(requestStatus: DirectusRequestStatus.loaded));
             return;
           },
@@ -225,6 +225,22 @@ class FormDataCubit extends Cubit<FormDataState> {
       }
     } catch (e) {
       emit(state.copyWith(requestStatus: DirectusRequestStatus.error));
+    }
+  }
+
+  fetchRecipeData(String? id) async {
+    try {
+      if (id == null) return;
+      emit(state.copyWith(recipeFetchStatus: DirectusRequestStatus.loading));
+      final errorOrRecipe = await _recipesRepository.getRecipeWithId(id: id);
+      errorOrRecipe.fold(
+        (err) => emit(state.copyWith(recipeFetchStatus: DirectusRequestStatus.error)),
+        (recipe) {
+          emit(state.copyWith(recipeFetchStatus: DirectusRequestStatus.loaded, recipe: recipe));
+        },
+      );
+    } catch (e) {
+      emit(state.copyWith(recipeFetchStatus: DirectusRequestStatus.error));
     }
   }
 }

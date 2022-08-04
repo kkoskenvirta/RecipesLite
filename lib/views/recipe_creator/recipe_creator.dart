@@ -1,7 +1,9 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_e_commerce/global/blocks/navigation/navigation_cubit.dart';
 import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
+import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
@@ -13,6 +15,8 @@ import 'package:flutter_e_commerce/views/recipe_creator/difficulty_selector.dart
 import 'package:flutter_e_commerce/views/recipe_creator/ingredients_selector.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/review_slide.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/tag_selector.dart';
+import 'package:flutter_e_commerce/views/single_recipe/cubit/single_recipe_cubit.dart';
+import 'package:flutter_e_commerce/widgets/custom_appbar.dart';
 import 'package:flutter_e_commerce/widgets/custom_stepper/custom_stepper.dart';
 import 'package:flutter_e_commerce/widgets/header/header.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
@@ -29,9 +33,11 @@ class RecipeCreatorScreen extends StatelessWidget {
   final String title;
   @override
   Widget build(BuildContext context) {
+    final navigationCubit = BlocProvider.of<NavigationCubit>(context);
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
+        appBar: CustomAppBar(navigationCubit: navigationCubit, title: title),
         body: SafeArea(
           child: Column(
             children: [
@@ -193,16 +199,25 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                           if (state.stepperItem == StepperItem.review) {
                             final navigator = Navigator.of(context);
                             final recipeFetchCubit = BlocProvider.of<RecipeFetchCubit>(context);
+                            final userDataCubit = BlocProvider.of<UserDataCubit>(context);
+                            final formDataCubit = BlocProvider.of<FormDataCubit>(context);
 
                             //Send upload mode so we know if we need to update an existing or create a new recipe
-                            final bool uploadCompleted = await BlocProvider.of<FormDataCubit>(context)
-                                .submitRecipe(editMode!, widget.editableRecipe);
+                            final bool uploadCompleted =
+                                await formDataCubit.submitRecipe(editMode!, widget.editableRecipe);
 
                             if (uploadCompleted) {
                               if (!mounted) return;
                               recipeFetchCubit.fetchHomePageRecipes();
-                              navigator.popUntil((route) => route.isFirst);
-                              _showToast(context);
+                              userDataCubit.getUserData();
+                              if (editMode) {
+                                navigator.pop(formDataCubit.state.recipe);
+                                _showToast(context);
+                              } else {
+                                navigator.popUntil((route) => route.isFirst);
+                                _showToast(context);
+                              }
+
                               //Get new created recipe and route to the recipe
                               // navigator.popAndPushNamed(Routes.recipe.name, arguments: )
                             }

@@ -9,6 +9,7 @@ import 'package:flutter_e_commerce/routes/route_service.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/scale_func.dart';
 import 'package:flutter_e_commerce/views/single_recipe/cubit/single_recipe_cubit.dart';
+import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
 import 'package:flutter_e_commerce/widgets/categorization_bar.dart';
 import 'package:flutter_e_commerce/widgets/ingredients_table.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
@@ -47,18 +48,18 @@ class _RecipePageState extends State<RecipePage> {
     Color backgroundColor;
     if (favorited) {
       message = "Added to favorites";
-      icon = Icon(Icons.favorite_rounded, size: 28);
+      icon = const Icon(Icons.favorite_rounded, size: 28);
       backgroundColor = Colors.pink.shade50;
     } else {
       message = "Removed from favorites";
-      icon = Icon(Icons.favorite_outline_rounded, size: 28);
+      icon = const Icon(Icons.favorite_outline_rounded, size: 28);
       backgroundColor = Colors.pink.shade50;
     }
     Flushbar(
       flushbarStyle: FlushbarStyle.FLOATING,
       borderRadius: BorderRadius.circular(8),
-      margin: EdgeInsets.all(8),
-      padding: EdgeInsets.symmetric(vertical: 18),
+      margin: const EdgeInsets.all(8),
+      padding: const EdgeInsets.symmetric(vertical: 18),
       boxShadows: [
         BoxShadow(
           color: Colors.black12.withOpacity(0.125),
@@ -91,9 +92,9 @@ class _RecipePageState extends State<RecipePage> {
           builder: (context, state) {
             switch (state.status) {
               case SingleRecipeStateStatus.initial:
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               case SingleRecipeStateStatus.loading:
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               case SingleRecipeStateStatus.loaded:
                 final recipe = state.recipe;
 
@@ -105,27 +106,12 @@ class _RecipePageState extends State<RecipePage> {
                         width: double.maxFinite,
                         height: Dimensions.recipeImgSize + 100,
                         child: recipe!.picture != null
-                            ? CachedNetworkImage(
-                                height: Dimensions.listViewImgSize,
-                                width: Dimensions.listViewImgSize,
-                                imageUrl: '$baseUrl$assetsPath${recipe.picture}',
-                                imageBuilder: (context, imageProvider) => Container(
-                                  height: Dimensions.listViewImgSize,
-                                  width: Dimensions.listViewImgSize,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(Dimensions.radius20),
-                                    image: DecorationImage(
-                                      image: imageProvider,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                progressIndicatorBuilder: (context, url, downloadProgress) => Padding(
-                                  padding: const EdgeInsets.all(24.0),
-                                  child: CircularProgressIndicator(value: downloadProgress.progress),
-                                ),
+                            ? BlurhashImage(
+                                aspectRatio: 1.5,
+                                blurhash: recipe.blurhash,
+                                image: recipe.picture,
                               )
-                            : SizedBox(),
+                            : const SizedBox(),
                       ),
                     ),
                   ),
@@ -185,11 +171,11 @@ class _RecipePageState extends State<RecipePage> {
                             SizedBox(
                               height: Dimensions.height20,
                             ),
-                            CategorizationBar(categories: recipe.categories!, tags: recipe.tags!),
+                            CategorizationBar(categories: recipe.categories, tags: recipe.tags),
                             const SizedBox(
                               height: 12,
                             ),
-                            Divider(
+                            const Divider(
                               height: 1,
                             ),
                             const SizedBox(
@@ -202,7 +188,7 @@ class _RecipePageState extends State<RecipePage> {
                                   text: "Ingredients",
                                 )),
                             ingredientsTable(ingredients: recipe.ingredients),
-                            Divider(
+                            const Divider(
                               height: 1,
                             ),
                             SizedBox(
@@ -264,12 +250,17 @@ class _RecipePageState extends State<RecipePage> {
                       right: Dimensions.width20,
                       top: Dimensions.height45,
                       child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(
+                        onTap: () async {
+                          final singleRecipeCubit = BlocProvider.of<SingleRecipeCubit>(context);
+                          final RecipeModel? editedRecipe = await Navigator.pushNamed<dynamic>(
                             context,
                             Routes.recipeEditor.name,
                             arguments: RecipeEditorArgs("Edit recipe", recipe),
                           );
+                          if (editedRecipe != null) {
+                            print(editedRecipe);
+                            singleRecipeCubit.emitUpdatedRecipe(editedRecipe);
+                          }
                         },
                         child: Container(
                           width: 42,
@@ -296,7 +287,7 @@ class _RecipePageState extends State<RecipePage> {
                     ),
                 ]);
               default:
-                return SizedBox();
+                return const SizedBox();
             }
           },
         ),

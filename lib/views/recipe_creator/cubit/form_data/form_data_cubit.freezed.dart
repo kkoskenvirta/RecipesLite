@@ -19,6 +19,8 @@ mixin _$FormDataState {
   bool? get editMode => throw _privateConstructorUsedError;
   FormDataStateStatus get status => throw _privateConstructorUsedError;
   DirectusRequestStatus get requestStatus => throw _privateConstructorUsedError;
+  DirectusRequestStatus get recipeFetchStatus =>
+      throw _privateConstructorUsedError;
   BlurHashStatus get blurHashStatus => throw _privateConstructorUsedError;
   bool get featured => throw _privateConstructorUsedError;
   String get instructions => throw _privateConstructorUsedError;
@@ -49,6 +51,7 @@ abstract class $FormDataStateCopyWith<$Res> {
       {bool? editMode,
       FormDataStateStatus status,
       DirectusRequestStatus requestStatus,
+      DirectusRequestStatus recipeFetchStatus,
       BlurHashStatus blurHashStatus,
       bool featured,
       String instructions,
@@ -82,6 +85,7 @@ class _$FormDataStateCopyWithImpl<$Res>
     Object? editMode = freezed,
     Object? status = freezed,
     Object? requestStatus = freezed,
+    Object? recipeFetchStatus = freezed,
     Object? blurHashStatus = freezed,
     Object? featured = freezed,
     Object? instructions = freezed,
@@ -110,6 +114,10 @@ class _$FormDataStateCopyWithImpl<$Res>
       requestStatus: requestStatus == freezed
           ? _value.requestStatus
           : requestStatus // ignore: cast_nullable_to_non_nullable
+              as DirectusRequestStatus,
+      recipeFetchStatus: recipeFetchStatus == freezed
+          ? _value.recipeFetchStatus
+          : recipeFetchStatus // ignore: cast_nullable_to_non_nullable
               as DirectusRequestStatus,
       blurHashStatus: blurHashStatus == freezed
           ? _value.blurHashStatus
@@ -193,6 +201,7 @@ abstract class _$$_FormDataStateCopyWith<$Res>
       {bool? editMode,
       FormDataStateStatus status,
       DirectusRequestStatus requestStatus,
+      DirectusRequestStatus recipeFetchStatus,
       BlurHashStatus blurHashStatus,
       bool featured,
       String instructions,
@@ -229,6 +238,7 @@ class __$$_FormDataStateCopyWithImpl<$Res>
     Object? editMode = freezed,
     Object? status = freezed,
     Object? requestStatus = freezed,
+    Object? recipeFetchStatus = freezed,
     Object? blurHashStatus = freezed,
     Object? featured = freezed,
     Object? instructions = freezed,
@@ -257,6 +267,10 @@ class __$$_FormDataStateCopyWithImpl<$Res>
       requestStatus: requestStatus == freezed
           ? _value.requestStatus
           : requestStatus // ignore: cast_nullable_to_non_nullable
+              as DirectusRequestStatus,
+      recipeFetchStatus: recipeFetchStatus == freezed
+          ? _value.recipeFetchStatus
+          : recipeFetchStatus // ignore: cast_nullable_to_non_nullable
               as DirectusRequestStatus,
       blurHashStatus: blurHashStatus == freezed
           ? _value.blurHashStatus
@@ -329,6 +343,7 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
       {this.editMode,
       required this.status,
       required this.requestStatus,
+      required this.recipeFetchStatus,
       required this.blurHashStatus,
       required this.featured,
       required this.instructions,
@@ -354,6 +369,8 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
   final FormDataStateStatus status;
   @override
   final DirectusRequestStatus requestStatus;
+  @override
+  final DirectusRequestStatus recipeFetchStatus;
   @override
   final BlurHashStatus blurHashStatus;
   @override
@@ -402,7 +419,7 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'FormDataState(editMode: $editMode, status: $status, requestStatus: $requestStatus, blurHashStatus: $blurHashStatus, featured: $featured, instructions: $instructions, ingredients: $ingredients, categories: $categories, tags: $tags, recipe: $recipe, id: $id, preparationTime: $preparationTime, name: $name, shortDescription: $shortDescription, difficulty: $difficulty, picture: $picture, image: $image, blurHash: $blurHash)';
+    return 'FormDataState(editMode: $editMode, status: $status, requestStatus: $requestStatus, recipeFetchStatus: $recipeFetchStatus, blurHashStatus: $blurHashStatus, featured: $featured, instructions: $instructions, ingredients: $ingredients, categories: $categories, tags: $tags, recipe: $recipe, id: $id, preparationTime: $preparationTime, name: $name, shortDescription: $shortDescription, difficulty: $difficulty, picture: $picture, image: $image, blurHash: $blurHash)';
   }
 
   @override
@@ -413,6 +430,7 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
       ..add(DiagnosticsProperty('editMode', editMode))
       ..add(DiagnosticsProperty('status', status))
       ..add(DiagnosticsProperty('requestStatus', requestStatus))
+      ..add(DiagnosticsProperty('recipeFetchStatus', recipeFetchStatus))
       ..add(DiagnosticsProperty('blurHashStatus', blurHashStatus))
       ..add(DiagnosticsProperty('featured', featured))
       ..add(DiagnosticsProperty('instructions', instructions))
@@ -440,6 +458,8 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
             const DeepCollectionEquality()
                 .equals(other.requestStatus, requestStatus) &&
             const DeepCollectionEquality()
+                .equals(other.recipeFetchStatus, recipeFetchStatus) &&
+            const DeepCollectionEquality()
                 .equals(other.blurHashStatus, blurHashStatus) &&
             const DeepCollectionEquality().equals(other.featured, featured) &&
             const DeepCollectionEquality()
@@ -464,26 +484,28 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(editMode),
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(requestStatus),
-      const DeepCollectionEquality().hash(blurHashStatus),
-      const DeepCollectionEquality().hash(featured),
-      const DeepCollectionEquality().hash(instructions),
-      const DeepCollectionEquality().hash(_ingredients),
-      const DeepCollectionEquality().hash(_categories),
-      const DeepCollectionEquality().hash(_tags),
-      const DeepCollectionEquality().hash(recipe),
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(preparationTime),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(shortDescription),
-      const DeepCollectionEquality().hash(difficulty),
-      const DeepCollectionEquality().hash(picture),
-      const DeepCollectionEquality().hash(image),
-      const DeepCollectionEquality().hash(blurHash));
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        const DeepCollectionEquality().hash(editMode),
+        const DeepCollectionEquality().hash(status),
+        const DeepCollectionEquality().hash(requestStatus),
+        const DeepCollectionEquality().hash(recipeFetchStatus),
+        const DeepCollectionEquality().hash(blurHashStatus),
+        const DeepCollectionEquality().hash(featured),
+        const DeepCollectionEquality().hash(instructions),
+        const DeepCollectionEquality().hash(_ingredients),
+        const DeepCollectionEquality().hash(_categories),
+        const DeepCollectionEquality().hash(_tags),
+        const DeepCollectionEquality().hash(recipe),
+        const DeepCollectionEquality().hash(id),
+        const DeepCollectionEquality().hash(preparationTime),
+        const DeepCollectionEquality().hash(name),
+        const DeepCollectionEquality().hash(shortDescription),
+        const DeepCollectionEquality().hash(difficulty),
+        const DeepCollectionEquality().hash(picture),
+        const DeepCollectionEquality().hash(image),
+        const DeepCollectionEquality().hash(blurHash)
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -496,6 +518,7 @@ abstract class _FormDataState implements FormDataState {
       {final bool? editMode,
       required final FormDataStateStatus status,
       required final DirectusRequestStatus requestStatus,
+      required final DirectusRequestStatus recipeFetchStatus,
       required final BlurHashStatus blurHashStatus,
       required final bool featured,
       required final String instructions,
@@ -518,6 +541,8 @@ abstract class _FormDataState implements FormDataState {
   FormDataStateStatus get status;
   @override
   DirectusRequestStatus get requestStatus;
+  @override
+  DirectusRequestStatus get recipeFetchStatus;
   @override
   BlurHashStatus get blurHashStatus;
   @override

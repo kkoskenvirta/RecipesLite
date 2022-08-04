@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/auth/cubit/auth_cubit.dart';
+import 'package:flutter_e_commerce/global/blocks/navigation/navigation_cubit.dart';
+import 'package:flutter_e_commerce/global/blocks/navigation/navigation_cubit.dart';
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
 import 'package:flutter_e_commerce/models/user/user_model.dart';
 import 'package:flutter_e_commerce/routes/route_service.dart';
@@ -16,7 +18,6 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Column(children: [
-        const ProfileHeader(),
         const SizedBox(
           height: 20,
         ),
@@ -43,25 +44,6 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
-class ProfileHeader extends StatelessWidget {
-  const ProfileHeader({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final authCubit = BlocProvider.of<AuthCubit>(context);
-    return Header(
-        title: "Profile",
-        showLeadingButton: false,
-        trailingButtonIcon: const Icon(
-          Icons.logout_rounded,
-          size: 28,
-        ),
-        onTrailingButtonPressed: () {
-          authCubit.logout();
-        });
-  }
-}
-
 class ProfileBody extends StatelessWidget {
   const ProfileBody({Key? key, required this.profile}) : super(key: key);
   final UserModel profile;
@@ -69,69 +51,77 @@ class ProfileBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userDataCubit = BlocProvider.of<UserDataCubit>(context);
+    final navigationCubit = BlocProvider.of<NavigationCubit>(context);
     final favorites = userDataCubit.state.favorites;
     final ownRecipes = userDataCubit.state.recipes;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          LargeText(
-            text: profile.firstName,
-            size: 22,
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          ListTile(
-            title: const Text(
-              "Favorites",
-              textScaleFactor: 0.9,
+
+    return BlocBuilder<NavigationCubit, NavigationState>(builder: (context, state) {
+      if (state.navBarItem == NavBarItem.profile) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                LargeText(
+                  text: profile.firstName,
+                  size: 22,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                ListTile(
+                  title: const Text(
+                    "Favorites",
+                    textScaleFactor: 0.9,
+                  ),
+                  tileColor: Colors.pink.shade50,
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: (() {
+                    Navigator.pushNamed(
+                      context,
+                      Routes.favorites.name,
+                    );
+                  }),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                ListTile(
+                  title: const Text(
+                    "Own recipes",
+                    textScaleFactor: 0.9,
+                  ),
+                  tileColor: Colors.pink.shade50,
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: (() {
+                    Navigator.pushNamed(
+                      context,
+                      Routes.ownRecipes.name,
+                    );
+                  }),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                ListTile(
+                  title: const Text(
+                    "Settings",
+                    textScaleFactor: 0.9,
+                  ),
+                  tileColor: Colors.pink.shade50,
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                ),
+              ],
             ),
-            tileColor: Colors.pink.shade50,
-            trailing: const Icon(Icons.chevron_right_rounded),
-            onTap: (() {
-              Navigator.pushNamed(
-                context,
-                Routes.favorites.name,
-                arguments: RecipeListArgs("favorites", favorites),
-              );
-            }),
           ),
-          const SizedBox(
-            height: 8,
-          ),
-          ListTile(
-            title: const Text(
-              "Own recipes",
-              textScaleFactor: 0.9,
-            ),
-            tileColor: Colors.pink.shade50,
-            trailing: const Icon(Icons.chevron_right_rounded),
-            onTap: (() {
-              Navigator.pushNamed(
-                context,
-                Routes.ownRecipes.name,
-                arguments: RecipeListArgs("My recipes", ownRecipes),
-              );
-            }),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          ListTile(
-            title: const Text(
-              "Settings",
-              textScaleFactor: 0.9,
-            ),
-            tileColor: Colors.pink.shade50,
-            trailing: const Icon(Icons.chevron_right_rounded),
-          ),
-        ],
-      ),
-    );
+        );
+      } else {
+        return const SizedBox();
+      }
+    });
   }
 }

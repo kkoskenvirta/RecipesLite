@@ -19,7 +19,7 @@ class SearchResultList extends StatelessWidget {
       if (state is RecipeSearchInitial) {
         return const SearchError(text: "Search for your favorite recipies! 🥘");
       } else if (state is RecipeSearchLoading) {
-        return Center(
+        return const Center(
           child: CircularProgressIndicator(),
         );
       } else if (state is RecipeSearchLoaded && state.recipeList.isNotEmpty) {
@@ -30,14 +30,14 @@ class SearchResultList extends StatelessWidget {
               SmallText(
                 text: "Found ${state.recipeList.length} result(s)",
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Flexible(
                 child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: recipeList.length,
-                  padding: EdgeInsets.symmetric(horizontal: 4.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
                   itemBuilder: (context, index) {
                     final RecipeModel resultRecipe = recipeList[index];
 
@@ -55,6 +55,7 @@ class SearchResultList extends StatelessWidget {
                         description: resultRecipe.shortDescription!,
                         timeEstimate: resultRecipe.preparationTime!,
                         imageUrl: resultRecipe.picture,
+                        blurhash: resultRecipe.blurhash,
                       ),
                     );
                   },
@@ -86,7 +87,7 @@ class SearchError extends StatelessWidget {
       child: Column(
         children: [
           Image.asset('assets/images/not-found.png'),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           LargeText(text: text),
