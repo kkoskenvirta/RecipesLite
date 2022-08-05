@@ -110,16 +110,17 @@ class _HomePageBodyState extends State<HomePageBody> {
                   const SizedBox(
                     height: 10,
                   ),
-                  DotsIndicator(
-                    dotsCount: featuredList.length,
-                    position: _currPageValue,
-                    decorator: DotsDecorator(
-                      activeColor: Colors.pink.shade300,
-                      size: const Size.square(9.0),
-                      activeSize: const Size(18.0, 9.0),
-                      activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+                  if (featuredList.isNotEmpty)
+                    DotsIndicator(
+                      dotsCount: featuredList.length,
+                      position: _currPageValue,
+                      decorator: DotsDecorator(
+                        activeColor: Colors.pink.shade300,
+                        size: const Size.square(9.0),
+                        activeSize: const Size(18.0, 9.0),
+                        activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+                      ),
                     ),
-                  ),
                   SizedBox(
                     height: Dimensions.height20,
                   ),

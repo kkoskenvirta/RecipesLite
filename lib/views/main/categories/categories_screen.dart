@@ -42,16 +42,16 @@ class CategoriesScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        BlocBuilder<CategoriesCubit, CategoriesState>(
-          builder: (context, state) {
-            switch (state.status) {
-              case CategoriesStateStatus.loading:
-                return CircularProgressIndicator();
-              case CategoriesStateStatus.loaded:
-                final categoryList = state.categories;
-                return Padding(
+    return BlocBuilder<CategoriesCubit, CategoriesState>(
+      builder: (context, state) {
+        switch (state.status) {
+          case CategoriesStateStatus.loading:
+            return const Center(child: CircularProgressIndicator());
+          case CategoriesStateStatus.loaded:
+            final categoryList = state.categories;
+            return Column(
+              children: [
+                Padding(
                   padding: EdgeInsets.all(Dimensions.width20),
                   child: GridView.builder(
                     shrinkWrap: true,
@@ -71,13 +71,13 @@ class CategoriesScreenBody extends StatelessWidget {
                       );
                     },
                   ),
-                );
-              default:
-                return SizedBox();
-            }
-          },
-        )
-      ],
+                ),
+              ],
+            );
+          default:
+            return const SizedBox();
+        }
+      },
     );
   }
 }

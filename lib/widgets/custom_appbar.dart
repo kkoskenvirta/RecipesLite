@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const CustomAppBar({Key? key, required this.navigationCubit, this.title})
+  const CustomAppBar({Key? key, this.title})
       : preferredSize = const Size.fromHeight(kToolbarHeight),
         super(key: key);
 
@@ -17,8 +17,6 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 
   @override
   final Size preferredSize;
-
-  final NavigationCubit navigationCubit;
 
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
@@ -31,28 +29,30 @@ class _CustomAppBarState extends State<CustomAppBar> {
 
     return BlocBuilder<NavigationCubit, NavigationState>(
       builder: (context, state) {
+        print(Get.currentRoute);
         return AppBar(
-          leading: IconButton(
-            onPressed: () => showBarModalBottomSheet(
-              expand: true,
-              context: context,
-              backgroundColor: Colors.white,
-              builder: (context) => const SearchModal(),
-            ),
-            icon: Icon(Icons.search),
-          ),
+          leading: Get.currentRoute == "/"
+              ? IconButton(
+                  onPressed: () => showBarModalBottomSheet(
+                    expand: true,
+                    context: context,
+                    backgroundColor: Colors.white,
+                    builder: (context) => const SearchModal(),
+                  ),
+                  icon: Icon(Icons.search),
+                )
+              : null,
           actions: [
-            if (state.index != 2)
+            if (state.index == 2 && Get.currentRoute == "/")
+              IconButton(onPressed: () => authCubit.logout(), icon: const Icon(Icons.logout))
+            else if (state.index != 2 && Get.currentRoute == "/")
               IconButton(
                   onPressed: () {
                     Get.toNamed(Routes.recipeCreator.name);
-                    //Navigation cubitti tähän -> lisää route pusheihin update navigation stateen tai tarkista appbarissa navigation routen nimi
                   },
                   icon: const Icon(Icons.add_box))
-            else
-              IconButton(onPressed: () => authCubit.logout(), icon: const Icon(Icons.logout))
           ],
-          title: widget.title == null ? Text(widget.navigationCubit.state.title) : Text(widget.title!),
+          title: widget.title == null ? Text(state.title) : Text(widget.title!),
         );
       },
     );
