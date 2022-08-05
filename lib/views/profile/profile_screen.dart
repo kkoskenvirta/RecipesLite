@@ -6,9 +6,11 @@ import 'package:flutter_e_commerce/global/blocks/navigation/navigation_cubit.dar
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
 import 'package:flutter_e_commerce/models/user/user_model.dart';
 import 'package:flutter_e_commerce/routes/route_service.dart';
+import 'package:flutter_e_commerce/views/profile/profile_recipe_view.dart';
 
 import 'package:flutter_e_commerce/widgets/header/header.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
+import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -81,10 +83,7 @@ class ProfileBody extends StatelessWidget {
                   tileColor: Colors.pink.shade50,
                   trailing: const Icon(Icons.chevron_right_rounded),
                   onTap: (() {
-                    Navigator.pushNamed(
-                      context,
-                      Routes.favorites.name,
-                    );
+                    Get.toNamed(Routes.favorites.name, arguments: RecipeListArgs("Favorites", ListMode.favorites));
                   }),
                 ),
                 const SizedBox(
@@ -98,10 +97,7 @@ class ProfileBody extends StatelessWidget {
                   tileColor: Colors.pink.shade50,
                   trailing: const Icon(Icons.chevron_right_rounded),
                   onTap: (() {
-                    Navigator.pushNamed(
-                      context,
-                      Routes.ownRecipes.name,
-                    );
+                    Get.toNamed(Routes.ownRecipes.name, arguments: RecipeListArgs("Own recipes", ListMode.owned));
                   }),
                 ),
                 const SizedBox(

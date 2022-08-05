@@ -11,6 +11,10 @@ class NavigationState with _$NavigationState {
   }) = _NavigationState;
 
   factory NavigationState.initial() {
-    return const NavigationState(navBarItem: NavBarItem.home, index: 0, title: "Home");
+    return const NavigationState(
+      navBarItem: NavBarItem.home,
+      index: 0,
+      title: "Home",
+    );
   }
 }

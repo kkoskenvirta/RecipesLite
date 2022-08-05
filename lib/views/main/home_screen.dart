@@ -1,17 +1,43 @@
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
+import 'package:flutter_e_commerce/routes/route_service.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
 import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
-import 'package:flutter_e_commerce/widgets/ratings_bar.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
 
 import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
+import 'package:get/get.dart';
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Column(
+        children: [
+          Flexible(
+            child: SingleChildScrollView(
+              child: Column(
+                children: const [
+                  HomePageBody(),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
 
 class HomePageBody extends StatefulWidget {
   const HomePageBody({Key? key}) : super(key: key);
@@ -120,12 +146,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                           imageUrl: recipe.picture,
                           blurhash: recipe.blurhash,
                           onTap: () {
-                            Navigator.push(
-                              (context),
-                              MaterialPageRoute(
-                                builder: (context) => RecipePage(recipe: recipe),
-                              ),
-                            );
+                            Get.toNamed(Routes.recipe.name, arguments: recipe);
                           },
                         );
                       },
@@ -172,12 +193,7 @@ class _HomePageBodyState extends State<HomePageBody> {
     // Slide item
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          (context),
-          MaterialPageRoute(
-            builder: (context) => RecipePage(recipe: recipe),
-          ),
-        );
+        Get.toNamed(Routes.recipe.name, arguments: recipe);
       },
       child: Transform(
         transform: matrix,

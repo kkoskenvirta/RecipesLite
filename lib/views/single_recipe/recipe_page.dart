@@ -8,23 +8,21 @@ import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:flutter_e_commerce/routes/route_service.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/scale_func.dart';
+import 'package:flutter_e_commerce/views/recipe_creator/recipe_creator.dart';
 import 'package:flutter_e_commerce/views/single_recipe/cubit/single_recipe_cubit.dart';
 import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
 import 'package:flutter_e_commerce/widgets/categorization_bar.dart';
 import 'package:flutter_e_commerce/widgets/ingredients_table.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
+import 'package:get/get.dart';
 
 import '../../config/api_config.dart';
 import '../../models/recipe/recipe_model.dart';
 
 class RecipePage extends StatefulWidget {
-  final RecipeModel? recipe;
-  final String? recipeId;
   const RecipePage({
     Key? key,
-    required this.recipe,
-    this.recipeId,
   }) : super(key: key);
 
   @override
@@ -80,14 +78,14 @@ class _RecipePageState extends State<RecipePage> {
   @override
   Widget build(BuildContext context) {
     _scaleFactor = createScaling(_currScrollPosition);
-    final loadedRecipe = widget.recipe;
+    final loadedRecipe = Get.arguments;
     final currentUser = BlocProvider.of<UserDataCubit>(context).state.currUser;
 
     return Scaffold(
       body: BlocProvider(
         create: (context) => SingleRecipeCubit(
           recipesRepository: context.read<RecipesRepository>(),
-        )..initializeRecipe(widget.recipeId, loadedRecipe),
+        )..initializeRecipe(loadedRecipe),
         child: BlocBuilder<SingleRecipeCubit, SingleRecipeState>(
           builder: (context, state) {
             switch (state.status) {
@@ -252,13 +250,13 @@ class _RecipePageState extends State<RecipePage> {
                       child: GestureDetector(
                         onTap: () async {
                           final singleRecipeCubit = BlocProvider.of<SingleRecipeCubit>(context);
-                          final RecipeModel? editedRecipe = await Navigator.pushNamed<dynamic>(
-                            context,
-                            Routes.recipeEditor.name,
-                            arguments: RecipeEditorArgs("Edit recipe", recipe),
-                          );
+                          final RecipeModel? editedRecipe = await Get.toNamed<dynamic>(Routes.recipeEditor.name,
+                              arguments: RecipeEditorArgs(
+                                "Edit recipe",
+                                recipe,
+                              ));
+
                           if (editedRecipe != null) {
-                            print(editedRecipe);
                             singleRecipeCubit.emitUpdatedRecipe(editedRecipe);
                           }
                         },

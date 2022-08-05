@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/models/category/category_model.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
+import 'package:flutter_e_commerce/routes/route_service.dart';
 import 'package:flutter_e_commerce/views/category_recipes/single_category_page.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
+import 'package:get/get.dart';
 
 class CategorizationBar extends StatelessWidget {
   const CategorizationBar({Key? key, this.tags, this.categories, this.disableChipButtons = false}) : super(key: key);
@@ -20,7 +22,7 @@ class CategorizationBar extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Align(alignment: Alignment.centerLeft, child: LargeText(size: 16, text: "Categories")),
-        SizedBox(
+        const SizedBox(
           height: 2,
         ),
         Wrap(
@@ -30,13 +32,7 @@ class CategorizationBar extends StatelessWidget {
           children: categoryList.map((category) {
             return ActionChip(
               onPressed: () {
-                if (!disableChipButtons)
-                  Navigator.push(
-                    (context),
-                    MaterialPageRoute(
-                      builder: (context) => SingleCategoryScreen(category: category),
-                    ),
-                  );
+                if (!disableChipButtons) Get.toNamed(Routes.category.name, arguments: category);
               },
               label: SmallText(
                 text: category.name,
@@ -46,12 +42,12 @@ class CategorizationBar extends StatelessWidget {
             );
           }).toList(),
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         if (tagList.isNotEmpty)
           Align(alignment: Alignment.centerLeft, child: LargeText(size: 16, text: "Dietary tags")),
-        SizedBox(
+        const SizedBox(
           height: 2,
         ),
         Wrap(

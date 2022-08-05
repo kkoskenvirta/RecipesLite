@@ -9,6 +9,7 @@ import 'package:flutter_e_commerce/widgets/category_list_item.dart';
 import 'package:flutter_e_commerce/widgets/header/header.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/search_modal/search_modal.dart';
+import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class CategoriesScreen extends StatelessWidget {
@@ -65,12 +66,7 @@ class CategoriesScreenBody extends StatelessWidget {
                         imageUrl: category.picture,
                         blurhash: category.blurhash,
                         onTap: () {
-                          Navigator.push(
-                            (context),
-                            MaterialPageRoute(
-                              builder: (context) => SingleCategoryScreen(category: category),
-                            ),
-                          );
+                          Get.toNamed(Routes.category.name, arguments: category);
                         },
                       );
                     },

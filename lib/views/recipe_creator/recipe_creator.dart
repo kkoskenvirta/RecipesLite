@@ -7,6 +7,8 @@ import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
+import 'package:flutter_e_commerce/routes/route_service.dart';
+import 'package:flutter_e_commerce/views/main/home_screen.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/category_selector.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_data/form_data_cubit.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_fetch/form_fetch_cubit.dart';
@@ -15,25 +17,26 @@ import 'package:flutter_e_commerce/views/recipe_creator/difficulty_selector.dart
 import 'package:flutter_e_commerce/views/recipe_creator/ingredients_selector.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/review_slide.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/tag_selector.dart';
-import 'package:flutter_e_commerce/views/single_recipe/cubit/single_recipe_cubit.dart';
 import 'package:flutter_e_commerce/widgets/custom_appbar.dart';
 import 'package:flutter_e_commerce/widgets/custom_stepper/custom_stepper.dart';
 import 'package:flutter_e_commerce/widgets/header/header.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
+import 'package:get/get.dart';
 
 class RecipeCreatorScreen extends StatelessWidget {
   const RecipeCreatorScreen({
     Key? key,
-    this.editableRecipe,
-    this.title = "New recipe",
   }) : super(key: key);
 
-  final RecipeModel? editableRecipe;
-  final String title;
   @override
   Widget build(BuildContext context) {
     final navigationCubit = BlocProvider.of<NavigationCubit>(context);
+    final RecipeEditorArgs? editorArgs = Get.arguments;
+
+    final String title = editorArgs != null ? editorArgs.title : "New recipe";
+    final RecipeModel? editableRecipe = editorArgs?.recipe;
+
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -41,7 +44,6 @@ class RecipeCreatorScreen extends StatelessWidget {
         body: SafeArea(
           child: Column(
             children: [
-              FormFetchHeader(title: title),
               const SizedBox(
                 height: 0,
               ),
@@ -64,23 +66,6 @@ class RecipeCreatorScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class FormFetchHeader extends StatelessWidget {
-  const FormFetchHeader({
-    Key? key,
-    required this.title,
-  }) : super(key: key);
-  final String title;
-  @override
-  Widget build(BuildContext context) {
-    return Header(
-      title: title,
-      showTrailingButton: false,
-      onLeadingButtonPressed: () => Navigator.pop(context),
-      leadingButtonIcon: const Icon(Icons.chevron_left),
     );
   }
 }
@@ -197,7 +182,6 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                             stepperCubit.nextStep();
                           }
                           if (state.stepperItem == StepperItem.review) {
-                            final navigator = Navigator.of(context);
                             final recipeFetchCubit = BlocProvider.of<RecipeFetchCubit>(context);
                             final userDataCubit = BlocProvider.of<UserDataCubit>(context);
                             final formDataCubit = BlocProvider.of<FormDataCubit>(context);
@@ -211,10 +195,10 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                               recipeFetchCubit.fetchHomePageRecipes();
                               userDataCubit.getUserData();
                               if (editMode) {
-                                navigator.pop(formDataCubit.state.recipe);
+                                Get.back(result: formDataCubit.state.recipe);
                                 _showToast(context);
                               } else {
-                                navigator.popUntil((route) => route.isFirst);
+                                Get.offAll(() => const HomeScreen());
                                 _showToast(context);
                               }
 
