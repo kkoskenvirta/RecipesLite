@@ -1,30 +1,30 @@
 import 'package:another_flushbar/flushbar.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
-import 'package:flutter_e_commerce/routes/route_service.dart';
+import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/scale_func.dart';
-import 'package:flutter_e_commerce/views/recipe_creator/recipe_creator.dart';
 import 'package:flutter_e_commerce/views/single_recipe/cubit/single_recipe_cubit.dart';
+import 'package:flutter_e_commerce/widgets/appbars/recipe_appbar.dart';
 import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
 import 'package:flutter_e_commerce/widgets/categorization_bar.dart';
+import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/ingredients_table.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:get/get.dart';
 
-import '../../config/api_config.dart';
 import '../../models/recipe/recipe_model.dart';
 
 class RecipePage extends StatefulWidget {
   const RecipePage({
     Key? key,
+    required this.recipe,
   }) : super(key: key);
-
+  final RecipeModel recipe;
   @override
   State<RecipePage> createState() => _RecipePageState();
 }
@@ -78,15 +78,32 @@ class _RecipePageState extends State<RecipePage> {
   @override
   Widget build(BuildContext context) {
     _scaleFactor = createScaling(_currScrollPosition);
-    final loadedRecipe = Get.arguments;
+    final loadedRecipe = widget.recipe;
     final currentUser = BlocProvider.of<UserDataCubit>(context).state.currUser;
 
-    return Scaffold(
-      body: BlocProvider(
-        create: (context) => SingleRecipeCubit(
-          recipesRepository: context.read<RecipesRepository>(),
-        )..initializeRecipe(loadedRecipe),
-        child: BlocBuilder<SingleRecipeCubit, SingleRecipeState>(
+    final router = AutoRouter.of(context);
+    return BlocProvider(
+      create: (context) =>
+          SingleRecipeCubit(recipesRepository: context.read<RecipesRepository>())..initializeRecipe(loadedRecipe),
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: RecipeAppBar(
+          title: "",
+          transparent: true,
+          editRecipe: () async {
+            final singleRecipeCubit = BlocProvider.of<SingleRecipeCubit>(context);
+            final RecipeModel? editedRecipe = await router.push<dynamic>(
+              RecipeEditor(
+                title: "Edit recipe",
+                editableRecipe: loadedRecipe,
+              ),
+            );
+            if (editedRecipe != null) {
+              singleRecipeCubit.emitUpdatedRecipe(editedRecipe);
+            }
+          },
+        ),
+        body: BlocBuilder<SingleRecipeCubit, SingleRecipeState>(
           builder: (context, state) {
             switch (state.status) {
               case SingleRecipeStateStatus.initial:
@@ -250,11 +267,13 @@ class _RecipePageState extends State<RecipePage> {
                       child: GestureDetector(
                         onTap: () async {
                           final singleRecipeCubit = BlocProvider.of<SingleRecipeCubit>(context);
-                          final RecipeModel? editedRecipe = await Get.toNamed<dynamic>(Routes.recipeEditor.name,
-                              arguments: RecipeEditorArgs(
-                                "Edit recipe",
-                                recipe,
-                              ));
+
+                          final RecipeModel? editedRecipe = await router.push<dynamic>(
+                            RecipeEditor(
+                              title: "Edit recipe",
+                              editableRecipe: recipe,
+                            ),
+                          );
 
                           if (editedRecipe != null) {
                             singleRecipeCubit.emitUpdatedRecipe(editedRecipe);

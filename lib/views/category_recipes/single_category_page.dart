@@ -1,9 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/models/category/category_model.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
+import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/views/category_recipes/cubit/category_recipes_cubit.dart';
 import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
+import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:get/get.dart';
@@ -11,21 +14,19 @@ import 'package:get/get.dart';
 import '../../routes/route_service.dart';
 
 class SingleCategoryScreen extends StatelessWidget {
-  SingleCategoryScreen({
+  const SingleCategoryScreen({
     Key? key,
+    required this.category,
   }) : super(key: key);
+  final CategoryModel category;
 
   @override
   Widget build(BuildContext context) {
-    final CategoryModel category = Get.arguments;
-
     return Scaffold(
+      appBar: MainAppBar(title: category.name),
       body: SafeArea(
         child: Column(
           children: [
-            SingleCategoryHeader(
-              category: category,
-            ),
             Flexible(
               child: SingleChildScrollView(
                 child: SingleCategoryScreenBody(
@@ -35,48 +36,6 @@ class SingleCategoryScreen extends StatelessWidget {
             )
           ],
         ),
-      ),
-    );
-  }
-}
-
-class SingleCategoryHeader extends StatelessWidget {
-  const SingleCategoryHeader({
-    Key? key,
-    required this.category,
-  }) : super(key: key);
-
-  final CategoryModel category;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: IconButton(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(Icons.chevron_left_rounded),
-                ),
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: LargeText(text: category.name),
-              )
-            ],
-          ),
-        ],
       ),
     );
   }
@@ -92,6 +51,7 @@ class SingleCategoryScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final router = AutoRouter.of(context);
     return Column(
       children: [
         BlocBuilder<CategoryRecipesCubit, CategoryRecipesState>(
@@ -119,8 +79,7 @@ class SingleCategoryScreenBody extends StatelessWidget {
                       imageUrl: recipe.picture,
                       blurhash: recipe.blurhash,
                       onTap: () {
-                        // Get.to(() => RecipePage(recipe: recipe));
-                        Get.toNamed(Routes.recipe.name, arguments: recipe);
+                        router.push(RecipeRoute(recipe: recipe));
                       },
                     );
                   },

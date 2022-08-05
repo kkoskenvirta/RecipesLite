@@ -17,7 +17,7 @@ import 'package:flutter_e_commerce/views/recipe_creator/difficulty_selector.dart
 import 'package:flutter_e_commerce/views/recipe_creator/ingredients_selector.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/review_slide.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/tag_selector.dart';
-import 'package:flutter_e_commerce/widgets/custom_appbar.dart';
+import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/custom_stepper/custom_stepper.dart';
 import 'package:flutter_e_commerce/widgets/header/header.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
@@ -27,20 +27,18 @@ import 'package:get/get.dart';
 class RecipeCreatorScreen extends StatelessWidget {
   const RecipeCreatorScreen({
     Key? key,
+    this.title = "New recipe",
+    this.editableRecipe,
   }) : super(key: key);
+  final String title;
+  final RecipeModel? editableRecipe;
 
   @override
   Widget build(BuildContext context) {
-    final navigationCubit = BlocProvider.of<NavigationCubit>(context);
-    final RecipeEditorArgs? editorArgs = Get.arguments;
-
-    final String title = editorArgs != null ? editorArgs.title : "New recipe";
-    final RecipeModel? editableRecipe = editorArgs?.recipe;
-
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        appBar: CustomAppBar(navigationCubit: navigationCubit, title: title),
+        appBar: MainAppBar(title: title),
         body: SafeArea(
           child: Column(
             children: [

@@ -15,9 +15,10 @@ class RecipeAppTheme {
     appBarTheme: AppBarTheme(
       centerTitle: true,
       backgroundColor: Palette.pToLight.shade800,
-      scrolledUnderElevation: 3,
+      scrolledUnderElevation: 5,
+      shadowColor: Palette.pToLight.shade400,
       elevation: 0,
-      titleTextStyle: TextStyle(
+      titleTextStyle: const TextStyle(
         color: Colors.black87,
         fontSize: 18,
         fontWeight: FontWeight.w500,

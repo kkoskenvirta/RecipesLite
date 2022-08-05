@@ -5,7 +5,7 @@ import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubi
 import 'package:flutter_e_commerce/views/main/categories/categories_screen.dart';
 import 'package:flutter_e_commerce/views/main/home_screen.dart';
 import 'package:flutter_e_commerce/views/profile/profile_screen.dart';
-import 'package:flutter_e_commerce/widgets/custom_appbar.dart';
+import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -16,9 +16,7 @@ class MainPage extends StatelessWidget {
     return BlocBuilder<NavigationCubit, NavigationState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: CustomAppBar(
-            navigationCubit: navigationCubit,
-          ),
+          appBar: const MainAppBar(),
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           body: BlocBuilder<RecipeFetchCubit, RecipeFetchState>(
             builder: (context, state) {

@@ -1,11 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/models/category/category_model.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
-import 'package:flutter_e_commerce/routes/route_service.dart';
-import 'package:flutter_e_commerce/views/category_recipes/single_category_page.dart';
+import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
-import 'package:get/get.dart';
 
 class CategorizationBar extends StatelessWidget {
   const CategorizationBar({Key? key, this.tags, this.categories, this.disableChipButtons = false}) : super(key: key);
@@ -17,6 +16,7 @@ class CategorizationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final List tagList = tags != null ? Set.from(tags!).toList() : [];
     final List categoryList = categories != null ? Set.from(categories!).toList() : [];
+    final router = AutoRouter.of(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,7 +32,7 @@ class CategorizationBar extends StatelessWidget {
           children: categoryList.map((category) {
             return ActionChip(
               onPressed: () {
-                if (!disableChipButtons) Get.toNamed(Routes.category.name, arguments: category);
+                if (!disableChipButtons) router.push(SingleCategoryScreen(category: category));
               },
               label: SmallText(
                 text: category.name,

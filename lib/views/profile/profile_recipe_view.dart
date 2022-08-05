@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
@@ -11,17 +12,20 @@ import 'package:flutter_e_commerce/widgets/header/header.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:get/get.dart';
 
+import '../../routes/app_router.gr.dart';
+
 class ProfileRecipeView extends StatelessWidget {
   const ProfileRecipeView({
     Key? key,
+    required this.title,
+    required this.mode,
   }) : super(key: key);
+
+  final String title;
+  final ListMode mode;
 
   @override
   Widget build(BuildContext context) {
-    final RecipeListArgs recipeListArgs = Get.arguments;
-    final String title = recipeListArgs.title;
-    final ListMode mode = recipeListArgs.mode;
-
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -77,6 +81,8 @@ class ProfileRecipeViewBody extends StatelessWidget {
   final List<RecipeModel> recipes;
   @override
   Widget build(BuildContext context) {
+    final router = AutoRouter.of(context);
+
     return Column(
       children: [
         BlocBuilder<UserDataCubit, UserDataState>(
@@ -103,7 +109,7 @@ class ProfileRecipeViewBody extends StatelessWidget {
                       imageUrl: recipe.picture,
                       blurhash: recipe.blurhash,
                       onTap: () {
-                        Get.toNamed(Routes.recipe.name, arguments: recipe);
+                        router.push(RecipeRoute(recipe: recipe));
                       },
                     );
                   },

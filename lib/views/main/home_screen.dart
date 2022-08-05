@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
+import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/routes/route_service.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
@@ -88,11 +89,10 @@ class _HomePageBodyState extends State<HomePageBody> {
             case RecipeFetchStateStatus.loaded:
               final featuredList = state.featured;
               final popularList = state.popular;
-              print("rendered");
               return Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 20),
+                    margin: const EdgeInsets.only(top: 20),
                     clipBehavior: Clip.none,
                     height: Dimensions.pageView,
 
@@ -107,21 +107,22 @@ class _HomePageBodyState extends State<HomePageBody> {
                               return _buildPageItem(index, featured);
                             },
                           )
-                        : SizedBox(),
+                        : const SizedBox(),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  DotsIndicator(
-                    dotsCount: featuredList.length,
-                    position: _currPageValue,
-                    decorator: DotsDecorator(
-                      activeColor: Colors.pink.shade300,
-                      size: const Size.square(9.0),
-                      activeSize: const Size(18.0, 9.0),
-                      activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+                  if (featuredList.isNotEmpty)
+                    DotsIndicator(
+                      dotsCount: featuredList.length,
+                      position: _currPageValue,
+                      decorator: DotsDecorator(
+                        activeColor: Colors.pink.shade300,
+                        size: const Size.square(9.0),
+                        activeSize: const Size(18.0, 9.0),
+                        activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+                      ),
                     ),
-                  ),
                   SizedBox(
                     height: Dimensions.height20,
                   ),
@@ -148,8 +149,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                           imageUrl: recipe.picture,
                           blurhash: recipe.blurhash,
                           onTap: () {
-                            // Get.toNamed(Routes.recipe.name, arguments: recipe);
-                            router.pushNamed('/recipe');
+                            router.push(RecipeRoute(recipe: recipe));
                           },
                         );
                       },
@@ -192,11 +192,12 @@ class _HomePageBodyState extends State<HomePageBody> {
     }
 
     Matrix4 matrix = createScalingMatrix();
+    final router = AutoRouter.of(context);
 
     // Slide item
     return GestureDetector(
       onTap: () {
-        Get.toNamed(Routes.recipe.name, arguments: recipe);
+        router.push(RecipeRoute(recipe: recipe));
       },
       child: Transform(
         transform: matrix,

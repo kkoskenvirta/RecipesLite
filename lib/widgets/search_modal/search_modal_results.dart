@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
@@ -12,11 +13,14 @@ import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
 import 'package:get/get.dart';
 
+import '../../routes/app_router.gr.dart';
+
 class SearchResultList extends StatelessWidget {
   SearchResultList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final router = AutoRouter.of(context);
     return BlocBuilder<RecipeSearchCubit, RecipeSearchState>(builder: (context, state) {
       if (state is RecipeSearchInitial) {
         return const SearchError(text: "Search for your favorite recipies! 🥘");
@@ -45,7 +49,7 @@ class SearchResultList extends StatelessWidget {
 
                     return GestureDetector(
                       onTap: () {
-                        Get.toNamed(Routes.recipe.name, arguments: recipe);
+                        router.push(RecipeRoute(recipe: recipe));
                       },
                       child: PopularListItem(
                         title: recipe.name!,
