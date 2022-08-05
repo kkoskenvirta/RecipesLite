@@ -9,19 +9,19 @@ import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
 import 'package:flutter_e_commerce/widgets/header/header.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
+import 'package:get/get.dart';
 
 class ProfileRecipeView extends StatelessWidget {
   const ProfileRecipeView({
     Key? key,
-    required this.title,
-    required this.mode,
   }) : super(key: key);
-
-  final String title;
-  final ListMode mode;
 
   @override
   Widget build(BuildContext context) {
+    final RecipeListArgs recipeListArgs = Get.arguments;
+    final String title = recipeListArgs.title;
+    final ListMode mode = recipeListArgs.mode;
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -103,12 +103,7 @@ class ProfileRecipeViewBody extends StatelessWidget {
                       imageUrl: recipe.picture,
                       blurhash: recipe.blurhash,
                       onTap: () {
-                        Navigator.push(
-                          (context),
-                          MaterialPageRoute(
-                            builder: (context) => RecipePage(recipe: recipe),
-                          ),
-                        );
+                        Get.toNamed(Routes.recipe.name, arguments: recipe);
                       },
                     );
                   },

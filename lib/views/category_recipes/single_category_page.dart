@@ -6,17 +6,19 @@ import 'package:flutter_e_commerce/views/category_recipes/cubit/category_recipes
 import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
+import 'package:get/get.dart';
+
+import '../../routes/route_service.dart';
 
 class SingleCategoryScreen extends StatelessWidget {
-  const SingleCategoryScreen({
+  SingleCategoryScreen({
     Key? key,
-    required this.category,
   }) : super(key: key);
-
-  final CategoryModel category;
 
   @override
   Widget build(BuildContext context) {
+    final CategoryModel category = Get.arguments;
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -117,12 +119,8 @@ class SingleCategoryScreenBody extends StatelessWidget {
                       imageUrl: recipe.picture,
                       blurhash: recipe.blurhash,
                       onTap: () {
-                        Navigator.push(
-                          (context),
-                          MaterialPageRoute(
-                            builder: (context) => RecipePage(recipe: recipe),
-                          ),
-                        );
+                        // Get.to(() => RecipePage(recipe: recipe));
+                        Get.toNamed(Routes.recipe.name, arguments: recipe);
                       },
                     );
                   },

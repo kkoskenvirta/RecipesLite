@@ -13,20 +13,9 @@ class SingleRecipeCubit extends Cubit<SingleRecipeState> {
         super(SingleRecipeState.initial());
 
   final RecipesRepository _recipesRepository;
-  initializeRecipe(String? id, RecipeModel? recipeModel) async {
+  initializeRecipe(RecipeModel? recipeModel) async {
     try {
-      if (id != null) {
-        emit(state.copyWith(status: SingleRecipeStateStatus.loading));
-        final errorOrRecipe = await _recipesRepository.getRecipeWithId(id: id);
-        errorOrRecipe.fold(
-          (err) => emit(state.copyWith(status: SingleRecipeStateStatus.error)),
-          (recipe) {
-            emit(state.copyWith(status: SingleRecipeStateStatus.loaded, recipe: recipe));
-          },
-        );
-      } else if (recipeModel != null) {
-        emit(state.copyWith(status: SingleRecipeStateStatus.loaded, recipe: recipeModel));
-      }
+      emit(state.copyWith(status: SingleRecipeStateStatus.loaded, recipe: recipeModel));
     } catch (e) {
       emit(state.copyWith(status: SingleRecipeStateStatus.error));
     }

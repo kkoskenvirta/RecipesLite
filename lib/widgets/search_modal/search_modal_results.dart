@@ -3,12 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/modules/directus_module.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
+import 'package:flutter_e_commerce/routes/route_service.dart';
 import 'package:flutter_e_commerce/views/main/cubit/recipe_search_cubit.dart';
 
 import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
+import 'package:get/get.dart';
 
 class SearchResultList extends StatelessWidget {
   SearchResultList({Key? key}) : super(key: key);
@@ -39,23 +41,19 @@ class SearchResultList extends StatelessWidget {
                   itemCount: recipeList.length,
                   padding: const EdgeInsets.symmetric(horizontal: 4.0),
                   itemBuilder: (context, index) {
-                    final RecipeModel resultRecipe = recipeList[index];
+                    final RecipeModel recipe = recipeList[index];
 
                     return GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                            (context),
-                            MaterialPageRoute(
-                              builder: (context) => RecipePage(recipe: resultRecipe),
-                            ));
+                        Get.toNamed(Routes.recipe.name, arguments: recipe);
                       },
                       child: PopularListItem(
-                        title: resultRecipe.name!,
-                        difficulty: resultRecipe.difficulty!,
-                        description: resultRecipe.shortDescription!,
-                        timeEstimate: resultRecipe.preparationTime!,
-                        imageUrl: resultRecipe.picture,
-                        blurhash: resultRecipe.blurhash,
+                        title: recipe.name!,
+                        difficulty: recipe.difficulty!,
+                        description: recipe.shortDescription!,
+                        timeEstimate: recipe.preparationTime!,
+                        imageUrl: recipe.picture,
+                        blurhash: recipe.blurhash,
                       ),
                     );
                   },

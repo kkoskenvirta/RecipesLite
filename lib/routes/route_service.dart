@@ -9,6 +9,7 @@ import 'package:flutter_e_commerce/views/profile/profile_screen.dart';
 import 'package:flutter_e_commerce/views/category_recipes/single_category_page.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/recipe_creator.dart';
 import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
+import 'package:get/get.dart';
 
 enum Routes {
   login('/'),
@@ -26,12 +27,15 @@ enum Routes {
   final String name;
 }
 
-enum ListMode { favorites, owned }
+enum ListMode {
+  favorites,
+  owned,
+}
 
 class RecipeListArgs {
   final String title;
-  final List<RecipeModel> recipes;
-  RecipeListArgs(this.title, this.recipes);
+  final ListMode mode;
+  RecipeListArgs(this.title, this.mode);
 }
 
 class RecipeEditorArgs {
@@ -40,50 +44,17 @@ class RecipeEditorArgs {
   RecipeEditorArgs(this.title, this.recipe);
 }
 
-class RouterService {
-  RouterService._internal();
-  static final _singleton = RouterService._internal();
-  factory RouterService() => _singleton;
-
-  navigate(RouteSettings settings) {
-    final route = Routes.values.firstWhere((route) => route.name == settings.name);
-    switch (route) {
-      case Routes.login:
-        return const LoginPage();
-
-      case Routes.recipe:
-        final recipeData = settings.arguments as RecipeModel;
-        return RecipePage(recipe: recipeData);
-
-      case Routes.main:
-        return const MainPage();
-
-      case Routes.profile:
-        // final profileData = settings.arguments as ProfileModel;
-        return const ProfileScreen();
-
-      case Routes.favorites:
-        return const ProfileRecipeView(mode: ListMode.favorites, title: "Favorites");
-
-      case Routes.ownRecipes:
-        return const ProfileRecipeView(mode: ListMode.owned, title: "Own recipes");
-
-      case Routes.categories:
-        return const CategoriesScreen();
-
-      case Routes.category:
-        final category = settings.arguments as CategoryModel;
-        return SingleCategoryScreen(category: category);
-
-      case Routes.recipeCreator:
-        return const RecipeCreatorScreen();
-
-      case Routes.recipeEditor:
-        final recipeEditorArgs = settings.arguments as RecipeEditorArgs;
-        return RecipeCreatorScreen(
-          editableRecipe: recipeEditorArgs.recipe,
-          title: recipeEditorArgs.title,
-        );
-    }
-  }
+class GetXRoutes {
+  final List<GetPage> routes = [
+    GetPage(name: Routes.login.name, page: () => const LoginPage()),
+    GetPage(name: Routes.main.name, page: () => const MainPage()),
+    GetPage(name: Routes.recipe.name, page: () => const RecipePage()),
+    GetPage(name: Routes.favorites.name, page: () => const ProfileRecipeView()),
+    GetPage(name: Routes.ownRecipes.name, page: () => const ProfileRecipeView()),
+    GetPage(name: Routes.categories.name, page: () => const CategoriesScreen()),
+    GetPage(name: Routes.category.name, page: () => SingleCategoryScreen()),
+    GetPage(name: Routes.recipeCreator.name, page: () => const RecipeCreatorScreen()),
+    GetPage(name: Routes.recipeEditor.name, page: () => const RecipeCreatorScreen()),
+  ];
+  GetXRoutes();
 }
