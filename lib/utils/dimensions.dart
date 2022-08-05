@@ -1,8 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Dimensions {
-  static double screenHeight = Get.context!.height;
-  static double screenWidth = Get.context!.width;
+  static Size size = WidgetsBinding.instance.window.physicalSize;
+  static double ratio = WidgetsBinding.instance.window.devicePixelRatio;
+  static double screenWidth = size.width / ratio;
+  static double screenHeight = size.height / ratio;
+  // static double screenWidth = size.width;
 
   static double pageView = screenHeight / 2.65;
   static double pageViewContainer = screenHeight / 3.84;

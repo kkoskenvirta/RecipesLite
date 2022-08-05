@@ -12,7 +12,7 @@ import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 import 'package:get/get.dart';
 
 enum Routes {
-  login('/'),
+  login('/login'),
   recipe('/main/recipe'),
   main('/main'),
   profile('/main/profile'),

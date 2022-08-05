@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -71,6 +72,7 @@ class _HomePageBodyState extends State<HomePageBody> {
 
   @override
   Widget build(BuildContext context) {
+    final router = AutoRouter.of(context);
     //Home view horizontal slider
     return ColoredBox(
       color: Theme.of(context).scaffoldBackgroundColor,
@@ -146,7 +148,8 @@ class _HomePageBodyState extends State<HomePageBody> {
                           imageUrl: recipe.picture,
                           blurhash: recipe.blurhash,
                           onTap: () {
-                            Get.toNamed(Routes.recipe.name, arguments: recipe);
+                            // Get.toNamed(Routes.recipe.name, arguments: recipe);
+                            router.pushNamed('/recipe');
                           },
                         );
                       },

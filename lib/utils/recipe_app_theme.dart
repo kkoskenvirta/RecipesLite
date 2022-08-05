@@ -48,6 +48,7 @@ class RecipeAppTheme {
         // surfaceTintColor: Colors.pink.shade400,
       ),
     ),
+
     primarySwatch: Palette.pToLight,
     scaffoldBackgroundColor: const Color.fromARGB(255, 252, 242, 246),
     toggleableActiveColor: Colors.pink.shade300, // primaryColor: const Color.fromARGB(255, 252, 242, 246),
