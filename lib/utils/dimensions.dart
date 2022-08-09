@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class Dimensions {
   static Size size = WidgetsBinding.instance.window.physicalSize;

@@ -8,6 +8,7 @@ class NavigationState with _$NavigationState {
     required NavBarItem navBarItem,
     required int index,
     required String title,
+    required String? currentPath,
   }) = _NavigationState;
 
   factory NavigationState.initial() {
@@ -15,6 +16,7 @@ class NavigationState with _$NavigationState {
       navBarItem: NavBarItem.home,
       index: 0,
       title: "Home",
+      currentPath: '/main',
     );
   }
 }

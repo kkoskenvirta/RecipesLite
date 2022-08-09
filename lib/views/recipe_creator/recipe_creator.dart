@@ -1,4 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/navigation/navigation_cubit.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
+import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/routes/route_service.dart';
 import 'package:flutter_e_commerce/views/main/home_screen.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/category_selector.dart';
@@ -22,7 +24,6 @@ import 'package:flutter_e_commerce/widgets/custom_stepper/custom_stepper.dart';
 import 'package:flutter_e_commerce/widgets/header/header.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
-import 'package:get/get.dart';
 
 class RecipeCreatorScreen extends StatelessWidget {
   const RecipeCreatorScreen({
@@ -143,7 +144,10 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
         instructionFieldController.text = formDataCubit.state.instructions;
         switch (state.status) {
           case FormFetchStateStatus.loading:
-            return const CircularProgressIndicator();
+            return const Padding(
+              padding: EdgeInsets.only(top: 16.0),
+              child: Center(child: CircularProgressIndicator()),
+            );
           case FormFetchStateStatus.loaded:
             // items for dropdowns
             final categories = state.categories;
@@ -185,6 +189,8 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                             final formDataCubit = BlocProvider.of<FormDataCubit>(context);
 
                             //Send upload mode so we know if we need to update an existing or create a new recipe
+                            final router = AutoRouter.of(context);
+
                             final bool uploadCompleted =
                                 await formDataCubit.submitRecipe(editMode!, widget.editableRecipe);
 
@@ -193,10 +199,11 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                               recipeFetchCubit.fetchHomePageRecipes();
                               userDataCubit.getUserData();
                               if (editMode) {
-                                Get.back(result: formDataCubit.state.recipe);
+                                router.pop(formDataCubit.state.recipe);
                                 _showToast(context);
                               } else {
-                                Get.offAll(() => const HomeScreen());
+                                router.popUntilRouteWithName(HomeRouter.name);
+
                                 _showToast(context);
                               }
 
@@ -451,7 +458,7 @@ class CustomStepperControls extends StatelessWidget {
         top: BorderSide(width: 1, color: Colors.black12),
       )),
       margin: const EdgeInsets.only(top: 0.0),
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 12),
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 6, bottom: 6),
       child: ConstrainedBox(
         constraints: const BoxConstraints.tightFor(
           height: 48.0,

@@ -32,7 +32,7 @@ class CategorizationBar extends StatelessWidget {
           children: categoryList.map((category) {
             return ActionChip(
               onPressed: () {
-                if (!disableChipButtons) router.push(SingleCategoryScreen(category: category));
+                // if (!disableChipButtons) router.push(CategoryRoute(category: category,));
               },
               label: SmallText(
                 text: category.name,

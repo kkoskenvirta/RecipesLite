@@ -23,4 +23,9 @@ class NavigationCubit extends Cubit<NavigationState> {
         emit(state.copyWith(index: 0, navBarItem: NavBarItem.home, title: "Home"));
     }
   }
+
+  setCurrentPath(String? path) {
+    print(path);
+    emit(state.copyWith(currentPath: path));
+  }
 }

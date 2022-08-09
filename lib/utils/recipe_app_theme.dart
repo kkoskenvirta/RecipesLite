@@ -26,7 +26,7 @@ class RecipeAppTheme {
       iconTheme: IconThemeData(color: Palette.pToLight.shade50),
     ),
 
-    canvasColor: const Color.fromARGB(255, 252, 242, 246),
+    canvasColor: Palette.pToLight.shade800,
     listTileTheme: ListTileThemeData(
       visualDensity: const VisualDensity(vertical: -3),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
@@ -51,7 +51,7 @@ class RecipeAppTheme {
     ),
 
     primarySwatch: Palette.pToLight,
-    scaffoldBackgroundColor: const Color.fromARGB(255, 252, 242, 246),
+    scaffoldBackgroundColor: Palette.pToLight.shade800,
     toggleableActiveColor: Colors.pink.shade300, // primaryColor: const Color.fromARGB(255, 252, 242, 246),
     textTheme: TextTheme(
       headline1: GoogleFonts.raleway(fontSize: 52, fontWeight: FontWeight.w600, letterSpacing: -1.5),

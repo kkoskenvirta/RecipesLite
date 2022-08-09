@@ -36,9 +36,8 @@ class _Body extends StatelessWidget {
               constraints: BoxConstraints(minHeight: constraints.maxHeight, maxHeight: constraints.maxHeight),
               child: Column(
                 children: [
-                  LargeText(text: "Recipe search"),
                   SizedBox(
-                    height: 16,
+                    height: 4,
                   ),
                   Container(
                     decoration: BoxDecoration(

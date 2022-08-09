@@ -2,18 +2,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
-import 'package:flutter_e_commerce/modules/directus_module.dart';
-import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
-import 'package:flutter_e_commerce/routes/route_service.dart';
+import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/views/main/cubit/recipe_search_cubit.dart';
 
-import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
-import 'package:get/get.dart';
-
-import '../../routes/app_router.gr.dart';
 
 class SearchResultList extends StatelessWidget {
   SearchResultList({Key? key}) : super(key: key);
@@ -49,7 +43,7 @@ class SearchResultList extends StatelessWidget {
 
                     return GestureDetector(
                       onTap: () {
-                        router.push(RecipeRoute(recipe: recipe));
+                        router.push(RecipeRoute(recipe: recipe, recipeId: recipe.id!));
                       },
                       child: PopularListItem(
                         title: recipe.name!,
@@ -90,7 +84,7 @@ class SearchError extends StatelessWidget {
         children: [
           Image.asset('assets/images/not-found.png'),
           const SizedBox(
-            height: 16,
+            height: 8,
           ),
           LargeText(text: text),
         ],

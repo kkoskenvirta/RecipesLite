@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_e_commerce/modules/dio_module.dart';
-import 'package:flutter_e_commerce/modules/directus_module.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/views/main/cubit/recipe_search_cubit.dart';
@@ -19,7 +17,7 @@ class SearchModal extends StatelessWidget {
       create: (context) => RecipeSearchCubit(
         recipesRepository: context.read<RecipesRepository>(),
       ),
-      child: _Body(),
+      child: const _Body(),
     );
   }
 }
@@ -39,10 +37,6 @@ class _Body extends StatelessWidget {
               constraints: BoxConstraints(minHeight: constraints.maxHeight, maxHeight: constraints.maxHeight),
               child: Column(
                 children: [
-                  LargeText(text: "Recipe search"),
-                  SizedBox(
-                    height: 16,
-                  ),
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -62,8 +56,8 @@ class _Body extends StatelessWidget {
                       child: SearchField(searchController: searchController, searchCubit: searchCubit),
                     ),
                   ),
-                  SizedBox(
-                    height: 16,
+                  const SizedBox(
+                    height: 8,
                   ),
                   SearchResultList(),
                 ],
@@ -103,7 +97,7 @@ class _SearchFieldState extends State<SearchField> {
       children: [
         Expanded(
           child: TextField(
-            decoration: InputDecoration(border: InputBorder.none, hintText: "Search for recipes"),
+            decoration: const InputDecoration(border: InputBorder.none, hintText: "Search for recipes"),
             controller: widget.searchController,
             onChanged: ((value) async {
               if (value.isNotEmpty) {
@@ -123,7 +117,7 @@ class _SearchFieldState extends State<SearchField> {
               widget.searchController.text = "";
             }
           },
-          child: Icon(Icons.close_rounded),
+          child: const Icon(Icons.close_rounded),
         ),
       ],
     );

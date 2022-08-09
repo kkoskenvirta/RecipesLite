@@ -4,27 +4,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
-import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/scale_func.dart';
 import 'package:flutter_e_commerce/views/single_recipe/cubit/single_recipe_cubit.dart';
+import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/appbars/recipe_appbar.dart';
 import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
 import 'package:flutter_e_commerce/widgets/categorization_bar.dart';
-import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/ingredients_table.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
-import 'package:get/get.dart';
 
 import '../../models/recipe/recipe_model.dart';
 
 class RecipePage extends StatefulWidget {
   const RecipePage({
     Key? key,
-    required this.recipe,
+    @PathParam('recipeId') required this.recipeId,
+    this.recipe,
   }) : super(key: key);
-  final RecipeModel recipe;
+  final RecipeModel? recipe;
+  final String recipeId;
   @override
   State<RecipePage> createState() => _RecipePageState();
 }
@@ -80,29 +80,19 @@ class _RecipePageState extends State<RecipePage> {
     _scaleFactor = createScaling(_currScrollPosition);
     final loadedRecipe = widget.recipe;
     final currentUser = BlocProvider.of<UserDataCubit>(context).state.currUser;
-
     final router = AutoRouter.of(context);
+    bool permission = currentUser?.id == loadedRecipe!.userCreated;
     return BlocProvider(
       create: (context) =>
           SingleRecipeCubit(recipesRepository: context.read<RecipesRepository>())..initializeRecipe(loadedRecipe),
       child: Scaffold(
-        extendBodyBehindAppBar: true,
         appBar: RecipeAppBar(
-          title: "",
+          creator: loadedRecipe.userCreated,
           transparent: true,
-          editRecipe: () async {
-            final singleRecipeCubit = BlocProvider.of<SingleRecipeCubit>(context);
-            final RecipeModel? editedRecipe = await router.push<dynamic>(
-              RecipeEditor(
-                title: "Edit recipe",
-                editableRecipe: loadedRecipe,
-              ),
-            );
-            if (editedRecipe != null) {
-              singleRecipeCubit.emitUpdatedRecipe(editedRecipe);
-            }
-          },
+          showEditButton: true,
+          loadedRecipe: loadedRecipe,
         ),
+        extendBodyBehindAppBar: true,
         body: BlocBuilder<SingleRecipeCubit, SingleRecipeState>(
           builder: (context, state) {
             switch (state.status) {
@@ -148,7 +138,7 @@ class _RecipePageState extends State<RecipePage> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                if (recipe.name != null) LargeText(text: recipe.name!),
+                                if (recipe.name != null) Expanded(child: LargeText(text: recipe.name!)),
                                 BlocBuilder<UserDataCubit, UserDataState>(builder: (context, state) {
                                   final userDataCubit = BlocProvider.of<UserDataCubit>(context);
 
@@ -230,78 +220,6 @@ class _RecipePageState extends State<RecipePage> {
                       return false;
                     },
                   ),
-                  Positioned(
-                    left: Dimensions.width20,
-                    top: Dimensions.height45,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        width: 42,
-                        height: 42,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(Dimensions.radius20),
-                          color: const Color.fromARGB(255, 252, 242, 246),
-                          boxShadow: const [
-                            BoxShadow(
-                              spreadRadius: 10,
-                              blurRadius: 10,
-                              color: Colors.black12,
-                            ),
-                          ],
-                        ),
-                        child: const Center(
-                          child: Icon(
-                            Icons.chevron_left_rounded,
-                            size: 28,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  if (currentUser?.id == recipe.userCreated)
-                    Positioned(
-                      right: Dimensions.width20,
-                      top: Dimensions.height45,
-                      child: GestureDetector(
-                        onTap: () async {
-                          final singleRecipeCubit = BlocProvider.of<SingleRecipeCubit>(context);
-
-                          final RecipeModel? editedRecipe = await router.push<dynamic>(
-                            RecipeEditor(
-                              title: "Edit recipe",
-                              editableRecipe: recipe,
-                            ),
-                          );
-
-                          if (editedRecipe != null) {
-                            singleRecipeCubit.emitUpdatedRecipe(editedRecipe);
-                          }
-                        },
-                        child: Container(
-                          width: 42,
-                          height: 42,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(Dimensions.radius20),
-                            color: const Color.fromARGB(255, 252, 242, 246),
-                            boxShadow: const [
-                              BoxShadow(
-                                spreadRadius: 10,
-                                blurRadius: 10,
-                                color: Colors.black12,
-                              ),
-                            ],
-                          ),
-                          child: const Center(
-                            child: Icon(
-                              Icons.edit,
-                              size: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
                 ]);
               default:
                 return const SizedBox();

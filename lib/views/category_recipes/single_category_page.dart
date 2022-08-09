@@ -9,28 +9,30 @@ import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
-import 'package:get/get.dart';
 
 import '../../routes/route_service.dart';
 
 class SingleCategoryScreen extends StatelessWidget {
   const SingleCategoryScreen({
     Key? key,
-    required this.category,
+    this.category,
+    @PathParam() required this.categoryId,
   }) : super(key: key);
-  final CategoryModel category;
-
+  final CategoryModel? category;
+  final String categoryId;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MainAppBar(title: category.name),
+      appBar: MainAppBar(
+        title: category!.name,
+      ),
       body: SafeArea(
         child: Column(
           children: [
             Flexible(
               child: SingleChildScrollView(
                 child: SingleCategoryScreenBody(
-                  category: category,
+                  category: category!,
                 ),
               ),
             )
@@ -59,9 +61,15 @@ class SingleCategoryScreenBody extends StatelessWidget {
           builder: (context, state) {
             switch (state.status) {
               case CategoryRecipesStateStatus.initial:
-                return const CircularProgressIndicator();
+                return const Padding(
+                  padding: EdgeInsets.only(top: 16.0),
+                  child: Center(child: CircularProgressIndicator()),
+                );
               case CategoryRecipesStateStatus.loading:
-                return const CircularProgressIndicator();
+                return const Padding(
+                  padding: EdgeInsets.only(top: 16.0),
+                  child: Center(child: CircularProgressIndicator()),
+                );
               case CategoryRecipesStateStatus.loaded:
                 final recipeList = state.recipeList;
                 return ListView.builder(
@@ -79,7 +87,7 @@ class SingleCategoryScreenBody extends StatelessWidget {
                       imageUrl: recipe.picture,
                       blurhash: recipe.blurhash,
                       onTap: () {
-                        router.push(RecipeRoute(recipe: recipe));
+                        router.push(RecipeRoute(recipe: recipe, recipeId: recipe.id!));
                       },
                     );
                   },

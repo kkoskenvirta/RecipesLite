@@ -5,7 +5,6 @@ import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
-import 'package:get/route_manager.dart';
 
 import '../config/api_config.dart';
 

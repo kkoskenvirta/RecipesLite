@@ -47,7 +47,7 @@ class GlobalBlocs extends StatelessWidget {
           )..getCategories(),
         ),
         BlocProvider<NavigationCubit>(
-          lazy: true,
+          lazy: false,
           create: (context) => NavigationCubit(),
         ),
         BlocProvider<CategoryRecipesCubit>(

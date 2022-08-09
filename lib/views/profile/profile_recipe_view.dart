@@ -7,67 +7,43 @@ import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/routes/route_service.dart';
 import 'package:flutter_e_commerce/views/category_recipes/cubit/category_recipes_cubit.dart';
 import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
+import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
 import 'package:flutter_e_commerce/widgets/header/header.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
-import 'package:get/get.dart';
 
 import '../../routes/app_router.gr.dart';
 
 class ProfileRecipeView extends StatelessWidget {
   const ProfileRecipeView({
     Key? key,
-    required this.title,
-    required this.mode,
-  }) : super(key: key);
+    @PathParam('listMode') required this.listMode,
+  })  : mode = listMode == "favorites" ? ListMode.favorites : ListMode.owned,
+        title = listMode == "favorites" ? "Favorites" : "My recipes",
+        super(key: key);
 
+  final String listMode;
   final String title;
   final ListMode mode;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            ProfileRecipeViewHeader(
-              title: title,
-            ),
-            BlocBuilder<UserDataCubit, UserDataState>(
-              builder: (context, state) {
-                List<RecipeModel> recipes;
-                recipes = mode == ListMode.favorites ? state.favorites : state.recipes;
-
-                return Flexible(
-                  child: SingleChildScrollView(
-                    child: ProfileRecipeViewBody(
-                      recipes: recipes,
-                    ),
-                  ),
-                );
-              },
-            )
-          ],
-        ),
+      appBar: MainAppBar(
+        title: title,
       ),
-    );
-  }
-}
+      body: BlocBuilder<UserDataCubit, UserDataState>(
+        builder: (context, state) {
+          List<RecipeModel> recipes;
+          recipes = mode == ListMode.favorites ? state.favorites : state.recipes;
 
-class ProfileRecipeViewHeader extends StatelessWidget {
-  const ProfileRecipeViewHeader({
-    Key? key,
-    required this.title,
-  }) : super(key: key);
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Header(
-      title: title,
-      leadingButtonIcon: const Icon(Icons.chevron_left_rounded),
-      onLeadingButtonPressed: () => Navigator.pop(context),
-      showTrailingButton: false,
+          return SingleChildScrollView(
+            child: ProfileRecipeViewBody(
+              recipes: recipes,
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -109,7 +85,7 @@ class ProfileRecipeViewBody extends StatelessWidget {
                       imageUrl: recipe.picture,
                       blurhash: recipe.blurhash,
                       onTap: () {
-                        router.push(RecipeRoute(recipe: recipe));
+                        router.push(RecipeRoute(recipe: recipe, recipeId: recipe.id!));
                       },
                     );
                   },
