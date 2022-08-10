@@ -9,7 +9,6 @@ import 'package:flutter_e_commerce/views/category_recipes/cubit/category_recipes
 import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
-import 'package:flutter_e_commerce/widgets/header/header.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 
 import '../../routes/app_router.gr.dart';

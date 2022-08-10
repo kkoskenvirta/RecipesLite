@@ -5,7 +5,7 @@ import 'package:flutter_e_commerce/global/blocks/auth/cubit/auth_cubit.dart';
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
-import 'package:flutter_e_commerce/widgets/search_modal/search_modal.dart';
+import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -59,14 +59,15 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: showBackButton ? true : false,
       leading: showSearchButton
           ? IconButton(
-              onPressed: () => showBarModalBottomSheet(
-                expand: true,
-                context: context,
-                backgroundColor: Colors.white,
-                elevation: 5,
-                barrierColor: Colors.black87,
-                builder: (context) => const SearchModal(),
-              ),
+              // onPressed: () => showBarModalBottomSheet(
+              //   expand: true,
+              //   context: context,
+              //   backgroundColor: Colors.white,
+              //   elevation: 5,
+              //   barrierColor: Colors.black87,
+              //   builder: (context) => const SearchModal(),
+              // ),
+              onPressed: (() => router.push(SearchRoute())),
               icon: const Icon(
                 Icons.search,
                 size: 30,
@@ -103,7 +104,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
             child: const Text("Close"),
           )
       ],
-      title: title == null ? const SizedBox() : Text(title!),
+      title: title == null ? const SizedBox() : LargeText(text: title!),
     );
   }
 }

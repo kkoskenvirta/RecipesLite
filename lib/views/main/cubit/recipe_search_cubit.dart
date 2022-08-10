@@ -26,10 +26,16 @@ class RecipeSearchCubit extends Cubit<RecipeSearchState> {
       final errorOrSearchResults = await recipesRepository.searchRecipes(filters: filter);
 
       errorOrSearchResults.fold(
-        (error) => emit(state.copyWith(status: RecipeSearchStatus.error)),
-        (searchResult) => emit(
-          state.copyWith(status: RecipeSearchStatus.loaded, recipeList: searchResult),
+        (error) => emit(
+          state.copyWith(status: RecipeSearchStatus.error),
         ),
+        (searchResult) {
+          if (state.status != RecipeSearchStatus.initial) {
+            emit(
+              state.copyWith(status: RecipeSearchStatus.loaded, recipeList: searchResult),
+            );
+          }
+        },
       );
     } catch (e) {}
   }

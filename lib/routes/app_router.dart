@@ -8,6 +8,7 @@ import 'package:flutter_e_commerce/views/main/main_page.dart';
 import 'package:flutter_e_commerce/views/profile/profile_recipe_view.dart';
 import 'package:flutter_e_commerce/views/profile/profile_screen.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/recipe_creator.dart';
+import 'package:flutter_e_commerce/views/search/search_page.dart';
 import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 
 @MaterialAutoRouter(
@@ -45,6 +46,8 @@ import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
     MaterialRoute(path: '/recipes/:recipeId', page: RecipePage),
     MaterialRoute<RecipeModel>(name: "RecipeCreator", page: RecipeCreatorScreen, path: '/recipe-creator'),
     MaterialRoute<RecipeModel>(name: "RecipeEditor", page: RecipeCreatorScreen, path: '/recipe-editor'),
+    CustomRoute(
+        page: SearchPage, path: '/search', transitionsBuilder: TransitionsBuilders.fadeIn, durationInMilliseconds: 150),
   ],
   replaceInRouteName: 'Page,Route',
 )

@@ -61,6 +61,7 @@ dependencies:
   mime_type: ^1.0.0
   octo_image: ^1.0.2
   another_flushbar: ^1.10.29
+  auto_animated: ^3.0.1
 
 dev_dependencies:
   flutter_test:
