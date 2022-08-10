@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,6 +52,8 @@ class SliverSearchAppBar extends StatelessWidget implements PreferredSizeWidget 
   Widget build(BuildContext context) {
     final router = AutoRouter.of(context);
     return SliverAppBar(
+      floating: true,
+      snap: true,
       backgroundColor: transparent ? Colors.transparent : null,
       shadowColor: transparent ? Colors.transparent : null,
       scrolledUnderElevation: elevation ? null : 0,
@@ -96,7 +99,7 @@ class SearchBar extends StatelessWidget implements PreferredSizeWidget {
           ..selection = TextSelection.collapsed(offset: state.searchString.length);
         return Container(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.only(left: 12.0, right: 12, top: 0, bottom: 8),
             child: CupertinoSearchTextField(
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
               placeholder: "Search for recipes",

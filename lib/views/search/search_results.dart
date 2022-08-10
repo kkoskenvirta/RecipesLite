@@ -24,8 +24,11 @@ class SearchResultList extends StatelessWidget {
 
         case RecipeSearchStatus.loading:
           return const SliverToBoxAdapter(
-            child: Center(
-              child: CircularProgressIndicator(),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 16),
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
             ),
           );
 
@@ -33,31 +36,12 @@ class SearchResultList extends StatelessWidget {
           final recipeList = state.recipeList;
           return recipeList != null
               ? SliverPadding(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  // sliver: SliverList(
-                  //   delegate: SliverChildBuilderDelegate(
-                  //     (_, int index) {
-                  //       final recipe = recipeList[index];
-                  //       return Padding(
-                  //         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 14),
-                  //         child: RecipeItem(
-                  //           title: recipe.name!,
-                  //           difficulty: recipe.difficulty!,
-                  //           description: recipe.shortDescription!,
-                  //           timeEstimate: recipe.preparationTime!,
-                  //           imageUrl: recipe.picture,
-                  //           blurhash: recipe.blurhash,
-                  //           categories: recipe.categories!,
-                  //           tags: recipe.tags!,
-                  //         ),
-                  //       );
-                  //     },
-                  // childCount: recipeList.length,
-                  //   ),
+                  padding: const EdgeInsets.symmetric(vertical: 4),
                   sliver: LiveSliverList(
                       controller: scrollController,
                       itemCount: recipeList.length,
                       showItemDuration: const Duration(milliseconds: 200),
+                      showItemInterval: const Duration(milliseconds: 50),
                       itemBuilder: (context, index, animation) {
                         final recipe = recipeList[index];
 
