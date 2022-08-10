@@ -35,7 +35,7 @@ class CategoryListItem extends StatelessWidget {
               color: Colors.black12,
             ),
           ],
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(Dimensions.radius15),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

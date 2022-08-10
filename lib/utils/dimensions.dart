@@ -1,8 +1,11 @@
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
 class Dimensions {
-  static double screenHeight = Get.context!.height;
-  static double screenWidth = Get.context!.width;
+  static Size size = WidgetsBinding.instance.window.physicalSize;
+  static double ratio = WidgetsBinding.instance.window.devicePixelRatio;
+  static double screenWidth = size.width / ratio;
+  static double screenHeight = size.height / ratio;
+  // static double screenWidth = size.width;
 
   static double pageView = screenHeight / 2.65;
   static double pageViewContainer = screenHeight / 3.84;
@@ -26,7 +29,7 @@ class Dimensions {
   static double radius20 = screenHeight / 42.2;
   static double radius30 = screenHeight / 28.3;
 
-  static double listViewImgSize = screenWidth / 3.5;
+  static double listViewImgSize = screenWidth / 3.35;
 
   static double categoryListImgSize = screenWidth / 6.5;
 

@@ -1,18 +1,21 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
+import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/routes/route_service.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
+import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
 import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
+import 'package:flutter_e_commerce/widgets/recipe_item.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
 
 import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
-import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
@@ -21,19 +24,18 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        children: [
-          Flexible(
-            child: SingleChildScrollView(
-              child: Column(
-                children: const [
-                  HomePageBody(),
-                ],
-              ),
-            ),
-          )
-        ],
+    return Scaffold(
+      appBar: MainAppBar(
+        title: "Home",
+        showSearchButton: true,
+        showCreateButton: true,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: const [
+            HomePageBody(),
+          ],
+        ),
       ),
     );
   }
@@ -71,6 +73,7 @@ class _HomePageBodyState extends State<HomePageBody> {
 
   @override
   Widget build(BuildContext context) {
+    final router = AutoRouter.of(context);
     //Home view horizontal slider
     return ColoredBox(
       color: Theme.of(context).scaffoldBackgroundColor,
@@ -78,19 +81,24 @@ class _HomePageBodyState extends State<HomePageBody> {
         builder: (context, state) {
           switch (state.status) {
             case RecipeFetchStateStatus.initial:
-              return const Center(child: CircularProgressIndicator());
+              return const Padding(
+                padding: EdgeInsets.only(top: 16.0),
+                child: Center(child: CircularProgressIndicator()),
+              );
             case RecipeFetchStateStatus.loading:
-              return const Center(child: CircularProgressIndicator());
+              return const Padding(
+                padding: EdgeInsets.only(top: 16.0),
+                child: Center(child: CircularProgressIndicator()),
+              );
             case RecipeFetchStateStatus.error:
               return const Text("Error happened");
             case RecipeFetchStateStatus.loaded:
               final featuredList = state.featured;
               final popularList = state.popular;
-              print("rendered");
               return Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 20),
+                    margin: const EdgeInsets.only(top: 20),
                     clipBehavior: Clip.none,
                     height: Dimensions.pageView,
 
@@ -105,12 +113,12 @@ class _HomePageBodyState extends State<HomePageBody> {
                               return _buildPageItem(index, featured);
                             },
                           )
-                        : SizedBox(),
+                        : const SizedBox(),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  if (featuredList.isNotEmpty)
+                  if (featuredList.length > 0)
                     DotsIndicator(
                       dotsCount: featuredList.length,
                       position: _currPageValue,
@@ -125,29 +133,36 @@ class _HomePageBodyState extends State<HomePageBody> {
                     height: Dimensions.height20,
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: Dimensions.width20, right: Dimensions.width20),
+                    margin: EdgeInsets.only(left: Dimensions.width15, right: Dimensions.width15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [LargeText(text: "Popular recipes"), SmallText(text: "SHOW ALL")],
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(Dimensions.width20),
-                    child: ListView.builder(
+                    padding: EdgeInsets.all(Dimensions.width15),
+                    child: ListView.separated(
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(
+                          height: 14,
+                        );
+                      },
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: popularList.length,
                       itemBuilder: (context, index) {
                         final RecipeModel recipe = popularList[index];
-                        return PopularListItem(
+                        return RecipeItem(
                           title: recipe.name!,
                           difficulty: recipe.difficulty!,
                           description: recipe.shortDescription!,
                           timeEstimate: recipe.preparationTime!,
                           imageUrl: recipe.picture,
                           blurhash: recipe.blurhash,
+                          categories: recipe.categories!,
+                          tags: recipe.tags!,
                           onTap: () {
-                            Get.toNamed(Routes.recipe.name, arguments: recipe);
+                            router.push(RecipeRoute(recipe: recipe, recipeId: recipe.id!));
                           },
                         );
                       },
@@ -190,11 +205,12 @@ class _HomePageBodyState extends State<HomePageBody> {
     }
 
     Matrix4 matrix = createScalingMatrix();
+    final router = AutoRouter.of(context);
 
     // Slide item
     return GestureDetector(
       onTap: () {
-        Get.toNamed(Routes.recipe.name, arguments: recipe);
+        router.push(RecipeRoute(recipe: recipe, recipeId: recipe.id!));
       },
       child: Transform(
         transform: matrix,
@@ -210,7 +226,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                   BoxShadow(
                     color: Colors.black12.withOpacity(0.025),
                     spreadRadius: 10,
-                    blurRadius: 26,
+                    blurRadius: 13,
                   )
                 ],
               ),
@@ -221,9 +237,9 @@ class _HomePageBodyState extends State<HomePageBody> {
                 height: Dimensions.pageViewContainer,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black12.withOpacity(0.025),
+                    color: Colors.black12.withOpacity(0.05),
                     spreadRadius: 10,
-                    blurRadius: 26,
+                    blurRadius: 13,
                   )
                 ],
               ),

@@ -6,14 +6,23 @@ class SmallText extends StatelessWidget {
   final String text;
   double size;
   double height;
+  TextOverflow overFlow;
 
-  SmallText({Key? key, this.color = Colors.black45, required this.text, this.size = 13, this.height = 1.2})
-      : super(key: key);
+  SmallText({
+    Key? key,
+    this.color = Colors.black45,
+    required this.text,
+    this.size = 13,
+    this.height = 1.2,
+    this.overFlow = TextOverflow.ellipsis,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
+      overflow: overFlow,
+      maxLines: 1,
       style: GoogleFonts.lato(
         textStyle: TextStyle(
           color: color,

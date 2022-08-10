@@ -19,6 +19,7 @@ mixin _$NavigationState {
   NavBarItem get navBarItem => throw _privateConstructorUsedError;
   int get index => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
+  String? get currentPath => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $NavigationStateCopyWith<NavigationState> get copyWith =>
@@ -30,7 +31,8 @@ abstract class $NavigationStateCopyWith<$Res> {
   factory $NavigationStateCopyWith(
           NavigationState value, $Res Function(NavigationState) then) =
       _$NavigationStateCopyWithImpl<$Res>;
-  $Res call({NavBarItem navBarItem, int index, String title});
+  $Res call(
+      {NavBarItem navBarItem, int index, String title, String? currentPath});
 }
 
 /// @nodoc
@@ -47,6 +49,7 @@ class _$NavigationStateCopyWithImpl<$Res>
     Object? navBarItem = freezed,
     Object? index = freezed,
     Object? title = freezed,
+    Object? currentPath = freezed,
   }) {
     return _then(_value.copyWith(
       navBarItem: navBarItem == freezed
@@ -61,6 +64,10 @@ class _$NavigationStateCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      currentPath: currentPath == freezed
+          ? _value.currentPath
+          : currentPath // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -72,7 +79,8 @@ abstract class _$$_NavigationStateCopyWith<$Res>
           _$_NavigationState value, $Res Function(_$_NavigationState) then) =
       __$$_NavigationStateCopyWithImpl<$Res>;
   @override
-  $Res call({NavBarItem navBarItem, int index, String title});
+  $Res call(
+      {NavBarItem navBarItem, int index, String title, String? currentPath});
 }
 
 /// @nodoc
@@ -91,6 +99,7 @@ class __$$_NavigationStateCopyWithImpl<$Res>
     Object? navBarItem = freezed,
     Object? index = freezed,
     Object? title = freezed,
+    Object? currentPath = freezed,
   }) {
     return _then(_$_NavigationState(
       navBarItem: navBarItem == freezed
@@ -105,6 +114,10 @@ class __$$_NavigationStateCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      currentPath: currentPath == freezed
+          ? _value.currentPath
+          : currentPath // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -115,7 +128,10 @@ class _$_NavigationState
     with DiagnosticableTreeMixin
     implements _NavigationState {
   const _$_NavigationState(
-      {required this.navBarItem, required this.index, required this.title});
+      {required this.navBarItem,
+      required this.index,
+      required this.title,
+      required this.currentPath});
 
   @override
   final NavBarItem navBarItem;
@@ -123,10 +139,12 @@ class _$_NavigationState
   final int index;
   @override
   final String title;
+  @override
+  final String? currentPath;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'NavigationState(navBarItem: $navBarItem, index: $index, title: $title)';
+    return 'NavigationState(navBarItem: $navBarItem, index: $index, title: $title, currentPath: $currentPath)';
   }
 
   @override
@@ -136,7 +154,8 @@ class _$_NavigationState
       ..add(DiagnosticsProperty('type', 'NavigationState'))
       ..add(DiagnosticsProperty('navBarItem', navBarItem))
       ..add(DiagnosticsProperty('index', index))
-      ..add(DiagnosticsProperty('title', title));
+      ..add(DiagnosticsProperty('title', title))
+      ..add(DiagnosticsProperty('currentPath', currentPath));
   }
 
   @override
@@ -147,7 +166,9 @@ class _$_NavigationState
             const DeepCollectionEquality()
                 .equals(other.navBarItem, navBarItem) &&
             const DeepCollectionEquality().equals(other.index, index) &&
-            const DeepCollectionEquality().equals(other.title, title));
+            const DeepCollectionEquality().equals(other.title, title) &&
+            const DeepCollectionEquality()
+                .equals(other.currentPath, currentPath));
   }
 
   @override
@@ -155,7 +176,8 @@ class _$_NavigationState
       runtimeType,
       const DeepCollectionEquality().hash(navBarItem),
       const DeepCollectionEquality().hash(index),
-      const DeepCollectionEquality().hash(title));
+      const DeepCollectionEquality().hash(title),
+      const DeepCollectionEquality().hash(currentPath));
 
   @JsonKey(ignore: true)
   @override
@@ -167,7 +189,8 @@ abstract class _NavigationState implements NavigationState {
   const factory _NavigationState(
       {required final NavBarItem navBarItem,
       required final int index,
-      required final String title}) = _$_NavigationState;
+      required final String title,
+      required final String? currentPath}) = _$_NavigationState;
 
   @override
   NavBarItem get navBarItem;
@@ -175,6 +198,8 @@ abstract class _NavigationState implements NavigationState {
   int get index;
   @override
   String get title;
+  @override
+  String? get currentPath;
   @override
   @JsonKey(ignore: true)
   _$$_NavigationStateCopyWith<_$_NavigationState> get copyWith =>

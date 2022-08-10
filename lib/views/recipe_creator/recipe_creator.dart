@@ -1,14 +1,13 @@
 import 'package:another_flushbar/flushbar.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_e_commerce/global/blocks/navigation/navigation_cubit.dart';
 import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
-import 'package:flutter_e_commerce/routes/route_service.dart';
-import 'package:flutter_e_commerce/views/main/home_screen.dart';
+import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/category_selector.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_data/form_data_cubit.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_fetch/form_fetch_cubit.dart';
@@ -17,52 +16,39 @@ import 'package:flutter_e_commerce/views/recipe_creator/difficulty_selector.dart
 import 'package:flutter_e_commerce/views/recipe_creator/ingredients_selector.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/review_slide.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/tag_selector.dart';
-import 'package:flutter_e_commerce/widgets/custom_appbar.dart';
+import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/custom_stepper/custom_stepper.dart';
-import 'package:flutter_e_commerce/widgets/header/header.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
-import 'package:get/get.dart';
 
 class RecipeCreatorScreen extends StatelessWidget {
   const RecipeCreatorScreen({
     Key? key,
+    this.title = "New recipe",
+    this.editableRecipe,
   }) : super(key: key);
+  final String title;
+  final RecipeModel? editableRecipe;
 
   @override
   Widget build(BuildContext context) {
-    final navigationCubit = BlocProvider.of<NavigationCubit>(context);
-    final RecipeEditorArgs? editorArgs = Get.arguments;
-
-    final String title = editorArgs != null ? editorArgs.title : "New recipe";
-    final RecipeModel? editableRecipe = editorArgs?.recipe;
-
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        appBar: CustomAppBar(title: title),
+        appBar: MainAppBar(title: title),
         body: SafeArea(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 0,
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => FormFetchCubit(categoryRepository: context.read<CategoryRepository>()),
               ),
-              Flexible(
-                child: MultiBlocProvider(
-                  providers: [
-                    BlocProvider(
-                      create: (context) => FormFetchCubit(categoryRepository: context.read<CategoryRepository>()),
-                    ),
-                    BlocProvider(
-                      create: (context) => FormDataCubit(recipesRepository: context.read<RecipesRepository>()),
-                    ),
-                  ],
-                  child: FormFetchScreenBody(
-                    editableRecipe: editableRecipe,
-                  ),
-                ),
-              )
+              BlocProvider(
+                create: (context) => FormDataCubit(recipesRepository: context.read<RecipesRepository>()),
+              ),
             ],
+            child: FormFetchScreenBody(
+              editableRecipe: editableRecipe,
+            ),
           ),
         ),
       ),
@@ -145,7 +131,10 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
         instructionFieldController.text = formDataCubit.state.instructions;
         switch (state.status) {
           case FormFetchStateStatus.loading:
-            return const CircularProgressIndicator();
+            return const Padding(
+              padding: EdgeInsets.only(top: 16.0),
+              child: Center(child: CircularProgressIndicator()),
+            );
           case FormFetchStateStatus.loaded:
             // items for dropdowns
             final categories = state.categories;
@@ -185,8 +174,9 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                             final recipeFetchCubit = BlocProvider.of<RecipeFetchCubit>(context);
                             final userDataCubit = BlocProvider.of<UserDataCubit>(context);
                             final formDataCubit = BlocProvider.of<FormDataCubit>(context);
+                            final router = AutoRouter.of(context);
 
-                            //Send upload mode so we know if we need to update an existing or create a new recipe
+                            //Send upload mode so we know if we need to update an existing or create a new recipes
                             final bool uploadCompleted =
                                 await formDataCubit.submitRecipe(editMode!, widget.editableRecipe);
 
@@ -195,15 +185,12 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                               recipeFetchCubit.fetchHomePageRecipes();
                               userDataCubit.getUserData();
                               if (editMode) {
-                                Get.back(result: formDataCubit.state.recipe);
+                                Navigator.pop(context, formDataCubit.state.recipe);
                                 _showToast(context);
                               } else {
-                                Get.offAll(() => const HomeScreen());
+                                router.popUntilRouteWithName(HomeRouter.name);
                                 _showToast(context);
                               }
-
-                              //Get new created recipe and route to the recipe
-                              // navigator.popAndPushNamed(Routes.recipe.name, arguments: )
                             }
                           }
                         },
@@ -216,7 +203,7 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                         controlsBuilder: (context, details) {
                           final ColorScheme colorScheme = Theme.of(context).colorScheme;
                           const OutlinedBorder buttonShape = RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(2)),
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
                           );
                           const EdgeInsets buttonPadding = EdgeInsets.symmetric(horizontal: 16.0);
                           return CustomStepperControls(
@@ -346,9 +333,7 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                                 const SizedBox(
                                   height: 6,
                                 ),
-                                TagSelector(
-                                  tags: tags,
-                                ),
+                                TagSelector(tags: tags),
                                 const SizedBox(
                                   height: 20,
                                 ),
@@ -453,7 +438,7 @@ class CustomStepperControls extends StatelessWidget {
         top: BorderSide(width: 1, color: Colors.black12),
       )),
       margin: const EdgeInsets.only(top: 0.0),
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 12),
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 6, bottom: 6),
       child: ConstrainedBox(
         constraints: const BoxConstraints.tightFor(
           height: 48.0,

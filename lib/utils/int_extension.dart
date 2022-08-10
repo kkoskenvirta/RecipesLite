@@ -6,7 +6,7 @@ extension IntExtension on int {
     if (hour == 0) {
       return '${minutes.toString().padLeft(1, "0")}min';
     } else {
-      return '${hour.toString()}:${minutes.toString().padLeft(2, "0")} hours';
+      return '${hour.toString()}:${minutes.toString().padLeft(2, "0")} h';
     }
   }
 }

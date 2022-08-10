@@ -57,7 +57,7 @@ class IngredientsSelector extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             minimumSize: const Size.fromHeight(50),
             elevation: 0,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             surfaceTintColor: Theme.of(context).primaryColor,
           ),
           onPressed: () => showBottomSheet(),
@@ -114,8 +114,11 @@ class ingredientRow extends StatelessWidget {
           onDismissed: (_) => removeingredient(context),
           dismissThresholds: const {DismissDirection.endToStart: 0.6},
           background: Container(
-            color: Colors.pink.shade400,
-            padding: const EdgeInsets.symmetric(horizontal: 14),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.pink.shade400,
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             alignment: Alignment.centerRight,
             child: const Icon(
               Icons.delete,
@@ -124,7 +127,7 @@ class ingredientRow extends StatelessWidget {
           ),
           child: Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
+              borderRadius: BorderRadius.circular(8),
               color: Colors.pink.shade50,
             ),
             child: ListTile(
