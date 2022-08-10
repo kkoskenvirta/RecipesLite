@@ -9,7 +9,7 @@ import 'package:flutter_e_commerce/widgets/search_modal/search_modal.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MainAppBar({
+  MainAppBar({
     Key? key,
     this.title,
     this.transparent = false,
@@ -20,20 +20,27 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.showBackButton = false,
     this.showEditButton = false,
     this.showCreateButton = false,
-  })  : preferredSize = const Size.fromHeight(50),
+    this.showCloseButton = false,
+    this.size = 50,
+    this.elevation = true,
+  })  : preferredSize = Size.fromHeight(size),
         super(key: key);
 
+  final double size;
   final String? title;
   final bool transparent;
 
   final String? creator;
   final VoidCallback? editRecipe;
 
+  final bool elevation;
+
   final bool showLogoutButton;
   final bool showSearchButton;
   final bool showBackButton;
   final bool showEditButton;
   final bool showCreateButton;
+  final bool showCloseButton;
 
   @override
   final Size preferredSize;
@@ -48,7 +55,8 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: transparent ? Colors.transparent : null,
       shadowColor: transparent ? Colors.transparent : null,
-      elevation: transparent ? 0 : null,
+      scrolledUnderElevation: elevation ? null : 0,
+      automaticallyImplyLeading: showBackButton ? true : false,
       leading: showSearchButton
           ? IconButton(
               onPressed: () => showBarModalBottomSheet(
@@ -82,6 +90,18 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
           )
         else if (showEditButton && permission)
           IconButton(onPressed: editRecipe, icon: const Icon(Icons.edit))
+        else if (showCloseButton)
+          TextButton(
+            onPressed: () {
+              router.pop();
+            },
+            style: ButtonStyle(
+              padding: MaterialStateProperty.all<EdgeInsets>(
+                const EdgeInsets.only(right: 8),
+              ),
+            ),
+            child: const Text("Close"),
+          )
       ],
       title: title == null ? const SizedBox() : Text(title!),
     );

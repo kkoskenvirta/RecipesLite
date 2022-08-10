@@ -2,15 +2,12 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_e_commerce/global/blocks/navigation/navigation_cubit.dart';
 import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
-import 'package:flutter_e_commerce/routes/route_service.dart';
-import 'package:flutter_e_commerce/views/main/home_screen.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/category_selector.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_data/form_data_cubit.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_fetch/form_fetch_cubit.dart';
@@ -21,7 +18,6 @@ import 'package:flutter_e_commerce/views/recipe_creator/review_slide.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/tag_selector.dart';
 import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/custom_stepper/custom_stepper.dart';
-import 'package:flutter_e_commerce/widgets/header/header.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
 
@@ -41,27 +37,18 @@ class RecipeCreatorScreen extends StatelessWidget {
       child: Scaffold(
         appBar: MainAppBar(title: title),
         body: SafeArea(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 0,
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => FormFetchCubit(categoryRepository: context.read<CategoryRepository>()),
               ),
-              Flexible(
-                child: MultiBlocProvider(
-                  providers: [
-                    BlocProvider(
-                      create: (context) => FormFetchCubit(categoryRepository: context.read<CategoryRepository>()),
-                    ),
-                    BlocProvider(
-                      create: (context) => FormDataCubit(recipesRepository: context.read<RecipesRepository>()),
-                    ),
-                  ],
-                  child: FormFetchScreenBody(
-                    editableRecipe: editableRecipe,
-                  ),
-                ),
-              )
+              BlocProvider(
+                create: (context) => FormDataCubit(recipesRepository: context.read<RecipesRepository>()),
+              ),
             ],
+            child: FormFetchScreenBody(
+              editableRecipe: editableRecipe,
+            ),
           ),
         ),
       ),
@@ -187,10 +174,9 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                             final recipeFetchCubit = BlocProvider.of<RecipeFetchCubit>(context);
                             final userDataCubit = BlocProvider.of<UserDataCubit>(context);
                             final formDataCubit = BlocProvider.of<FormDataCubit>(context);
-
-                            //Send upload mode so we know if we need to update an existing or create a new recipe
                             final router = AutoRouter.of(context);
 
+                            //Send upload mode so we know if we need to update an existing or create a new recipes
                             final bool uploadCompleted =
                                 await formDataCubit.submitRecipe(editMode!, widget.editableRecipe);
 
@@ -199,16 +185,12 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                               recipeFetchCubit.fetchHomePageRecipes();
                               userDataCubit.getUserData();
                               if (editMode) {
-                                router.pop(formDataCubit.state.recipe);
+                                Navigator.pop(context, formDataCubit.state.recipe);
                                 _showToast(context);
                               } else {
                                 router.popUntilRouteWithName(HomeRouter.name);
-
                                 _showToast(context);
                               }
-
-                              //Get new created recipe and route to the recipe
-                              // navigator.popAndPushNamed(Routes.recipe.name, arguments: )
                             }
                           }
                         },
@@ -221,7 +203,7 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                         controlsBuilder: (context, details) {
                           final ColorScheme colorScheme = Theme.of(context).colorScheme;
                           const OutlinedBorder buttonShape = RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(2)),
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
                           );
                           const EdgeInsets buttonPadding = EdgeInsets.symmetric(horizontal: 16.0);
                           return CustomStepperControls(
@@ -351,9 +333,7 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                                 const SizedBox(
                                   height: 6,
                                 ),
-                                TagSelector(
-                                  tags: tags,
-                                ),
+                                TagSelector(tags: tags),
                                 const SizedBox(
                                   height: 20,
                                 ),

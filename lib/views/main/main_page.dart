@@ -2,12 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/navigation/navigation_cubit.dart';
-import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
-import 'package:flutter_e_commerce/views/main/categories/categories_screen.dart';
-import 'package:flutter_e_commerce/views/main/home_screen.dart';
-import 'package:flutter_e_commerce/views/profile/profile_screen.dart';
-import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);

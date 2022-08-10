@@ -25,18 +25,11 @@ class SingleCategoryScreen extends StatelessWidget {
     return Scaffold(
       appBar: MainAppBar(
         title: category!.name,
+        showBackButton: true,
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Flexible(
-              child: SingleChildScrollView(
-                child: SingleCategoryScreenBody(
-                  category: category!,
-                ),
-              ),
-            )
-          ],
+      body: SingleChildScrollView(
+        child: SingleCategoryScreenBody(
+          category: category!,
         ),
       ),
     );

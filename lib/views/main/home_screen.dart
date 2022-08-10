@@ -12,6 +12,7 @@ import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
 import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
+import 'package:flutter_e_commerce/widgets/recipe_item.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
 
 import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
@@ -24,18 +25,16 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MainAppBar(
+      appBar: MainAppBar(
         title: "Home",
         showSearchButton: true,
         showCreateButton: true,
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: const [
-              HomePageBody(),
-            ],
-          ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: const [
+            HomePageBody(),
+          ],
         ),
       ),
     );
@@ -134,27 +133,34 @@ class _HomePageBodyState extends State<HomePageBody> {
                     height: Dimensions.height20,
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: Dimensions.width20, right: Dimensions.width20),
+                    margin: EdgeInsets.only(left: Dimensions.width15, right: Dimensions.width15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [LargeText(text: "Popular recipes"), SmallText(text: "SHOW ALL")],
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(Dimensions.width20),
-                    child: ListView.builder(
+                    padding: EdgeInsets.all(Dimensions.width15),
+                    child: ListView.separated(
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(
+                          height: 14,
+                        );
+                      },
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: popularList.length,
                       itemBuilder: (context, index) {
                         final RecipeModel recipe = popularList[index];
-                        return PopularListItem(
+                        return RecipeItem(
                           title: recipe.name!,
                           difficulty: recipe.difficulty!,
                           description: recipe.shortDescription!,
                           timeEstimate: recipe.preparationTime!,
                           imageUrl: recipe.picture,
                           blurhash: recipe.blurhash,
+                          categories: recipe.categories!,
+                          tags: recipe.tags!,
                           onTap: () {
                             router.push(RecipeRoute(recipe: recipe, recipeId: recipe.id!));
                           },

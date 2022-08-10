@@ -59,7 +59,7 @@ class RecipeAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: IconButton(
                 icon: Icon(
                   Icons.chevron_left_rounded,
-                  color: Palette.pToLight.shade300,
+                  color: RecipeAppTheme.colors.pinkMedium,
                 ),
                 onPressed: () => Navigator.of(context).pop(),
               ),
@@ -83,7 +83,7 @@ class RecipeAppBar extends StatelessWidget implements PreferredSizeWidget {
                       }
                     },
                     icon: const Icon(Icons.edit),
-                    color: Palette.pToLight.shade300,
+                    color: RecipeAppTheme.colors.pinkMedium,
                   ),
                 )
             ],

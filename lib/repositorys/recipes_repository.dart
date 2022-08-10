@@ -66,6 +66,7 @@ class RecipesRepository {
   Future<Either<FetchError, List<RecipeModel>>> searchRecipes({required String filters}) async {
     try {
       final Response? response;
+      print('$baseUrl$recipesPathFields$filters');
       response = await _tokenDio.get('$baseUrl$recipesPathFields$filters');
 
       if (response.data != null) {

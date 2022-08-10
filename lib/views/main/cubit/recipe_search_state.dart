@@ -1,23 +1,22 @@
 part of 'recipe_search_cubit.dart';
 
-@immutable
-abstract class RecipeSearchState extends Equatable {
-  const RecipeSearchState();
+enum RecipeSearchStatus { initial, loading, loaded, error }
 
-  @override
-  List<Object> get props => [];
+@freezed
+class RecipeSearchState with _$RecipeSearchState {
+  const factory RecipeSearchState({
+    required RecipeSearchStatus status,
+    required List<RecipeModel>? recipeList,
+    required String searchString,
+    required String filterApplied,
+  }) = _RecipeSearchState;
+
+  factory RecipeSearchState.initial() {
+    return const RecipeSearchState(
+      status: RecipeSearchStatus.initial,
+      recipeList: [],
+      searchString: "",
+      filterApplied: "",
+    );
+  }
 }
-
-class RecipeSearchInitial extends RecipeSearchState {}
-
-class RecipeSearchLoading extends RecipeSearchState {}
-
-class RecipeSearchLoaded extends RecipeSearchState {
-  final List<RecipeModel> recipeList;
-  RecipeSearchLoaded({required this.recipeList});
-
-  @override
-  List<Object> get props => [recipeList];
-}
-
-class RecipeSearchError extends RecipeSearchState {}

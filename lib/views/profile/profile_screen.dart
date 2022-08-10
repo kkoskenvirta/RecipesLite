@@ -18,7 +18,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MainAppBar(
+      appBar: MainAppBar(
         title: "Profile",
         showLogoutButton: true,
         showBackButton: false,

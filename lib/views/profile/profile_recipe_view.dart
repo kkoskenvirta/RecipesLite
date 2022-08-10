@@ -31,6 +31,7 @@ class ProfileRecipeView extends StatelessWidget {
     return Scaffold(
       appBar: MainAppBar(
         title: title,
+        showBackButton: true,
       ),
       body: BlocBuilder<UserDataCubit, UserDataState>(
         builder: (context, state) {

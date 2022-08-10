@@ -52,7 +52,7 @@ class AppRouter extends _i5.RootStackRouter {
     RecipeCreator.name: (routeData) {
       final args = routeData.argsAs<RecipeCreatorArgs>(
           orElse: () => const RecipeCreatorArgs());
-      return _i5.MaterialPageX<dynamic>(
+      return _i5.MaterialPageX<_i12.RecipeModel>(
           routeData: routeData,
           child: _i4.RecipeCreatorScreen(
               key: args.key,
@@ -62,7 +62,7 @@ class AppRouter extends _i5.RootStackRouter {
     RecipeEditor.name: (routeData) {
       final args = routeData.argsAs<RecipeEditorArgs>(
           orElse: () => const RecipeEditorArgs());
-      return _i5.MaterialPageX<dynamic>(
+      return _i5.MaterialPageX<_i12.RecipeModel>(
           routeData: routeData,
           child: _i4.RecipeCreatorScreen(
               key: args.key,

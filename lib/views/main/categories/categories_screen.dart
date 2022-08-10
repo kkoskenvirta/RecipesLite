@@ -22,7 +22,7 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MainAppBar(
+      appBar: MainAppBar(
         title: "Categories",
         showSearchButton: true,
         showCreateButton: true,

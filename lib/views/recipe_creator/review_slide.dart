@@ -63,7 +63,6 @@ class ReviewSlide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(editableRecipe);
     return BlocBuilder<FormDataCubit, FormDataState>(
       builder: (context, state) {
         final recipe = state;
@@ -86,7 +85,7 @@ class ReviewSlide extends StatelessWidget {
                             height: 250,
                             width: 280,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(Dimensions.radius20),
                               border: Border.all(color: Colors.pink.shade100, width: 0),
                               image: DecorationImage(
                                 image: AssetImage(image.path),
@@ -106,7 +105,7 @@ class ReviewSlide extends StatelessWidget {
                                 height: 200,
                                 width: 250,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
+                                  borderRadius: BorderRadius.circular(Dimensions.radius20),
                                   color: Colors.pink.shade50,
                                   border: Border.all(color: Colors.pink.shade100, width: 1),
                                 ),

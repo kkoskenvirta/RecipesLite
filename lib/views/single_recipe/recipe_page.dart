@@ -55,7 +55,7 @@ class _RecipePageState extends State<RecipePage> {
     }
     Flushbar(
       flushbarStyle: FlushbarStyle.FLOATING,
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(Dimensions.radius15),
       margin: const EdgeInsets.all(8),
       padding: const EdgeInsets.symmetric(vertical: 18),
       boxShadows: [
@@ -161,7 +161,15 @@ class _RecipePageState extends State<RecipePage> {
                                                 size: 30,
                                               ));
                                   }
-                                  return const SizedBox();
+                                  return IconButton(
+                                      icon: const Icon(
+                                        Icons.favorite_border_rounded,
+                                        color: Colors.transparent,
+                                        size: 30,
+                                      ),
+                                      onPressed: () {
+                                        return;
+                                      });
                                 }),
                               ],
                             ),

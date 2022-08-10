@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/views/category_recipes/single_category_page.dart';
 import 'package:flutter_e_commerce/views/login/login_page.dart';
 import 'package:flutter_e_commerce/views/main/categories/categories_screen.dart';
@@ -42,8 +43,8 @@ import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
       ),
     ]),
     MaterialRoute(path: '/recipes/:recipeId', page: RecipePage),
-    MaterialRoute(name: "RecipeCreator", page: RecipeCreatorScreen, path: '/recipe-creator'),
-    MaterialRoute(name: "RecipeEditor", page: RecipeCreatorScreen, path: '/recipe-editor'),
+    MaterialRoute<RecipeModel>(name: "RecipeCreator", page: RecipeCreatorScreen, path: '/recipe-creator'),
+    MaterialRoute<RecipeModel>(name: "RecipeEditor", page: RecipeCreatorScreen, path: '/recipe-editor'),
   ],
   replaceInRouteName: 'Page,Route',
 )
