@@ -12,10 +12,6 @@ class ingredientsTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          // borderRadius: BorderRadius.circular(Dimensions.radius15),
-          // color: Colors.red,
-          ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

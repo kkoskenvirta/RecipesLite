@@ -47,7 +47,11 @@ import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
     MaterialRoute<RecipeModel>(name: "RecipeCreator", page: RecipeCreatorScreen, path: '/recipe-creator'),
     MaterialRoute<RecipeModel>(name: "RecipeEditor", page: RecipeCreatorScreen, path: '/recipe-editor'),
     CustomRoute(
-        page: SearchPage, path: '/search', transitionsBuilder: TransitionsBuilders.fadeIn, durationInMilliseconds: 150),
+      page: SearchPage,
+      path: '/search',
+      transitionsBuilder: TransitionsBuilders.slideRight,
+      durationInMilliseconds: 250,
+    ),
   ],
   replaceInRouteName: 'Page,Route',
 )

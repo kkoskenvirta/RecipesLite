@@ -36,14 +36,11 @@ class BlurhashImage extends StatelessWidget {
           aspectRatio: aspectRatio,
           child: ClipRRect(
             borderRadius: borderRadius ?? BorderRadius.circular(Dimensions.radius20),
-            child: OctoImage(
+            child: OctoImage.fromSet(
               image: CachedNetworkImageProvider(
                 '$baseUrl$assetsPath$image',
               ),
-              placeholderBuilder: OctoPlaceholder.blurHash(
-                blurhash!,
-              ),
-              errorBuilder: OctoError.icon(color: Colors.pink.shade100),
+              octoSet: OctoSet.blurHash(blurhash!),
               fit: BoxFit.cover,
             ),
           ),

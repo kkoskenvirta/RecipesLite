@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
@@ -54,4 +55,21 @@ class RecipeSearchCubit extends Cubit<RecipeSearchState> {
       ),
     );
   }
+
+  // updateAnimationCoordinates(GlobalKey chipKey, GlobalKey searchFieldKey) {
+  //   RenderBox? chip = chipKey.currentContext?.findRenderObject() as RenderBox?;
+  //   Offset? chipPosition = chip?.localToGlobal(Offset.zero);
+  //   RenderBox? searchField = searchFieldKey.currentContext?.findRenderObject() as RenderBox?;
+  //   Offset? searchFieldPosition = searchField?.localToGlobal(Offset.zero);
+  //   if (chipPosition != null && searchFieldPosition != null) {
+  //     emit(
+  //       state.copyWith(
+  //         chipX: chipPosition.dx,
+  //         chipY: chipPosition.dy,
+  //         searchFieldX: searchFieldPosition.dx,
+  //         searchFieldY: searchFieldPosition.dy,
+  //       ),
+  //     );
+  //   }
+  // }
 }

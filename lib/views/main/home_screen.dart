@@ -6,6 +6,7 @@ import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/routes/route_service.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
+import 'package:flutter_e_commerce/utils/int_extension.dart';
 import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
@@ -16,6 +17,8 @@ import 'package:flutter_e_commerce/widgets/recipe_item.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
 
 import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
+import 'package:flutter_e_commerce/widgets/tag_list.dart';
+import 'package:flutter_e_commerce/widgets/time_chip.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
@@ -214,84 +217,103 @@ class _HomePageBodyState extends State<HomePageBody> {
       },
       child: Transform(
         transform: matrix,
-        child: Stack(
-          children: [
-            Container(
-              height: Dimensions.pageViewContainer,
-              margin: EdgeInsets.only(bottom: Dimensions.height10, left: Dimensions.width10, right: Dimensions.width10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(Dimensions.radius20),
-                color: Colors.pink.shade200,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12.withOpacity(0.025),
-                    spreadRadius: 10,
-                    blurRadius: 13,
-                  )
-                ],
-              ),
-              child: BlurhashImage(
-                aspectRatio: 1.6,
-                image: recipe.picture,
-                blurhash: recipe.blurhash,
-                height: Dimensions.pageViewContainer,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12.withOpacity(0.05),
-                    spreadRadius: 10,
-                    blurRadius: 13,
-                  )
-                ],
-              ),
-            ),
-            Column(
+        child: Hero(
+          tag: recipe.picture ?? "hero",
+          child: Material(
+            child: Stack(
               children: [
-                const Spacer(),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: Dimensions.width15),
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: Dimensions.width20),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(Dimensions.radius20),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12.withOpacity(0.025),
-                              spreadRadius: 10,
-                              blurRadius: 26,
+                Container(
+                  height: Dimensions.pageViewContainer,
+                  margin:
+                      EdgeInsets.only(bottom: Dimensions.height10, left: Dimensions.width10, right: Dimensions.width10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(Dimensions.radius20),
+                    color: Colors.pink.shade200,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12.withOpacity(0.025),
+                        spreadRadius: 10,
+                        blurRadius: 13,
+                      )
+                    ],
+                  ),
+                  child: Stack(
+                    children: [
+                      BlurhashImage(
+                        aspectRatio: 1.6,
+                        image: recipe.picture,
+                        blurhash: recipe.blurhash,
+                        height: Dimensions.pageViewContainer,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12.withOpacity(0.1),
+                            spreadRadius: 2,
+                            blurRadius: 10,
+                          )
+                        ],
+                      ),
+                      Positioned(
+                        left: 0,
+                        child: TimeChip(
+                          size: 14,
+                          text: recipe.preparationTime!.parseToTimeString(),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Column(
+                  children: [
+                    const Spacer(),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: Dimensions.width15),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: Dimensions.width20),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(Dimensions.radius20),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12.withOpacity(0.025),
+                                  spreadRadius: 10,
+                                  blurRadius: 26,
+                                ),
+                              ]),
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                top: Dimensions.height10,
+                                bottom: Dimensions.height10,
+                                left: Dimensions.width15,
+                                right: Dimensions.width15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TagList(categories: recipe.categories!, tags: recipe.tags!),
+                                const SizedBox(height: 8),
+                                LargeText(text: recipe.name!),
+                                const SizedBox(height: 8),
+                                SmallText(text: recipe.shortDescription!),
+                                // const RatingsRow(ratingScore: 4.5, commentCount: 1245),
+                                SizedBox(
+                                  height: Dimensions.height15,
+                                ),
+                                InformationBar(
+                                  status: recipe.difficulty!,
+                                  timeEstimate: recipe.preparationTime!,
+                                )
+                              ],
                             ),
-                          ]),
-                      child: Container(
-                        padding: EdgeInsets.only(
-                            top: Dimensions.height10,
-                            bottom: Dimensions.height10,
-                            left: Dimensions.width15,
-                            right: Dimensions.width15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            LargeText(text: recipe.name!),
-                            SizedBox(height: Dimensions.height10),
-                            SmallText(text: recipe.shortDescription!),
-                            // const RatingsRow(ratingScore: 4.5, commentCount: 1245),
-                            SizedBox(
-                              height: Dimensions.height15,
-                            ),
-                            const InformationBar(
-                              status: "Normal",
-                              timeEstimate: 20,
-                            )
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ],
-            )
-          ],
+            ),
+          ),
         ),
       ),
     );

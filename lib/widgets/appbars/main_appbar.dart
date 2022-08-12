@@ -67,7 +67,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
               //   barrierColor: Colors.black87,
               //   builder: (context) => const SearchModal(),
               // ),
-              onPressed: (() => router.push(SearchRoute())),
+              onPressed: (() => router.navigate(SearchRoute())),
               icon: const Icon(
                 Icons.search,
                 size: 30,

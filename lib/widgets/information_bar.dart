@@ -12,7 +12,7 @@ class InformationBar extends StatelessWidget {
   difficultyColor(String status) {
     if (status.toLowerCase() == "easy") {
       return Colors.green.shade400;
-    } else if (status.toLowerCase() == "normal") {
+    } else if (status.toLowerCase() == "medium") {
       return Colors.yellow.shade400;
     } else if (status.toLowerCase() == "hard") {
       return Colors.red.shade300;

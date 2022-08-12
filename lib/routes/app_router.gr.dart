@@ -74,8 +74,8 @@ class AppRouter extends _i6.RootStackRouter {
       return _i6.CustomPage<dynamic>(
           routeData: routeData,
           child: const _i5.SearchPage(),
-          transitionsBuilder: _i6.TransitionsBuilders.fadeIn,
-          durationInMilliseconds: 150,
+          transitionsBuilder: _i6.TransitionsBuilders.slideRight,
+          durationInMilliseconds: 250,
           opaque: true,
           barrierDismissible: false);
     },

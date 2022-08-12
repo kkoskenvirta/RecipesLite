@@ -6,23 +6,22 @@ class TimeChip extends StatelessWidget {
   final String text;
   double size;
   double height;
+  double horizontal;
+  double vertical;
 
   TimeChip({
     Key? key,
     required this.text,
     this.size = 13,
     this.height = 1.2,
+    this.horizontal = 10.0,
+    this.vertical = 8.0,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(
-        top: 5,
-        bottom: 5,
-        right: 7,
-        left: 8,
-      ),
+      padding: EdgeInsets.symmetric(vertical: vertical, horizontal: horizontal),
       decoration: BoxDecoration(
         color: RecipeAppTheme.colors.blueLight,
         boxShadow: const [

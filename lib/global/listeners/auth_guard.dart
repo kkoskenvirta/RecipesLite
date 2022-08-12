@@ -19,9 +19,9 @@ class AuthGuard extends StatelessWidget {
       listener: (context, state) {
         print(state);
         state.maybeWhen(
-          authenticated: () => router.navigate(const MainRoute()),
+          authenticated: () => router.replace(const MainRoute()),
           unauthenticated: () {
-            router.navigate(const LoginRoute());
+            router.replace(const LoginRoute());
             context.read<AuthCubit>().updateState(const AuthState.uninitialized(inProgress: false));
           },
           orElse: () {},

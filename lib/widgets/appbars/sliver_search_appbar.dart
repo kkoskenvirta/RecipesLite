@@ -26,6 +26,7 @@ class SliverSearchAppBar extends StatelessWidget implements PreferredSizeWidget 
     this.showCloseButton = false,
     this.size = 50,
     this.elevation = true,
+    required this.searchFieldKey,
   })  : preferredSize = Size.fromHeight(size),
         super(key: key);
 
@@ -45,6 +46,8 @@ class SliverSearchAppBar extends StatelessWidget implements PreferredSizeWidget 
   final bool showCreateButton;
   final bool showCloseButton;
 
+  final GlobalKey searchFieldKey;
+
   @override
   final Size preferredSize;
 
@@ -59,6 +62,7 @@ class SliverSearchAppBar extends StatelessWidget implements PreferredSizeWidget 
       scrolledUnderElevation: elevation ? null : 0,
       automaticallyImplyLeading: showBackButton ? true : false,
       bottom: SearchBar(
+        searchFieldKey: searchFieldKey,
         size: 50.0,
       ),
       title: LargeText(text: title!),
@@ -78,13 +82,14 @@ class SliverSearchAppBar extends StatelessWidget implements PreferredSizeWidget 
 }
 
 class SearchBar extends StatelessWidget implements PreferredSizeWidget {
-  SearchBar({Key? key, required size})
+  SearchBar({Key? key, required size, required this.searchFieldKey})
       : preferredSize = Size.fromHeight(size),
         super(key: key);
 
   @override
   final Size preferredSize;
 
+  final GlobalKey searchFieldKey;
   @override
   Widget build(BuildContext context) {
     final searchCubit = BlocProvider.of<RecipeSearchCubit>(context);
@@ -97,36 +102,35 @@ class SearchBar extends StatelessWidget implements PreferredSizeWidget {
         final searchController = TextEditingController()
           ..text = state.searchString
           ..selection = TextSelection.collapsed(offset: state.searchString.length);
-        return Container(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 12.0, right: 12, top: 0, bottom: 8),
-            child: CupertinoSearchTextField(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-              placeholder: "Search for recipes",
-              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
-              itemSize: 26,
-              controller: searchController,
-              prefixIcon: const Icon(
-                Icons.search,
-              ),
-              suffixIcon: const Icon(Icons.close_rounded),
-              onSuffixTap: () {
-                if (searchController.value.text.isEmpty) {
-                  Navigator.pop(context);
-                } else {
-                  searchCubit.resetSearch();
-                  searchController.text = "";
-                }
-              },
-              onChanged: ((value) async {
-                if (value == "") {
-                  searchCubit.resetSearch();
-                }
-                if (value.isNotEmpty) {
-                  searchCubit.searchRecipes(value);
-                }
-              }),
+        return Padding(
+          padding: const EdgeInsets.only(left: 12.0, right: 12, top: 0, bottom: 8),
+          child: CupertinoSearchTextField(
+            key: searchFieldKey,
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+            placeholder: "Search for recipes",
+            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
+            itemSize: 26,
+            controller: searchController,
+            prefixIcon: const Icon(
+              Icons.search,
             ),
+            suffixIcon: const Icon(Icons.close_rounded),
+            onSuffixTap: () {
+              if (searchController.value.text.isEmpty) {
+                Navigator.pop(context);
+              } else {
+                searchCubit.resetSearch();
+                searchController.text = "";
+              }
+            },
+            onChanged: ((value) async {
+              if (value == "") {
+                searchCubit.resetSearch();
+              }
+              if (value.isNotEmpty) {
+                searchCubit.searchRecipes(value);
+              }
+            }),
           ),
         );
       },
