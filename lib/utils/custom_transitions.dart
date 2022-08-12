@@ -8,10 +8,11 @@ class CustomTransitions {
   static Widget _slideRight(
       BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
     return SlideTransition(
-      position: Tween<Offset>(
-        begin: const Offset(-1.0, 0.0),
-        end: Offset.zero,
-      ).animate(animation),
+      position: animation.drive(
+        Tween(begin: const Offset(-1.0, 0.0), end: Offset.zero).chain(
+          CurveTween(curve: Curves.easeIn),
+        ),
+      ),
       child: child,
     );
   }

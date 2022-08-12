@@ -10,6 +10,7 @@ import 'package:flutter_e_commerce/models/recipe/dto/recipe_data_dto.dart';
 import 'package:flutter_e_commerce/models/recipe/dto/recipe_dto.dart';
 import 'package:flutter_e_commerce/models/recipe/dto/recipe_post_request_dto.dart';
 import 'package:flutter_e_commerce/models/recipe/dto/recipe_single_dto.dart';
+import 'package:flutter_e_commerce/models/tag/tag_model.dart';
 import '../models/recipe/recipe_model.dart';
 import '../modules/dio_module.dart';
 
@@ -35,6 +36,28 @@ class RecipesRepository {
       }
 
       final Response response = await _tokenDio.get('$baseUrl$recipesPathFields$resultLimit$resultFilters');
+      final recipesDTO = RecipeDTO.fromJson(response.data);
+      final recipes = recipesDTO.data.map((recipeDataDTO) => recipeDataDTO.toDomain()).toList();
+
+      return right(recipes);
+    } catch (e) {
+      if (e is DioError && e.response?.statusCode == 400) return left(FetchError.invalidPayload);
+      if (e is DioError && e.response?.statusCode == 401) return left(FetchError.permissionError);
+      return left(FetchError.unexpected);
+    }
+  }
+
+  Future<Either<FetchError, List<RecipeModel>?>> getRecipesListWithTags(List<TagModel> tags) async {
+    try {
+      final List<String> filterQueryList = tags.map((tag) {
+        return '{"tags":{"tag_id":{"id":{"_eq":"${tag.id}"}}}}';
+      }).toList();
+
+      String filterQueryString = filterQueryList.join(',');
+      final String filterQuery = '{"_and":[{"_and":[{"_and":[$filterQueryString]}]},{"status":{"_neq":"archived"}}]}';
+
+      final Response response = await _tokenDio.get('$baseUrl$recipesPathFields$filterQuery');
+
       final recipesDTO = RecipeDTO.fromJson(response.data);
       final recipes = recipesDTO.data.map((recipeDataDTO) => recipeDataDTO.toDomain()).toList();
 

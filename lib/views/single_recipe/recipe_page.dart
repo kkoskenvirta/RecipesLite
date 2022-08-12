@@ -23,9 +23,11 @@ class RecipePage extends StatefulWidget {
     Key? key,
     @PathParam('recipeId') required this.recipeId,
     this.recipe,
+    this.heroTag,
   }) : super(key: key);
   final RecipeModel? recipe;
   final String recipeId;
+  final UniqueKey? heroTag;
   @override
   State<RecipePage> createState() => _RecipePageState();
 }
@@ -104,7 +106,11 @@ class _RecipePageState extends State<RecipePage> {
                 final recipe = state.recipe;
 
                 return Stack(children: [
-                  HeroImage(scaleFactor: _scaleFactor, recipe: recipe),
+                  HeroImage(
+                    scaleFactor: _scaleFactor,
+                    recipe: recipe,
+                    heroTag: widget.heroTag!,
+                  ),
                   NotificationListener(
                     child: SingleChildScrollView(
                       controller: scrollController,
@@ -235,16 +241,18 @@ class HeroImage extends StatelessWidget {
     Key? key,
     required double scaleFactor,
     required this.recipe,
+    required this.heroTag,
   })  : _scaleFactor = scaleFactor,
         super(key: key);
 
   final double _scaleFactor;
   final RecipeModel? recipe;
+  final UniqueKey heroTag;
 
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: recipe!.picture ?? "hero",
+      tag: heroTag,
       child: ClipRect(
         child: Transform.scale(
           scale: _scaleFactor,

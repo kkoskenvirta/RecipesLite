@@ -35,7 +35,10 @@ class RecipeCreatorScreen extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        appBar: MainAppBar(title: title),
+        appBar: MainAppBar(
+          title: title,
+          transparent: true,
+        ),
         body: SafeArea(
           child: MultiBlocProvider(
             providers: [

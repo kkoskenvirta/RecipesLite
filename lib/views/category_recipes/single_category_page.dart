@@ -9,6 +9,7 @@ import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
+import 'package:flutter_e_commerce/widgets/recipe_item.dart';
 
 import '../../routes/route_service.dart';
 
@@ -46,7 +47,6 @@ class SingleCategoryScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final router = AutoRouter.of(context);
     return Column(
       children: [
         BlocBuilder<CategoryRecipesCubit, CategoryRecipesState>(
@@ -65,25 +65,22 @@ class SingleCategoryScreenBody extends StatelessWidget {
                 );
               case CategoryRecipesStateStatus.loaded:
                 final recipeList = state.recipeList;
-                return ListView.builder(
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: recipeList.length,
-                  itemBuilder: (context, index) {
-                    final RecipeModel recipe = recipeList[index];
-                    return PopularListItem(
-                      title: recipe.name!,
-                      difficulty: recipe.difficulty!,
-                      description: recipe.shortDescription!,
-                      timeEstimate: recipe.preparationTime!,
-                      imageUrl: recipe.picture,
-                      blurhash: recipe.blurhash,
-                      onTap: () {
-                        router.push(RecipeRoute(recipe: recipe, recipeId: recipe.id!));
-                      },
-                    );
-                  },
+                return Padding(
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: ListView.separated(
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 16);
+                    },
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: recipeList.length,
+                    itemBuilder: (context, index) {
+                      return RecipeItem(
+                        recipe: recipeList[index],
+                      );
+                    },
+                  ),
                 );
               default:
                 return const Text("Error");

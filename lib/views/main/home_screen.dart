@@ -139,7 +139,15 @@ class _HomePageBodyState extends State<HomePageBody> {
                     margin: EdgeInsets.only(left: Dimensions.width15, right: Dimensions.width15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [LargeText(text: "Popular recipes"), SmallText(text: "SHOW ALL")],
+                      children: [
+                        LargeText(text: "Popular recipes"),
+                        TextButton(
+                          child: SmallText(text: "SHOW ALL"),
+                          onPressed: () {
+                            context.router.push(const RecipeListRoute());
+                          },
+                        )
+                      ],
                     ),
                   ),
                   Padding(
@@ -154,19 +162,8 @@ class _HomePageBodyState extends State<HomePageBody> {
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: popularList.length,
                       itemBuilder: (context, index) {
-                        final RecipeModel recipe = popularList[index];
                         return RecipeItem(
-                          title: recipe.name!,
-                          difficulty: recipe.difficulty!,
-                          description: recipe.shortDescription!,
-                          timeEstimate: recipe.preparationTime!,
-                          imageUrl: recipe.picture,
-                          blurhash: recipe.blurhash,
-                          categories: recipe.categories!,
-                          tags: recipe.tags!,
-                          onTap: () {
-                            router.push(RecipeRoute(recipe: recipe, recipeId: recipe.id!));
-                          },
+                          recipe: popularList[index],
                         );
                       },
                     ),
@@ -209,16 +206,16 @@ class _HomePageBodyState extends State<HomePageBody> {
 
     Matrix4 matrix = createScalingMatrix();
     final router = AutoRouter.of(context);
-
+    final UniqueKey heroTag = UniqueKey();
     // Slide item
     return GestureDetector(
       onTap: () {
-        router.push(RecipeRoute(recipe: recipe, recipeId: recipe.id!));
+        router.push(RecipeRoute(recipe: recipe, recipeId: recipe.id!, heroTag: heroTag));
       },
       child: Transform(
         transform: matrix,
         child: Hero(
-          tag: recipe.picture ?? "hero",
+          tag: heroTag,
           child: Material(
             child: Stack(
               children: [

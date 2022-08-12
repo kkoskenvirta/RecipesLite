@@ -11,23 +11,25 @@
 // ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i6;
-import 'package:flutter/material.dart' as _i12;
+import 'package:flutter/material.dart' as _i13;
 
-import '../models/category/category_model.dart' as _i14;
-import '../models/recipe/recipe_model.dart' as _i13;
-import '../views/category_recipes/single_category_page.dart' as _i9;
+import '../models/category/category_model.dart' as _i16;
+import '../models/recipe/recipe_model.dart' as _i14;
+import '../utils/custom_transitions.dart' as _i15;
+import '../views/category_recipes/single_category_page.dart' as _i10;
 import '../views/login/login_page.dart' as _i1;
-import '../views/main/categories/categories_screen.dart' as _i8;
+import '../views/main/categories/categories_screen.dart' as _i9;
 import '../views/main/home_screen.dart' as _i7;
 import '../views/main/main_page.dart' as _i2;
-import '../views/profile/profile_recipe_view.dart' as _i11;
-import '../views/profile/profile_screen.dart' as _i10;
+import '../views/profile/profile_recipe_view.dart' as _i12;
+import '../views/profile/profile_screen.dart' as _i11;
 import '../views/recipe_creator/recipe_creator.dart' as _i4;
+import '../views/recipe_list_page/recipe_list_page.dart' as _i8;
 import '../views/search/search_page.dart' as _i5;
 import '../views/single_recipe/recipe_page.dart' as _i3;
 
 class AppRouter extends _i6.RootStackRouter {
-  AppRouter([_i12.GlobalKey<_i12.NavigatorState>? navigatorKey])
+  AppRouter([_i13.GlobalKey<_i13.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
@@ -48,12 +50,15 @@ class AppRouter extends _i6.RootStackRouter {
       return _i6.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i3.RecipePage(
-              key: args.key, recipeId: args.recipeId, recipe: args.recipe));
+              key: args.key,
+              recipeId: args.recipeId,
+              recipe: args.recipe,
+              heroTag: args.heroTag));
     },
     RecipeCreator.name: (routeData) {
       final args = routeData.argsAs<RecipeCreatorArgs>(
           orElse: () => const RecipeCreatorArgs());
-      return _i6.MaterialPageX<_i13.RecipeModel>(
+      return _i6.MaterialPageX<_i14.RecipeModel>(
           routeData: routeData,
           child: _i4.RecipeCreatorScreen(
               key: args.key,
@@ -63,7 +68,7 @@ class AppRouter extends _i6.RootStackRouter {
     RecipeEditor.name: (routeData) {
       final args = routeData.argsAs<RecipeEditorArgs>(
           orElse: () => const RecipeEditorArgs());
-      return _i6.MaterialPageX<_i13.RecipeModel>(
+      return _i6.MaterialPageX<_i14.RecipeModel>(
           routeData: routeData,
           child: _i4.RecipeCreatorScreen(
               key: args.key,
@@ -74,8 +79,8 @@ class AppRouter extends _i6.RootStackRouter {
       return _i6.CustomPage<dynamic>(
           routeData: routeData,
           child: const _i5.SearchPage(),
-          transitionsBuilder: _i6.TransitionsBuilders.slideRight,
-          durationInMilliseconds: 250,
+          transitionsBuilder: _i15.CustomTransitions.slideRight,
+          durationInMilliseconds: 200,
           opaque: true,
           barrierDismissible: false);
     },
@@ -95,9 +100,13 @@ class AppRouter extends _i6.RootStackRouter {
       return _i6.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i7.HomeScreen());
     },
+    RecipeListRoute.name: (routeData) {
+      return _i6.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i8.RecipeListPage());
+    },
     CategoriesScreen.name: (routeData) {
       return _i6.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i8.CategoriesScreen());
+          routeData: routeData, child: const _i9.CategoriesScreen());
     },
     CategoryRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
@@ -106,14 +115,14 @@ class AppRouter extends _i6.RootStackRouter {
               categoryId: pathParams.getString('categoryId')));
       return _i6.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i9.SingleCategoryScreen(
+          child: _i10.SingleCategoryScreen(
               key: args.key,
               category: args.category,
               categoryId: args.categoryId));
     },
     ProfileScreen.name: (routeData) {
       return _i6.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i10.ProfileScreen());
+          routeData: routeData, child: const _i11.ProfileScreen());
     },
     FavoritesRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
@@ -123,7 +132,7 @@ class AppRouter extends _i6.RootStackRouter {
       return _i6.MaterialPageX<dynamic>(
           routeData: routeData,
           child:
-              _i11.ProfileRecipeView(key: args.key, listMode: args.listMode));
+              _i12.ProfileRecipeView(key: args.key, listMode: args.listMode));
     },
     OwnedRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
@@ -133,7 +142,7 @@ class AppRouter extends _i6.RootStackRouter {
       return _i6.MaterialPageX<dynamic>(
           routeData: routeData,
           child:
-              _i11.ProfileRecipeView(key: args.key, listMode: args.listMode));
+              _i12.ProfileRecipeView(key: args.key, listMode: args.listMode));
     }
   };
 
@@ -148,7 +157,9 @@ class AppRouter extends _i6.RootStackRouter {
               parent: MainRoute.name,
               children: [
                 _i6.RouteConfig(HomeScreen.name,
-                    path: '', parent: HomeRouter.name)
+                    path: '', parent: HomeRouter.name),
+                _i6.RouteConfig(RecipeListRoute.name,
+                    path: 'browse', parent: HomeRouter.name)
               ]),
           _i6.RouteConfig(CategoriesRouter.name,
               path: 'categories',
@@ -199,27 +210,34 @@ class MainRoute extends _i6.PageRouteInfo<void> {
 /// [_i3.RecipePage]
 class RecipeRoute extends _i6.PageRouteInfo<RecipeRouteArgs> {
   RecipeRoute(
-      {_i12.Key? key, required String recipeId, _i13.RecipeModel? recipe})
+      {_i13.Key? key,
+      required String recipeId,
+      _i14.RecipeModel? recipe,
+      _i13.UniqueKey? heroTag})
       : super(RecipeRoute.name,
             path: '/recipes/:recipeId',
-            args: RecipeRouteArgs(key: key, recipeId: recipeId, recipe: recipe),
+            args: RecipeRouteArgs(
+                key: key, recipeId: recipeId, recipe: recipe, heroTag: heroTag),
             rawPathParams: {'recipeId': recipeId});
 
   static const String name = 'RecipeRoute';
 }
 
 class RecipeRouteArgs {
-  const RecipeRouteArgs({this.key, required this.recipeId, this.recipe});
+  const RecipeRouteArgs(
+      {this.key, required this.recipeId, this.recipe, this.heroTag});
 
-  final _i12.Key? key;
+  final _i13.Key? key;
 
   final String recipeId;
 
-  final _i13.RecipeModel? recipe;
+  final _i14.RecipeModel? recipe;
+
+  final _i13.UniqueKey? heroTag;
 
   @override
   String toString() {
-    return 'RecipeRouteArgs{key: $key, recipeId: $recipeId, recipe: $recipe}';
+    return 'RecipeRouteArgs{key: $key, recipeId: $recipeId, recipe: $recipe, heroTag: $heroTag}';
   }
 }
 
@@ -227,9 +245,9 @@ class RecipeRouteArgs {
 /// [_i4.RecipeCreatorScreen]
 class RecipeCreator extends _i6.PageRouteInfo<RecipeCreatorArgs> {
   RecipeCreator(
-      {_i12.Key? key,
+      {_i13.Key? key,
       String title = "New recipe",
-      _i13.RecipeModel? editableRecipe})
+      _i14.RecipeModel? editableRecipe})
       : super(RecipeCreator.name,
             path: '/recipe-creator',
             args: RecipeCreatorArgs(
@@ -242,11 +260,11 @@ class RecipeCreatorArgs {
   const RecipeCreatorArgs(
       {this.key, this.title = "New recipe", this.editableRecipe});
 
-  final _i12.Key? key;
+  final _i13.Key? key;
 
   final String title;
 
-  final _i13.RecipeModel? editableRecipe;
+  final _i14.RecipeModel? editableRecipe;
 
   @override
   String toString() {
@@ -258,9 +276,9 @@ class RecipeCreatorArgs {
 /// [_i4.RecipeCreatorScreen]
 class RecipeEditor extends _i6.PageRouteInfo<RecipeEditorArgs> {
   RecipeEditor(
-      {_i12.Key? key,
+      {_i13.Key? key,
       String title = "New recipe",
-      _i13.RecipeModel? editableRecipe})
+      _i14.RecipeModel? editableRecipe})
       : super(RecipeEditor.name,
             path: '/recipe-editor',
             args: RecipeEditorArgs(
@@ -273,11 +291,11 @@ class RecipeEditorArgs {
   const RecipeEditorArgs(
       {this.key, this.title = "New recipe", this.editableRecipe});
 
-  final _i12.Key? key;
+  final _i13.Key? key;
 
   final String title;
 
-  final _i13.RecipeModel? editableRecipe;
+  final _i14.RecipeModel? editableRecipe;
 
   @override
   String toString() {
@@ -330,7 +348,15 @@ class HomeScreen extends _i6.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i8.CategoriesScreen]
+/// [_i8.RecipeListPage]
+class RecipeListRoute extends _i6.PageRouteInfo<void> {
+  const RecipeListRoute() : super(RecipeListRoute.name, path: 'browse');
+
+  static const String name = 'RecipeListRoute';
+}
+
+/// generated route for
+/// [_i9.CategoriesScreen]
 class CategoriesScreen extends _i6.PageRouteInfo<void> {
   const CategoriesScreen() : super(CategoriesScreen.name, path: '');
 
@@ -338,10 +364,10 @@ class CategoriesScreen extends _i6.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i9.SingleCategoryScreen]
+/// [_i10.SingleCategoryScreen]
 class CategoryRoute extends _i6.PageRouteInfo<CategoryRouteArgs> {
   CategoryRoute(
-      {_i12.Key? key, _i14.CategoryModel? category, required String categoryId})
+      {_i13.Key? key, _i16.CategoryModel? category, required String categoryId})
       : super(CategoryRoute.name,
             path: ':categoryId',
             args: CategoryRouteArgs(
@@ -354,9 +380,9 @@ class CategoryRoute extends _i6.PageRouteInfo<CategoryRouteArgs> {
 class CategoryRouteArgs {
   const CategoryRouteArgs({this.key, this.category, required this.categoryId});
 
-  final _i12.Key? key;
+  final _i13.Key? key;
 
-  final _i14.CategoryModel? category;
+  final _i16.CategoryModel? category;
 
   final String categoryId;
 
@@ -367,7 +393,7 @@ class CategoryRouteArgs {
 }
 
 /// generated route for
-/// [_i10.ProfileScreen]
+/// [_i11.ProfileScreen]
 class ProfileScreen extends _i6.PageRouteInfo<void> {
   const ProfileScreen() : super(ProfileScreen.name, path: '');
 
@@ -375,9 +401,9 @@ class ProfileScreen extends _i6.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i11.ProfileRecipeView]
+/// [_i12.ProfileRecipeView]
 class FavoritesRoute extends _i6.PageRouteInfo<FavoritesRouteArgs> {
-  FavoritesRoute({_i12.Key? key, required String listMode})
+  FavoritesRoute({_i13.Key? key, required String listMode})
       : super(FavoritesRoute.name,
             path: ':listMode',
             args: FavoritesRouteArgs(key: key, listMode: listMode),
@@ -389,7 +415,7 @@ class FavoritesRoute extends _i6.PageRouteInfo<FavoritesRouteArgs> {
 class FavoritesRouteArgs {
   const FavoritesRouteArgs({this.key, required this.listMode});
 
-  final _i12.Key? key;
+  final _i13.Key? key;
 
   final String listMode;
 
@@ -400,9 +426,9 @@ class FavoritesRouteArgs {
 }
 
 /// generated route for
-/// [_i11.ProfileRecipeView]
+/// [_i12.ProfileRecipeView]
 class OwnedRoute extends _i6.PageRouteInfo<OwnedRouteArgs> {
-  OwnedRoute({_i12.Key? key, required String listMode})
+  OwnedRoute({_i13.Key? key, required String listMode})
       : super(OwnedRoute.name,
             path: ':listMode',
             args: OwnedRouteArgs(key: key, listMode: listMode),
@@ -414,7 +440,7 @@ class OwnedRoute extends _i6.PageRouteInfo<OwnedRouteArgs> {
 class OwnedRouteArgs {
   const OwnedRouteArgs({this.key, required this.listMode});
 
-  final _i12.Key? key;
+  final _i13.Key? key;
 
   final String listMode;
 

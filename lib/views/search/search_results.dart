@@ -62,17 +62,7 @@ class SearchResultList extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 14),
                                 child: RecipeItem(
-                                  title: recipe.name!,
-                                  difficulty: recipe.difficulty!,
-                                  description: recipe.shortDescription!,
-                                  timeEstimate: recipe.preparationTime!,
-                                  imageUrl: recipe.picture,
-                                  blurhash: recipe.blurhash,
-                                  categories: recipe.categories!,
-                                  tags: recipe.tags!,
-                                  onTap: () {
-                                    router.push(RecipeRoute(recipe: recipe, recipeId: recipe.id!));
-                                  },
+                                  recipe: recipe,
                                 ),
                               )),
                         );

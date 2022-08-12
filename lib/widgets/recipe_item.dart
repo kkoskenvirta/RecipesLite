@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/models/category/category_model.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
+import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/int_extension.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
@@ -11,40 +13,26 @@ import 'package:flutter_e_commerce/widgets/tag_chip.dart';
 import 'package:flutter_e_commerce/widgets/tag_list.dart';
 import 'package:flutter_e_commerce/widgets/time_chip.dart';
 
+import '../models/recipe/recipe_model.dart';
+
 class RecipeItem extends StatelessWidget {
-  final String? imageUrl;
-  final String title;
-  final String description;
+  final RecipeModel recipe;
 
-  final String difficulty;
-  final String distance;
-  final int timeEstimate;
-  final VoidCallback? onTap;
-  final List<CategoryModel> categories;
-  final List<TagModel> tags;
-
-  final String? blurhash;
   const RecipeItem({
     Key? key,
-    this.imageUrl,
-    this.title = "",
-    this.difficulty = "",
-    this.description = "",
-    this.distance = "",
-    this.blurhash = "",
-    this.categories = const [],
-    this.tags = const [],
-    this.timeEstimate = 0,
-    this.onTap,
+    required this.recipe,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final List categoryList = categories.isNotEmpty ? Set.from(categories).toList() : [];
-    final List tagList = tags.isNotEmpty ? Set.from(tags).toList() : [];
-
+    final List categoryList = recipe.categories!.isNotEmpty ? Set.from(recipe.categories!).toList() : [];
+    final List tagList = recipe.tags!.isNotEmpty ? Set.from(recipe.tags!).toList() : [];
+    final router = AutoRouter.of(context);
+    final UniqueKey heroTag = UniqueKey();
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        router.push(RecipeRoute(recipe: recipe, recipeId: recipe.id!, heroTag: heroTag));
+      },
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -61,14 +49,16 @@ class RecipeItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Hero(
-              tag: imageUrl ?? "hero",
+              tag: heroTag,
               child: Material(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(Dimensions.radius15),
                 child: Stack(
                   children: [
                     BlurhashImage(
                       aspectRatio: 1,
-                      image: imageUrl,
-                      blurhash: blurhash!,
+                      image: recipe.picture,
+                      blurhash: recipe.blurhash!,
                       borderRadius: BorderRadius.circular(Dimensions.radius15),
                     ),
                     Positioned(
@@ -76,7 +66,7 @@ class RecipeItem extends StatelessWidget {
                       top: 0,
                       child: TimeChip(
                         size: 12,
-                        text: timeEstimate.parseToTimeString(),
+                        text: recipe.preparationTime!.parseToTimeString(),
                         horizontal: 8,
                         vertical: 7,
                       ),
@@ -93,25 +83,18 @@ class RecipeItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    TagList(categories: categories, tags: tags),
-                    const SizedBox(height: 6),
+                    TagList(categories: recipe.categories!, tags: recipe.tags!),
+                    const SizedBox(height: 4),
                     Padding(
                       padding: const EdgeInsets.only(right: 20),
                       child: LargeText(
-                        text: title,
+                        text: recipe.name!,
                         overFlow: TextOverflow.ellipsis,
                         size: 18,
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    // const Spacer(),
-                    SmallText(text: description),
-                    // const SizedBox(height: 4),
-
-                    // InformationBar(
-                    //   status: difficulty,
-                    //   timeEstimate: timeEstimate,
-                    // )
+                    const SizedBox(height: 3),
+                    SmallText(text: recipe.shortDescription!),
                   ],
                 ),
               ),

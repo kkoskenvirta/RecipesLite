@@ -10,6 +10,7 @@ import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
+import 'package:flutter_e_commerce/widgets/recipe_item.dart';
 
 import '../../routes/app_router.gr.dart';
 
@@ -57,8 +58,6 @@ class ProfileRecipeViewBody extends StatelessWidget {
   final List<RecipeModel> recipes;
   @override
   Widget build(BuildContext context) {
-    final router = AutoRouter.of(context);
-
     return Column(
       children: [
         BlocBuilder<UserDataCubit, UserDataState>(
@@ -76,17 +75,8 @@ class ProfileRecipeViewBody extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: recipeList.length,
                   itemBuilder: (context, index) {
-                    final RecipeModel recipe = recipeList[index];
-                    return PopularListItem(
-                      title: recipe.name!,
-                      difficulty: recipe.difficulty!,
-                      description: recipe.shortDescription!,
-                      timeEstimate: recipe.preparationTime!,
-                      imageUrl: recipe.picture,
-                      blurhash: recipe.blurhash,
-                      onTap: () {
-                        router.push(RecipeRoute(recipe: recipe, recipeId: recipe.id!));
-                      },
+                    return RecipeItem(
+                      recipe: recipeList[index],
                     );
                   },
                 );

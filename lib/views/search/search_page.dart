@@ -56,13 +56,11 @@ class _BodyState extends State<_Body> {
         _searchFieldY = searchFieldPosition.dy;
         _chipName = chipName;
       });
-      Timer(const Duration(milliseconds: 125), () {
-        print(_chipY);
-        animate();
-        Timer(const Duration(milliseconds: 125), () {
-          setState(() {
-            animateChip = false;
-          });
+      print(_chipY);
+      animate();
+      Timer(const Duration(milliseconds: 150), () {
+        setState(() {
+          animateChip = false;
         });
       });
     }
@@ -105,28 +103,30 @@ class _BodyState extends State<_Body> {
             ),
           ),
         ),
-        AnimatedPositioned(
-          key: const Key('animationChip'),
-          curve: Curves.easeIn,
-          top: animateChip ? _searchFieldY! - 2 : _chipY,
-          left: animateChip ? _searchFieldX! + 30 : _chipX,
-          duration: const Duration(milliseconds: 125),
-          child: IgnorePointer(
-            child: Material(
-              color: Colors.transparent,
-              child: Opacity(
-                opacity: animateChip ? 0.25 : 0.0,
-                child: Chip(
-                  backgroundColor: animateChip ? RecipeAppTheme.colors.pinkLightPlus : Colors.transparent,
-                  label: SmallText(
-                    text: _chipName ?? "-",
-                    color: animateChip ? Colors.black87 : Colors.transparent,
+        if (_chipX != 0.0)
+          AnimatedPositioned(
+            key: const Key('animationChip'),
+            curve: Curves.easeIn,
+            top: animateChip ? _searchFieldY! - 2 : _chipY,
+            left: animateChip ? _searchFieldX! + 30 : _chipX,
+            duration: const Duration(milliseconds: 150),
+            child: IgnorePointer(
+              child: Material(
+                color: Colors.transparent,
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 50),
+                  opacity: animateChip ? 0.35 : 0.0,
+                  child: Chip(
+                    backgroundColor: animateChip ? RecipeAppTheme.colors.pinkLightPlus : Colors.transparent,
+                    label: SmallText(
+                      text: _chipName ?? "-",
+                      color: animateChip ? Colors.black87 : Colors.transparent,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
       ],
     );
   }
