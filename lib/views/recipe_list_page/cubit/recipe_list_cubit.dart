@@ -20,42 +20,29 @@ class RecipeListCubit extends Cubit<RecipeListState> {
   final CategoryRepository _categoryRepository;
 
   Future<void> getRecipes() async {
-    try {
-      emit(state.copyWith(status: RecipeListStatus.loading));
-      if (state.filters != null) {
-        final errorOrRecipeList = await _recipesRepository.getRecipesListWithTags(state.filters!);
-        errorOrRecipeList.fold(
-          (err) => emit(state.copyWith(status: RecipeListStatus.error)),
-          (recipeList) => emit(state.copyWith(status: RecipeListStatus.loaded, recipeList: recipeList!)),
-        );
-      }
+    emit(state.copyWith(listStatus: RecipeListStatus.loading));
+    if (state.filters.isNotEmpty) {
+      final errorOrRecipeList = await _recipesRepository.getRecipesListWithTags(state.filters);
+      errorOrRecipeList.fold(
+        (err) => emit(state.copyWith(listStatus: RecipeListStatus.error)),
+        (recipeList) => emit(state.copyWith(listStatus: RecipeListStatus.loaded, recipeList: recipeList!)),
+      );
+    } else {
       final errorOrRecipeList = await _recipesRepository.getRecipesList();
       errorOrRecipeList.fold(
-        (err) => emit(state.copyWith(status: RecipeListStatus.error)),
-        (recipeList) => emit(state.copyWith(status: RecipeListStatus.loaded, recipeList: recipeList!)),
+        (err) => emit(state.copyWith(listStatus: RecipeListStatus.error)),
+        (recipeList) => emit(state.copyWith(listStatus: RecipeListStatus.loaded, recipeList: recipeList!)),
       );
-    } catch (e) {
-      emit(state.copyWith(status: RecipeListStatus.error));
     }
   }
 
   Future<void> getTags() async {
-    try {
-      emit(state.copyWith(status: RecipeListStatus.loading));
-      final errorOrTags = await _categoryRepository.getTagList();
-      errorOrTags.fold(
-        (err) => emit(state.copyWith(status: RecipeListStatus.error)),
-        (tagList) {
-          if (state.recipeList != null) {
-            emit(state.copyWith(status: RecipeListStatus.loaded, tags: tagList!));
-          } else {
-            emit(state.copyWith(status: RecipeListStatus.loading, tags: tagList!));
-          }
-        },
-      );
-    } catch (e) {
-      emit(state.copyWith(status: RecipeListStatus.error));
-    }
+    emit(state.copyWith(tagStatus: TagStatus.loading));
+    final errorOrTags = await _categoryRepository.getTagList();
+    errorOrTags.fold(
+      (err) => emit(state.copyWith(tagStatus: TagStatus.error)),
+      (tagList) => emit(state.copyWith(tagStatus: TagStatus.loaded, tags: tagList!)),
+    );
   }
 
   updateTagList(TagModel newTag, bool status) {

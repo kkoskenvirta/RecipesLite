@@ -16,7 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$RecipeListState {
-  RecipeListStatus get status => throw _privateConstructorUsedError;
+  RecipeListStatus get listStatus => throw _privateConstructorUsedError;
+  TagStatus get tagStatus => throw _privateConstructorUsedError;
   List<RecipeModel>? get recipeList => throw _privateConstructorUsedError;
   List<TagModel>? get tags => throw _privateConstructorUsedError;
   List<TagModel> get filters => throw _privateConstructorUsedError;
@@ -32,7 +33,8 @@ abstract class $RecipeListStateCopyWith<$Res> {
           RecipeListState value, $Res Function(RecipeListState) then) =
       _$RecipeListStateCopyWithImpl<$Res>;
   $Res call(
-      {RecipeListStatus status,
+      {RecipeListStatus listStatus,
+      TagStatus tagStatus,
       List<RecipeModel>? recipeList,
       List<TagModel>? tags,
       List<TagModel> filters});
@@ -49,16 +51,21 @@ class _$RecipeListStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? status = freezed,
+    Object? listStatus = freezed,
+    Object? tagStatus = freezed,
     Object? recipeList = freezed,
     Object? tags = freezed,
     Object? filters = freezed,
   }) {
     return _then(_value.copyWith(
-      status: status == freezed
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
+      listStatus: listStatus == freezed
+          ? _value.listStatus
+          : listStatus // ignore: cast_nullable_to_non_nullable
               as RecipeListStatus,
+      tagStatus: tagStatus == freezed
+          ? _value.tagStatus
+          : tagStatus // ignore: cast_nullable_to_non_nullable
+              as TagStatus,
       recipeList: recipeList == freezed
           ? _value.recipeList
           : recipeList // ignore: cast_nullable_to_non_nullable
@@ -83,7 +90,8 @@ abstract class _$$_RecipeListStateCopyWith<$Res>
       __$$_RecipeListStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {RecipeListStatus status,
+      {RecipeListStatus listStatus,
+      TagStatus tagStatus,
       List<RecipeModel>? recipeList,
       List<TagModel>? tags,
       List<TagModel> filters});
@@ -102,16 +110,21 @@ class __$$_RecipeListStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? status = freezed,
+    Object? listStatus = freezed,
+    Object? tagStatus = freezed,
     Object? recipeList = freezed,
     Object? tags = freezed,
     Object? filters = freezed,
   }) {
     return _then(_$_RecipeListState(
-      status: status == freezed
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
+      listStatus: listStatus == freezed
+          ? _value.listStatus
+          : listStatus // ignore: cast_nullable_to_non_nullable
               as RecipeListStatus,
+      tagStatus: tagStatus == freezed
+          ? _value.tagStatus
+          : tagStatus // ignore: cast_nullable_to_non_nullable
+              as TagStatus,
       recipeList: recipeList == freezed
           ? _value._recipeList
           : recipeList // ignore: cast_nullable_to_non_nullable
@@ -132,7 +145,8 @@ class __$$_RecipeListStateCopyWithImpl<$Res>
 
 class _$_RecipeListState implements _RecipeListState {
   const _$_RecipeListState(
-      {required this.status,
+      {required this.listStatus,
+      required this.tagStatus,
       required final List<RecipeModel>? recipeList,
       required final List<TagModel>? tags,
       required final List<TagModel> filters})
@@ -141,7 +155,9 @@ class _$_RecipeListState implements _RecipeListState {
         _filters = filters;
 
   @override
-  final RecipeListStatus status;
+  final RecipeListStatus listStatus;
+  @override
+  final TagStatus tagStatus;
   final List<RecipeModel>? _recipeList;
   @override
   List<RecipeModel>? get recipeList {
@@ -169,7 +185,7 @@ class _$_RecipeListState implements _RecipeListState {
 
   @override
   String toString() {
-    return 'RecipeListState(status: $status, recipeList: $recipeList, tags: $tags, filters: $filters)';
+    return 'RecipeListState(listStatus: $listStatus, tagStatus: $tagStatus, recipeList: $recipeList, tags: $tags, filters: $filters)';
   }
 
   @override
@@ -177,7 +193,9 @@ class _$_RecipeListState implements _RecipeListState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_RecipeListState &&
-            const DeepCollectionEquality().equals(other.status, status) &&
+            const DeepCollectionEquality()
+                .equals(other.listStatus, listStatus) &&
+            const DeepCollectionEquality().equals(other.tagStatus, tagStatus) &&
             const DeepCollectionEquality()
                 .equals(other._recipeList, _recipeList) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
@@ -187,7 +205,8 @@ class _$_RecipeListState implements _RecipeListState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(status),
+      const DeepCollectionEquality().hash(listStatus),
+      const DeepCollectionEquality().hash(tagStatus),
       const DeepCollectionEquality().hash(_recipeList),
       const DeepCollectionEquality().hash(_tags),
       const DeepCollectionEquality().hash(_filters));
@@ -200,13 +219,16 @@ class _$_RecipeListState implements _RecipeListState {
 
 abstract class _RecipeListState implements RecipeListState {
   const factory _RecipeListState(
-      {required final RecipeListStatus status,
+      {required final RecipeListStatus listStatus,
+      required final TagStatus tagStatus,
       required final List<RecipeModel>? recipeList,
       required final List<TagModel>? tags,
       required final List<TagModel> filters}) = _$_RecipeListState;
 
   @override
-  RecipeListStatus get status;
+  RecipeListStatus get listStatus;
+  @override
+  TagStatus get tagStatus;
   @override
   List<RecipeModel>? get recipeList;
   @override

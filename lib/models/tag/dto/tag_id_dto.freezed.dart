@@ -21,7 +21,7 @@ TagIdDTO _$TagIdDTOFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$TagIdDTO {
   @JsonKey(name: "id")
-  int get relationId => throw _privateConstructorUsedError;
+  int? get relationId => throw _privateConstructorUsedError;
   @JsonKey(name: "tag_id")
   TagDataDTO get tag => throw _privateConstructorUsedError;
 
@@ -36,7 +36,7 @@ abstract class $TagIdDTOCopyWith<$Res> {
   factory $TagIdDTOCopyWith(TagIdDTO value, $Res Function(TagIdDTO) then) =
       _$TagIdDTOCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: "id") int relationId,
+      {@JsonKey(name: "id") int? relationId,
       @JsonKey(name: "tag_id") TagDataDTO tag});
 
   $TagDataDTOCopyWith<$Res> get tag;
@@ -59,7 +59,7 @@ class _$TagIdDTOCopyWithImpl<$Res> implements $TagIdDTOCopyWith<$Res> {
       relationId: relationId == freezed
           ? _value.relationId
           : relationId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       tag: tag == freezed
           ? _value.tag
           : tag // ignore: cast_nullable_to_non_nullable
@@ -82,7 +82,7 @@ abstract class _$$_TagIdDTOCopyWith<$Res> implements $TagIdDTOCopyWith<$Res> {
       __$$_TagIdDTOCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: "id") int relationId,
+      {@JsonKey(name: "id") int? relationId,
       @JsonKey(name: "tag_id") TagDataDTO tag});
 
   @override
@@ -108,7 +108,7 @@ class __$$_TagIdDTOCopyWithImpl<$Res> extends _$TagIdDTOCopyWithImpl<$Res>
       relationId: relationId == freezed
           ? _value.relationId
           : relationId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       tag: tag == freezed
           ? _value.tag
           : tag // ignore: cast_nullable_to_non_nullable
@@ -130,7 +130,7 @@ class _$_TagIdDTO extends _TagIdDTO {
 
   @override
   @JsonKey(name: "id")
-  final int relationId;
+  final int? relationId;
   @override
   @JsonKey(name: "tag_id")
   final TagDataDTO tag;
@@ -172,7 +172,7 @@ class _$_TagIdDTO extends _TagIdDTO {
 
 abstract class _TagIdDTO extends TagIdDTO {
   factory _TagIdDTO(
-      {@JsonKey(name: "id") required final int relationId,
+      {@JsonKey(name: "id") required final int? relationId,
       @JsonKey(name: "tag_id") required final TagDataDTO tag}) = _$_TagIdDTO;
   _TagIdDTO._() : super._();
 
@@ -180,7 +180,7 @@ abstract class _TagIdDTO extends TagIdDTO {
 
   @override
   @JsonKey(name: "id")
-  int get relationId;
+  int? get relationId;
   @override
   @JsonKey(name: "tag_id")
   TagDataDTO get tag;

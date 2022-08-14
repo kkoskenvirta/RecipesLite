@@ -8,7 +8,7 @@ part 'tag_id_dto.g.dart';
 @freezed
 class TagIdDTO with _$TagIdDTO {
   factory TagIdDTO({
-    @JsonKey(name: "id") required int relationId,
+    @JsonKey(name: "id") required int? relationId,
     @JsonKey(name: "tag_id") required TagDataDTO tag,
   }) = _TagIdDTO;
 

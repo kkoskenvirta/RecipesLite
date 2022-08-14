@@ -1,6 +1,7 @@
 import 'package:auto_animated/auto_animated.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:flutter_e_commerce/views/recipe_list_page/cubit/recipe_list_cubit.dart';
@@ -47,7 +48,9 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RecipeListCubit, RecipeListState>(
       builder: (context, state) {
-        switch (state.status) {
+        final recipeListCubit = BlocProvider.of<RecipeListCubit>(context);
+
+        switch (state.listStatus) {
           case RecipeListStatus.initial:
             return const SliverToBoxAdapter(
               child: Padding(
@@ -65,41 +68,79 @@ class _Body extends StatelessWidget {
           case RecipeListStatus.loaded:
             final recipeList = state.recipeList;
 
-            return SliverPadding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              sliver: LiveSliverList(
-                  controller: ScrollController(),
-                  itemCount: recipeList!.length,
-                  showItemDuration: const Duration(milliseconds: 150),
-                  showItemInterval: const Duration(milliseconds: 50),
-                  itemBuilder: (context, index, animation) {
-                    final recipe = recipeList[index];
-                    return FadeTransition(
-                      opacity: Tween<double>(
-                        begin: 0,
-                        end: 1,
-                      ).animate(animation),
-                      // And slide transition
-                      child: SlideTransition(
-                          position: Tween<Offset>(
-                            begin: const Offset(0, -0.1),
-                            end: Offset.zero,
-                          ).animate(animation),
-                          // Paste you Widget
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 14),
-                            child: RecipeItem(
-                              recipe: recipe,
-                            ),
-                          )),
-                    );
-                  }),
-            );
+            return SliverList(recipeList: recipeList, recipeListCubit: recipeListCubit);
 
           default:
-            return SliverToBoxAdapter(child: const Text("Error"));
+            return const SliverToBoxAdapter(child: Text("Error"));
         }
       },
+    );
+  }
+}
+
+class SliverList extends StatefulWidget {
+  const SliverList({
+    Key? key,
+    required this.recipeList,
+    required this.recipeListCubit,
+  }) : super(key: key);
+
+  final List<RecipeModel>? recipeList;
+  final RecipeListCubit recipeListCubit;
+  @override
+  State<SliverList> createState() => _SliverListState();
+}
+
+class _SliverListState extends State<SliverList> {
+  final ScrollController _scrollController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent &&
+          widget.recipeListCubit.state.listStatus != RecipeListStatus.loading) {
+        widget.recipeListCubit.getRecipes();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      sliver: LiveSliverList(
+          controller: _scrollController,
+          itemCount: widget.recipeList!.length,
+          showItemDuration: const Duration(milliseconds: 150),
+          showItemInterval: const Duration(milliseconds: 50),
+          itemBuilder: (context, index, animation) {
+            final recipe = widget.recipeList![index];
+            return FadeTransition(
+              opacity: Tween<double>(
+                begin: 0,
+                end: 1,
+              ).animate(animation),
+              // And slide transition
+              child: SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(0, -0.1),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  // Paste you Widget
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 14),
+                    child: RecipeItem(
+                      recipe: recipe,
+                    ),
+                  )),
+            );
+          }),
     );
   }
 }
@@ -148,13 +189,20 @@ class _FilterChipsState extends State<FilterChips> with TickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RecipeListCubit, RecipeListState>(
+      // buildWhen: (previous, current) {
+      //   if (previous.tags == null) {
+      //     return true;
+      //   } else {
+      //     return false;
+      //   }
+      // },
       builder: (context, state) {
-        switch (state.status) {
-          case RecipeListStatus.initial:
+        switch (state.tagStatus) {
+          case TagStatus.initial:
             return const SizedBox();
-          case RecipeListStatus.loading:
+          case TagStatus.loading:
             return const SizedBox();
-          case RecipeListStatus.loaded:
+          case TagStatus.loaded:
             final tags = state.tags;
             final List tagList = Set.from(tags!).toList();
             _animationController.forward();

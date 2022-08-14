@@ -54,7 +54,8 @@ class RecipesRepository {
       }).toList();
 
       String filterQueryString = filterQueryList.join(',');
-      final String filterQuery = '{"_and":[{"_and":[{"_and":[$filterQueryString]}]},{"status":{"_neq":"archived"}}]}';
+      final String filterQuery =
+          '&filter={"_and":[{"_and":[{"_and":[$filterQueryString]}]},{"status":{"_neq":"archived"}}]}';
 
       final Response response = await _tokenDio.get('$baseUrl$recipesPathFields$filterQuery');
 
