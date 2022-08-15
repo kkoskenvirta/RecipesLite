@@ -130,7 +130,7 @@ class IngredientRow extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: Colors.pink.shade50,
+              color: Color(0xFFFCE4EC),
             ),
             child: ListTile(
               title: LargeText(

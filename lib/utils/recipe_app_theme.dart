@@ -36,7 +36,7 @@ class RecipeAppTheme {
     chipTheme: ChipThemeData(
       backgroundColor: colors.pinkLightLow,
       selectedColor: colors.pinkAccent,
-      elevation: 1,
+      elevation: 0.5,
       pressElevation: 3,
     ),
     buttonTheme: ButtonThemeData(
@@ -53,15 +53,7 @@ class RecipeAppTheme {
         // surfaceTintColor: Colors.pink.shade400,
       ),
     ),
-    textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(
-        backgroundColor: colors.pinkLightLow,
-        visualDensity: VisualDensity.comfortable,
-        textStyle: const TextStyle(
-          color: Colors.white,
-        ),
-      ),
-    ),
+    textButtonTheme: TextButtonThemeData(),
     // primarySwatch: Palette.pToLight,
     primarySwatch: createMaterialColor(colors.pinkAccent),
 

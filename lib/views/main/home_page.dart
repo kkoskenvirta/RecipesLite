@@ -140,6 +140,13 @@ class _HomePageBodyState extends State<HomePageBody> {
                         LargeText(text: "Popular recipes"),
                         TextButton(
                           child: SmallText(text: "SHOW ALL"),
+                          style: TextButton.styleFrom(
+                            backgroundColor: RecipeAppTheme.colors.pinkLightLow,
+                            visualDensity: VisualDensity.comfortable,
+                            textStyle: const TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
                           onPressed: () {
                             context.router.push(const RecipeListRoute());
                           },

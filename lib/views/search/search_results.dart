@@ -65,7 +65,7 @@ class SearchResultList extends StatelessWidget {
                         );
                       }),
                 )
-              : const SliverToBoxAdapter(child: SearchError(text: "No results found 😪"));
+              : const SliverToBoxAdapter(child: SearchError(text: "No recipes found 🥺"));
         case RecipeSearchStatus.error:
           return const SliverToBoxAdapter(child: SearchError(text: "Something went wrong 😪"));
 

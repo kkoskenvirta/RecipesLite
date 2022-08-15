@@ -453,6 +453,9 @@ class CustomStepperControls extends StatelessWidget {
             Container(
               margin: const EdgeInsetsDirectional.only(start: 8.0),
               child: TextButton(
+                style: TextButton.styleFrom(
+                  visualDensity: VisualDensity.comfortable,
+                ),
                 onPressed: details.onStepCancel,
                 child: details.currentStep > 0 ? const Text("Previous") : const Text("Cancel"),
               ),

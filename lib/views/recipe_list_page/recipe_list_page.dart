@@ -8,6 +8,7 @@ import 'package:flutter_e_commerce/models/tag/tag_model.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:flutter_e_commerce/views/recipe_list_page/cubit/recipe_list_cubit.dart';
+import 'package:flutter_e_commerce/views/search/search_results.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/recipe_item.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
@@ -120,9 +121,9 @@ class _Body extends StatelessWidget {
             if (recipeList != null && recipeList.isNotEmpty) {
               return SliverList(recipeList: recipeList, tagFilters: state.tagFilters);
             } else {
-              return SliverToBoxAdapter(
+              return const SliverToBoxAdapter(
                 child: Center(
-                  child: LargeText(text: "No results"),
+                  child: SearchError(text: "No recipes found 🥺"),
                 ),
               );
             }

@@ -7,6 +7,7 @@ import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
+import 'package:flutter_e_commerce/views/search/search_results.dart';
 import 'package:flutter_e_commerce/views/single_category_page/cubit/single_category_cubit.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/recipe_item.dart';
@@ -129,9 +130,9 @@ class _Body extends StatelessWidget {
             if (recipeList != null && recipeList.isNotEmpty) {
               return SliverList(singleCategory: recipeList, tagFilters: state.tagFilters);
             } else {
-              return SliverToBoxAdapter(
+              return const SliverToBoxAdapter(
                 child: Center(
-                  child: LargeText(text: "No results"),
+                  child: SearchError(text: "No recipes found 🥺"),
                 ),
               );
             }
@@ -253,7 +254,7 @@ class _FilterChipsState extends State<FilterChips> with TickerProviderStateMixin
                           showCheckmark: false,
                           label: SmallText(
                             text: tag.name,
-                            color: Colors.black87,
+                            color: status ? Colors.white : Colors.black87,
                             size: 14,
                           ),
                           onSelected: ((status) {
