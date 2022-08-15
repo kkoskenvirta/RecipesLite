@@ -1,12 +1,9 @@
-import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_e_commerce/config/api_config.dart';
 import 'package:flutter_e_commerce/models/category/category_model.dart';
 import 'package:flutter_e_commerce/models/file/directus_file.dart';
 import 'package:flutter_e_commerce/models/file/dto/directus_file_dto.dart';
-import 'package:flutter_e_commerce/models/recipe/dto/recipe_data_dto.dart';
 import 'package:flutter_e_commerce/models/recipe/dto/recipe_dto.dart';
 import 'package:flutter_e_commerce/models/recipe/dto/recipe_post_request_dto.dart';
 import 'package:flutter_e_commerce/models/recipe/dto/recipe_single_dto.dart';
@@ -24,12 +21,15 @@ class RecipesRepository {
   final Dio _tokenDio;
   final Dio _dio;
 
-  Future<Either<FetchError, List<RecipeModel>?>> getRecipesList({int? limit, String? filters}) async {
+  Future<Either<FetchError, List<RecipeModel>?>> getRecipesList({int? limit, int? page, String? filters}) async {
     try {
       String resultLimit = '&limit=-1';
       String resultFilters = '';
       if (limit != null) {
         resultLimit = '&limit=$limit';
+      }
+      if (page != null) {
+        resultLimit = '$resultLimit&page=$page';
       }
       if (filters != null) {
         resultFilters = filters;
@@ -47,17 +47,45 @@ class RecipesRepository {
     }
   }
 
-  Future<Either<FetchError, List<RecipeModel>?>> getRecipesListWithTags(List<TagModel> tags) async {
+  Future<Either<FetchError, List<RecipeModel>?>> getRecipesListWithFilters(
+      {int? limit, int? page, required List<TagModel> tags, required List<CategoryModel> categories}) async {
     try {
-      final List<String> filterQueryList = tags.map((tag) {
-        return '{"tags":{"tag_id":{"id":{"_eq":"${tag.id}"}}}}';
-      }).toList();
+      String resultLimit = '&limit=-1';
+      List<String> tagQueryList = [];
+      String tagQueryString = "";
+      List<String> categoryQueryList = [];
+      String categoryQueryString = "";
+      String filterQuery = "";
+      if (limit != null) {
+        resultLimit = '&limit=$limit';
+      }
+      if (page != null) {
+        resultLimit = '$resultLimit&page=$page';
+      }
 
-      String filterQueryString = filterQueryList.join(',');
-      final String filterQuery =
-          '&filter={"_and":[{"_and":[{"_and":[$filterQueryString]}]},{"status":{"_neq":"archived"}}]}';
+      if (categories.isNotEmpty) {
+        categoryQueryList = categories.map((category) {
+          return '{"categories":{"category_category_id":{"category_id":{"_eq":"${category.id}"}}}}';
+        }).toList();
+        categoryQueryString = categoryQueryList.join(',');
+        filterQuery = '&filter={"_and":[{"_and":[{"_and":[$categoryQueryString]}]},{"status":{"_neq":"archived"}}]}';
+      }
 
-      final Response response = await _tokenDio.get('$baseUrl$recipesPathFields$filterQuery');
+      if (tags.isNotEmpty) {
+        tagQueryList = tags.map((tag) {
+          return '{"tags":{"tag_id":{"id":{"_eq":"${tag.id}"}}}}';
+        }).toList();
+        tagQueryString = tagQueryList.join(',');
+        filterQuery = '&filter={"_and":[{"_and":[{"_and":[$tagQueryString]}]},{"status":{"_neq":"archived"}}]}';
+      }
+
+      if (tags.isNotEmpty && categories.isNotEmpty) {
+        filterQuery =
+            '&filter={"_and":[{"_and":[{"_and":[$tagQueryString,$categoryQueryString]}]},{"status":{"_neq":"archived"}}]}';
+        print(filterQuery);
+      }
+
+      final Response response = await _tokenDio.get('$baseUrl$recipesPathFields$filterQuery$resultLimit');
 
       final recipesDTO = RecipeDTO.fromJson(response.data);
       final recipes = recipesDTO.data.map((recipeDataDTO) => recipeDataDTO.toDomain()).toList();
@@ -90,7 +118,6 @@ class RecipesRepository {
   Future<Either<FetchError, List<RecipeModel>>> searchRecipes({required String filters}) async {
     try {
       final Response? response;
-      print('$baseUrl$recipesPathFields$filters');
       response = await _tokenDio.get('$baseUrl$recipesPathFields$filters');
 
       if (response.data != null) {

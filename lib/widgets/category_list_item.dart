@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/config/api_config.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
+import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
@@ -29,12 +30,7 @@ class CategoryListItem extends StatelessWidget {
         margin: EdgeInsets.symmetric(vertical: Dimensions.height10),
         decoration: BoxDecoration(
           color: Colors.white,
-          boxShadow: const [
-            BoxShadow(
-              blurRadius: 10,
-              color: Colors.black12,
-            ),
-          ],
+          boxShadow: [RecipeAppTheme.shadows.normal],
           borderRadius: BorderRadius.circular(Dimensions.radius15),
         ),
         child: Column(

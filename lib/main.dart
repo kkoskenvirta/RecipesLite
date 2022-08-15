@@ -22,8 +22,11 @@ class MyApp extends StatelessWidget {
   static final navigatorKey = GlobalKey<NavigatorState>();
   final AppRouter appRouter = AppRouter();
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
+    // PaintingBinding.instance.imageCache.maximumSizeBytes = 1000 << 20;
+
     return GlobalRepos(
       child: GlobalBlocs(
         child: AuthGuard(

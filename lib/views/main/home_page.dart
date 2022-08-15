@@ -4,13 +4,11 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
-import 'package:flutter_e_commerce/routes/route_service.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/int_extension.dart';
-import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
+import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
-import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/recipe_item.dart';
@@ -20,8 +18,8 @@ import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubi
 import 'package:flutter_e_commerce/widgets/tag_list.dart';
 import 'package:flutter_e_commerce/widgets/time_chip.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({
+class HomePage extends StatelessWidget {
+  const HomePage({
     Key? key,
   }) : super(key: key);
 
@@ -76,12 +74,11 @@ class _HomePageBodyState extends State<HomePageBody> {
 
   @override
   Widget build(BuildContext context) {
-    final router = AutoRouter.of(context);
-    //Home view horizontal slider
     return ColoredBox(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: BlocBuilder<RecipeFetchCubit, RecipeFetchState>(
         builder: (context, state) {
+          print("rebuild");
           switch (state.status) {
             case RecipeFetchStateStatus.initial:
               return const Padding(
@@ -121,7 +118,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                   const SizedBox(
                     height: 10,
                   ),
-                  if (featuredList.length > 0)
+                  if (featuredList.isNotEmpty)
                     DotsIndicator(
                       dotsCount: featuredList.length,
                       position: _currPageValue,
@@ -226,13 +223,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(Dimensions.radius20),
                     color: Colors.pink.shade200,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12.withOpacity(0.025),
-                        spreadRadius: 10,
-                        blurRadius: 13,
-                      )
-                    ],
+                    boxShadow: [RecipeAppTheme.shadows.normal],
                   ),
                   child: Stack(
                     children: [
@@ -241,13 +232,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                         image: recipe.picture,
                         blurhash: recipe.blurhash,
                         height: Dimensions.pageViewContainer,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12.withOpacity(0.1),
-                            spreadRadius: 2,
-                            blurRadius: 10,
-                          )
-                        ],
+                        boxShadow: [RecipeAppTheme.shadows.normal],
                       ),
                       Positioned(
                         left: 0,
@@ -287,7 +272,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                TagList(categories: recipe.categories!, tags: recipe.tags!),
+                                TagList(categories: recipe.categories!, tags: recipe.tags!, tagFilters: const []),
                                 const SizedBox(height: 8),
                                 LargeText(text: recipe.name!),
                                 const SizedBox(height: 8),

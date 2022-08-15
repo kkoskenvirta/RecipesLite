@@ -189,9 +189,10 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                               userDataCubit.getUserData();
                               if (editMode) {
                                 Navigator.pop(context, formDataCubit.state.recipe);
+
                                 _showToast(context);
                               } else {
-                                router.popUntilRouteWithName(HomeRouter.name);
+                                Navigator.pop(context);
                                 _showToast(context);
                               }
                             }

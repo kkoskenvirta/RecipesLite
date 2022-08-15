@@ -67,7 +67,8 @@ class FormDataCubit extends Cubit<FormDataState> {
 
   addIngredient(String name, String amount, String unit) {
     List<IngredientModel> ingredientList = [...state.ingredients];
-    ingredientList.add(IngredientModel(name: name.capitalize(), amount: double.parse(amount), unit: unit));
+    ingredientList
+        .add(IngredientModel(name: name.capitalize(), amount: double.parse(amount.replaceAll(',', '.')), unit: unit));
     emit(state.copyWith(ingredients: ingredientList));
   }
 

@@ -20,7 +20,7 @@ class RecipeAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.showEditButton = false,
     this.showCreateButton = false,
     this.loadedRecipe,
-  })  : preferredSize = const Size.fromHeight(44),
+  })  : preferredSize = const Size.fromHeight(60),
         super(key: key);
 
   final bool transparent;
@@ -48,27 +48,36 @@ class RecipeAppBar extends StatelessWidget implements PreferredSizeWidget {
     return BlocBuilder<SingleRecipeCubit, SingleRecipeState>(
       builder: (context, state) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: AppBar(
             backgroundColor: transparent ? Colors.transparent : null,
             shadowColor: transparent ? Colors.transparent : null,
             elevation: transparent ? 0 : null,
-            leading: CircleAvatar(
-              radius: 28,
-              backgroundColor: Colors.white,
+            leading: Container(
+              height: 55,
+              width: 55,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [RecipeAppTheme.shadows.normal],
+                borderRadius: BorderRadius.circular(50),
+              ),
               child: IconButton(
                 icon: Icon(
                   Icons.chevron_left_rounded,
-                  color: RecipeAppTheme.colors.pinkMedium,
+                  color: RecipeAppTheme.colors.pinkAccent,
                 ),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ),
             actions: [
               if (showEditButton && permission)
-                CircleAvatar(
-                  radius: 28,
-                  backgroundColor: Colors.white,
+                Container(
+                  height: 55,
+                  width: 55,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: Colors.white,
+                      boxShadow: [RecipeAppTheme.shadows.normal]),
                   child: IconButton(
                     onPressed: () async {
                       final singleRecipeCubit = BlocProvider.of<SingleRecipeCubit>(context);
@@ -82,7 +91,10 @@ class RecipeAppBar extends StatelessWidget implements PreferredSizeWidget {
                         singleRecipeCubit.emitUpdatedRecipe(editedRecipe);
                       }
                     },
-                    icon: const Icon(Icons.edit),
+                    icon: Icon(
+                      Icons.edit,
+                      color: RecipeAppTheme.colors.pinkAccent,
+                    ),
                     color: RecipeAppTheme.colors.pinkMedium,
                   ),
                 )

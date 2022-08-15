@@ -1,14 +1,14 @@
-part of 'recipe_list_cubit.dart';
+part of 'single_category_cubit.dart';
 
-enum RecipeListStatus { initial, loading, loaded, error }
+enum SingleCategoryStatus { initial, loading, loaded, error }
 
 enum TagStatus { initial, loading, loaded, error }
 
 @freezed
-class RecipeListState with _$RecipeListState {
-  const factory RecipeListState({
-    required RecipeListStatus listStatus,
-    required RecipeListStatus fetchingMore,
+class SingleCategoryState with _$SingleCategoryState {
+  const factory SingleCategoryState({
+    required SingleCategoryStatus listStatus,
+    required SingleCategoryStatus fetchingMore,
     required TagStatus tagStatus,
     required List<RecipeModel>? recipeList,
     required int recipeListPage,
@@ -16,12 +16,12 @@ class RecipeListState with _$RecipeListState {
     required List<TagModel>? tags,
     required List<TagModel> tagFilters,
     required List<CategoryModel> categoryFilters,
-  }) = _RecipeListState;
+  }) = _SingleCategoryState;
 
-  factory RecipeListState.initial() {
-    return const RecipeListState(
-      listStatus: RecipeListStatus.initial,
-      fetchingMore: RecipeListStatus.initial,
+  factory SingleCategoryState.initial() {
+    return const SingleCategoryState(
+      listStatus: SingleCategoryStatus.initial,
+      fetchingMore: SingleCategoryStatus.initial,
       tagStatus: TagStatus.initial,
       recipeList: [],
       recipeListPage: 1,

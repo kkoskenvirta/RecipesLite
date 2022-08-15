@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/auth/cubit/auth_cubit.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
-import 'package:flutter_e_commerce/routes/route_service.dart';
 
 class AuthGuard extends StatelessWidget {
   const AuthGuard({

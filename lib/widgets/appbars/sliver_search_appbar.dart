@@ -21,7 +21,6 @@ class SliverSearchAppBar extends StatelessWidget implements PreferredSizeWidget 
     this.showCloseButton = false,
     this.size = 50,
     this.elevation = true,
-    required this.searchFieldKey,
   })  : preferredSize = Size.fromHeight(size),
         super(key: key);
 
@@ -41,8 +40,6 @@ class SliverSearchAppBar extends StatelessWidget implements PreferredSizeWidget 
   final bool showCreateButton;
   final bool showCloseButton;
 
-  final GlobalKey searchFieldKey;
-
   @override
   final Size preferredSize;
 
@@ -57,7 +54,6 @@ class SliverSearchAppBar extends StatelessWidget implements PreferredSizeWidget 
       scrolledUnderElevation: elevation ? null : 0,
       automaticallyImplyLeading: showBackButton ? true : false,
       bottom: SearchBar(
-        searchFieldKey: searchFieldKey,
         size: 50.0,
       ),
       title: LargeText(text: title!),
@@ -77,14 +73,15 @@ class SliverSearchAppBar extends StatelessWidget implements PreferredSizeWidget 
 }
 
 class SearchBar extends StatelessWidget implements PreferredSizeWidget {
-  SearchBar({Key? key, required size, required this.searchFieldKey})
-      : preferredSize = Size.fromHeight(size),
+  SearchBar({
+    Key? key,
+    required size,
+  })  : preferredSize = Size.fromHeight(size),
         super(key: key);
 
   @override
   final Size preferredSize;
 
-  final GlobalKey searchFieldKey;
   @override
   Widget build(BuildContext context) {
     final searchCubit = BlocProvider.of<RecipeSearchCubit>(context);
@@ -100,7 +97,6 @@ class SearchBar extends StatelessWidget implements PreferredSizeWidget {
         return Padding(
           padding: const EdgeInsets.only(left: 12.0, right: 12, top: 0, bottom: 8),
           child: CupertinoSearchTextField(
-            key: searchFieldKey,
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
             placeholder: "Search for recipes",
             decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),

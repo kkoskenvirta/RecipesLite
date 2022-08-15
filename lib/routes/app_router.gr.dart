@@ -16,16 +16,16 @@ import 'package:flutter/material.dart' as _i13;
 import '../models/category/category_model.dart' as _i16;
 import '../models/recipe/recipe_model.dart' as _i14;
 import '../utils/custom_transitions.dart' as _i15;
-import '../views/category_recipes/single_category_page.dart' as _i10;
 import '../views/login/login_page.dart' as _i1;
-import '../views/main/categories/categories_screen.dart' as _i9;
-import '../views/main/home_screen.dart' as _i7;
+import '../views/main/categories/categories_page.dart' as _i9;
+import '../views/main/home_page.dart' as _i7;
 import '../views/main/main_page.dart' as _i2;
 import '../views/profile/profile_recipe_view.dart' as _i12;
 import '../views/profile/profile_screen.dart' as _i11;
 import '../views/recipe_creator/recipe_creator.dart' as _i4;
 import '../views/recipe_list_page/recipe_list_page.dart' as _i8;
 import '../views/search/search_page.dart' as _i5;
+import '../views/single_category_page/single_category_page.dart' as _i10;
 import '../views/single_recipe/recipe_page.dart' as _i3;
 
 class AppRouter extends _i6.RootStackRouter {
@@ -96,17 +96,17 @@ class AppRouter extends _i6.RootStackRouter {
       return _i6.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i6.EmptyRouterPage());
     },
-    HomeScreen.name: (routeData) {
+    HomeRoute.name: (routeData) {
       return _i6.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i7.HomeScreen());
+          routeData: routeData, child: const _i7.HomePage());
     },
     RecipeListRoute.name: (routeData) {
       return _i6.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i8.RecipeListPage());
     },
-    CategoriesScreen.name: (routeData) {
+    CategoriesRoute.name: (routeData) {
       return _i6.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i9.CategoriesScreen());
+          routeData: routeData, child: const _i9.CategoriesPage());
     },
     CategoryRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
@@ -115,9 +115,9 @@ class AppRouter extends _i6.RootStackRouter {
               categoryId: pathParams.getString('categoryId')));
       return _i6.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i10.SingleCategoryScreen(
+          child: _i10.SingleCategoryPage(
               key: args.key,
-              category: args.category,
+              categoryFilters: args.categoryFilters,
               categoryId: args.categoryId));
     },
     ProfileScreen.name: (routeData) {
@@ -156,7 +156,7 @@ class AppRouter extends _i6.RootStackRouter {
               path: 'home',
               parent: MainRoute.name,
               children: [
-                _i6.RouteConfig(HomeScreen.name,
+                _i6.RouteConfig(HomeRoute.name,
                     path: '', parent: HomeRouter.name),
                 _i6.RouteConfig(RecipeListRoute.name,
                     path: 'browse', parent: HomeRouter.name)
@@ -165,7 +165,7 @@ class AppRouter extends _i6.RootStackRouter {
               path: 'categories',
               parent: MainRoute.name,
               children: [
-                _i6.RouteConfig(CategoriesScreen.name,
+                _i6.RouteConfig(CategoriesRoute.name,
                     path: '', parent: CategoriesRouter.name),
                 _i6.RouteConfig(CategoryRoute.name,
                     path: ':categoryId', parent: CategoriesRouter.name)
@@ -340,11 +340,11 @@ class ProfileRouter extends _i6.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i7.HomeScreen]
-class HomeScreen extends _i6.PageRouteInfo<void> {
-  const HomeScreen() : super(HomeScreen.name, path: '');
+/// [_i7.HomePage]
+class HomeRoute extends _i6.PageRouteInfo<void> {
+  const HomeRoute() : super(HomeRoute.name, path: '');
 
-  static const String name = 'HomeScreen';
+  static const String name = 'HomeRoute';
 }
 
 /// generated route for
@@ -356,39 +356,44 @@ class RecipeListRoute extends _i6.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i9.CategoriesScreen]
-class CategoriesScreen extends _i6.PageRouteInfo<void> {
-  const CategoriesScreen() : super(CategoriesScreen.name, path: '');
+/// [_i9.CategoriesPage]
+class CategoriesRoute extends _i6.PageRouteInfo<void> {
+  const CategoriesRoute() : super(CategoriesRoute.name, path: '');
 
-  static const String name = 'CategoriesScreen';
+  static const String name = 'CategoriesRoute';
 }
 
 /// generated route for
-/// [_i10.SingleCategoryScreen]
+/// [_i10.SingleCategoryPage]
 class CategoryRoute extends _i6.PageRouteInfo<CategoryRouteArgs> {
   CategoryRoute(
-      {_i13.Key? key, _i16.CategoryModel? category, required String categoryId})
+      {_i13.Key? key,
+      List<_i16.CategoryModel>? categoryFilters,
+      required String categoryId})
       : super(CategoryRoute.name,
             path: ':categoryId',
             args: CategoryRouteArgs(
-                key: key, category: category, categoryId: categoryId),
+                key: key,
+                categoryFilters: categoryFilters,
+                categoryId: categoryId),
             rawPathParams: {'categoryId': categoryId});
 
   static const String name = 'CategoryRoute';
 }
 
 class CategoryRouteArgs {
-  const CategoryRouteArgs({this.key, this.category, required this.categoryId});
+  const CategoryRouteArgs(
+      {this.key, this.categoryFilters, required this.categoryId});
 
   final _i13.Key? key;
 
-  final _i16.CategoryModel? category;
+  final List<_i16.CategoryModel>? categoryFilters;
 
   final String categoryId;
 
   @override
   String toString() {
-    return 'CategoryRouteArgs{key: $key, category: $category, categoryId: $categoryId}';
+    return 'CategoryRouteArgs{key: $key, categoryFilters: $categoryFilters, categoryId: $categoryId}';
   }
 }
 

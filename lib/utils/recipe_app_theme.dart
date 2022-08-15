@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class RecipeAppTheme {
   static final colors = AppColors();
+  static final shadows = AppShadows();
   ThemeData themeData = ThemeData(
     splashFactory: NoSplash.splashFactory,
     inputDecorationTheme: InputDecorationTheme(
@@ -11,8 +12,7 @@ class RecipeAppTheme {
         decorationColor: colors.pinkMediumPlus,
       ),
       filled: true,
-      fillColor: colors.pinkLightPlus,
-      // contentPadding: EdgeInsets.only(left: 4),
+      fillColor: colors.pinkLightLow,
     ),
     appBarTheme: AppBarTheme(
       centerTitle: true,
@@ -34,16 +34,18 @@ class RecipeAppTheme {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
     ),
     chipTheme: ChipThemeData(
-      backgroundColor: colors.pinkLightPlus,
-      selectedColor: colors.pinkMediumPlus,
+      backgroundColor: colors.pinkLightLow,
+      selectedColor: colors.pinkAccent,
+      elevation: 1,
+      pressElevation: 3,
     ),
-    buttonTheme: const ButtonThemeData(
-      buttonColor: Colors.pink,
+    buttonTheme: ButtonThemeData(
+      buttonColor: colors.pinkAccent,
       textTheme: ButtonTextTheme.primary,
     ),
     iconTheme: IconThemeData(
-        // color: Palette.pToLight.shade100,
-        ),
+      color: colors.pinkAccent,
+    ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         elevation: 0,
@@ -51,11 +53,20 @@ class RecipeAppTheme {
         // surfaceTintColor: Colors.pink.shade400,
       ),
     ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        backgroundColor: colors.pinkLightLow,
+        visualDensity: VisualDensity.comfortable,
+        textStyle: const TextStyle(
+          color: Colors.white,
+        ),
+      ),
+    ),
     // primarySwatch: Palette.pToLight,
-    primarySwatch: createMaterialColor(Color(0xfff381a8)),
+    primarySwatch: createMaterialColor(colors.pinkAccent),
 
     scaffoldBackgroundColor: colors.pinkLight,
-    toggleableActiveColor: colors.pinkMedium, // primaryColor: const Color.fromARGB(255, 252, 242, 246),
+    toggleableActiveColor: colors.pinkAccent, // primaryColor: const Color.fromARGB(255, 252, 242, 246),
     textTheme: TextTheme(
       headline1: GoogleFonts.raleway(fontSize: 52, fontWeight: FontWeight.w600, letterSpacing: -1.5),
       headline2: GoogleFonts.raleway(fontSize: 42, fontWeight: FontWeight.w600, letterSpacing: -0.5),
@@ -74,49 +85,26 @@ class RecipeAppTheme {
   );
 }
 
-//palette.dart
-// class Palette {
-//   static const MaterialColor pToLight = MaterialColor(
-//     0xfff06292, // 0% comes in here, this will be color picked if no shade is selected when defining a Color property which doesn’t require a swatch.
-//     <int, Color>{
-//       50: Color(0xfff2729d), //10%
-//       100: Color(0xfff381a8), //20%
-//       200: Color(0xfff591b3), //30%
-//       300: Color(0xfff6a1be), //40%
-//       400: Color(0xfff6a1be), //50%
-//       500: Color(0xfff9c0d3), //60%
-//       600: Color(0xfffbd0de), //70%
-//       700: Color(0xfffce0e9), //80%
-//       800: Color(0xfffeeff4), //90%
-//       900: Color(0xffffffff), //100%
-//     },
-//   );
-//   static const MaterialColor blueToLight = MaterialColor(
-//     0xff3286f0, // 0% comes in here, this will be color picked if no shade is selected when defining a Color property which doesn’t require a swatch.
-//     <int, Color>{
-//       50: Color(0xff4792f2), //10%
-//       100: Color(0xff5b9ef3), //20%
-//       200: Color(0xff70aaf5), //30%
-//       300: Color(0xff84b6f6), //40%
-//       400: Color(0xff99c3f8), //50%
-//       500: Color(0xffadcff9), //60%
-//       600: Color(0xffc2dbfb), //70%
-//       700: Color(0xffd6e7fc), //80%
-//       800: Color(0xffebf3fe), //90%
-//       900: Color(0xffffffff), //100%
-//     },
-//   );
-// }
-
 class AppColors {
   final blueAccent = const Color(0xff4792f2);
   final blueMedium = const Color(0xff99c3f8);
   final blueLight = const Color(0xffebf3fe);
-  final pinkAccent = const Color(0xfff2729d);
+  final pinkAccent = const Color.fromARGB(255, 245, 128, 167);
   final pinkMediumPlus = const Color(0xfff6a1be);
   final pinkMedium = const Color(0xfff6a1be);
-  final pinkLightPlus = const Color(0xfffce0e9);
-  final pinkLight = const Color(0xfffeeff4);
+  final pinkLightPlus = const Color.fromARGB(255, 248, 209, 221);
+  final pinkLightLow = const Color(0xFFFCE4EC);
+
+  final pinkLight = Color.fromARGB(255, 250, 244, 246);
 
   AppColors();
+}
+
+class AppShadows {
+  final normal = const BoxShadow(
+    blurRadius: 4,
+    color: Colors.black12,
+  );
+
+  AppShadows();
 }

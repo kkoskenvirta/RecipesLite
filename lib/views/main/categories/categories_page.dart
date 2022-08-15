@@ -12,8 +12,8 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../routes/app_router.gr.dart';
 
-class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({
+class CategoriesPage extends StatelessWidget {
+  const CategoriesPage({
     Key? key,
   }) : super(key: key);
 
@@ -28,7 +28,7 @@ class CategoriesScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: const [
-            CategoriesScreenBody(),
+            CategoriesPageBody(),
           ],
         ),
       ),
@@ -36,8 +36,8 @@ class CategoriesScreen extends StatelessWidget {
   }
 }
 
-class CategoriesScreenBody extends StatelessWidget {
-  const CategoriesScreenBody({Key? key}) : super(key: key);
+class CategoriesPageBody extends StatelessWidget {
+  const CategoriesPageBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +67,7 @@ class CategoriesScreenBody extends StatelessWidget {
                         imageUrl: category.picture,
                         blurhash: category.blurhash,
                         onTap: () {
-                          router.push(CategoryRoute(category: category, categoryId: category.id));
+                          router.push(CategoryRoute(categoryFilters: [category], categoryId: category.id));
                         },
                       );
                     },

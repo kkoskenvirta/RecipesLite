@@ -6,25 +6,28 @@ import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 
-part 'recipe_list_cubit.freezed.dart';
-part 'recipe_list_state.dart';
+part 'single_category_cubit.freezed.dart';
+part 'single_category_state.dart';
 
-class RecipeListCubit extends Cubit<RecipeListState> {
-  RecipeListCubit({
+class SingleCategoryCubit extends Cubit<SingleCategoryState> {
+  SingleCategoryCubit({
     required CategoryRepository categoryRepository,
     required RecipesRepository recipesRepository,
   })  : _recipesRepository = recipesRepository,
         _categoryRepository = categoryRepository,
-        super(RecipeListState.initial());
+        super(SingleCategoryState.initial());
 
   final RecipesRepository _recipesRepository;
   final CategoryRepository _categoryRepository;
 
-  Future<void> getRecipes() async {
+  Future<void> getRecipes(List<CategoryModel>? category) async {
+    if (category != null) {
+      emit(state.copyWith(categoryFilters: [...category]));
+    }
     if (state.recipeListPage == 1) {
-      emit(state.copyWith(listStatus: RecipeListStatus.loading));
+      emit(state.copyWith(listStatus: SingleCategoryStatus.loading));
     } else {
-      emit(state.copyWith(fetchingMore: RecipeListStatus.loading));
+      emit(state.copyWith(fetchingMore: SingleCategoryStatus.loading));
     }
     final errorOrRecipeList = await _recipesRepository.getRecipesListWithFilters(
       limit: 15,
@@ -33,12 +36,12 @@ class RecipeListCubit extends Cubit<RecipeListState> {
       categories: state.categoryFilters,
     );
     errorOrRecipeList.fold(
-      (err) => emit(state.copyWith(listStatus: RecipeListStatus.error)),
+      (err) => emit(state.copyWith(listStatus: SingleCategoryStatus.error)),
       (newRecipes) {
         if (newRecipes == null) {
           emit(state.copyWith(
-            listStatus: RecipeListStatus.loaded,
-            fetchingMore: RecipeListStatus.loaded,
+            listStatus: SingleCategoryStatus.loaded,
+            fetchingMore: SingleCategoryStatus.loaded,
             noMoreResults: true,
           ));
           return;
@@ -46,8 +49,8 @@ class RecipeListCubit extends Cubit<RecipeListState> {
         List<RecipeModel> recipeList = [...state.recipeList!];
         recipeList.addAll(newRecipes);
         emit(state.copyWith(
-          listStatus: RecipeListStatus.loaded,
-          fetchingMore: RecipeListStatus.loaded,
+          listStatus: SingleCategoryStatus.loaded,
+          fetchingMore: SingleCategoryStatus.loaded,
           recipeList: recipeList,
           recipeListPage: state.recipeListPage + 1,
         ));
@@ -81,6 +84,6 @@ class RecipeListCubit extends Cubit<RecipeListState> {
       recipeList: [],
       noMoreResults: false,
     ));
-    getRecipes();
+    getRecipes(state.categoryFilters);
   }
 }

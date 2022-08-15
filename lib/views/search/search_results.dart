@@ -3,17 +3,15 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
-import 'package:flutter_e_commerce/routes/app_router.gr.dart';
+import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/views/main/cubit/recipe_search_cubit.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/recipe_item.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
 
 class SearchResultList extends StatelessWidget {
-  const SearchResultList({Key? key, required this.animateMethod, required this.searchFieldKey}) : super(key: key);
-  final Function animateMethod;
-  final GlobalKey searchFieldKey;
+  const SearchResultList({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final scrollController = ScrollController();
@@ -21,8 +19,7 @@ class SearchResultList extends StatelessWidget {
     return BlocBuilder<RecipeSearchCubit, RecipeSearchState>(builder: (context, state) {
       switch (state.status) {
         case RecipeSearchStatus.initial:
-          return SliverToBoxAdapter(
-              child: SearchRecommendations(animateMethod: animateMethod, searchFieldKey: searchFieldKey));
+          return SliverToBoxAdapter(child: SearchRecommendations());
 
         case RecipeSearchStatus.loading:
           return const SliverToBoxAdapter(
@@ -102,9 +99,8 @@ class SearchError extends StatelessWidget {
 }
 
 class SearchRecommendations extends StatelessWidget {
-  SearchRecommendations({Key? key, required this.animateMethod, required this.searchFieldKey}) : super(key: key);
-  final Function animateMethod;
-  final GlobalKey searchFieldKey;
+  SearchRecommendations({Key? key}) : super(key: key);
+
   final List<String> recommendations = ["Lunch", "Breakfast", "Vegan", "Soup", "Gluten-free", "Egg-free", "Asian"];
   @override
   Widget build(BuildContext context) {
@@ -120,13 +116,13 @@ class SearchRecommendations extends StatelessWidget {
               final _key = GlobalKey();
               return ActionChip(
                 key: _key,
+                backgroundColor: RecipeAppTheme.colors.pinkAccent,
                 label: SmallText(
                   text: recommendation,
-                  color: Colors.black87,
+                  color: Colors.white,
                   size: 14,
                 ),
                 onPressed: () {
-                  animateMethod(_key, searchFieldKey, recommendation);
                   BlocProvider.of<RecipeSearchCubit>(context).searchRecipes(recommendation);
                   BlocProvider.of<RecipeSearchCubit>(context).updateSearchString(recommendation);
                   FocusManager.instance.primaryFocus?.unfocus();

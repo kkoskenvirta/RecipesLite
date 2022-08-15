@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'recipe_list_cubit.dart';
+part of 'single_category_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,9 +15,9 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$RecipeListState {
-  RecipeListStatus get listStatus => throw _privateConstructorUsedError;
-  RecipeListStatus get fetchingMore => throw _privateConstructorUsedError;
+mixin _$SingleCategoryState {
+  SingleCategoryStatus get listStatus => throw _privateConstructorUsedError;
+  SingleCategoryStatus get fetchingMore => throw _privateConstructorUsedError;
   TagStatus get tagStatus => throw _privateConstructorUsedError;
   List<RecipeModel>? get recipeList => throw _privateConstructorUsedError;
   int get recipeListPage => throw _privateConstructorUsedError;
@@ -27,18 +27,18 @@ mixin _$RecipeListState {
   List<CategoryModel> get categoryFilters => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $RecipeListStateCopyWith<RecipeListState> get copyWith =>
+  $SingleCategoryStateCopyWith<SingleCategoryState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $RecipeListStateCopyWith<$Res> {
-  factory $RecipeListStateCopyWith(
-          RecipeListState value, $Res Function(RecipeListState) then) =
-      _$RecipeListStateCopyWithImpl<$Res>;
+abstract class $SingleCategoryStateCopyWith<$Res> {
+  factory $SingleCategoryStateCopyWith(
+          SingleCategoryState value, $Res Function(SingleCategoryState) then) =
+      _$SingleCategoryStateCopyWithImpl<$Res>;
   $Res call(
-      {RecipeListStatus listStatus,
-      RecipeListStatus fetchingMore,
+      {SingleCategoryStatus listStatus,
+      SingleCategoryStatus fetchingMore,
       TagStatus tagStatus,
       List<RecipeModel>? recipeList,
       int recipeListPage,
@@ -49,13 +49,13 @@ abstract class $RecipeListStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$RecipeListStateCopyWithImpl<$Res>
-    implements $RecipeListStateCopyWith<$Res> {
-  _$RecipeListStateCopyWithImpl(this._value, this._then);
+class _$SingleCategoryStateCopyWithImpl<$Res>
+    implements $SingleCategoryStateCopyWith<$Res> {
+  _$SingleCategoryStateCopyWithImpl(this._value, this._then);
 
-  final RecipeListState _value;
+  final SingleCategoryState _value;
   // ignore: unused_field
-  final $Res Function(RecipeListState) _then;
+  final $Res Function(SingleCategoryState) _then;
 
   @override
   $Res call({
@@ -73,11 +73,11 @@ class _$RecipeListStateCopyWithImpl<$Res>
       listStatus: listStatus == freezed
           ? _value.listStatus
           : listStatus // ignore: cast_nullable_to_non_nullable
-              as RecipeListStatus,
+              as SingleCategoryStatus,
       fetchingMore: fetchingMore == freezed
           ? _value.fetchingMore
           : fetchingMore // ignore: cast_nullable_to_non_nullable
-              as RecipeListStatus,
+              as SingleCategoryStatus,
       tagStatus: tagStatus == freezed
           ? _value.tagStatus
           : tagStatus // ignore: cast_nullable_to_non_nullable
@@ -111,15 +111,15 @@ class _$RecipeListStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$_RecipeListStateCopyWith<$Res>
-    implements $RecipeListStateCopyWith<$Res> {
-  factory _$$_RecipeListStateCopyWith(
-          _$_RecipeListState value, $Res Function(_$_RecipeListState) then) =
-      __$$_RecipeListStateCopyWithImpl<$Res>;
+abstract class _$$_SingleCategoryStateCopyWith<$Res>
+    implements $SingleCategoryStateCopyWith<$Res> {
+  factory _$$_SingleCategoryStateCopyWith(_$_SingleCategoryState value,
+          $Res Function(_$_SingleCategoryState) then) =
+      __$$_SingleCategoryStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {RecipeListStatus listStatus,
-      RecipeListStatus fetchingMore,
+      {SingleCategoryStatus listStatus,
+      SingleCategoryStatus fetchingMore,
       TagStatus tagStatus,
       List<RecipeModel>? recipeList,
       int recipeListPage,
@@ -130,15 +130,15 @@ abstract class _$$_RecipeListStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_RecipeListStateCopyWithImpl<$Res>
-    extends _$RecipeListStateCopyWithImpl<$Res>
-    implements _$$_RecipeListStateCopyWith<$Res> {
-  __$$_RecipeListStateCopyWithImpl(
-      _$_RecipeListState _value, $Res Function(_$_RecipeListState) _then)
-      : super(_value, (v) => _then(v as _$_RecipeListState));
+class __$$_SingleCategoryStateCopyWithImpl<$Res>
+    extends _$SingleCategoryStateCopyWithImpl<$Res>
+    implements _$$_SingleCategoryStateCopyWith<$Res> {
+  __$$_SingleCategoryStateCopyWithImpl(_$_SingleCategoryState _value,
+      $Res Function(_$_SingleCategoryState) _then)
+      : super(_value, (v) => _then(v as _$_SingleCategoryState));
 
   @override
-  _$_RecipeListState get _value => super._value as _$_RecipeListState;
+  _$_SingleCategoryState get _value => super._value as _$_SingleCategoryState;
 
   @override
   $Res call({
@@ -152,15 +152,15 @@ class __$$_RecipeListStateCopyWithImpl<$Res>
     Object? tagFilters = freezed,
     Object? categoryFilters = freezed,
   }) {
-    return _then(_$_RecipeListState(
+    return _then(_$_SingleCategoryState(
       listStatus: listStatus == freezed
           ? _value.listStatus
           : listStatus // ignore: cast_nullable_to_non_nullable
-              as RecipeListStatus,
+              as SingleCategoryStatus,
       fetchingMore: fetchingMore == freezed
           ? _value.fetchingMore
           : fetchingMore // ignore: cast_nullable_to_non_nullable
-              as RecipeListStatus,
+              as SingleCategoryStatus,
       tagStatus: tagStatus == freezed
           ? _value.tagStatus
           : tagStatus // ignore: cast_nullable_to_non_nullable
@@ -195,8 +195,8 @@ class __$$_RecipeListStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RecipeListState implements _RecipeListState {
-  const _$_RecipeListState(
+class _$_SingleCategoryState implements _SingleCategoryState {
+  const _$_SingleCategoryState(
       {required this.listStatus,
       required this.fetchingMore,
       required this.tagStatus,
@@ -212,9 +212,9 @@ class _$_RecipeListState implements _RecipeListState {
         _categoryFilters = categoryFilters;
 
   @override
-  final RecipeListStatus listStatus;
+  final SingleCategoryStatus listStatus;
   @override
-  final RecipeListStatus fetchingMore;
+  final SingleCategoryStatus fetchingMore;
   @override
   final TagStatus tagStatus;
   final List<RecipeModel>? _recipeList;
@@ -255,14 +255,14 @@ class _$_RecipeListState implements _RecipeListState {
 
   @override
   String toString() {
-    return 'RecipeListState(listStatus: $listStatus, fetchingMore: $fetchingMore, tagStatus: $tagStatus, recipeList: $recipeList, recipeListPage: $recipeListPage, noMoreResults: $noMoreResults, tags: $tags, tagFilters: $tagFilters, categoryFilters: $categoryFilters)';
+    return 'SingleCategoryState(listStatus: $listStatus, fetchingMore: $fetchingMore, tagStatus: $tagStatus, recipeList: $recipeList, recipeListPage: $recipeListPage, noMoreResults: $noMoreResults, tags: $tags, tagFilters: $tagFilters, categoryFilters: $categoryFilters)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RecipeListState &&
+            other is _$_SingleCategoryState &&
             const DeepCollectionEquality()
                 .equals(other.listStatus, listStatus) &&
             const DeepCollectionEquality()
@@ -296,26 +296,28 @@ class _$_RecipeListState implements _RecipeListState {
 
   @JsonKey(ignore: true)
   @override
-  _$$_RecipeListStateCopyWith<_$_RecipeListState> get copyWith =>
-      __$$_RecipeListStateCopyWithImpl<_$_RecipeListState>(this, _$identity);
+  _$$_SingleCategoryStateCopyWith<_$_SingleCategoryState> get copyWith =>
+      __$$_SingleCategoryStateCopyWithImpl<_$_SingleCategoryState>(
+          this, _$identity);
 }
 
-abstract class _RecipeListState implements RecipeListState {
-  const factory _RecipeListState(
-      {required final RecipeListStatus listStatus,
-      required final RecipeListStatus fetchingMore,
-      required final TagStatus tagStatus,
-      required final List<RecipeModel>? recipeList,
-      required final int recipeListPage,
-      required final bool noMoreResults,
-      required final List<TagModel>? tags,
-      required final List<TagModel> tagFilters,
-      required final List<CategoryModel> categoryFilters}) = _$_RecipeListState;
+abstract class _SingleCategoryState implements SingleCategoryState {
+  const factory _SingleCategoryState(
+          {required final SingleCategoryStatus listStatus,
+          required final SingleCategoryStatus fetchingMore,
+          required final TagStatus tagStatus,
+          required final List<RecipeModel>? recipeList,
+          required final int recipeListPage,
+          required final bool noMoreResults,
+          required final List<TagModel>? tags,
+          required final List<TagModel> tagFilters,
+          required final List<CategoryModel> categoryFilters}) =
+      _$_SingleCategoryState;
 
   @override
-  RecipeListStatus get listStatus;
+  SingleCategoryStatus get listStatus;
   @override
-  RecipeListStatus get fetchingMore;
+  SingleCategoryStatus get fetchingMore;
   @override
   TagStatus get tagStatus;
   @override
@@ -332,6 +334,6 @@ abstract class _RecipeListState implements RecipeListState {
   List<CategoryModel> get categoryFilters;
   @override
   @JsonKey(ignore: true)
-  _$$_RecipeListStateCopyWith<_$_RecipeListState> get copyWith =>
+  _$$_SingleCategoryStateCopyWith<_$_SingleCategoryState> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -2,6 +2,8 @@ const String baseUrl = "https://jrcejhll.directus.app/";
 
 const String assetsPath = "assets/";
 
+const String qualityPath = "?fit=cover&width=800&height=600";
+
 const String recipesPath = "items/recipe/";
 
 const String recipeFields =

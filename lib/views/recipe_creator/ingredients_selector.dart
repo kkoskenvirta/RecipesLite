@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/models/ingredient/ingredient_model.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
+import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/utils/string_extension.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_data/form_data_cubit.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
@@ -37,7 +39,7 @@ class IngredientsSelector extends StatelessWidget {
             itemBuilder: (context, index) {
               return Column(
                 children: [
-                  ingredientRow(
+                  IngredientRow(
                     index: index,
                   ),
                 ],
@@ -68,8 +70,8 @@ class IngredientsSelector extends StatelessWidget {
   }
 }
 
-class ingredientRow extends StatelessWidget {
-  const ingredientRow({Key? key, required this.index}) : super(key: key);
+class IngredientRow extends StatelessWidget {
+  const IngredientRow({Key? key, required this.index}) : super(key: key);
   final int index;
 
   removeingredient(context) {
@@ -116,7 +118,7 @@ class ingredientRow extends StatelessWidget {
           background: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: Colors.pink.shade400,
+              color: RecipeAppTheme.colors.pinkAccent,
             ),
             padding: const EdgeInsets.symmetric(horizontal: 16),
             alignment: Alignment.centerRight,
@@ -242,7 +244,7 @@ class _IngredientSheetState extends State<IngredientSheet> {
                         ),
                         controller: amountController,
                         textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.number,
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         onChanged: (amount) {
                           this.amount = amount;
                         },
@@ -251,7 +253,7 @@ class _IngredientSheetState extends State<IngredientSheet> {
                             return "Amount can't be empty";
                           }
                           try {
-                            double.parse(value!);
+                            double.parse(value!.replaceAll(',', '.'));
                           } catch (e) {
                             print(e);
                             return "Invalid amount";

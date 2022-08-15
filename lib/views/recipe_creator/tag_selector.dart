@@ -34,7 +34,7 @@ class TagSelector extends StatelessWidget {
                 showCheckmark: false,
                 label: SmallText(
                   text: tag.name,
-                  color: Colors.black87,
+                  color: status ? Colors.white : Colors.black87,
                   size: 14,
                 ),
                 selected: status,

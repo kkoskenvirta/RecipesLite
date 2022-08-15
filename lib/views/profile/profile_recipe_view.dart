@@ -2,17 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
-import 'package:flutter_e_commerce/models/category/category_model.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/routes/route_service.dart';
-import 'package:flutter_e_commerce/views/category_recipes/cubit/category_recipes_cubit.dart';
-import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
-import 'package:flutter_e_commerce/widgets/food_page_popular_item.dart';
-import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/recipe_item.dart';
-
-import '../../routes/app_router.gr.dart';
 
 class ProfileRecipeView extends StatelessWidget {
   const ProfileRecipeView({
@@ -69,16 +62,24 @@ class ProfileRecipeViewBody extends StatelessWidget {
                 return const CircularProgressIndicator();
               case UserDataStateStatus.loaded:
                 final recipeList = recipes;
-                return ListView.builder(
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: recipeList.length,
-                  itemBuilder: (context, index) {
-                    return RecipeItem(
-                      recipe: recipeList[index],
-                    );
-                  },
+                return Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: ListView.separated(
+                    separatorBuilder: (context, index) {
+                      return SizedBox(
+                        height: 16,
+                      );
+                    },
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: recipeList.length,
+                    itemBuilder: (context, index) {
+                      return RecipeItem(
+                        recipe: recipeList[index],
+                      );
+                    },
+                  ),
                 );
               default:
                 return const Text("Error");

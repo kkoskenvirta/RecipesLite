@@ -7,31 +7,35 @@ import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
-import 'package:flutter_e_commerce/views/recipe_list_page/cubit/recipe_list_cubit.dart';
+import 'package:flutter_e_commerce/views/single_category_page/cubit/single_category_cubit.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/recipe_item.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
 
-class RecipeListPage extends StatelessWidget {
-  const RecipeListPage({
+class SingleCategoryPage extends StatelessWidget {
+  const SingleCategoryPage({
     Key? key,
+    this.categoryFilters,
+    @PathParam() required this.categoryId,
   }) : super(key: key);
 
+  final List<CategoryModel>? categoryFilters;
+  final String categoryId;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RecipeListCubit(
+      create: (context) => SingleCategoryCubit(
         recipesRepository: context.read<RecipesRepository>(),
         categoryRepository: context.read<CategoryRepository>(),
       )
-        ..getRecipes()
+        ..getRecipes(categoryFilters)
         ..getTags(),
-      child: BlocBuilder<RecipeListCubit, RecipeListState>(
+      child: BlocBuilder<SingleCategoryCubit, SingleCategoryState>(
         builder: (context, state) {
-          final recipeListCubit = BlocProvider.of<RecipeListCubit>(context);
+          final singleCategoryCubit = BlocProvider.of<SingleCategoryCubit>(context);
 
           return Scaffold(
-            body: RecipeListScrollView(recipeListCubit: recipeListCubit),
+            body: SingleCategoryScrollView(singleCategoryCubit: singleCategoryCubit, categoryFilters: categoryFilters),
           );
         },
       ),
@@ -39,31 +43,37 @@ class RecipeListPage extends StatelessWidget {
   }
 }
 
-class RecipeListScrollView extends StatefulWidget {
-  const RecipeListScrollView({
+class SingleCategoryScrollView extends StatefulWidget {
+  const SingleCategoryScrollView({
     Key? key,
-    required this.recipeListCubit,
+    required this.singleCategoryCubit,
+    this.categoryFilters,
   }) : super(key: key);
-  final RecipeListCubit recipeListCubit;
+  final SingleCategoryCubit singleCategoryCubit;
+  final List<CategoryModel>? categoryFilters;
   @override
-  State<RecipeListScrollView> createState() => _RecipeListScrollViewState();
+  State<SingleCategoryScrollView> createState() => _SingleCategoryScrollViewState();
 }
 
-class _RecipeListScrollViewState extends State<RecipeListScrollView> {
+class _SingleCategoryScrollViewState extends State<SingleCategoryScrollView> {
   final ScrollController _scrollController = ScrollController();
   String title = "Recipe list";
   @override
   void initState() {
-    final state = widget.recipeListCubit.state;
+    final state = widget.singleCategoryCubit.state;
     super.initState();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent &&
-          state.fetchingMore != RecipeListStatus.loading &&
-          state.listStatus != RecipeListStatus.loading &&
+          state.fetchingMore != SingleCategoryStatus.loading &&
+          state.listStatus != SingleCategoryStatus.loading &&
           state.noMoreResults != true) {
-        widget.recipeListCubit.getRecipes();
+        widget.singleCategoryCubit.getRecipes(widget.categoryFilters);
       }
     });
+
+    if (widget.categoryFilters != null && widget.categoryFilters!.isNotEmpty) {
+      title = widget.categoryFilters![0].name;
+    }
   }
 
   @override
@@ -79,10 +89,9 @@ class _RecipeListScrollViewState extends State<RecipeListScrollView> {
       slivers: [
         SliverAppBar(
           floating: true,
-          // pinned: true,
-          snap: true,
+          pinned: true,
           scrolledUnderElevation: 0,
-          title: LargeText(text: "Browse"),
+          title: LargeText(text: widget.categoryFilters![0].name),
           bottom: FilterChips(size: 148.0),
         ),
         const _Body(),
@@ -98,27 +107,27 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RecipeListCubit, RecipeListState>(
+    return BlocBuilder<SingleCategoryCubit, SingleCategoryState>(
       builder: (context, state) {
         switch (state.listStatus) {
-          case RecipeListStatus.initial:
+          case SingleCategoryStatus.initial:
             return const SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.only(top: 16.0),
                 child: Center(child: CircularProgressIndicator()),
               ),
             );
-          case RecipeListStatus.loading:
+          case SingleCategoryStatus.loading:
             return const SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.only(top: 16.0),
                 child: Center(child: CircularProgressIndicator()),
               ),
             );
-          case RecipeListStatus.loaded:
+          case SingleCategoryStatus.loaded:
             final recipeList = state.recipeList;
             if (recipeList != null && recipeList.isNotEmpty) {
-              return SliverList(recipeList: recipeList, tagFilters: state.tagFilters);
+              return SliverList(singleCategory: recipeList, tagFilters: state.tagFilters);
             } else {
               return SliverToBoxAdapter(
                 child: Center(
@@ -136,21 +145,21 @@ class _Body extends StatelessWidget {
 }
 
 class SliverList extends StatelessWidget {
-  const SliverList({Key? key, required this.recipeList, required this.tagFilters}) : super(key: key);
+  const SliverList({Key? key, required this.singleCategory, required this.tagFilters}) : super(key: key);
 
   final List<TagModel> tagFilters;
-  final List<RecipeModel> recipeList;
+  final List<RecipeModel> singleCategory;
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       sliver: LiveSliverList(
           controller: ScrollController(),
-          itemCount: recipeList.length,
+          itemCount: singleCategory.length,
           showItemDuration: const Duration(milliseconds: 150),
           showItemInterval: const Duration(milliseconds: 50),
           itemBuilder: (context, index, animation) {
-            final recipe = recipeList[index];
+            final recipe = singleCategory[index];
             return FadeTransition(
               opacity: Tween<double>(
                 begin: 0,
@@ -203,13 +212,13 @@ class _FilterChipsState extends State<FilterChips> with TickerProviderStateMixin
 
   @override
   void dispose() {
-    // _animationController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RecipeListCubit, RecipeListState>(
+    return BlocBuilder<SingleCategoryCubit, SingleCategoryState>(
       builder: (context, state) {
         switch (state.tagStatus) {
           case TagStatus.initial:
@@ -237,17 +246,20 @@ class _FilterChipsState extends State<FilterChips> with TickerProviderStateMixin
                     children: tagList.map((tag) {
                       final match = state.tagFilters.indexWhere((filter) => filter.id == tag.id);
                       final status = match == -1 ? false : true;
-                      return FilterChip(
-                        selected: status,
-                        showCheckmark: false,
-                        label: SmallText(
-                          text: tag.name,
-                          color: status ? Colors.white : Colors.black87,
-                          size: 14,
+                      return FadeTransition(
+                        opacity: _animationController,
+                        child: FilterChip(
+                          selected: status,
+                          showCheckmark: false,
+                          label: SmallText(
+                            text: tag.name,
+                            color: Colors.black87,
+                            size: 14,
+                          ),
+                          onSelected: ((status) {
+                            BlocProvider.of<SingleCategoryCubit>(context).updateTagList(tag, status);
+                          }),
                         ),
-                        onSelected: ((status) {
-                          BlocProvider.of<RecipeListCubit>(context).updateTagList(tag, status);
-                        }),
                       );
                     }).toList(),
                   ),

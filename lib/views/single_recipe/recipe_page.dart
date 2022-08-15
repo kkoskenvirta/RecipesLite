@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
+import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/utils/scale_func.dart';
 import 'package:flutter_e_commerce/views/single_recipe/cubit/single_recipe_cubit.dart';
 import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
@@ -51,11 +52,11 @@ class _RecipePageState extends State<RecipePage> {
     if (favorited) {
       message = "Added to favorites";
       icon = const Icon(Icons.favorite_rounded, size: 28);
-      backgroundColor = Colors.pink.shade50;
+      backgroundColor = RecipeAppTheme.colors.pinkLightLow;
     } else {
       message = "Removed from favorites";
       icon = const Icon(Icons.favorite_outline_rounded, size: 28);
-      backgroundColor = Colors.pink.shade50;
+      backgroundColor = RecipeAppTheme.colors.pinkLightLow;
     }
     Flushbar(
       flushbarStyle: FlushbarStyle.FLOATING,
@@ -64,9 +65,9 @@ class _RecipePageState extends State<RecipePage> {
       padding: const EdgeInsets.symmetric(vertical: 18),
       boxShadows: [
         BoxShadow(
-          color: Colors.black12.withOpacity(0.125),
-          spreadRadius: 4,
-          blurRadius: 4,
+          color: Colors.black12.withOpacity(0.05),
+          spreadRadius: 2,
+          blurRadius: 2,
         )
       ],
       icon: icon,
@@ -131,7 +132,7 @@ class _RecipePageState extends State<RecipePage> {
                             padding: EdgeInsets.symmetric(vertical: Dimensions.width15, horizontal: Dimensions.width20),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(Dimensions.radius20),
-                              color: const Color.fromARGB(255, 252, 242, 246),
+                              color: RecipeAppTheme.colors.pinkLight,
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

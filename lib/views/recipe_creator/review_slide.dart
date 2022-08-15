@@ -166,16 +166,13 @@ class ReviewSlide extends StatelessWidget {
                   const SizedBox(
                     height: 12,
                   ),
-                  Align(alignment: Alignment.centerLeft, child: LargeText(size: 16, text: "ingredients")),
+                  Align(alignment: Alignment.centerLeft, child: LargeText(size: 16, text: "Ingredients")),
                   const SizedBox(
                     height: 12,
                   ),
                   ingredientsTable(ingredients: state.ingredients),
                   const SizedBox(
                     height: 12,
-                  ),
-                  const Divider(
-                    height: 1,
                   ),
                   SizedBox(
                     height: Dimensions.height20,
