@@ -21,9 +21,10 @@ UserDTO _$UserDTOFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UserDTO {
   String get id => throw _privateConstructorUsedError;
-  @JsonKey(name: "first_name")
-  String get firstName => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
+  String get username => throw _privateConstructorUsedError;
+  @JsonKey(name: "first_name")
+  String? get firstName => throw _privateConstructorUsedError;
   @JsonKey(name: "last_name")
   String? get lastName => throw _privateConstructorUsedError;
   String? get password => throw _privateConstructorUsedError;
@@ -48,8 +49,9 @@ abstract class $UserDTOCopyWith<$Res> {
       _$UserDTOCopyWithImpl<$Res>;
   $Res call(
       {String id,
-      @JsonKey(name: "first_name") String firstName,
       String email,
+      String username,
+      @JsonKey(name: "first_name") String? firstName,
       @JsonKey(name: "last_name") String? lastName,
       String? password,
       String? location,
@@ -74,8 +76,9 @@ class _$UserDTOCopyWithImpl<$Res> implements $UserDTOCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
-    Object? firstName = freezed,
     Object? email = freezed,
+    Object? username = freezed,
+    Object? firstName = freezed,
     Object? lastName = freezed,
     Object? password = freezed,
     Object? location = freezed,
@@ -93,14 +96,18 @@ class _$UserDTOCopyWithImpl<$Res> implements $UserDTOCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      firstName: firstName == freezed
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String,
       email: email == freezed
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      username: username == freezed
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      firstName: firstName == freezed
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String?,
       lastName: lastName == freezed
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
@@ -157,8 +164,9 @@ abstract class _$$_UserDTOCopyWith<$Res> implements $UserDTOCopyWith<$Res> {
   @override
   $Res call(
       {String id,
-      @JsonKey(name: "first_name") String firstName,
       String email,
+      String username,
+      @JsonKey(name: "first_name") String? firstName,
       @JsonKey(name: "last_name") String? lastName,
       String? password,
       String? location,
@@ -184,8 +192,9 @@ class __$$_UserDTOCopyWithImpl<$Res> extends _$UserDTOCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? firstName = freezed,
     Object? email = freezed,
+    Object? username = freezed,
+    Object? firstName = freezed,
     Object? lastName = freezed,
     Object? password = freezed,
     Object? location = freezed,
@@ -203,14 +212,18 @@ class __$$_UserDTOCopyWithImpl<$Res> extends _$UserDTOCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      firstName: firstName == freezed
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String,
       email: email == freezed
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      username: username == freezed
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      firstName: firstName == freezed
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String?,
       lastName: lastName == freezed
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
@@ -264,8 +277,9 @@ class __$$_UserDTOCopyWithImpl<$Res> extends _$UserDTOCopyWithImpl<$Res>
 class _$_UserDTO extends _UserDTO {
   _$_UserDTO(
       {required this.id,
-      @JsonKey(name: "first_name") required this.firstName,
       required this.email,
+      required this.username,
+      @JsonKey(name: "first_name") this.firstName,
       @JsonKey(name: "last_name") this.lastName,
       this.password,
       this.location,
@@ -286,10 +300,12 @@ class _$_UserDTO extends _UserDTO {
   @override
   final String id;
   @override
-  @JsonKey(name: "first_name")
-  final String firstName;
-  @override
   final String email;
+  @override
+  final String username;
+  @override
+  @JsonKey(name: "first_name")
+  final String? firstName;
   @override
   @JsonKey(name: "last_name")
   final String? lastName;
@@ -323,7 +339,7 @@ class _$_UserDTO extends _UserDTO {
 
   @override
   String toString() {
-    return 'UserDTO(id: $id, firstName: $firstName, email: $email, lastName: $lastName, password: $password, location: $location, title: $title, description: $description, tags: $tags, avatar: $avatar, language: $language, theme: $theme, status: $status, role: $role)';
+    return 'UserDTO(id: $id, email: $email, username: $username, firstName: $firstName, lastName: $lastName, password: $password, location: $location, title: $title, description: $description, tags: $tags, avatar: $avatar, language: $language, theme: $theme, status: $status, role: $role)';
   }
 
   @override
@@ -332,8 +348,9 @@ class _$_UserDTO extends _UserDTO {
         (other.runtimeType == runtimeType &&
             other is _$_UserDTO &&
             const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.firstName, firstName) &&
             const DeepCollectionEquality().equals(other.email, email) &&
+            const DeepCollectionEquality().equals(other.username, username) &&
+            const DeepCollectionEquality().equals(other.firstName, firstName) &&
             const DeepCollectionEquality().equals(other.lastName, lastName) &&
             const DeepCollectionEquality().equals(other.password, password) &&
             const DeepCollectionEquality().equals(other.location, location) &&
@@ -353,8 +370,9 @@ class _$_UserDTO extends _UserDTO {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(firstName),
       const DeepCollectionEquality().hash(email),
+      const DeepCollectionEquality().hash(username),
+      const DeepCollectionEquality().hash(firstName),
       const DeepCollectionEquality().hash(lastName),
       const DeepCollectionEquality().hash(password),
       const DeepCollectionEquality().hash(location),
@@ -383,8 +401,9 @@ class _$_UserDTO extends _UserDTO {
 abstract class _UserDTO extends UserDTO {
   factory _UserDTO(
       {required final String id,
-      @JsonKey(name: "first_name") required final String firstName,
       required final String email,
+      required final String username,
+      @JsonKey(name: "first_name") final String? firstName,
       @JsonKey(name: "last_name") final String? lastName,
       final String? password,
       final String? location,
@@ -403,10 +422,12 @@ abstract class _UserDTO extends UserDTO {
   @override
   String get id;
   @override
-  @JsonKey(name: "first_name")
-  String get firstName;
-  @override
   String get email;
+  @override
+  String get username;
+  @override
+  @JsonKey(name: "first_name")
+  String? get firstName;
   @override
   @JsonKey(name: "last_name")
   String? get lastName;

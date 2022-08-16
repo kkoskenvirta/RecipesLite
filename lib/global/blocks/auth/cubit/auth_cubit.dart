@@ -10,7 +10,7 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit({required AuthRepository authRepository, required SecureStorageRepository secureStorageRepository})
       : _authRepository = authRepository,
         _secureStorageRepository = secureStorageRepository,
-        super(AuthState.authenticated()) {
+        super(AuthState.initial()) {
     _init();
   }
 
@@ -20,25 +20,27 @@ class AuthCubit extends Cubit<AuthState> {
   _init() async {
     final isLoggedIn = await _authRepository.isUserLoggedIn();
     if (isLoggedIn) {
-      emit(AuthState.authenticated());
+      emit(state.copyWith(status: AuthStateStatus.authenticated));
     } else {
-      emit(const AuthState.unauthenticated());
+      emit(state.copyWith(status: AuthStateStatus.unauthenticated));
     }
   }
 
   login(String email, String password) async {
-    emit(const AuthState.uninitialized(inProgress: true));
+    emit(state.copyWith(status: AuthStateStatus.uninitialized, inProgress: true));
 
     final failureOrAuth = await _authRepository.login(email: email, password: password);
     failureOrAuth.fold(
-      (error) => emit(AuthState.uninitialized(inProgress: false, authError: error)),
+      (error) => emit(state.copyWith(
+        inProgress: false,
+        status: AuthStateStatus.unauthenticated,
+        error: error,
+      )),
       (auth) {
         _secureStorageRepository.setWithKey(StorageKeys.accessToken, auth.accessToken);
         _secureStorageRepository.setWithKey(StorageKeys.refreshToken, auth.refreshToken);
 
-        emit(
-          AuthState.authenticated(),
-        );
+        emit(state.copyWith(status: AuthStateStatus.authenticated));
       },
     );
   }
@@ -48,12 +50,23 @@ class AuthCubit extends Cubit<AuthState> {
       final refreshToken = await _secureStorageRepository.getWithKey(StorageKeys.refreshToken);
       await _secureStorageRepository.removeWithKey(StorageKeys.refreshToken);
 
-      emit(const AuthState.unauthenticated());
+      emit(state.copyWith(status: AuthStateStatus.unauthenticated));
       _authRepository.logout(refreshToken: refreshToken.toString());
     } catch (e) {
       print("error when logging out");
     }
   }
 
-  updateState(AuthState newState) async => emit(newState);
+  register(String username, String email, String password) async {
+    emit(state.copyWith(inProgress: true));
+
+    final failureOrUser = await _authRepository.register(username: username, email: email, password: password);
+    failureOrUser.fold(
+        (error) =>
+            emit(state.copyWith(inProgress: false, status: AuthStateStatus.unauthenticated, registerError: error)),
+        (user) => login(email, password));
+  }
+
+  updateState(AuthStateStatus newState, bool inProgress) async =>
+      emit(state.copyWith(status: newState, inProgress: inProgress));
 }

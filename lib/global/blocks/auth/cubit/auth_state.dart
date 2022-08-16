@@ -1,11 +1,22 @@
 part of 'auth_cubit.dart';
 
+enum AuthStateStatus { uninitialized, authenticated, unauthenticated }
+
 @freezed
 class AuthState with _$AuthState {
-  const factory AuthState.uninitialized(
-      {required bool inProgress, AuthError? authError}) = _Uninitialized;
+  const factory AuthState({
+    required AuthStateStatus status,
+    required AuthError? error,
+    required AuthError? registerError,
+    required bool inProgress,
+  }) = _AuthState;
 
-  const factory AuthState.authenticated() = _Authenticated;
-
-  const factory AuthState.unauthenticated() = _Unauthenticated;
+  factory AuthState.initial() {
+    return const AuthState(
+      status: AuthStateStatus.uninitialized,
+      error: null,
+      registerError: null,
+      inProgress: false,
+    );
+  }
 }

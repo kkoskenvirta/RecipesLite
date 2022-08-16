@@ -9,6 +9,7 @@ import 'package:flutter_e_commerce/views/profile/profile_recipe_view.dart';
 import 'package:flutter_e_commerce/views/profile/profile_screen.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/recipe_creator.dart';
 import 'package:flutter_e_commerce/views/recipe_list_page/recipe_list_page.dart';
+import 'package:flutter_e_commerce/views/register/register_page.dart';
 import 'package:flutter_e_commerce/views/search/search_page.dart';
 import 'package:flutter_e_commerce/views/single_category_page/single_category_page.dart';
 import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
@@ -16,6 +17,7 @@ import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 @MaterialAutoRouter(
   routes: [
     MaterialRoute(page: LoginPage, path: '/login', initial: true),
+    MaterialRoute(page: RegisterPage, path: '/register'),
     AutoRoute(page: MainPage, path: '/main', children: [
       MaterialRoute(
         name: "HomeRouter",

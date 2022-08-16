@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$UserModel {
   String get id => throw _privateConstructorUsedError;
-  String get firstName => throw _privateConstructorUsedError;
+  String get username => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String? get role => throw _privateConstructorUsedError;
   String? get avatar => throw _privateConstructorUsedError;
@@ -32,11 +32,7 @@ abstract class $UserModelCopyWith<$Res> {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) then) =
       _$UserModelCopyWithImpl<$Res>;
   $Res call(
-      {String id,
-      String firstName,
-      String email,
-      String? role,
-      String? avatar});
+      {String id, String username, String email, String? role, String? avatar});
 }
 
 /// @nodoc
@@ -50,7 +46,7 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
-    Object? firstName = freezed,
+    Object? username = freezed,
     Object? email = freezed,
     Object? role = freezed,
     Object? avatar = freezed,
@@ -60,9 +56,9 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      firstName: firstName == freezed
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
+      username: username == freezed
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
               as String,
       email: email == freezed
           ? _value.email
@@ -87,11 +83,7 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
       __$$_UserModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id,
-      String firstName,
-      String email,
-      String? role,
-      String? avatar});
+      {String id, String username, String email, String? role, String? avatar});
 }
 
 /// @nodoc
@@ -107,7 +99,7 @@ class __$$_UserModelCopyWithImpl<$Res> extends _$UserModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? firstName = freezed,
+    Object? username = freezed,
     Object? email = freezed,
     Object? role = freezed,
     Object? avatar = freezed,
@@ -117,9 +109,9 @@ class __$$_UserModelCopyWithImpl<$Res> extends _$UserModelCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      firstName: firstName == freezed
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
+      username: username == freezed
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
               as String,
       email: email == freezed
           ? _value.email
@@ -142,7 +134,7 @@ class __$$_UserModelCopyWithImpl<$Res> extends _$UserModelCopyWithImpl<$Res>
 class _$_UserModel implements _UserModel {
   _$_UserModel(
       {required this.id,
-      required this.firstName,
+      required this.username,
       required this.email,
       this.role,
       this.avatar});
@@ -150,7 +142,7 @@ class _$_UserModel implements _UserModel {
   @override
   final String id;
   @override
-  final String firstName;
+  final String username;
   @override
   final String email;
   @override
@@ -160,7 +152,7 @@ class _$_UserModel implements _UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, firstName: $firstName, email: $email, role: $role, avatar: $avatar)';
+    return 'UserModel(id: $id, username: $username, email: $email, role: $role, avatar: $avatar)';
   }
 
   @override
@@ -169,7 +161,7 @@ class _$_UserModel implements _UserModel {
         (other.runtimeType == runtimeType &&
             other is _$_UserModel &&
             const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.firstName, firstName) &&
+            const DeepCollectionEquality().equals(other.username, username) &&
             const DeepCollectionEquality().equals(other.email, email) &&
             const DeepCollectionEquality().equals(other.role, role) &&
             const DeepCollectionEquality().equals(other.avatar, avatar));
@@ -179,7 +171,7 @@ class _$_UserModel implements _UserModel {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(firstName),
+      const DeepCollectionEquality().hash(username),
       const DeepCollectionEquality().hash(email),
       const DeepCollectionEquality().hash(role),
       const DeepCollectionEquality().hash(avatar));
@@ -193,7 +185,7 @@ class _$_UserModel implements _UserModel {
 abstract class _UserModel implements UserModel {
   factory _UserModel(
       {required final String id,
-      required final String firstName,
+      required final String username,
       required final String email,
       final String? role,
       final String? avatar}) = _$_UserModel;
@@ -201,7 +193,7 @@ abstract class _UserModel implements UserModel {
   @override
   String get id;
   @override
-  String get firstName;
+  String get username;
   @override
   String get email;
   @override

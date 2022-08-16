@@ -58,7 +58,7 @@ class ProfileBody extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             LargeText(
-              text: profile.firstName,
+              text: profile.username,
               size: 22,
             ),
             const SizedBox(

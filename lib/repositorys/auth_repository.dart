@@ -8,7 +8,14 @@ import 'package:flutter_e_commerce/repositorys/secure_storage_repository.dart';
 import '../models/auth/dto/auth_dto.dart';
 import '../modules/dio_module.dart';
 
-enum AuthError { userNotExist, invalidCredentials, userAlreadyExist, invalidPayload, roleNoteFound, unexpected }
+enum AuthError {
+  userNotExist,
+  invalidCredentials,
+  userAlreadyExist,
+  invalidPayload,
+  roleNoteFound,
+  unexpected,
+}
 
 class AuthRepository {
   AuthRepository({
@@ -102,6 +109,26 @@ class AuthRepository {
       return right(auth);
     } catch (e) {
       if (e is DioError && e.response?.statusCode == 400) return left(AuthError.invalidPayload);
+      if (e is DioError && e.response?.statusCode == 401) return left(AuthError.invalidCredentials);
+      return left(AuthError.unexpected);
+    }
+  }
+
+  Future<Either<AuthError, UserModel>> register(
+      {required String username, required String email, required String password}) async {
+    try {
+      final body = {
+        'username': username,
+        'email': email,
+        'password': password,
+        'role': '06121d77-d40a-49ae-89c2-9b547200a2d8',
+      };
+      final response = await _authDio.post('/users', data: body);
+      final userDTO = UserObjectDTO.fromJson(response.data);
+      final user = userDTO.data.toDomain();
+      return right(user);
+    } catch (e) {
+      if (e is DioError && e.response?.statusCode == 400) return left(AuthError.userNotExist);
       if (e is DioError && e.response?.statusCode == 401) return left(AuthError.invalidCredentials);
       return left(AuthError.unexpected);
     }

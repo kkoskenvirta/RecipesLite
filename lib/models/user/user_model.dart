@@ -5,7 +5,7 @@ part 'user_model.freezed.dart';
 class UserModel with _$UserModel {
   factory UserModel({
     required String id,
-    required String firstName,
+    required String username,
     required String email,
     String? role,
     String? avatar,
