@@ -73,7 +73,7 @@ class LoginPage extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size.fromHeight(50), // NEW
                         ),
-                        onPressed: () async => authCubit.login('kasukosu96@gmail.com', 'directustesti'),
+                        onPressed: () async => authCubit.login('kazu.kozu@hotmail.com', 'directustesti'),
                         child: state.maybeWhen(
                           uninitialized: (inProgress, authError) {
                             if (inProgress) {

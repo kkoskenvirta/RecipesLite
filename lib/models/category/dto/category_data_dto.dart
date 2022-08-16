@@ -7,10 +7,9 @@ part 'category_data_dto.g.dart';
 @freezed
 class CategoryDataDTO with _$CategoryDataDTO {
   factory CategoryDataDTO({
-    @JsonKey(name: 'category_id') required String id,
-    @JsonKey(name: 'category_name') @Default('') String name,
-    @JsonKey(name: 'category_picture') @Default('') String picture,
-    @JsonKey(name: 'category_icon') @Default('') String icon,
+    @JsonKey(name: 'id') required String id,
+    @JsonKey(name: 'name') @Default('') String name,
+    @JsonKey(name: 'picture') @Default('') String picture,
     String? blurhash,
     String? status,
     String? sort,
@@ -21,7 +20,6 @@ class CategoryDataDTO with _$CategoryDataDTO {
   factory CategoryDataDTO.fromJson(Map<String, dynamic> json) => _$CategoryDataDTOFromJson(json);
 
   CategoryModel toDomain() {
-    return CategoryModel(
-        id: id, name: name, picture: picture, status: status, blurhash: blurhash, icon: icon, sort: sort);
+    return CategoryModel(id: id, name: name, picture: picture, status: status, blurhash: blurhash, sort: sort);
   }
 }

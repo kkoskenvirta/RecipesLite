@@ -9,7 +9,7 @@ part of 'tag_data_dto.dart';
 _$_TagDataDTO _$$_TagDataDTOFromJson(Map<String, dynamic> json) =>
     _$_TagDataDTO(
       id: json['id'] as String,
-      name: json['tag_name'] as String? ?? '',
+      name: json['name'] as String,
       status: json['status'] as String?,
       sort: json['sort'] as String?,
     );
@@ -17,7 +17,7 @@ _$_TagDataDTO _$$_TagDataDTOFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_TagDataDTOToJson(_$_TagDataDTO instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'tag_name': instance.name,
+      'name': instance.name,
       'status': instance.status,
       'sort': instance.sort,
     };

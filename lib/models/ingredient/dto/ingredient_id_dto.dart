@@ -21,7 +21,7 @@ class IngredientIdDTO with _$IngredientIdDTO {
       id: ingredient.id,
       relationId: relationId,
       name: ingredient.name,
-      amount: ingredient.amount,
+      amount: double.parse(ingredient.amount),
       unit: ingredient.unit,
     );
   }

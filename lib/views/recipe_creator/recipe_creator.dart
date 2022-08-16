@@ -332,12 +332,13 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                           CustomStep(
                             title: SmallText(text: 'Categories'),
                             content: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Align(alignment: Alignment.centerLeft, child: SmallText(text: "Special dietary")),
                                 const SizedBox(
                                   height: 6,
                                 ),
-                                TagSelector(tags: tags),
+                                Align(alignment: Alignment.centerLeft, child: TagSelector(tags: tags)),
                                 const SizedBox(
                                   height: 20,
                                 ),
@@ -477,12 +478,26 @@ class CustomStepperControls extends StatelessWidget {
                   shape: MaterialStateProperty.all<OutlinedBorder>(buttonShape),
                 ),
                 child: details.currentStep < 3
-                    ? const Text("Continue")
+                    ? SmallText(
+                        text: "Continue",
+                        color: Colors.white,
+                        size: 14,
+                      )
                     : BlocBuilder<FormDataCubit, FormDataState>(
                         builder: (context, state) {
                           switch (state.requestStatus) {
                             case DirectusRequestStatus.initial:
-                              return editMode ? const Text("Save") : const Text("Submit");
+                              return editMode
+                                  ? SmallText(
+                                      text: "Save",
+                                      size: 14,
+                                      color: Colors.white,
+                                    )
+                                  : SmallText(
+                                      text: "Submit",
+                                      size: 14,
+                                      color: Colors.white,
+                                    );
                             case DirectusRequestStatus.loading:
                               return const Center(
                                 child: Padding(
@@ -498,7 +513,10 @@ class CustomStepperControls extends StatelessWidget {
                               );
                             case DirectusRequestStatus.loaded:
                               return const Center(
-                                child: Icon(Icons.check_circle_outline),
+                                child: Icon(
+                                  Icons.check_circle_outline,
+                                  color: Colors.white,
+                                ),
                               );
 
                             default:

@@ -9,7 +9,7 @@ class IngredientDataDTO with _$IngredientDataDTO {
   factory IngredientDataDTO({
     @JsonKey(name: 'ingredient_id') String? id,
     @Default('') String name,
-    double? amount,
+    required String amount,
     @Default('gram') String unit,
     String? sort,
   }) = _IngredientDataDTO;
@@ -19,6 +19,6 @@ class IngredientDataDTO with _$IngredientDataDTO {
   factory IngredientDataDTO.fromJson(Map<String, dynamic> json) => _$IngredientDataDTOFromJson(json);
 
   IngredientModel toDomain() {
-    return IngredientModel(id: id, name: name, amount: amount, unit: unit);
+    return IngredientModel(id: id, name: name, amount: double.parse(amount), unit: unit);
   }
 }

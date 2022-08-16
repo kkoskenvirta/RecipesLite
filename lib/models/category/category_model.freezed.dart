@@ -25,7 +25,6 @@ mixin _$CategoryModel {
   int? get relationId => throw _privateConstructorUsedError;
   String? get picture => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
-  String? get icon => throw _privateConstructorUsedError;
   String? get blurhash => throw _privateConstructorUsedError;
   String? get sort => throw _privateConstructorUsedError;
 
@@ -46,7 +45,6 @@ abstract class $CategoryModelCopyWith<$Res> {
       int? relationId,
       String? picture,
       String? status,
-      String? icon,
       String? blurhash,
       String? sort});
 }
@@ -67,7 +65,6 @@ class _$CategoryModelCopyWithImpl<$Res>
     Object? relationId = freezed,
     Object? picture = freezed,
     Object? status = freezed,
-    Object? icon = freezed,
     Object? blurhash = freezed,
     Object? sort = freezed,
   }) {
@@ -91,10 +88,6 @@ class _$CategoryModelCopyWithImpl<$Res>
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String?,
-      icon: icon == freezed
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
               as String?,
       blurhash: blurhash == freezed
           ? _value.blurhash
@@ -121,7 +114,6 @@ abstract class _$$_CategoryModelCopyWith<$Res>
       int? relationId,
       String? picture,
       String? status,
-      String? icon,
       String? blurhash,
       String? sort});
 }
@@ -144,7 +136,6 @@ class __$$_CategoryModelCopyWithImpl<$Res>
     Object? relationId = freezed,
     Object? picture = freezed,
     Object? status = freezed,
-    Object? icon = freezed,
     Object? blurhash = freezed,
     Object? sort = freezed,
   }) {
@@ -169,10 +160,6 @@ class __$$_CategoryModelCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
-      icon: icon == freezed
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
-              as String?,
       blurhash: blurhash == freezed
           ? _value.blurhash
           : blurhash // ignore: cast_nullable_to_non_nullable
@@ -194,7 +181,6 @@ class _$_CategoryModel extends _CategoryModel {
       this.relationId,
       this.picture,
       this.status,
-      this.icon,
       this.blurhash,
       this.sort})
       : super._();
@@ -213,15 +199,13 @@ class _$_CategoryModel extends _CategoryModel {
   @override
   final String? status;
   @override
-  final String? icon;
-  @override
   final String? blurhash;
   @override
   final String? sort;
 
   @override
   String toString() {
-    return 'CategoryModel(id: $id, name: $name, relationId: $relationId, picture: $picture, status: $status, icon: $icon, blurhash: $blurhash, sort: $sort)';
+    return 'CategoryModel(id: $id, name: $name, relationId: $relationId, picture: $picture, status: $status, blurhash: $blurhash, sort: $sort)';
   }
 
   @override
@@ -235,7 +219,6 @@ class _$_CategoryModel extends _CategoryModel {
                 .equals(other.relationId, relationId) &&
             const DeepCollectionEquality().equals(other.picture, picture) &&
             const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality().equals(other.icon, icon) &&
             const DeepCollectionEquality().equals(other.blurhash, blurhash) &&
             const DeepCollectionEquality().equals(other.sort, sort));
   }
@@ -249,7 +232,6 @@ class _$_CategoryModel extends _CategoryModel {
       const DeepCollectionEquality().hash(relationId),
       const DeepCollectionEquality().hash(picture),
       const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(icon),
       const DeepCollectionEquality().hash(blurhash),
       const DeepCollectionEquality().hash(sort));
 
@@ -273,7 +255,6 @@ abstract class _CategoryModel extends CategoryModel {
       final int? relationId,
       final String? picture,
       final String? status,
-      final String? icon,
       final String? blurhash,
       final String? sort}) = _$_CategoryModel;
   _CategoryModel._() : super._();
@@ -291,8 +272,6 @@ abstract class _CategoryModel extends CategoryModel {
   String? get picture;
   @override
   String? get status;
-  @override
-  String? get icon;
   @override
   String? get blurhash;
   @override

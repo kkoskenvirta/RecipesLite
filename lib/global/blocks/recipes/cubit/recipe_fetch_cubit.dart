@@ -29,7 +29,7 @@ class RecipeFetchCubit extends Cubit<RecipeFetchState> {
   Future<void> fetchFeatured() async {
     try {
       emit(state.copyWith(featuredStatus: RecipeFetchStateStatus.loading));
-      const String filter = '&filter={"Featured":{"_eq": "true"}}';
+      const String filter = '&filter={"featured":{"_eq": "true"}}';
       final errorOrPopularList = await recipesRepository.getRecipesList(limit: 5, filters: filter);
       errorOrPopularList.fold(
         (err) => emit(state.copyWith(status: RecipeFetchStateStatus.error)),
@@ -50,7 +50,7 @@ class RecipeFetchCubit extends Cubit<RecipeFetchState> {
   Future<void> fetchPopular() async {
     try {
       emit(state.copyWith(popularStatus: RecipeFetchStateStatus.loading));
-      const String filter = '&filter={"Featured":{"_eq": "false"}}';
+      const String filter = '&filter={"featured":{"_eq": "false"}}';
       const int limit = 8;
       final errorOrPopularList = await recipesRepository.getRecipesList(filters: filter, limit: limit);
       errorOrPopularList.fold(

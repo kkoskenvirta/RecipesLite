@@ -9,7 +9,7 @@ part 'category_id_dto.g.dart';
 class CategoryIdDTO with _$CategoryIdDTO {
   factory CategoryIdDTO({
     @JsonKey(name: "id") required int relationId,
-    @JsonKey(name: "category_category_id") required CategoryDataDTO category,
+    @JsonKey(name: "category_id") required CategoryDataDTO category,
   }) = _CategoryIdDTO;
 
   const CategoryIdDTO._();
@@ -23,7 +23,6 @@ class CategoryIdDTO with _$CategoryIdDTO {
       name: category.name,
       blurhash: category.blurhash,
       picture: category.picture,
-      icon: category.icon,
       status: category.sort,
       sort: category.sort,
     );

@@ -63,7 +63,17 @@ class IngredientsSelector extends StatelessWidget {
             surfaceTintColor: Theme.of(context).primaryColor,
           ),
           onPressed: () => showBottomSheet(),
-          child: ingredients.isEmpty ? const Text("ADD ingredient") : const Text("ADD"),
+          child: ingredients.isEmpty
+              ? SmallText(
+                  text: "ADD Ingredient",
+                  size: 14,
+                  color: Colors.white,
+                )
+              : SmallText(
+                  text: "ADD",
+                  size: 14,
+                  color: Colors.white,
+                ),
         ),
       ],
     );
@@ -319,7 +329,11 @@ class _IngredientSheetState extends State<IngredientSheet> {
                             Navigator.pop(context);
                           }
                         },
-                        child: const Text("Save"),
+                        child: SmallText(
+                          text: "Save",
+                          size: 14,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),

@@ -10,7 +10,7 @@ _$_IngredientDataDTO _$$_IngredientDataDTOFromJson(Map<String, dynamic> json) =>
     _$_IngredientDataDTO(
       id: json['ingredient_id'] as String?,
       name: json['name'] as String? ?? '',
-      amount: (json['amount'] as num?)?.toDouble(),
+      amount: json['amount'] as String,
       unit: json['unit'] as String? ?? 'gram',
       sort: json['sort'] as String?,
     );

@@ -23,7 +23,7 @@ mixin _$IngredientDataDTO {
   @JsonKey(name: 'ingredient_id')
   String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  double? get amount => throw _privateConstructorUsedError;
+  String get amount => throw _privateConstructorUsedError;
   String get unit => throw _privateConstructorUsedError;
   String? get sort => throw _privateConstructorUsedError;
 
@@ -41,7 +41,7 @@ abstract class $IngredientDataDTOCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'ingredient_id') String? id,
       String name,
-      double? amount,
+      String amount,
       String unit,
       String? sort});
 }
@@ -75,7 +75,7 @@ class _$IngredientDataDTOCopyWithImpl<$Res>
       amount: amount == freezed
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String,
       unit: unit == freezed
           ? _value.unit
           : unit // ignore: cast_nullable_to_non_nullable
@@ -98,7 +98,7 @@ abstract class _$$_IngredientDataDTOCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'ingredient_id') String? id,
       String name,
-      double? amount,
+      String amount,
       String unit,
       String? sort});
 }
@@ -134,7 +134,7 @@ class __$$_IngredientDataDTOCopyWithImpl<$Res>
       amount: amount == freezed
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String,
       unit: unit == freezed
           ? _value.unit
           : unit // ignore: cast_nullable_to_non_nullable
@@ -153,7 +153,7 @@ class _$_IngredientDataDTO extends _IngredientDataDTO {
   _$_IngredientDataDTO(
       {@JsonKey(name: 'ingredient_id') this.id,
       this.name = '',
-      this.amount,
+      required this.amount,
       this.unit = 'gram',
       this.sort})
       : super._();
@@ -168,7 +168,7 @@ class _$_IngredientDataDTO extends _IngredientDataDTO {
   @JsonKey()
   final String name;
   @override
-  final double? amount;
+  final String amount;
   @override
   @JsonKey()
   final String unit;
@@ -220,7 +220,7 @@ abstract class _IngredientDataDTO extends IngredientDataDTO {
   factory _IngredientDataDTO(
       {@JsonKey(name: 'ingredient_id') final String? id,
       final String name,
-      final double? amount,
+      required final String amount,
       final String unit,
       final String? sort}) = _$_IngredientDataDTO;
   _IngredientDataDTO._() : super._();
@@ -234,7 +234,7 @@ abstract class _IngredientDataDTO extends IngredientDataDTO {
   @override
   String get name;
   @override
-  double? get amount;
+  String get amount;
   @override
   String get unit;
   @override

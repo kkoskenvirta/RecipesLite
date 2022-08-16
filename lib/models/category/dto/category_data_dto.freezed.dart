@@ -20,14 +20,12 @@ CategoryDataDTO _$CategoryDataDTOFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CategoryDataDTO {
-  @JsonKey(name: 'category_id')
+  @JsonKey(name: 'id')
   String get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'category_name')
+  @JsonKey(name: 'name')
   String get name => throw _privateConstructorUsedError;
-  @JsonKey(name: 'category_picture')
+  @JsonKey(name: 'picture')
   String get picture => throw _privateConstructorUsedError;
-  @JsonKey(name: 'category_icon')
-  String get icon => throw _privateConstructorUsedError;
   String? get blurhash => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   String? get sort => throw _privateConstructorUsedError;
@@ -44,10 +42,9 @@ abstract class $CategoryDataDTOCopyWith<$Res> {
           CategoryDataDTO value, $Res Function(CategoryDataDTO) then) =
       _$CategoryDataDTOCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: 'category_id') String id,
-      @JsonKey(name: 'category_name') String name,
-      @JsonKey(name: 'category_picture') String picture,
-      @JsonKey(name: 'category_icon') String icon,
+      {@JsonKey(name: 'id') String id,
+      @JsonKey(name: 'name') String name,
+      @JsonKey(name: 'picture') String picture,
       String? blurhash,
       String? status,
       String? sort});
@@ -67,7 +64,6 @@ class _$CategoryDataDTOCopyWithImpl<$Res>
     Object? id = freezed,
     Object? name = freezed,
     Object? picture = freezed,
-    Object? icon = freezed,
     Object? blurhash = freezed,
     Object? status = freezed,
     Object? sort = freezed,
@@ -84,10 +80,6 @@ class _$CategoryDataDTOCopyWithImpl<$Res>
       picture: picture == freezed
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
-              as String,
-      icon: icon == freezed
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
               as String,
       blurhash: blurhash == freezed
           ? _value.blurhash
@@ -113,10 +105,9 @@ abstract class _$$_CategoryDataDTOCopyWith<$Res>
       __$$_CategoryDataDTOCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: 'category_id') String id,
-      @JsonKey(name: 'category_name') String name,
-      @JsonKey(name: 'category_picture') String picture,
-      @JsonKey(name: 'category_icon') String icon,
+      {@JsonKey(name: 'id') String id,
+      @JsonKey(name: 'name') String name,
+      @JsonKey(name: 'picture') String picture,
       String? blurhash,
       String? status,
       String? sort});
@@ -138,7 +129,6 @@ class __$$_CategoryDataDTOCopyWithImpl<$Res>
     Object? id = freezed,
     Object? name = freezed,
     Object? picture = freezed,
-    Object? icon = freezed,
     Object? blurhash = freezed,
     Object? status = freezed,
     Object? sort = freezed,
@@ -155,10 +145,6 @@ class __$$_CategoryDataDTOCopyWithImpl<$Res>
       picture: picture == freezed
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
-              as String,
-      icon: icon == freezed
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
               as String,
       blurhash: blurhash == freezed
           ? _value.blurhash
@@ -180,10 +166,9 @@ class __$$_CategoryDataDTOCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_CategoryDataDTO extends _CategoryDataDTO {
   _$_CategoryDataDTO(
-      {@JsonKey(name: 'category_id') required this.id,
-      @JsonKey(name: 'category_name') this.name = '',
-      @JsonKey(name: 'category_picture') this.picture = '',
-      @JsonKey(name: 'category_icon') this.icon = '',
+      {@JsonKey(name: 'id') required this.id,
+      @JsonKey(name: 'name') this.name = '',
+      @JsonKey(name: 'picture') this.picture = '',
       this.blurhash,
       this.status,
       this.sort})
@@ -193,17 +178,14 @@ class _$_CategoryDataDTO extends _CategoryDataDTO {
       _$$_CategoryDataDTOFromJson(json);
 
   @override
-  @JsonKey(name: 'category_id')
+  @JsonKey(name: 'id')
   final String id;
   @override
-  @JsonKey(name: 'category_name')
+  @JsonKey(name: 'name')
   final String name;
   @override
-  @JsonKey(name: 'category_picture')
+  @JsonKey(name: 'picture')
   final String picture;
-  @override
-  @JsonKey(name: 'category_icon')
-  final String icon;
   @override
   final String? blurhash;
   @override
@@ -213,7 +195,7 @@ class _$_CategoryDataDTO extends _CategoryDataDTO {
 
   @override
   String toString() {
-    return 'CategoryDataDTO(id: $id, name: $name, picture: $picture, icon: $icon, blurhash: $blurhash, status: $status, sort: $sort)';
+    return 'CategoryDataDTO(id: $id, name: $name, picture: $picture, blurhash: $blurhash, status: $status, sort: $sort)';
   }
 
   @override
@@ -224,7 +206,6 @@ class _$_CategoryDataDTO extends _CategoryDataDTO {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.picture, picture) &&
-            const DeepCollectionEquality().equals(other.icon, icon) &&
             const DeepCollectionEquality().equals(other.blurhash, blurhash) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.sort, sort));
@@ -237,7 +218,6 @@ class _$_CategoryDataDTO extends _CategoryDataDTO {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(picture),
-      const DeepCollectionEquality().hash(icon),
       const DeepCollectionEquality().hash(blurhash),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(sort));
@@ -257,10 +237,9 @@ class _$_CategoryDataDTO extends _CategoryDataDTO {
 
 abstract class _CategoryDataDTO extends CategoryDataDTO {
   factory _CategoryDataDTO(
-      {@JsonKey(name: 'category_id') required final String id,
-      @JsonKey(name: 'category_name') final String name,
-      @JsonKey(name: 'category_picture') final String picture,
-      @JsonKey(name: 'category_icon') final String icon,
+      {@JsonKey(name: 'id') required final String id,
+      @JsonKey(name: 'name') final String name,
+      @JsonKey(name: 'picture') final String picture,
       final String? blurhash,
       final String? status,
       final String? sort}) = _$_CategoryDataDTO;
@@ -270,17 +249,14 @@ abstract class _CategoryDataDTO extends CategoryDataDTO {
       _$_CategoryDataDTO.fromJson;
 
   @override
-  @JsonKey(name: 'category_id')
+  @JsonKey(name: 'id')
   String get id;
   @override
-  @JsonKey(name: 'category_name')
+  @JsonKey(name: 'name')
   String get name;
   @override
-  @JsonKey(name: 'category_picture')
+  @JsonKey(name: 'picture')
   String get picture;
-  @override
-  @JsonKey(name: 'category_icon')
-  String get icon;
   @override
   String? get blurhash;
   @override

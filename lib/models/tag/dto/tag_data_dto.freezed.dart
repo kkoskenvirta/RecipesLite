@@ -20,9 +20,7 @@ TagDataDTO _$TagDataDTOFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TagDataDTO {
-  @JsonKey(name: 'id')
   String get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'tag_name')
   String get name => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   String? get sort => throw _privateConstructorUsedError;
@@ -38,11 +36,7 @@ abstract class $TagDataDTOCopyWith<$Res> {
   factory $TagDataDTOCopyWith(
           TagDataDTO value, $Res Function(TagDataDTO) then) =
       _$TagDataDTOCopyWithImpl<$Res>;
-  $Res call(
-      {@JsonKey(name: 'id') String id,
-      @JsonKey(name: 'tag_name') String name,
-      String? status,
-      String? sort});
+  $Res call({String id, String name, String? status, String? sort});
 }
 
 /// @nodoc
@@ -88,11 +82,7 @@ abstract class _$$_TagDataDTOCopyWith<$Res>
           _$_TagDataDTO value, $Res Function(_$_TagDataDTO) then) =
       __$$_TagDataDTOCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {@JsonKey(name: 'id') String id,
-      @JsonKey(name: 'tag_name') String name,
-      String? status,
-      String? sort});
+  $Res call({String id, String name, String? status, String? sort});
 }
 
 /// @nodoc
@@ -136,21 +126,15 @@ class __$$_TagDataDTOCopyWithImpl<$Res> extends _$TagDataDTOCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_TagDataDTO extends _TagDataDTO {
-  _$_TagDataDTO(
-      {@JsonKey(name: 'id') required this.id,
-      @JsonKey(name: 'tag_name') this.name = '',
-      this.status,
-      this.sort})
+  _$_TagDataDTO({required this.id, required this.name, this.status, this.sort})
       : super._();
 
   factory _$_TagDataDTO.fromJson(Map<String, dynamic> json) =>
       _$$_TagDataDTOFromJson(json);
 
   @override
-  @JsonKey(name: 'id')
   final String id;
   @override
-  @JsonKey(name: 'tag_name')
   final String name;
   @override
   final String? status;
@@ -197,8 +181,8 @@ class _$_TagDataDTO extends _TagDataDTO {
 
 abstract class _TagDataDTO extends TagDataDTO {
   factory _TagDataDTO(
-      {@JsonKey(name: 'id') required final String id,
-      @JsonKey(name: 'tag_name') final String name,
+      {required final String id,
+      required final String name,
       final String? status,
       final String? sort}) = _$_TagDataDTO;
   _TagDataDTO._() : super._();
@@ -207,10 +191,8 @@ abstract class _TagDataDTO extends TagDataDTO {
       _$_TagDataDTO.fromJson;
 
   @override
-  @JsonKey(name: 'id')
   String get id;
   @override
-  @JsonKey(name: 'tag_name')
   String get name;
   @override
   String? get status;

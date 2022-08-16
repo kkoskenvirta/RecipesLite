@@ -30,9 +30,7 @@ mixin _$RecipeDataDTO {
   List<CategoryIdDTO>? get categories => throw _privateConstructorUsedError;
   List<TagIdDTO>? get tags => throw _privateConstructorUsedError;
   List<IngredientIdDTO>? get ingredients => throw _privateConstructorUsedError;
-  @JsonKey(name: 'Name')
   String? get name => throw _privateConstructorUsedError;
-  @JsonKey(name: 'Featured')
   bool? get featured => throw _privateConstructorUsedError;
   @JsonKey(name: 'preparation_time')
   int? get preparationTime => throw _privateConstructorUsedError;
@@ -69,8 +67,8 @@ abstract class $RecipeDataDTOCopyWith<$Res> {
       List<CategoryIdDTO>? categories,
       List<TagIdDTO>? tags,
       List<IngredientIdDTO>? ingredients,
-      @JsonKey(name: 'Name') String? name,
-      @JsonKey(name: 'Featured') bool? featured,
+      String? name,
+      bool? featured,
       @JsonKey(name: 'preparation_time') int? preparationTime,
       @JsonKey(name: 'short_description') String? shortDescription,
       @JsonKey(name: 'comment_count') int? commentCount,
@@ -204,8 +202,8 @@ abstract class _$$_RecipeDataDTOCopyWith<$Res>
       List<CategoryIdDTO>? categories,
       List<TagIdDTO>? tags,
       List<IngredientIdDTO>? ingredients,
-      @JsonKey(name: 'Name') String? name,
-      @JsonKey(name: 'Featured') bool? featured,
+      String? name,
+      bool? featured,
       @JsonKey(name: 'preparation_time') int? preparationTime,
       @JsonKey(name: 'short_description') String? shortDescription,
       @JsonKey(name: 'comment_count') int? commentCount,
@@ -337,8 +335,8 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
       final List<CategoryIdDTO>? categories,
       final List<TagIdDTO>? tags,
       final List<IngredientIdDTO>? ingredients,
-      @JsonKey(name: 'Name') this.name,
-      @JsonKey(name: 'Featured') this.featured,
+      this.name,
+      this.featured,
       @JsonKey(name: 'preparation_time') this.preparationTime,
       @JsonKey(name: 'short_description') this.shortDescription,
       @JsonKey(name: 'comment_count') this.commentCount,
@@ -396,10 +394,8 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
   }
 
   @override
-  @JsonKey(name: 'Name')
   final String? name;
   @override
-  @JsonKey(name: 'Featured')
   final bool? featured;
   @override
   @JsonKey(name: 'preparation_time')
@@ -508,8 +504,8 @@ abstract class _RecipeDataDTO extends RecipeDataDTO {
           final List<CategoryIdDTO>? categories,
           final List<TagIdDTO>? tags,
           final List<IngredientIdDTO>? ingredients,
-          @JsonKey(name: 'Name') final String? name,
-          @JsonKey(name: 'Featured') final bool? featured,
+          final String? name,
+          final bool? featured,
           @JsonKey(name: 'preparation_time') final int? preparationTime,
           @JsonKey(name: 'short_description') final String? shortDescription,
           @JsonKey(name: 'comment_count') final int? commentCount,
@@ -543,10 +539,8 @@ abstract class _RecipeDataDTO extends RecipeDataDTO {
   @override
   List<IngredientIdDTO>? get ingredients;
   @override
-  @JsonKey(name: 'Name')
   String? get name;
   @override
-  @JsonKey(name: 'Featured')
   bool? get featured;
   @override
   @JsonKey(name: 'preparation_time')

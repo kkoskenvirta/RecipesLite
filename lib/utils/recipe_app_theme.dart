@@ -43,6 +43,7 @@ class RecipeAppTheme {
       buttonColor: colors.pinkAccent,
       textTheme: ButtonTextTheme.primary,
     ),
+    primaryColor: Colors.white,
     iconTheme: IconThemeData(
       color: colors.pinkAccent,
     ),
@@ -50,7 +51,7 @@ class RecipeAppTheme {
       style: ElevatedButton.styleFrom(
         elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-        // surfaceTintColor: Colors.pink.shade400,
+        surfaceTintColor: colors.pinkAccent,
       ),
     ),
     textButtonTheme: TextButtonThemeData(),

@@ -65,7 +65,7 @@ class RecipesRepository {
 
       if (categories.isNotEmpty) {
         categoryQueryList = categories.map((category) {
-          return '{"categories":{"category_category_id":{"category_id":{"_eq":"${category.id}"}}}}';
+          return '{"categories":{"category_id":{"category_id":{"_eq":"${category.id}"}}}}';
         }).toList();
         categoryQueryString = categoryQueryList.join(',');
         filterQuery = '&filter={"_and":[{"_and":[{"_and":[$categoryQueryString]}]},{"status":{"_neq":"archived"}}]}';
@@ -101,7 +101,7 @@ class RecipesRepository {
   Future<Either<FetchError, List<RecipeModel>?>> getRecipesListWithCategory(CategoryModel category) async {
     try {
       final String filterQuery =
-          '&filter={"_and":[{"_and":[{"categories":{"category_category_id":{"category_id":{"_eq":"${category.id}"}}}}]},{"status":{"_neq":"archived"}}]}';
+          '&filter={"_and":[{"_and":[{"categories":{"category_id":{"category_id":{"_eq":"${category.id}"}}}}]},{"status":{"_neq":"archived"}}]}';
       final Response response = await _tokenDio.get('$baseUrl$recipesPathFields$filterQuery');
 
       final recipesDTO = RecipeDTO.fromJson(response.data);
@@ -152,6 +152,7 @@ class RecipesRepository {
     try {
       final Response? response;
       final body = recipe.toJson();
+      print(body);
       _dio.options.headers['Content-Type'] = "application/json; charset=utf-8";
       response = await _dio.post(recipesPath, data: body);
       return right(Unit);
@@ -193,8 +194,9 @@ class RecipesRepository {
     try {
       final Response? response;
       final body = recipe.toJson();
+      print(body);
       _dio.options.headers['Content-Type'] = "application/json; charset=utf-8";
-      response = await _dio.patch('$recipesPath/$id', data: body);
+      response = await _dio.patch('$recipesPath$id', data: body);
       return right(Unit);
     } catch (e) {
       if (e is DioError && e.response?.statusCode == 400) return left(FetchError.invalidPayload);

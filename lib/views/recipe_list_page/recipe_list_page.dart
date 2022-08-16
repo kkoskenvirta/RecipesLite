@@ -226,8 +226,8 @@ class _FilterChipsState extends State<FilterChips> with TickerProviderStateMixin
               padding: const EdgeInsets.only(
                 top: 0.0,
                 bottom: 4.0,
-                left: 20.0,
-                right: 20.0,
+                left: 16.0,
+                right: 16.0,
               ),
               child: Column(
                 children: [

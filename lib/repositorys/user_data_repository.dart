@@ -57,13 +57,13 @@ class UserDataRepository {
       final UserDataModel userData;
 
       final response = await _dio.get(
-          "$userDataPath?filter[user][_eq]=${currentUser?.id}&fields=id,user,favorites.recipe_id.*,favorites.recipe_id.categories.category_category_id.*,favorites.recipe_id.tags.tag_id.*,favorites.recipe_id.ingredients.ingredient_id.*&limit=1");
+          "$userDataPath?filter[user][_eq]=${currentUser?.id}&fields=id,user,favorites.recipe_id.*,favorites.recipe_id.categories.category_id.*,favorites.recipe_id.tags.tag_id.*,favorites.recipe_id.ingredients.ingredient_id.*&limit=1");
+      final userDataDTO = UserDataObjectDTO.fromJson(response.data);
 
-      if (response.data.isEmpty) {
+      if (userDataDTO.data.isEmpty) {
         //If we cant find existing user_data with current user id, we create a new one
         userData = await createUserData();
       } else {
-        final userDataDTO = UserDataObjectDTO.fromJson(response.data);
         userData = userDataDTO.data[0].toDomain();
       }
 
@@ -80,7 +80,7 @@ class UserDataRepository {
       final body = {'user': currentUser?.id, 'favorites': []};
       final response = await _dio.post(userDataPath, data: body);
 
-      final userDataDTO = UserObjectDTO(data: response.data);
+      final userDataDTO = UserObjectDTO(data: response.data[0]);
       final userData = userDataDTO.data.toDomain();
 
       return userData;

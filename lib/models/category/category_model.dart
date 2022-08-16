@@ -11,7 +11,6 @@ class CategoryModel with _$CategoryModel {
     int? relationId,
     String? picture,
     String? status,
-    String? icon,
     String? blurhash,
     String? sort,
   }) = _CategoryModel;

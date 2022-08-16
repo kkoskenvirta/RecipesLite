@@ -7,8 +7,8 @@ part 'tag_data_dto.g.dart';
 @freezed
 class TagDataDTO with _$TagDataDTO {
   factory TagDataDTO({
-    @JsonKey(name: 'id') required String id,
-    @JsonKey(name: 'tag_name') @Default('') String name,
+    required String id,
+    required String name,
     String? status,
     String? sort,
   }) = _TagDataDTO;

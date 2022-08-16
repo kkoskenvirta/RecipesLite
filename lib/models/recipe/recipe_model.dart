@@ -100,9 +100,9 @@ class RecipeModel with _$RecipeModel {
         create: recipe.categories!.where((category) => category.relationId == null).map((category) {
           final createObj = {};
           final categoryObj = {};
-          categoryObj["category_id"] = category.id;
+          categoryObj["id"] = category.id;
           createObj["recipe_id"] = "+";
-          createObj["category_category_id"] = categoryObj;
+          createObj["category_id"] = categoryObj;
           return createObj;
         }).toList(),
         delete: deleteCategories,

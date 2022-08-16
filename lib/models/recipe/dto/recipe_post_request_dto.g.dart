@@ -16,7 +16,7 @@ _$_RecipePostRequestDTO _$$_RecipePostRequestDTOFromJson(
       categories: json['categories'] as Map<String, dynamic>,
       tags: json['tags'] as Map<String, dynamic>,
       ingredients: json['ingredients'] as Map<String, dynamic>,
-      name: json['Name'] as String?,
+      name: json['name'] as String,
       preparationTime: json['preparation_time'] as int?,
       shortDescription: json['short_description'] as String?,
     );
@@ -31,7 +31,7 @@ Map<String, dynamic> _$$_RecipePostRequestDTOToJson(
       'categories': instance.categories,
       'tags': instance.tags,
       'ingredients': instance.ingredients,
-      'Name': instance.name,
+      'name': instance.name,
       'preparation_time': instance.preparationTime,
       'short_description': instance.shortDescription,
     };

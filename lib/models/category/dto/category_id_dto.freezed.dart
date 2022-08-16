@@ -22,7 +22,7 @@ CategoryIdDTO _$CategoryIdDTOFromJson(Map<String, dynamic> json) {
 mixin _$CategoryIdDTO {
   @JsonKey(name: "id")
   int get relationId => throw _privateConstructorUsedError;
-  @JsonKey(name: "category_category_id")
+  @JsonKey(name: "category_id")
   CategoryDataDTO get category => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,7 +38,7 @@ abstract class $CategoryIdDTOCopyWith<$Res> {
       _$CategoryIdDTOCopyWithImpl<$Res>;
   $Res call(
       {@JsonKey(name: "id") int relationId,
-      @JsonKey(name: "category_category_id") CategoryDataDTO category});
+      @JsonKey(name: "category_id") CategoryDataDTO category});
 
   $CategoryDataDTOCopyWith<$Res> get category;
 }
@@ -86,7 +86,7 @@ abstract class _$$_CategoryIdDTOCopyWith<$Res>
   @override
   $Res call(
       {@JsonKey(name: "id") int relationId,
-      @JsonKey(name: "category_category_id") CategoryDataDTO category});
+      @JsonKey(name: "category_id") CategoryDataDTO category});
 
   @override
   $CategoryDataDTOCopyWith<$Res> get category;
@@ -126,7 +126,7 @@ class __$$_CategoryIdDTOCopyWithImpl<$Res>
 class _$_CategoryIdDTO extends _CategoryIdDTO {
   _$_CategoryIdDTO(
       {@JsonKey(name: "id") required this.relationId,
-      @JsonKey(name: "category_category_id") required this.category})
+      @JsonKey(name: "category_id") required this.category})
       : super._();
 
   factory _$_CategoryIdDTO.fromJson(Map<String, dynamic> json) =>
@@ -136,7 +136,7 @@ class _$_CategoryIdDTO extends _CategoryIdDTO {
   @JsonKey(name: "id")
   final int relationId;
   @override
-  @JsonKey(name: "category_category_id")
+  @JsonKey(name: "category_id")
   final CategoryDataDTO category;
 
   @override
@@ -178,7 +178,7 @@ abstract class _CategoryIdDTO extends CategoryIdDTO {
   factory _CategoryIdDTO(
       {@JsonKey(name: "id")
           required final int relationId,
-      @JsonKey(name: "category_category_id")
+      @JsonKey(name: "category_id")
           required final CategoryDataDTO category}) = _$_CategoryIdDTO;
   _CategoryIdDTO._() : super._();
 
@@ -189,7 +189,7 @@ abstract class _CategoryIdDTO extends CategoryIdDTO {
   @JsonKey(name: "id")
   int get relationId;
   @override
-  @JsonKey(name: "category_category_id")
+  @JsonKey(name: "category_id")
   CategoryDataDTO get category;
   @override
   @JsonKey(ignore: true)
