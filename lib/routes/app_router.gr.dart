@@ -20,8 +20,8 @@ import '../views/login/login_page.dart' as _i1;
 import '../views/main/categories/categories_page.dart' as _i10;
 import '../views/main/home_page.dart' as _i8;
 import '../views/main/main_page.dart' as _i3;
+import '../views/profile/profile_page.dart' as _i12;
 import '../views/profile/profile_recipe_view.dart' as _i13;
-import '../views/profile/profile_screen.dart' as _i12;
 import '../views/recipe_creator/recipe_creator.dart' as _i5;
 import '../views/recipe_list_page/recipe_list_page.dart' as _i9;
 import '../views/register/register_page.dart' as _i2;
@@ -125,9 +125,9 @@ class AppRouter extends _i7.RootStackRouter {
               categoryFilters: args.categoryFilters,
               categoryId: args.categoryId));
     },
-    ProfileScreen.name: (routeData) {
+    ProfileRoute.name: (routeData) {
       return _i7.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i12.ProfileScreen());
+          routeData: routeData, child: const _i12.ProfilePage());
     },
     FavoritesRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
@@ -180,7 +180,7 @@ class AppRouter extends _i7.RootStackRouter {
               path: 'profile',
               parent: MainRoute.name,
               children: [
-                _i7.RouteConfig(ProfileScreen.name,
+                _i7.RouteConfig(ProfileRoute.name,
                     path: '', parent: ProfileRouter.name),
                 _i7.RouteConfig(FavoritesRoute.name,
                     path: ':listMode', parent: ProfileRouter.name),
@@ -412,11 +412,11 @@ class CategoryRouteArgs {
 }
 
 /// generated route for
-/// [_i12.ProfileScreen]
-class ProfileScreen extends _i7.PageRouteInfo<void> {
-  const ProfileScreen() : super(ProfileScreen.name, path: '');
+/// [_i12.ProfilePage]
+class ProfileRoute extends _i7.PageRouteInfo<void> {
+  const ProfileRoute() : super(ProfileRoute.name, path: '');
 
-  static const String name = 'ProfileScreen';
+  static const String name = 'ProfileRoute';
 }
 
 /// generated route for

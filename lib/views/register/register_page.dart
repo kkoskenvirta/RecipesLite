@@ -114,10 +114,8 @@ class RegisterPage extends StatelessWidget {
                     child: BlocBuilder<AuthCubit, AuthState>(
                       builder: (context, state) {
                         switch (state.error) {
-                          case AuthError.userNotExist:
-                            return const Text('Wrong email');
-                          case AuthError.invalidCredentials:
-                            return const Text('Wrong password');
+                          case AuthError.emailTaken:
+                            return const Text('The email address is already in use');
 
                           default:
                             return const SizedBox();

@@ -14,6 +14,7 @@ enum AuthError {
   userAlreadyExist,
   invalidPayload,
   roleNoteFound,
+  emailTaken,
   unexpected,
 }
 
@@ -60,7 +61,7 @@ class AuthRepository {
     try {
       final response = await _dio.get("users/me");
 
-      if (response != null) {
+      if (response.data != null) {
         final userDTO = UserObjectDTO.fromJson(response.data);
         final user = userDTO.data.toDomain();
         return right(user);
@@ -118,7 +119,7 @@ class AuthRepository {
       {required String username, required String email, required String password}) async {
     try {
       final body = {
-        'username': username,
+        'first_name': username,
         'email': email,
         'password': password,
         'role': '06121d77-d40a-49ae-89c2-9b547200a2d8',
@@ -128,8 +129,8 @@ class AuthRepository {
       final user = userDTO.data.toDomain();
       return right(user);
     } catch (e) {
-      if (e is DioError && e.response?.statusCode == 400) return left(AuthError.userNotExist);
-      if (e is DioError && e.response?.statusCode == 401) return left(AuthError.invalidCredentials);
+      if (e is DioError && e.response?.statusCode == 400) return left(AuthError.emailTaken);
+      // if (e is DioError && e.response?.statusCode == 401) return left(AuthError.invalidCredentials);
       return left(AuthError.unexpected);
     }
   }

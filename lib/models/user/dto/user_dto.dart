@@ -10,8 +10,7 @@ class UserDTO with _$UserDTO {
   factory UserDTO({
     required String id,
     required String email,
-    required String username,
-    @JsonKey(name: "first_name") String? firstName,
+    @JsonKey(name: "first_name") required String firstName,
     @JsonKey(name: "last_name") String? lastName,
     String? password,
     String? location,
@@ -30,6 +29,6 @@ class UserDTO with _$UserDTO {
   factory UserDTO.fromJson(Map<String, dynamic> json) => _$UserDTOFromJson(json);
 
   UserModel toDomain() {
-    return UserModel(id: id, username: username, email: email, avatar: avatar);
+    return UserModel(id: id, username: firstName, email: email, avatar: avatar);
   }
 }

@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_e_commerce/global/blocks/navigation/navigation_cubit.dart';
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
 import 'package:flutter_e_commerce/models/user/user_model.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
@@ -11,8 +10,8 @@ import 'package:flutter_e_commerce/widgets/large_text.dart';
 
 import '../../widgets/appbars/main_appbar.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({Key? key}) : super(key: key);
   // final ProfileModel profileModel;
 
   @override
@@ -24,20 +23,26 @@ class ProfileScreen extends StatelessWidget {
         showBackButton: false,
       ),
       body: SingleChildScrollView(
-        child: BlocBuilder<UserDataCubit, UserDataState>(builder: (context, state) {
-          switch (state.status) {
-            case UserDataStateStatus.loading:
-              return const CircularProgressIndicator();
+        child: BlocBuilder<UserDataCubit, UserDataState>(
+            bloc: BlocProvider.of<UserDataCubit>(context)..getUserData(),
+            builder: (context, state) {
+              switch (state.status) {
+                case UserDataStateStatus.loading:
+                  return Column(
+                    children: const [
+                      Center(child: CircularProgressIndicator()),
+                    ],
+                  );
 
-            case UserDataStateStatus.loaded:
-              return ProfileBody(
-                profile: state.currUser!,
-              );
+                case UserDataStateStatus.loaded:
+                  return ProfileBody(
+                    profile: state.currUser!,
+                  );
 
-            default:
-              return const SizedBox();
-          }
-        }),
+                default:
+                  return const SizedBox();
+              }
+            }),
       ),
     );
   }

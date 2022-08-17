@@ -65,7 +65,7 @@ class RecipesRepository {
 
       if (categories.isNotEmpty) {
         categoryQueryList = categories.map((category) {
-          return '{"categories":{"category_id":{"category_id":{"_eq":"${category.id}"}}}}';
+          return '{"categories":{"category_id":{"id":{"_eq":"${category.id}"}}}}';
         }).toList();
         categoryQueryString = categoryQueryList.join(',');
         filterQuery = '&filter={"_and":[{"_and":[{"_and":[$categoryQueryString]}]},{"status":{"_neq":"archived"}}]}';
@@ -101,7 +101,7 @@ class RecipesRepository {
   Future<Either<FetchError, List<RecipeModel>?>> getRecipesListWithCategory(CategoryModel category) async {
     try {
       final String filterQuery =
-          '&filter={"_and":[{"_and":[{"categories":{"category_id":{"category_id":{"_eq":"${category.id}"}}}}]},{"status":{"_neq":"archived"}}]}';
+          '&filter={"_and":[{"_and":[{"categories":{"category_id":{"id":{"_eq":"${category.id}"}}}}]},{"status":{"_neq":"archived"}}]}';
       final Response response = await _tokenDio.get('$baseUrl$recipesPathFields$filterQuery');
 
       final recipesDTO = RecipeDTO.fromJson(response.data);

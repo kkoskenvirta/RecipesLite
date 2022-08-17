@@ -80,8 +80,8 @@ class UserDataRepository {
       final body = {'user': currentUser?.id, 'favorites': []};
       final response = await _dio.post(userDataPath, data: body);
 
-      final userDataDTO = UserObjectDTO(data: response.data[0]);
-      final userData = userDataDTO.data.toDomain();
+      final userDataObjectDTO = UserDataObjectDTO(data: response.data);
+      final userData = userDataObjectDTO.data[0].toDomain();
 
       return userData;
     } catch (e) {
