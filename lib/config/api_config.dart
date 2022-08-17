@@ -40,9 +40,13 @@ const String recipesPathFields =
 
 const String loginPath = "auth/login/";
 
+const String authGooglePath = "auth/login/google";
+
+const String authGoogleRedirectPath = "auth/login/google/callback";
+
 const String signupPath = "users/";
 
-const String categoryPath = "items/category";
+const String categoryPath = "items/category?fields=*,count(recipes)";
 
 const String tagPath = "items/tag";
 

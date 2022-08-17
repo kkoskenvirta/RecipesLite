@@ -8,17 +8,19 @@ class DifficultySelector extends StatelessWidget {
   DifficultySelector({Key? key}) : super(key: key);
 
   final List<String> difficulty = [
-    'easy',
-    'medium',
-    'hard',
+    'Easy',
+    'Medium',
+    'Hard',
   ];
 
+  final difficultyController = TextEditingController();
   final preparationTimeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FormDataCubit, FormDataState>(
       builder: (context, state) {
+        difficultyController.text = state.difficulty != null ? state.difficulty! : "";
         preparationTimeController.text =
             state.preparationTime != null ? state.preparationTime!.parseToTimeString() : "";
 
@@ -51,6 +53,9 @@ class DifficultySelector extends StatelessWidget {
                         }
                       },
                     ),
+                    const Divider(
+                      height: 8,
+                    ),
                     CupertinoButton(
                         child: const Text('OK'),
                         onPressed: () {
@@ -64,24 +69,61 @@ class DifficultySelector extends StatelessWidget {
           );
         }
 
+        void showDifficultyPicker(currentTime) {
+          showCupertinoModalPopup(
+            context: context,
+            builder: (BuildContext builder) {
+              String text = "";
+              return Container(
+                height: 290,
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 200,
+                      child: CupertinoPicker(
+                          itemExtent: 36,
+                          children: difficulty.map((unit) => Center(child: Text(unit))).toList(),
+                          onSelectedItemChanged: (index) {
+                            if (difficulty[index] != text) {
+                              text = difficulty[index];
+                            }
+                          }),
+                    ),
+                    const Divider(
+                      height: 8,
+                    ),
+                    CupertinoButton(
+                      child: const Text('OK'),
+                      onPressed: () {
+                        updateDifficulty(text.toString());
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ],
+                ),
+              );
+            },
+          );
+        }
+
         return Column(children: [
           Row(
             children: [
-              Container(
-                width: 120,
-                child: DropdownButtonFormField<String>(
-                  icon: null,
+              Expanded(
+                flex: 3,
+                child: TextFormField(
+                  controller: difficultyController,
+                  style: const TextStyle(
+                    fontSize: 16,
+                  ),
                   decoration: const InputDecoration(
+                    hintText: "Difficulty",
                     filled: true,
                   ),
-                  value: state.difficulty,
-                  items: difficulty
-                      .map((unit) => DropdownMenuItem(
-                            value: unit,
-                            child: Text(unit),
-                          ))
-                      .toList(),
-                  onChanged: (text) => updateDifficulty(text.toString()),
+                  validator: ((value) => null),
+                  readOnly: true,
+                  onTap: () => showDifficultyPicker(state.preparationTime),
                 ),
               ),
               const SizedBox(

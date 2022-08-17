@@ -26,6 +26,8 @@ mixin _$CategoryDataDTO {
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'picture')
   String get picture => throw _privateConstructorUsedError;
+  @JsonKey(name: 'recipes_count')
+  String? get recipesCount => throw _privateConstructorUsedError;
   String? get blurhash => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   String? get sort => throw _privateConstructorUsedError;
@@ -45,6 +47,7 @@ abstract class $CategoryDataDTOCopyWith<$Res> {
       {@JsonKey(name: 'id') String id,
       @JsonKey(name: 'name') String name,
       @JsonKey(name: 'picture') String picture,
+      @JsonKey(name: 'recipes_count') String? recipesCount,
       String? blurhash,
       String? status,
       String? sort});
@@ -64,6 +67,7 @@ class _$CategoryDataDTOCopyWithImpl<$Res>
     Object? id = freezed,
     Object? name = freezed,
     Object? picture = freezed,
+    Object? recipesCount = freezed,
     Object? blurhash = freezed,
     Object? status = freezed,
     Object? sort = freezed,
@@ -81,6 +85,10 @@ class _$CategoryDataDTOCopyWithImpl<$Res>
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
               as String,
+      recipesCount: recipesCount == freezed
+          ? _value.recipesCount
+          : recipesCount // ignore: cast_nullable_to_non_nullable
+              as String?,
       blurhash: blurhash == freezed
           ? _value.blurhash
           : blurhash // ignore: cast_nullable_to_non_nullable
@@ -108,6 +116,7 @@ abstract class _$$_CategoryDataDTOCopyWith<$Res>
       {@JsonKey(name: 'id') String id,
       @JsonKey(name: 'name') String name,
       @JsonKey(name: 'picture') String picture,
+      @JsonKey(name: 'recipes_count') String? recipesCount,
       String? blurhash,
       String? status,
       String? sort});
@@ -129,6 +138,7 @@ class __$$_CategoryDataDTOCopyWithImpl<$Res>
     Object? id = freezed,
     Object? name = freezed,
     Object? picture = freezed,
+    Object? recipesCount = freezed,
     Object? blurhash = freezed,
     Object? status = freezed,
     Object? sort = freezed,
@@ -146,6 +156,10 @@ class __$$_CategoryDataDTOCopyWithImpl<$Res>
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
               as String,
+      recipesCount: recipesCount == freezed
+          ? _value.recipesCount
+          : recipesCount // ignore: cast_nullable_to_non_nullable
+              as String?,
       blurhash: blurhash == freezed
           ? _value.blurhash
           : blurhash // ignore: cast_nullable_to_non_nullable
@@ -169,6 +183,7 @@ class _$_CategoryDataDTO extends _CategoryDataDTO {
       {@JsonKey(name: 'id') required this.id,
       @JsonKey(name: 'name') this.name = '',
       @JsonKey(name: 'picture') this.picture = '',
+      @JsonKey(name: 'recipes_count') this.recipesCount,
       this.blurhash,
       this.status,
       this.sort})
@@ -187,6 +202,9 @@ class _$_CategoryDataDTO extends _CategoryDataDTO {
   @JsonKey(name: 'picture')
   final String picture;
   @override
+  @JsonKey(name: 'recipes_count')
+  final String? recipesCount;
+  @override
   final String? blurhash;
   @override
   final String? status;
@@ -195,7 +213,7 @@ class _$_CategoryDataDTO extends _CategoryDataDTO {
 
   @override
   String toString() {
-    return 'CategoryDataDTO(id: $id, name: $name, picture: $picture, blurhash: $blurhash, status: $status, sort: $sort)';
+    return 'CategoryDataDTO(id: $id, name: $name, picture: $picture, recipesCount: $recipesCount, blurhash: $blurhash, status: $status, sort: $sort)';
   }
 
   @override
@@ -206,6 +224,8 @@ class _$_CategoryDataDTO extends _CategoryDataDTO {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.picture, picture) &&
+            const DeepCollectionEquality()
+                .equals(other.recipesCount, recipesCount) &&
             const DeepCollectionEquality().equals(other.blurhash, blurhash) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.sort, sort));
@@ -218,6 +238,7 @@ class _$_CategoryDataDTO extends _CategoryDataDTO {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(picture),
+      const DeepCollectionEquality().hash(recipesCount),
       const DeepCollectionEquality().hash(blurhash),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(sort));
@@ -240,6 +261,7 @@ abstract class _CategoryDataDTO extends CategoryDataDTO {
       {@JsonKey(name: 'id') required final String id,
       @JsonKey(name: 'name') final String name,
       @JsonKey(name: 'picture') final String picture,
+      @JsonKey(name: 'recipes_count') final String? recipesCount,
       final String? blurhash,
       final String? status,
       final String? sort}) = _$_CategoryDataDTO;
@@ -257,6 +279,9 @@ abstract class _CategoryDataDTO extends CategoryDataDTO {
   @override
   @JsonKey(name: 'picture')
   String get picture;
+  @override
+  @JsonKey(name: 'recipes_count')
+  String? get recipesCount;
   @override
   String? get blurhash;
   @override

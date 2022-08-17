@@ -99,7 +99,7 @@ class __$$_StepperStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StepperState with DiagnosticableTreeMixin implements _StepperState {
+class _$_StepperState implements _StepperState {
   const _$_StepperState({required this.stepperItem, required this.index});
 
   @override
@@ -108,17 +108,8 @@ class _$_StepperState with DiagnosticableTreeMixin implements _StepperState {
   final int index;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'StepperState(stepperItem: $stepperItem, index: $index)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'StepperState'))
-      ..add(DiagnosticsProperty('stepperItem', stepperItem))
-      ..add(DiagnosticsProperty('index', index));
   }
 
   @override

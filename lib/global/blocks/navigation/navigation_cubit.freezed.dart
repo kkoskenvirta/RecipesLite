@@ -124,9 +124,7 @@ class __$$_NavigationStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_NavigationState
-    with DiagnosticableTreeMixin
-    implements _NavigationState {
+class _$_NavigationState implements _NavigationState {
   const _$_NavigationState(
       {required this.navBarItem,
       required this.index,
@@ -143,19 +141,8 @@ class _$_NavigationState
   final String? currentPath;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'NavigationState(navBarItem: $navBarItem, index: $index, title: $title, currentPath: $currentPath)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'NavigationState'))
-      ..add(DiagnosticsProperty('navBarItem', navBarItem))
-      ..add(DiagnosticsProperty('index', index))
-      ..add(DiagnosticsProperty('title', title))
-      ..add(DiagnosticsProperty('currentPath', currentPath));
   }
 
   @override

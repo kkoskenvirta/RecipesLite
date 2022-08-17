@@ -10,6 +10,7 @@ class CategoryDataDTO with _$CategoryDataDTO {
     @JsonKey(name: 'id') required String id,
     @JsonKey(name: 'name') @Default('') String name,
     @JsonKey(name: 'picture') @Default('') String picture,
+    @JsonKey(name: 'recipes_count') String? recipesCount,
     String? blurhash,
     String? status,
     String? sort,
@@ -20,6 +21,14 @@ class CategoryDataDTO with _$CategoryDataDTO {
   factory CategoryDataDTO.fromJson(Map<String, dynamic> json) => _$CategoryDataDTOFromJson(json);
 
   CategoryModel toDomain() {
-    return CategoryModel(id: id, name: name, picture: picture, status: status, blurhash: blurhash, sort: sort);
+    return CategoryModel(
+      id: id,
+      name: name,
+      picture: picture,
+      status: status,
+      blurhash: blurhash,
+      sort: sort,
+      recipesCount: recipesCount,
+    );
   }
 }

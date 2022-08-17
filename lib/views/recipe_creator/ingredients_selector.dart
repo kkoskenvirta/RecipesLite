@@ -206,6 +206,7 @@ class _IngredientSheetState extends State<IngredientSheet> {
           key: formKey,
           autovalidateMode: AutovalidateMode.disabled,
           child: Container(
+            height: 625,
             padding: EdgeInsets.all(Dimensions.height20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -217,12 +218,11 @@ class _IngredientSheetState extends State<IngredientSheet> {
                 const SizedBox(
                   height: 16,
                 ),
-                Align(alignment: Alignment.centerLeft, child: SmallText(text: "Ingredient name")),
                 TextFormField(
                   style: const TextStyle(
                     fontSize: 16,
                   ),
-                  decoration: const InputDecoration(hintText: "Ingredient", filled: false),
+                  decoration: const InputDecoration(labelText: "Ingredient", filled: false),
                   textInputAction: TextInputAction.next,
                   controller: nameController,
                   autofocus: true,
@@ -239,7 +239,6 @@ class _IngredientSheetState extends State<IngredientSheet> {
                 const SizedBox(
                   height: 16,
                 ),
-                Align(alignment: Alignment.centerLeft, child: SmallText(text: "Ingredient amount")),
                 Row(
                   children: [
                     Expanded(
@@ -248,7 +247,7 @@ class _IngredientSheetState extends State<IngredientSheet> {
                           fontSize: 16,
                         ),
                         decoration: const InputDecoration(
-                          hintText: "Amount",
+                          labelText: "Amount",
                           filled: false,
                           helperText: "",
                         ),
@@ -278,9 +277,10 @@ class _IngredientSheetState extends State<IngredientSheet> {
                     Expanded(
                       child: Container(
                         width: 70,
-                        padding: const EdgeInsets.only(bottom: 24),
+                        padding: const EdgeInsets.only(bottom: 30),
                         child: DropdownButtonFormField<String>(
                           decoration: const InputDecoration(
+                            labelText: "",
                             filled: false,
                           ),
                           value: widget.ingredient != null ? widget.ingredient!.unit : "gram",

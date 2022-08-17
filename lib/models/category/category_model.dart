@@ -8,6 +8,7 @@ class CategoryModel with _$CategoryModel {
   factory CategoryModel({
     required String id,
     required String name,
+    String? recipesCount,
     int? relationId,
     String? picture,
     String? status,

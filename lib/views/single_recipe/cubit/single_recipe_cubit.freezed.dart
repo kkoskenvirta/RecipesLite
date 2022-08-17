@@ -116,9 +116,7 @@ class __$$_SingleRecipeStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SingleRecipeState
-    with DiagnosticableTreeMixin
-    implements _SingleRecipeState {
+class _$_SingleRecipeState implements _SingleRecipeState {
   const _$_SingleRecipeState({required this.status, required this.recipe});
 
   @override
@@ -127,17 +125,8 @@ class _$_SingleRecipeState
   final RecipeModel? recipe;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'SingleRecipeState(status: $status, recipe: $recipe)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'SingleRecipeState'))
-      ..add(DiagnosticsProperty('status', status))
-      ..add(DiagnosticsProperty('recipe', recipe));
   }
 
   @override

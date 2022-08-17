@@ -22,6 +22,7 @@ CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) {
 mixin _$CategoryModel {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String? get recipesCount => throw _privateConstructorUsedError;
   int? get relationId => throw _privateConstructorUsedError;
   String? get picture => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
@@ -42,6 +43,7 @@ abstract class $CategoryModelCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
+      String? recipesCount,
       int? relationId,
       String? picture,
       String? status,
@@ -62,6 +64,7 @@ class _$CategoryModelCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? recipesCount = freezed,
     Object? relationId = freezed,
     Object? picture = freezed,
     Object? status = freezed,
@@ -77,6 +80,10 @@ class _$CategoryModelCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      recipesCount: recipesCount == freezed
+          ? _value.recipesCount
+          : recipesCount // ignore: cast_nullable_to_non_nullable
+              as String?,
       relationId: relationId == freezed
           ? _value.relationId
           : relationId // ignore: cast_nullable_to_non_nullable
@@ -111,6 +118,7 @@ abstract class _$$_CategoryModelCopyWith<$Res>
   $Res call(
       {String id,
       String name,
+      String? recipesCount,
       int? relationId,
       String? picture,
       String? status,
@@ -133,6 +141,7 @@ class __$$_CategoryModelCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? recipesCount = freezed,
     Object? relationId = freezed,
     Object? picture = freezed,
     Object? status = freezed,
@@ -148,6 +157,10 @@ class __$$_CategoryModelCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      recipesCount: recipesCount == freezed
+          ? _value.recipesCount
+          : recipesCount // ignore: cast_nullable_to_non_nullable
+              as String?,
       relationId: relationId == freezed
           ? _value.relationId
           : relationId // ignore: cast_nullable_to_non_nullable
@@ -178,6 +191,7 @@ class _$_CategoryModel extends _CategoryModel {
   _$_CategoryModel(
       {required this.id,
       required this.name,
+      this.recipesCount,
       this.relationId,
       this.picture,
       this.status,
@@ -193,6 +207,8 @@ class _$_CategoryModel extends _CategoryModel {
   @override
   final String name;
   @override
+  final String? recipesCount;
+  @override
   final int? relationId;
   @override
   final String? picture;
@@ -205,7 +221,7 @@ class _$_CategoryModel extends _CategoryModel {
 
   @override
   String toString() {
-    return 'CategoryModel(id: $id, name: $name, relationId: $relationId, picture: $picture, status: $status, blurhash: $blurhash, sort: $sort)';
+    return 'CategoryModel(id: $id, name: $name, recipesCount: $recipesCount, relationId: $relationId, picture: $picture, status: $status, blurhash: $blurhash, sort: $sort)';
   }
 
   @override
@@ -215,6 +231,8 @@ class _$_CategoryModel extends _CategoryModel {
             other is _$_CategoryModel &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality()
+                .equals(other.recipesCount, recipesCount) &&
             const DeepCollectionEquality()
                 .equals(other.relationId, relationId) &&
             const DeepCollectionEquality().equals(other.picture, picture) &&
@@ -229,6 +247,7 @@ class _$_CategoryModel extends _CategoryModel {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(recipesCount),
       const DeepCollectionEquality().hash(relationId),
       const DeepCollectionEquality().hash(picture),
       const DeepCollectionEquality().hash(status),
@@ -252,6 +271,7 @@ abstract class _CategoryModel extends CategoryModel {
   factory _CategoryModel(
       {required final String id,
       required final String name,
+      final String? recipesCount,
       final int? relationId,
       final String? picture,
       final String? status,
@@ -266,6 +286,8 @@ abstract class _CategoryModel extends CategoryModel {
   String get id;
   @override
   String get name;
+  @override
+  String? get recipesCount;
   @override
   int? get relationId;
   @override

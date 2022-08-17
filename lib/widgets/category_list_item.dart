@@ -11,6 +11,7 @@ class CategoryListItem extends StatelessWidget {
   final String? imageUrl;
   final String? blurhash;
   final String title;
+  final String recipesCount;
 
   final VoidCallback? onTap;
 
@@ -18,6 +19,7 @@ class CategoryListItem extends StatelessWidget {
     Key? key,
     this.imageUrl,
     this.title = "",
+    this.recipesCount = "",
     this.onTap,
     this.blurhash,
   }) : super(key: key);
@@ -58,7 +60,7 @@ class CategoryListItem extends StatelessWidget {
                   const SizedBox(
                     height: 2,
                   ),
-                  SmallText(text: "recipe amount")
+                  SmallText(text: '$recipesCount recipes')
                 ],
               ),
             ),

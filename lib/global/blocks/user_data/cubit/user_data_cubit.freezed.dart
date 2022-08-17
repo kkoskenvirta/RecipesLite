@@ -172,7 +172,7 @@ class __$$_UserDataStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_UserDataState with DiagnosticableTreeMixin implements _UserDataState {
+class _$_UserDataState implements _UserDataState {
   const _$_UserDataState(
       {required this.status,
       required this.favoriteQuery,
@@ -206,21 +206,8 @@ class _$_UserDataState with DiagnosticableTreeMixin implements _UserDataState {
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'UserDataState(status: $status, favoriteQuery: $favoriteQuery, recipeQuery: $recipeQuery, currUser: $currUser, favorites: $favorites, recipes: $recipes)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'UserDataState'))
-      ..add(DiagnosticsProperty('status', status))
-      ..add(DiagnosticsProperty('favoriteQuery', favoriteQuery))
-      ..add(DiagnosticsProperty('recipeQuery', recipeQuery))
-      ..add(DiagnosticsProperty('currUser', currUser))
-      ..add(DiagnosticsProperty('favorites', favorites))
-      ..add(DiagnosticsProperty('recipes', recipes));
   }
 
   @override

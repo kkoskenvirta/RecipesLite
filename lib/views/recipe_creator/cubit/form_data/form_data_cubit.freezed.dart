@@ -338,7 +338,7 @@ class __$$_FormDataStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
+class _$_FormDataState implements _FormDataState {
   const _$_FormDataState(
       {this.editMode,
       required this.status,
@@ -418,34 +418,8 @@ class _$_FormDataState with DiagnosticableTreeMixin implements _FormDataState {
   final String? blurHash;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'FormDataState(editMode: $editMode, status: $status, requestStatus: $requestStatus, recipeFetchStatus: $recipeFetchStatus, blurHashStatus: $blurHashStatus, featured: $featured, instructions: $instructions, ingredients: $ingredients, categories: $categories, tags: $tags, recipe: $recipe, id: $id, preparationTime: $preparationTime, name: $name, shortDescription: $shortDescription, difficulty: $difficulty, picture: $picture, image: $image, blurHash: $blurHash)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'FormDataState'))
-      ..add(DiagnosticsProperty('editMode', editMode))
-      ..add(DiagnosticsProperty('status', status))
-      ..add(DiagnosticsProperty('requestStatus', requestStatus))
-      ..add(DiagnosticsProperty('recipeFetchStatus', recipeFetchStatus))
-      ..add(DiagnosticsProperty('blurHashStatus', blurHashStatus))
-      ..add(DiagnosticsProperty('featured', featured))
-      ..add(DiagnosticsProperty('instructions', instructions))
-      ..add(DiagnosticsProperty('ingredients', ingredients))
-      ..add(DiagnosticsProperty('categories', categories))
-      ..add(DiagnosticsProperty('tags', tags))
-      ..add(DiagnosticsProperty('recipe', recipe))
-      ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('preparationTime', preparationTime))
-      ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('shortDescription', shortDescription))
-      ..add(DiagnosticsProperty('difficulty', difficulty))
-      ..add(DiagnosticsProperty('picture', picture))
-      ..add(DiagnosticsProperty('image', image))
-      ..add(DiagnosticsProperty('blurHash', blurHash));
   }
 
   @override

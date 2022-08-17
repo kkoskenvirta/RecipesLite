@@ -8,6 +8,7 @@ import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
+import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/category_selector.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_data/form_data_cubit.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_fetch/form_fetch_cubit.dart';
@@ -469,10 +470,12 @@ class CustomStepperControls extends StatelessWidget {
                   foregroundColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
                     return states.contains(MaterialState.disabled)
                         ? null
-                        : (_isDark() ? colorScheme.onSurface : colorScheme.onPrimary);
+                        : (_isDark() ? colorScheme.onSurface : RecipeAppTheme.colors.pinkLightLow);
                   }),
                   backgroundColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
-                    return _isDark() || states.contains(MaterialState.disabled) ? null : colorScheme.primary;
+                    return _isDark() || states.contains(MaterialState.disabled)
+                        ? RecipeAppTheme.colors.pinkLightLow
+                        : colorScheme.primary;
                   }),
                   padding: MaterialStateProperty.all<EdgeInsetsGeometry>(buttonPadding),
                   shape: MaterialStateProperty.all<OutlinedBorder>(buttonShape),

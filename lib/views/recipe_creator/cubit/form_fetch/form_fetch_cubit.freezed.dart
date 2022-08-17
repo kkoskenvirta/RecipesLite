@@ -117,9 +117,7 @@ class __$$_FormFetchStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_FormFetchState
-    with DiagnosticableTreeMixin
-    implements _FormFetchState {
+class _$_FormFetchState implements _FormFetchState {
   const _$_FormFetchState(
       {required this.status,
       required final List<CategoryModel> categories,
@@ -144,18 +142,8 @@ class _$_FormFetchState
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'FormFetchState(status: $status, categories: $categories, tags: $tags)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'FormFetchState'))
-      ..add(DiagnosticsProperty('status', status))
-      ..add(DiagnosticsProperty('categories', categories))
-      ..add(DiagnosticsProperty('tags', tags));
   }
 
   @override

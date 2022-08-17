@@ -2,9 +2,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
+import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
+import 'package:flutter_signin_button/button_view.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../global/blocks/auth/cubit/auth_cubit.dart';
 import '../../repositorys/auth_repository.dart';
@@ -85,6 +89,30 @@ class LoginPage extends StatelessWidget {
                             ),
                     );
                   },
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                // SignInButton(
+                //   elevation: 0,
+                //   Buttons.Google,
+                //   onPressed: () async => authCubit.loginWithProvider('google'),
+                // ),
+                ElevatedButton.icon(
+                  icon: FaIcon(
+                    FontAwesomeIcons.google,
+                    color: Colors.red,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(50), // NEW
+                    backgroundColor: RecipeAppTheme.colors.blueAccent,
+                  ),
+                  onPressed: () async => authCubit.loginWithProvider('google'),
+                  label: LargeText(
+                    text: 'LOGIN WITH GOOGLE',
+                    size: 16,
+                    color: Colors.white,
+                  ),
                 ),
                 const SizedBox(
                   height: 20,

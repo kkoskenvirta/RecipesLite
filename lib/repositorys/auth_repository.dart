@@ -5,6 +5,9 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_e_commerce/models/user/dto/user_object_dto.dart';
 import 'package:flutter_e_commerce/models/user/user_model.dart';
 import 'package:flutter_e_commerce/repositorys/secure_storage_repository.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_web_auth/flutter_web_auth.dart';
+
 import '../models/auth/dto/auth_dto.dart';
 import '../modules/dio_module.dart';
 
@@ -29,7 +32,12 @@ class AuthRepository {
   final Dio _authDio;
   final Dio _dio;
   final SecureStorageRepository _secureStorageRepository;
-
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+    ],
+  );
   Future<Either<AuthError, AuthModel>> login({required String email, required String password}) async {
     try {
       final body = {'email': email, 'password': password};
@@ -43,6 +51,38 @@ class AuthRepository {
       return left(AuthError.unexpected);
     }
   }
+
+  Future<Either<AuthError, bool>> loginWithProvider({required String provider}) async {
+    try {
+      String providerResponse = "";
+      switch (provider) {
+        case "google":
+          final providerResponse = await loginWithGoogle();
+          print(providerResponse);
+          break;
+        default:
+      }
+      // final response = await _authDio.get('/auth/login/$provider');
+      // final authDTO = AuthDTO.fromJson(response.data);
+      // final auth = authDTO.data.toDomain();
+      return right(true);
+    } catch (e) {
+      if (e is DioError && e.response?.statusCode == 400) return left(AuthError.userNotExist);
+      if (e is DioError && e.response?.statusCode == 401) return left(AuthError.invalidCredentials);
+      return left(AuthError.unexpected);
+    }
+  }
+
+  Future<GoogleSignInAccount?> loginWithGoogle() async {
+    final result = await FlutterWebAuth.authenticate(
+        url: "https://directus-em2ehfwczq-ew.a.run.app/auth/login/google",
+        callbackUrlScheme: "com.googleusercontent.apps.493054963501-k9jbs83d0n6frddutel7qrcmgu4hta80");
+
+    print(result);
+    final token = Uri.parse(result).queryParameters['token'];
+    return null;
+  }
+  // Future<GoogleSignInAccount?> loginWithGoogle() => _googleSignIn.signIn();
 
   Future<Either<AuthError, void>> logout({required String refreshToken}) async {
     try {

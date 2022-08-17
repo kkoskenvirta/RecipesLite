@@ -100,9 +100,7 @@ class __$$_CategoriesStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CategoriesState
-    with DiagnosticableTreeMixin
-    implements _CategoriesState {
+class _$_CategoriesState implements _CategoriesState {
   const _$_CategoriesState(
       {required this.status, required final List<CategoryModel> categories})
       : _categories = categories;
@@ -117,17 +115,8 @@ class _$_CategoriesState
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'CategoriesState(status: $status, categories: $categories)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'CategoriesState'))
-      ..add(DiagnosticsProperty('status', status))
-      ..add(DiagnosticsProperty('categories', categories));
   }
 
   @override
