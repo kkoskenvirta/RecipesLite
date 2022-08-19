@@ -32,6 +32,8 @@ mixin _$RecipeDataDTO {
   List<IngredientIdDTO>? get ingredients => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   bool? get featured => throw _privateConstructorUsedError;
+  @JsonKey(name: 'favorites_count')
+  String? get favoritesCount => throw _privateConstructorUsedError;
   @JsonKey(name: 'preparation_time')
   int? get preparationTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'short_description')
@@ -69,6 +71,7 @@ abstract class $RecipeDataDTOCopyWith<$Res> {
       List<IngredientIdDTO>? ingredients,
       String? name,
       bool? featured,
+      @JsonKey(name: 'favorites_count') String? favoritesCount,
       @JsonKey(name: 'preparation_time') int? preparationTime,
       @JsonKey(name: 'short_description') String? shortDescription,
       @JsonKey(name: 'comment_count') int? commentCount,
@@ -100,6 +103,7 @@ class _$RecipeDataDTOCopyWithImpl<$Res>
     Object? ingredients = freezed,
     Object? name = freezed,
     Object? featured = freezed,
+    Object? favoritesCount = freezed,
     Object? preparationTime = freezed,
     Object? shortDescription = freezed,
     Object? commentCount = freezed,
@@ -156,6 +160,10 @@ class _$RecipeDataDTOCopyWithImpl<$Res>
           ? _value.featured
           : featured // ignore: cast_nullable_to_non_nullable
               as bool?,
+      favoritesCount: favoritesCount == freezed
+          ? _value.favoritesCount
+          : favoritesCount // ignore: cast_nullable_to_non_nullable
+              as String?,
       preparationTime: preparationTime == freezed
           ? _value.preparationTime
           : preparationTime // ignore: cast_nullable_to_non_nullable
@@ -204,6 +212,7 @@ abstract class _$$_RecipeDataDTOCopyWith<$Res>
       List<IngredientIdDTO>? ingredients,
       String? name,
       bool? featured,
+      @JsonKey(name: 'favorites_count') String? favoritesCount,
       @JsonKey(name: 'preparation_time') int? preparationTime,
       @JsonKey(name: 'short_description') String? shortDescription,
       @JsonKey(name: 'comment_count') int? commentCount,
@@ -237,6 +246,7 @@ class __$$_RecipeDataDTOCopyWithImpl<$Res>
     Object? ingredients = freezed,
     Object? name = freezed,
     Object? featured = freezed,
+    Object? favoritesCount = freezed,
     Object? preparationTime = freezed,
     Object? shortDescription = freezed,
     Object? commentCount = freezed,
@@ -293,6 +303,10 @@ class __$$_RecipeDataDTOCopyWithImpl<$Res>
           ? _value.featured
           : featured // ignore: cast_nullable_to_non_nullable
               as bool?,
+      favoritesCount: favoritesCount == freezed
+          ? _value.favoritesCount
+          : favoritesCount // ignore: cast_nullable_to_non_nullable
+              as String?,
       preparationTime: preparationTime == freezed
           ? _value.preparationTime
           : preparationTime // ignore: cast_nullable_to_non_nullable
@@ -337,6 +351,7 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
       final List<IngredientIdDTO>? ingredients,
       this.name,
       this.featured,
+      @JsonKey(name: 'favorites_count') this.favoritesCount,
       @JsonKey(name: 'preparation_time') this.preparationTime,
       @JsonKey(name: 'short_description') this.shortDescription,
       @JsonKey(name: 'comment_count') this.commentCount,
@@ -398,6 +413,9 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
   @override
   final bool? featured;
   @override
+  @JsonKey(name: 'favorites_count')
+  final String? favoritesCount;
+  @override
   @JsonKey(name: 'preparation_time')
   final int? preparationTime;
   @override
@@ -418,7 +436,7 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
 
   @override
   String toString() {
-    return 'RecipeDataDTO(id: $id, status: $status, difficulty: $difficulty, rating: $rating, blurhash: $blurhash, picture: $picture, instructions: $instructions, categories: $categories, tags: $tags, ingredients: $ingredients, name: $name, featured: $featured, preparationTime: $preparationTime, shortDescription: $shortDescription, commentCount: $commentCount, userCreated: $userCreated, dateCreated: $dateCreated, dateUpdated: $dateUpdated)';
+    return 'RecipeDataDTO(id: $id, status: $status, difficulty: $difficulty, rating: $rating, blurhash: $blurhash, picture: $picture, instructions: $instructions, categories: $categories, tags: $tags, ingredients: $ingredients, name: $name, featured: $featured, favoritesCount: $favoritesCount, preparationTime: $preparationTime, shortDescription: $shortDescription, commentCount: $commentCount, userCreated: $userCreated, dateCreated: $dateCreated, dateUpdated: $dateUpdated)';
   }
 
   @override
@@ -443,6 +461,8 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.featured, featured) &&
             const DeepCollectionEquality()
+                .equals(other.favoritesCount, favoritesCount) &&
+            const DeepCollectionEquality()
                 .equals(other.preparationTime, preparationTime) &&
             const DeepCollectionEquality()
                 .equals(other.shortDescription, shortDescription) &&
@@ -458,26 +478,28 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(difficulty),
-      const DeepCollectionEquality().hash(rating),
-      const DeepCollectionEquality().hash(blurhash),
-      const DeepCollectionEquality().hash(picture),
-      const DeepCollectionEquality().hash(instructions),
-      const DeepCollectionEquality().hash(_categories),
-      const DeepCollectionEquality().hash(_tags),
-      const DeepCollectionEquality().hash(_ingredients),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(featured),
-      const DeepCollectionEquality().hash(preparationTime),
-      const DeepCollectionEquality().hash(shortDescription),
-      const DeepCollectionEquality().hash(commentCount),
-      const DeepCollectionEquality().hash(userCreated),
-      const DeepCollectionEquality().hash(dateCreated),
-      const DeepCollectionEquality().hash(dateUpdated));
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        const DeepCollectionEquality().hash(id),
+        const DeepCollectionEquality().hash(status),
+        const DeepCollectionEquality().hash(difficulty),
+        const DeepCollectionEquality().hash(rating),
+        const DeepCollectionEquality().hash(blurhash),
+        const DeepCollectionEquality().hash(picture),
+        const DeepCollectionEquality().hash(instructions),
+        const DeepCollectionEquality().hash(_categories),
+        const DeepCollectionEquality().hash(_tags),
+        const DeepCollectionEquality().hash(_ingredients),
+        const DeepCollectionEquality().hash(name),
+        const DeepCollectionEquality().hash(featured),
+        const DeepCollectionEquality().hash(favoritesCount),
+        const DeepCollectionEquality().hash(preparationTime),
+        const DeepCollectionEquality().hash(shortDescription),
+        const DeepCollectionEquality().hash(commentCount),
+        const DeepCollectionEquality().hash(userCreated),
+        const DeepCollectionEquality().hash(dateCreated),
+        const DeepCollectionEquality().hash(dateUpdated)
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -506,6 +528,7 @@ abstract class _RecipeDataDTO extends RecipeDataDTO {
           final List<IngredientIdDTO>? ingredients,
           final String? name,
           final bool? featured,
+          @JsonKey(name: 'favorites_count') final String? favoritesCount,
           @JsonKey(name: 'preparation_time') final int? preparationTime,
           @JsonKey(name: 'short_description') final String? shortDescription,
           @JsonKey(name: 'comment_count') final int? commentCount,
@@ -542,6 +565,9 @@ abstract class _RecipeDataDTO extends RecipeDataDTO {
   String? get name;
   @override
   bool? get featured;
+  @override
+  @JsonKey(name: 'favorites_count')
+  String? get favoritesCount;
   @override
   @JsonKey(name: 'preparation_time')
   int? get preparationTime;

@@ -10,7 +10,7 @@ class UserDataDTO with _$UserDataDTO {
   factory UserDataDTO({
     required String id,
     @JsonKey(name: 'user') required String userId,
-    @JsonKey(name: 'favorites') required List<RecipeIdDTO> favorites,
+    @JsonKey(name: 'favorites') List<RecipeIdDTO>? favorites,
   }) = _UserDataDTO;
 
   const UserDataDTO._();
@@ -21,7 +21,7 @@ class UserDataDTO with _$UserDataDTO {
     return UserDataModel(
       id: id,
       userId: userId,
-      favorites: favorites.map((favorite) => favorite.toDomain()).toList(),
+      favorites: favorites != null ? favorites!.map((favorite) => favorite.toDomain()).toList() : [],
     );
   }
 }

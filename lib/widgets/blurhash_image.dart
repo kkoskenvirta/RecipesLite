@@ -42,7 +42,7 @@ class BlurhashImage extends StatelessWidget {
               ),
               placeholderBuilder: OctoPlaceholder.blurHash(blurhash!),
               fit: BoxFit.cover,
-              fadeOutDuration: Duration(milliseconds: 300),
+              fadeOutDuration: const Duration(milliseconds: 350),
             ),
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -27,9 +28,9 @@ class TimeChip extends StatelessWidget {
         boxShadow: const [
           BoxShadow(blurRadius: 3, spreadRadius: 1, color: Colors.black12, offset: Offset(2, 2)),
         ],
-        borderRadius: const BorderRadius.only(
-          bottomRight: Radius.circular(15),
-          topLeft: Radius.circular(15),
+        borderRadius: BorderRadius.only(
+          bottomRight: Radius.circular(Dimensions.radius15),
+          topLeft: Radius.circular(Dimensions.radius15),
         ),
       ),
       child: Row(

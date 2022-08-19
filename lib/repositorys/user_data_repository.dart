@@ -55,11 +55,10 @@ class UserDataRepository {
   Future<Either<UserDataError, UserDataModel>> loadUserData(String userId) async {
     try {
       final UserDataModel userData;
-
       final response = await _dio.get(
           "$userDataPath?filter[user][_eq]=${currentUser?.id}&fields=id,user,favorites.recipe_id.*,favorites.recipe_id.categories.category_id.*,favorites.recipe_id.tags.tag_id.*,favorites.recipe_id.ingredients.ingredient_id.*&limit=1");
       final userDataDTO = UserDataObjectDTO.fromJson(response.data);
-
+      print(userDataDTO);
       if (userDataDTO.data.isEmpty) {
         //If we cant find existing user_data with current user id, we create a new one
         userData = await createUserData();

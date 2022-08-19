@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/utils/custom_transitions.dart';
 import 'package:flutter_e_commerce/views/login/login_page.dart';
@@ -51,11 +52,9 @@ import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
     MaterialRoute(path: '/recipes/:recipeId', page: RecipePage),
     MaterialRoute<RecipeModel>(name: "RecipeCreator", page: RecipeCreatorScreen, path: '/recipe-creator'),
     MaterialRoute<RecipeModel>(name: "RecipeEditor", page: RecipeCreatorScreen, path: '/recipe-editor'),
-    CustomRoute(
+    MaterialRoute(
       page: SearchPage,
       path: '/search',
-      transitionsBuilder: CustomTransitions.slideRight,
-      durationInMilliseconds: 200,
     ),
   ],
   replaceInRouteName: 'Page,Route',

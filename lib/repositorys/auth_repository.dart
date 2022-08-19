@@ -58,6 +58,8 @@ class AuthRepository {
       switch (provider) {
         case "google":
           final providerResponse = await loginWithGoogle();
+          // final auth = await ssoRefreshAccessToken();
+
           print(providerResponse);
           break;
         default:
@@ -73,10 +75,13 @@ class AuthRepository {
     }
   }
 
+// success?state=code=4/0AdQt8qhsiEuJwaLUQxDw2oziS6O8D-FRkBSqeZ9CvVNf6fxuwqyQIXYEbaPG83mkQcjsrg&scope=email+profile+openid+https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile&authuser=0&prompt=none
   Future<GoogleSignInAccount?> loginWithGoogle() async {
     final result = await FlutterWebAuth.authenticate(
-        url: "https://directus-em2ehfwczq-ew.a.run.app/auth/login/google",
-        callbackUrlScheme: "com.googleusercontent.apps.493054963501-k9jbs83d0n6frddutel7qrcmgu4hta80");
+      url:
+          "${baseUrl}auth/login/google?redirect=recipeslite://?state=code=4/0AdQt8qhsiEuJwaLUQxDw2oziS6O8D-FRkBSqeZ9CvVNf6fxuwqyQIXYEbaPG83mkQcjsrg&scope=email+profile+openid+https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile&authuser=0&prompt=none",
+      callbackUrlScheme: "recipeslite",
+    );
 
     print(result);
     final token = Uri.parse(result).queryParameters['token'];
@@ -143,6 +148,24 @@ class AuthRepository {
     try {
       final body = {'refresh_token': refreshToken};
       final response = await _authDio.post('/auth/refresh', data: body);
+      final authDTO = AuthDTO.fromJson(response.data);
+      final auth = authDTO.data.toDomain();
+      await _secureStorageRepository.setWithKey(StorageKeys.accessToken, auth.accessToken.toString());
+      await _secureStorageRepository.setWithKey(StorageKeys.refreshToken, auth.refreshToken.toString());
+      return right(auth);
+    } catch (e) {
+      if (e is DioError && e.response?.statusCode == 400) return left(AuthError.invalidPayload);
+      if (e is DioError && e.response?.statusCode == 401) return left(AuthError.invalidCredentials);
+      return left(AuthError.unexpected);
+    }
+  }
+
+  Future<Either<AuthError, AuthModel>> ssoRefreshAccessToken({required String refreshToken}) async {
+    try {
+      Dio _tempDio = _authDio;
+      _tempDio.options.extra['withCredentials'] = true;
+      final body = {'refresh_token': refreshToken};
+      final response = await _tempDio.post('/auth/refresh', data: body);
       final authDTO = AuthDTO.fromJson(response.data);
       final auth = authDTO.data.toDomain();
       await _secureStorageRepository.setWithKey(StorageKeys.accessToken, auth.accessToken.toString());

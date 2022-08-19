@@ -58,10 +58,9 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.493054963501-k9jbs83d0n6frddutel7qrcmgu4hta80</string>
+				<string>recipeslite</string>
 			</array>
 		</dict>
 	</array>
 </dict>
-
 </plist>

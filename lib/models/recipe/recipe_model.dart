@@ -20,6 +20,7 @@ class RecipeModel with _$RecipeModel {
     String? picture,
     String? instructions,
     String? name,
+    String? favoritesCount,
     bool? featured,
     int? preparationTime,
     String? shortDescription,

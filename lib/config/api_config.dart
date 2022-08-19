@@ -33,10 +33,10 @@ const String qualityPath = "?fit=cover&width=800&height=600";
 const String recipesPath = "items/recipe/";
 
 const String recipeFields =
-    "?fields=*,ingredients.ingredient_id.*,ingredients.id,categories.category_id.*,categories.id,tags.tag_id.*,tags.id";
+    "?fields=*,ingredients.ingredient_id.*,ingredients.id,categories.category_id.*,categories.id,tags.tag_id.*,tags.id,count(favorites)";
 
 const String recipesPathFields =
-    "items/recipe/?fields=*,ingredients.ingredient_id.*,ingredients.id,categories.category_id.*,categories.id,tags.tag_id.*,tags.id";
+    "items/recipe/?fields=*,ingredients.ingredient_id.*,ingredients.id,categories.category_id.*,categories.id,tags.tag_id.*,tags.id,count(favorites)";
 
 const String loginPath = "auth/login/";
 

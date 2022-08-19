@@ -24,7 +24,7 @@ mixin _$UserDataDTO {
   @JsonKey(name: 'user')
   String get userId => throw _privateConstructorUsedError;
   @JsonKey(name: 'favorites')
-  List<RecipeIdDTO> get favorites => throw _privateConstructorUsedError;
+  List<RecipeIdDTO>? get favorites => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -40,7 +40,7 @@ abstract class $UserDataDTOCopyWith<$Res> {
   $Res call(
       {String id,
       @JsonKey(name: 'user') String userId,
-      @JsonKey(name: 'favorites') List<RecipeIdDTO> favorites});
+      @JsonKey(name: 'favorites') List<RecipeIdDTO>? favorites});
 }
 
 /// @nodoc
@@ -69,7 +69,7 @@ class _$UserDataDTOCopyWithImpl<$Res> implements $UserDataDTOCopyWith<$Res> {
       favorites: favorites == freezed
           ? _value.favorites
           : favorites // ignore: cast_nullable_to_non_nullable
-              as List<RecipeIdDTO>,
+              as List<RecipeIdDTO>?,
     ));
   }
 }
@@ -84,7 +84,7 @@ abstract class _$$_UserDataDTOCopyWith<$Res>
   $Res call(
       {String id,
       @JsonKey(name: 'user') String userId,
-      @JsonKey(name: 'favorites') List<RecipeIdDTO> favorites});
+      @JsonKey(name: 'favorites') List<RecipeIdDTO>? favorites});
 }
 
 /// @nodoc
@@ -115,7 +115,7 @@ class __$$_UserDataDTOCopyWithImpl<$Res> extends _$UserDataDTOCopyWithImpl<$Res>
       favorites: favorites == freezed
           ? _value._favorites
           : favorites // ignore: cast_nullable_to_non_nullable
-              as List<RecipeIdDTO>,
+              as List<RecipeIdDTO>?,
     ));
   }
 }
@@ -126,7 +126,7 @@ class _$_UserDataDTO extends _UserDataDTO {
   _$_UserDataDTO(
       {required this.id,
       @JsonKey(name: 'user') required this.userId,
-      @JsonKey(name: 'favorites') required final List<RecipeIdDTO> favorites})
+      @JsonKey(name: 'favorites') final List<RecipeIdDTO>? favorites})
       : _favorites = favorites,
         super._();
 
@@ -138,12 +138,14 @@ class _$_UserDataDTO extends _UserDataDTO {
   @override
   @JsonKey(name: 'user')
   final String userId;
-  final List<RecipeIdDTO> _favorites;
+  final List<RecipeIdDTO>? _favorites;
   @override
   @JsonKey(name: 'favorites')
-  List<RecipeIdDTO> get favorites {
+  List<RecipeIdDTO>? get favorites {
+    final value = _favorites;
+    if (value == null) return null;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_favorites);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
@@ -185,11 +187,10 @@ class _$_UserDataDTO extends _UserDataDTO {
 
 abstract class _UserDataDTO extends UserDataDTO {
   factory _UserDataDTO(
-      {required final String id,
-      @JsonKey(name: 'user')
-          required final String userId,
-      @JsonKey(name: 'favorites')
-          required final List<RecipeIdDTO> favorites}) = _$_UserDataDTO;
+          {required final String id,
+          @JsonKey(name: 'user') required final String userId,
+          @JsonKey(name: 'favorites') final List<RecipeIdDTO>? favorites}) =
+      _$_UserDataDTO;
   _UserDataDTO._() : super._();
 
   factory _UserDataDTO.fromJson(Map<String, dynamic> json) =
@@ -202,7 +203,7 @@ abstract class _UserDataDTO extends UserDataDTO {
   String get userId;
   @override
   @JsonKey(name: 'favorites')
-  List<RecipeIdDTO> get favorites;
+  List<RecipeIdDTO>? get favorites;
   @override
   @JsonKey(ignore: true)
   _$$_UserDataDTOCopyWith<_$_UserDataDTO> get copyWith =>

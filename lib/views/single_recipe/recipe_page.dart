@@ -146,7 +146,7 @@ class _RecipePageState extends State<RecipePage> {
                                       builder: (context, state) {
                                         final userDataCubit = BlocProvider.of<UserDataCubit>(context);
                                         if (state.status == UserDataStateStatus.loaded) {
-                                          final result = state.favorites.where((recipe) => recipe.id == recipe.id);
+                                          final result = state.favorites.where((favorite) => favorite.id == recipe.id);
                                           final bool favorited = result.isEmpty ? false : true;
 
                                           return IconButton(

@@ -13,9 +13,8 @@
 import 'package:auto_route/auto_route.dart' as _i7;
 import 'package:flutter/material.dart' as _i14;
 
-import '../models/category/category_model.dart' as _i17;
+import '../models/category/category_model.dart' as _i16;
 import '../models/recipe/recipe_model.dart' as _i15;
-import '../utils/custom_transitions.dart' as _i16;
 import '../views/login/login_page.dart' as _i1;
 import '../views/main/categories/categories_page.dart' as _i10;
 import '../views/main/home_page.dart' as _i8;
@@ -81,13 +80,8 @@ class AppRouter extends _i7.RootStackRouter {
               editableRecipe: args.editableRecipe));
     },
     SearchRoute.name: (routeData) {
-      return _i7.CustomPage<dynamic>(
-          routeData: routeData,
-          child: const _i6.SearchPage(),
-          transitionsBuilder: _i16.CustomTransitions.slideRight,
-          durationInMilliseconds: 200,
-          opaque: true,
-          barrierDismissible: false);
+      return _i7.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i6.SearchPage());
     },
     HomeRouter.name: (routeData) {
       return _i7.MaterialPageX<dynamic>(
@@ -382,7 +376,7 @@ class CategoriesRoute extends _i7.PageRouteInfo<void> {
 class CategoryRoute extends _i7.PageRouteInfo<CategoryRouteArgs> {
   CategoryRoute(
       {_i14.Key? key,
-      List<_i17.CategoryModel>? categoryFilters,
+      List<_i16.CategoryModel>? categoryFilters,
       required String categoryId})
       : super(CategoryRoute.name,
             path: ':categoryId',
@@ -401,7 +395,7 @@ class CategoryRouteArgs {
 
   final _i14.Key? key;
 
-  final List<_i17.CategoryModel>? categoryFilters;
+  final List<_i16.CategoryModel>? categoryFilters;
 
   final String categoryId;
 

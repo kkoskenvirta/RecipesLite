@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_e_commerce/config/api_config.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
@@ -9,6 +12,8 @@ import 'package:flutter_e_commerce/widgets/small_text.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../global/blocks/auth/cubit/auth_cubit.dart';
 import '../../repositorys/auth_repository.dart';
@@ -22,6 +27,7 @@ class LoginPage extends StatelessWidget {
     final passwordController = TextEditingController(text: '');
     final authCubit = BlocProvider.of<AuthCubit>(context);
     final router = AutoRouter.of(context);
+    final Completer<WebViewController> _completer = Completer<WebViewController>();
 
     return Scaffold(
       appBar: MainAppBar(
@@ -98,25 +104,55 @@ class LoginPage extends StatelessWidget {
                 //   Buttons.Google,
                 //   onPressed: () async => authCubit.loginWithProvider('google'),
                 // ),
-                ElevatedButton.icon(
-                  icon: FaIcon(
-                    FontAwesomeIcons.google,
-                    color: Colors.red,
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(50), // NEW
-                    backgroundColor: RecipeAppTheme.colors.blueAccent,
-                  ),
-                  onPressed: () async => authCubit.loginWithProvider('google'),
-                  label: LargeText(
-                    text: 'LOGIN WITH GOOGLE',
-                    size: 16,
-                    color: Colors.white,
-                  ),
-                ),
+                // ElevatedButton.icon(
+                //   icon: FaIcon(
+                //     FontAwesomeIcons.google,
+                //     color: Colors.red,
+                //   ),
+                //   style: ElevatedButton.styleFrom(
+                //     minimumSize: const Size.fromHeight(50), // NEW
+                //     backgroundColor: RecipeAppTheme.colors.blueAccent,
+                //   ),
+                //   onPressed: () async => authCubit.loginWithProvider('google'),
+                //   // onPressed: () async => showBottom,
+                //   label: LargeText(
+                //     text: 'LOGIN WITH GOOGLE',
+                //     size: 16,
+                //     color: Colors.white,
+                //   ),
+                // ),
+                // ElevatedButton.icon(
+                //   icon: FaIcon(
+                //     FontAwesomeIcons.google,
+                //     color: Colors.red,
+                //   ),
+                //   style: ElevatedButton.styleFrom(
+                //     minimumSize: const Size.fromHeight(50), // NEW
+                //     backgroundColor: RecipeAppTheme.colors.blueAccent,
+                //   ),
+                //   onPressed: () async => showDialog(
+                //     context: context,
+                //     barrierDismissible: true,
+                //     builder: (context) => Container(
+                //       width: MediaQuery.of(context).size.width,
+                //       height: MediaQuery.of(context).size.height,
+                //       child: WebView(
+                //         initialUrl:
+                //             '${baseUrl}auth/login/google?redirect=recipeslite://?state=code=4/0AdQt8qhsiEuJwaLUQxDw2oziS6O8D-FRkBSqeZ9CvVNf6fxuwqyQIXYEbaPG83mkQcjsrg&scope=email+profile+openid+https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile&authuser=0&prompt=none',
+                //       ),
+                //     ),
+                //   ),
+                //   // onPressed: () async => showBottom,
+                //   label: LargeText(
+                //     text: 'LOGIN WITH GOOGLE',
+                //     size: 16,
+                //     color: Colors.white,
+                //   ),
+                // ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
+
                 Align(
                   alignment: Alignment.center,
                   child: SmallText(

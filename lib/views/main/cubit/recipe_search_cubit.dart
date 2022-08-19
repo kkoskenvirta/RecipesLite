@@ -21,7 +21,7 @@ class RecipeSearchCubit extends Cubit<RecipeSearchState> {
         filter = '';
       } else {
         filter =
-            '&filter={"_and":[{"_and":[{"_or":[{"Name":{"_contains":"$text"}},{"ingredients":{"ingredient_id":{"name":{"_contains":"$text"}}}},{"categories":{"category_id":{"category_name":{"_contains":"$text"}}}},{"tags":{"tag_id":{"tag_name":{"_contains":"$text"}}}}]}]},{"status":{"_neq":"archived"}}]}';
+            '&filter={"_and":[{"_and":[{"_or":[{"name":{"_contains":"$text"}},{"ingredients":{"ingredient_id":{"name":{"_contains":"$text"}}}},{"categories":{"category_id":{"name":{"_contains":"$text"}}}},{"tags":{"tag_id":{"name":{"_contains":"$text"}}}}]}]},{"status":{"_neq":"archived"}}]}';
       }
 
       final errorOrSearchResults = await recipesRepository.searchRecipes(filters: filter);

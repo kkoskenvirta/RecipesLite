@@ -68,6 +68,8 @@ dependencies:
   email_validator: ^2.1.17
   flutter_signin_button: ^2.0.0
   flutter_web_auth: ^0.4.1
+  webview_flutter: ^3.0.4
+  skeletons: ^0.0.3
 
 dev_dependencies:
   flutter_test:

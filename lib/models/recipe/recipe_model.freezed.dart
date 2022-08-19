@@ -26,6 +26,7 @@ mixin _$RecipeModel {
   String? get picture => throw _privateConstructorUsedError;
   String? get instructions => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
+  String? get favoritesCount => throw _privateConstructorUsedError;
   bool? get featured => throw _privateConstructorUsedError;
   int? get preparationTime => throw _privateConstructorUsedError;
   String? get shortDescription => throw _privateConstructorUsedError;
@@ -57,6 +58,7 @@ abstract class $RecipeModelCopyWith<$Res> {
       String? picture,
       String? instructions,
       String? name,
+      String? favoritesCount,
       bool? featured,
       int? preparationTime,
       String? shortDescription,
@@ -87,6 +89,7 @@ class _$RecipeModelCopyWithImpl<$Res> implements $RecipeModelCopyWith<$Res> {
     Object? picture = freezed,
     Object? instructions = freezed,
     Object? name = freezed,
+    Object? favoritesCount = freezed,
     Object? featured = freezed,
     Object? preparationTime = freezed,
     Object? shortDescription = freezed,
@@ -124,6 +127,10 @@ class _$RecipeModelCopyWithImpl<$Res> implements $RecipeModelCopyWith<$Res> {
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      favoritesCount: favoritesCount == freezed
+          ? _value.favoritesCount
+          : favoritesCount // ignore: cast_nullable_to_non_nullable
               as String?,
       featured: featured == freezed
           ? _value.featured
@@ -191,6 +198,7 @@ abstract class _$$_RecipeModelCopyWith<$Res>
       String? picture,
       String? instructions,
       String? name,
+      String? favoritesCount,
       bool? featured,
       int? preparationTime,
       String? shortDescription,
@@ -223,6 +231,7 @@ class __$$_RecipeModelCopyWithImpl<$Res> extends _$RecipeModelCopyWithImpl<$Res>
     Object? picture = freezed,
     Object? instructions = freezed,
     Object? name = freezed,
+    Object? favoritesCount = freezed,
     Object? featured = freezed,
     Object? preparationTime = freezed,
     Object? shortDescription = freezed,
@@ -260,6 +269,10 @@ class __$$_RecipeModelCopyWithImpl<$Res> extends _$RecipeModelCopyWithImpl<$Res>
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      favoritesCount: favoritesCount == freezed
+          ? _value.favoritesCount
+          : favoritesCount // ignore: cast_nullable_to_non_nullable
               as String?,
       featured: featured == freezed
           ? _value.featured
@@ -323,6 +336,7 @@ class _$_RecipeModel extends _RecipeModel {
       this.picture,
       this.instructions,
       this.name,
+      this.favoritesCount,
       this.featured,
       this.preparationTime,
       this.shortDescription,
@@ -355,6 +369,8 @@ class _$_RecipeModel extends _RecipeModel {
   final String? instructions;
   @override
   final String? name;
+  @override
+  final String? favoritesCount;
   @override
   final bool? featured;
   @override
@@ -403,7 +419,7 @@ class _$_RecipeModel extends _RecipeModel {
 
   @override
   String toString() {
-    return 'RecipeModel(id: $id, difficulty: $difficulty, blurhash: $blurhash, picture: $picture, instructions: $instructions, name: $name, featured: $featured, preparationTime: $preparationTime, shortDescription: $shortDescription, commentCount: $commentCount, status: $status, rating: $rating, userCreated: $userCreated, ingredients: $ingredients, tags: $tags, categories: $categories, dateCreated: $dateCreated, dateUpdated: $dateUpdated)';
+    return 'RecipeModel(id: $id, difficulty: $difficulty, blurhash: $blurhash, picture: $picture, instructions: $instructions, name: $name, favoritesCount: $favoritesCount, featured: $featured, preparationTime: $preparationTime, shortDescription: $shortDescription, commentCount: $commentCount, status: $status, rating: $rating, userCreated: $userCreated, ingredients: $ingredients, tags: $tags, categories: $categories, dateCreated: $dateCreated, dateUpdated: $dateUpdated)';
   }
 
   @override
@@ -419,6 +435,8 @@ class _$_RecipeModel extends _RecipeModel {
             const DeepCollectionEquality()
                 .equals(other.instructions, instructions) &&
             const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality()
+                .equals(other.favoritesCount, favoritesCount) &&
             const DeepCollectionEquality().equals(other.featured, featured) &&
             const DeepCollectionEquality()
                 .equals(other.preparationTime, preparationTime) &&
@@ -443,26 +461,28 @@ class _$_RecipeModel extends _RecipeModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(difficulty),
-      const DeepCollectionEquality().hash(blurhash),
-      const DeepCollectionEquality().hash(picture),
-      const DeepCollectionEquality().hash(instructions),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(featured),
-      const DeepCollectionEquality().hash(preparationTime),
-      const DeepCollectionEquality().hash(shortDescription),
-      const DeepCollectionEquality().hash(commentCount),
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(rating),
-      const DeepCollectionEquality().hash(userCreated),
-      const DeepCollectionEquality().hash(_ingredients),
-      const DeepCollectionEquality().hash(_tags),
-      const DeepCollectionEquality().hash(_categories),
-      const DeepCollectionEquality().hash(dateCreated),
-      const DeepCollectionEquality().hash(dateUpdated));
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        const DeepCollectionEquality().hash(id),
+        const DeepCollectionEquality().hash(difficulty),
+        const DeepCollectionEquality().hash(blurhash),
+        const DeepCollectionEquality().hash(picture),
+        const DeepCollectionEquality().hash(instructions),
+        const DeepCollectionEquality().hash(name),
+        const DeepCollectionEquality().hash(favoritesCount),
+        const DeepCollectionEquality().hash(featured),
+        const DeepCollectionEquality().hash(preparationTime),
+        const DeepCollectionEquality().hash(shortDescription),
+        const DeepCollectionEquality().hash(commentCount),
+        const DeepCollectionEquality().hash(status),
+        const DeepCollectionEquality().hash(rating),
+        const DeepCollectionEquality().hash(userCreated),
+        const DeepCollectionEquality().hash(_ingredients),
+        const DeepCollectionEquality().hash(_tags),
+        const DeepCollectionEquality().hash(_categories),
+        const DeepCollectionEquality().hash(dateCreated),
+        const DeepCollectionEquality().hash(dateUpdated)
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -485,6 +505,7 @@ abstract class _RecipeModel extends RecipeModel {
       final String? picture,
       final String? instructions,
       final String? name,
+      final String? favoritesCount,
       final bool? featured,
       final int? preparationTime,
       final String? shortDescription,
@@ -514,6 +535,8 @@ abstract class _RecipeModel extends RecipeModel {
   String? get instructions;
   @override
   String? get name;
+  @override
+  String? get favoritesCount;
   @override
   bool? get featured;
   @override

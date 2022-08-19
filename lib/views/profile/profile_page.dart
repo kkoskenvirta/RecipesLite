@@ -7,6 +7,7 @@ import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/routes/route_service.dart';
 
 import 'package:flutter_e_commerce/widgets/large_text.dart';
+import 'package:skeletons/skeletons.dart';
 
 import '../../widgets/appbars/main_appbar.dart';
 
@@ -28,11 +29,7 @@ class ProfilePage extends StatelessWidget {
             builder: (context, state) {
               switch (state.status) {
                 case UserDataStateStatus.loading:
-                  return Column(
-                    children: const [
-                      Center(child: CircularProgressIndicator()),
-                    ],
-                  );
+                  return const ProfileBodySkeleton();
 
                 case UserDataStateStatus.loaded:
                   return ProfileBody(
@@ -107,6 +104,57 @@ class ProfileBody extends StatelessWidget {
               ),
               tileColor: Colors.pink.shade50,
               trailing: const Icon(Icons.chevron_right_rounded),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ProfileBodySkeleton extends StatelessWidget {
+  const ProfileBodySkeleton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SkeletonLine(
+              style: SkeletonLineStyle(height: 30, width: 100),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            SkeletonLine(
+              style: SkeletonLineStyle(
+                borderRadius: BorderRadius.circular(6),
+                height: 44,
+              ),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            SkeletonLine(
+              style: SkeletonLineStyle(
+                borderRadius: BorderRadius.circular(6),
+                height: 44,
+              ),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            SkeletonLine(
+              style: SkeletonLineStyle(
+                borderRadius: BorderRadius.circular(6),
+                height: 44,
+              ),
             ),
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_e_commerce/utils/color_generator.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,10 +16,15 @@ class RecipeAppTheme {
       fillColor: colors.pinkLightLow,
     ),
     appBarTheme: AppBarTheme(
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: RecipeAppTheme.colors.pinkLight,
+        statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+        statusBarBrightness: Brightness.light, // For iOS (dark icons)
+      ),
       centerTitle: true,
       backgroundColor: colors.pinkLight,
-      scrolledUnderElevation: 5,
-      shadowColor: colors.pinkMedium,
+      scrolledUnderElevation: 12,
+      shadowColor: colors.pinkLightLow,
       elevation: 0,
       titleTextStyle: const TextStyle(
         color: Colors.black87,
@@ -27,7 +33,7 @@ class RecipeAppTheme {
       ),
       iconTheme: IconThemeData(color: colors.pinkAccent),
     ),
-
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: colors.pinkLight),
     canvasColor: colors.pinkLight,
     listTileTheme: ListTileThemeData(
       visualDensity: const VisualDensity(vertical: -3),
@@ -36,9 +42,10 @@ class RecipeAppTheme {
     chipTheme: ChipThemeData(
       backgroundColor: colors.pinkLightLow,
       selectedColor: colors.pinkAccent,
-      elevation: 0.5,
-      pressElevation: 3,
+      elevation: 0,
+      pressElevation: 0,
     ),
+
     buttonTheme: ButtonThemeData(
       buttonColor: colors.pinkAccent,
       textTheme: ButtonTextTheme.primary,
@@ -58,8 +65,7 @@ class RecipeAppTheme {
     // primarySwatch: Palette.pToLight,
     primarySwatch: createMaterialColor(colors.pinkAccent),
 
-    scaffoldBackgroundColor: colors.pinkLight,
-    toggleableActiveColor: colors.pinkAccent, // primaryColor: const Color.fromARGB(255, 252, 242, 246),
+    scaffoldBackgroundColor: colors.pinkLight, // primaryColor: const Color.fromARGB(255, 252, 242, 246),
     textTheme: TextTheme(
       headline1: GoogleFonts.raleway(fontSize: 52, fontWeight: FontWeight.w600, letterSpacing: -1.5),
       headline2: GoogleFonts.raleway(fontSize: 42, fontWeight: FontWeight.w600, letterSpacing: -0.5),
@@ -74,6 +80,48 @@ class RecipeAppTheme {
       button: GoogleFonts.lato(fontSize: 15, fontWeight: FontWeight.w500, letterSpacing: 1.25),
       caption: GoogleFonts.lato(fontSize: 13, fontWeight: FontWeight.w400, letterSpacing: 0.4),
       overline: GoogleFonts.lato(fontSize: 10, fontWeight: FontWeight.w400, letterSpacing: 1.5),
+    ),
+    switchTheme: SwitchThemeData(
+      thumbColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+        if (states.contains(MaterialState.disabled)) {
+          return null;
+        }
+        if (states.contains(MaterialState.selected)) {
+          return colors.pinkAccent;
+        }
+        return null;
+      }),
+      trackColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+        if (states.contains(MaterialState.disabled)) {
+          return null;
+        }
+        if (states.contains(MaterialState.selected)) {
+          return colors.pinkAccent;
+        }
+        return null;
+      }),
+    ),
+    radioTheme: RadioThemeData(
+      fillColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+        if (states.contains(MaterialState.disabled)) {
+          return null;
+        }
+        if (states.contains(MaterialState.selected)) {
+          return colors.pinkAccent;
+        }
+        return null;
+      }),
+    ),
+    checkboxTheme: CheckboxThemeData(
+      fillColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+        if (states.contains(MaterialState.disabled)) {
+          return null;
+        }
+        if (states.contains(MaterialState.selected)) {
+          return colors.pinkAccent;
+        }
+        return null;
+      }),
     ),
   );
 }

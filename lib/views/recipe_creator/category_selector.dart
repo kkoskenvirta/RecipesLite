@@ -31,6 +31,7 @@ class CategorySelector extends StatelessWidget {
                 return Column(
                   children: [
                     CheckboxListTile(
+                      visualDensity: const VisualDensity(vertical: -1),
                       title: Text(categories[index].name),
                       value: status,
                       onChanged: (status) => updateCategory(categories[index], status!),
