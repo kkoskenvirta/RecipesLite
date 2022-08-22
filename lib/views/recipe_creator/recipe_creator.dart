@@ -111,6 +111,47 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
     ).show(context);
   }
 
+  _showCancelDialog() async {
+    final shouldPop = showDialog<bool>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Leaving recipe creator'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Do you wish to close the editor? All current changes will be lost.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: SmallText(
+                text: 'Quit',
+                size: 14,
+              ),
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+            ),
+            ElevatedButton(
+              child: SmallText(
+                text: 'Stay',
+                size: 14,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+            ),
+          ],
+        );
+      },
+    );
+    return shouldPop;
+  }
+
   @override
   void dispose() {
     nameFieldController.dispose();
@@ -178,7 +219,6 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                             final recipeFetchCubit = BlocProvider.of<RecipeFetchCubit>(context);
                             final userDataCubit = BlocProvider.of<UserDataCubit>(context);
                             final formDataCubit = BlocProvider.of<FormDataCubit>(context);
-                            final router = AutoRouter.of(context);
 
                             //Send upload mode so we know if we need to update an existing or create a new recipes
                             final bool uploadCompleted =
@@ -199,9 +239,11 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                             }
                           }
                         },
-                        onStepCancel: () {
+                        onStepCancel: () async {
                           if (state.index == 0) {
-                            Navigator.pop(context);
+                            final bool shouldPop = await _showCancelDialog();
+                            if (!mounted) return;
+                            shouldPop ? Navigator.pop(context) : null;
                           }
                           stepperCubit.previousStep();
                         },

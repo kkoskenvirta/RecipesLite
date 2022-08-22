@@ -81,7 +81,7 @@ class _HomePageBodyState extends State<HomePageBody> {
           builder: (context, state) {
             final featuredList = state.featured;
 
-            switch (state.status) {
+            switch (state.featuredStatus) {
               case RecipeFetchStateStatus.initial:
                 return const Padding(
                   padding: EdgeInsets.only(top: 16.0),
@@ -91,21 +91,12 @@ class _HomePageBodyState extends State<HomePageBody> {
                 return Column(
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(top: 20),
+                      margin: const EdgeInsets.only(top: 20, left: 15, right: 15),
                       clipBehavior: Clip.none,
                       height: Dimensions.pageView,
 
                       //Build the slides for the slider
-                      child: featuredList.isNotEmpty
-                          ? PageView.builder(
-                              clipBehavior: Clip.none,
-                              controller: pageController,
-                              itemCount: featuredList.length,
-                              itemBuilder: (context, index) {
-                                return const FeaturedItemSkeleton();
-                              },
-                            )
-                          : const SizedBox(),
+                      child: const FeaturedItemSkeleton(),
                     ),
                     const SizedBox(
                       height: 10,
@@ -174,17 +165,13 @@ class _HomePageBodyState extends State<HomePageBody> {
             children: [
               LargeText(text: "Popular recipes"),
               TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: RecipeAppTheme.colors.pinkLightLow,
-                  visualDensity: VisualDensity.comfortable,
-                  textStyle: const TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
                 onPressed: () {
                   context.router.push(const RecipeListRoute());
                 },
-                child: SmallText(text: "SHOW ALL"),
+                child: SmallText(
+                  text: "SHOW ALL",
+                  color: RecipeAppTheme.colors.pinkAccent,
+                ),
               )
             ],
           ),
@@ -192,7 +179,7 @@ class _HomePageBodyState extends State<HomePageBody> {
         BlocBuilder<RecipeFetchCubit, RecipeFetchState>(
           builder: (context, state) {
             final popularList = state.popular;
-            switch (state.status) {
+            switch (state.popularStatus) {
               case RecipeFetchStateStatus.initial:
                 return const RecipeItemListSkeleton();
               case RecipeFetchStateStatus.loading:
@@ -274,23 +261,12 @@ class _HomePageBodyState extends State<HomePageBody> {
                     borderRadius: BorderRadius.circular(Dimensions.radius20),
                     boxShadow: [RecipeAppTheme.shadows.normal],
                   ),
-                  child: Stack(
-                    children: [
-                      BlurhashImage(
-                        aspectRatio: 1.6,
-                        image: recipe.picture,
-                        blurhash: recipe.blurhash,
-                        height: Dimensions.pageViewContainer,
-                        boxShadow: [RecipeAppTheme.shadows.normal],
-                      ),
-                      Positioned(
-                        left: 0,
-                        child: TimeChip(
-                          size: 14,
-                          text: recipe.preparationTime!.parseToTimeString(),
-                        ),
-                      )
-                    ],
+                  child: BlurhashImage(
+                    aspectRatio: 1.6,
+                    image: recipe.picture,
+                    blurhash: recipe.blurhash,
+                    height: Dimensions.pageViewContainer,
+                    boxShadow: [RecipeAppTheme.shadows.normal],
                   ),
                 ),
                 Column(
@@ -332,7 +308,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                                 ),
                                 InformationBar(
                                   status: recipe.difficulty!,
-                                  timeEstimate: recipe.preparationTime!,
+                                  preparationTime: recipe.preparationTime!,
                                 )
                               ],
                             ),
@@ -406,7 +382,7 @@ class FeaturedItemSkeleton extends StatelessWidget {
                           spacing: 12,
                           lineStyle: SkeletonLineStyle(
                             randomLength: true,
-                            height: 20,
+                            height: 22,
                             borderRadius: BorderRadius.circular(8),
                             minLength: MediaQuery.of(context).size.width / 3,
                             maxLength: MediaQuery.of(context).size.width / 1.5,

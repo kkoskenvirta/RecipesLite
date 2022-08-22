@@ -5,18 +5,20 @@ import 'package:google_fonts/google_fonts.dart';
 
 class TimeChip extends StatelessWidget {
   final String text;
-  double size;
-  double height;
-  double horizontal;
-  double vertical;
+  final double size;
+  final double height;
+  final double horizontal;
+  final double vertical;
+  final bool rounded;
 
-  TimeChip({
+  const TimeChip({
     Key? key,
     required this.text,
     this.size = 13,
     this.height = 1.2,
     this.horizontal = 10.0,
     this.vertical = 8.0,
+    this.rounded = false,
   }) : super(key: key);
 
   @override
@@ -25,13 +27,19 @@ class TimeChip extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: vertical, horizontal: horizontal),
       decoration: BoxDecoration(
         color: RecipeAppTheme.colors.blueLight,
-        boxShadow: const [
-          BoxShadow(blurRadius: 3, spreadRadius: 1, color: Colors.black12, offset: Offset(2, 2)),
-        ],
-        borderRadius: BorderRadius.only(
-          bottomRight: Radius.circular(Dimensions.radius15),
-          topLeft: Radius.circular(Dimensions.radius15),
-        ),
+        boxShadow: rounded
+            ? null
+            : const [
+                BoxShadow(blurRadius: 3, spreadRadius: 1, color: Colors.black12, offset: Offset(2, 2)),
+              ],
+        borderRadius: rounded
+            ? BorderRadius.all(
+                Radius.circular(Dimensions.radius15),
+              )
+            : BorderRadius.only(
+                bottomRight: Radius.circular(Dimensions.radius15),
+                topLeft: Radius.circular(Dimensions.radius15),
+              ),
       ),
       child: Row(
         children: [

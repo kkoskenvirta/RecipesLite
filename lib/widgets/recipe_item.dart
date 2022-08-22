@@ -57,13 +57,14 @@ class RecipeItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(Dimensions.radius15),
                     ),
                     Positioned(
-                      left: 0,
-                      top: 0,
+                      left: 3,
+                      top: 3,
                       child: TimeChip(
                         size: 12,
                         text: recipe.preparationTime!.parseToTimeString(),
                         horizontal: 8,
                         vertical: 7,
+                        rounded: true,
                       ),
                     ),
                   ],

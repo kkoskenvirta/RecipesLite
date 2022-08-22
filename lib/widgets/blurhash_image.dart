@@ -57,7 +57,7 @@ class BlurhashImage extends StatelessWidget {
         child: AspectRatio(
           aspectRatio: aspectRatio,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(Dimensions.radius20),
+            borderRadius: BorderRadius.circular(Dimensions.radius15),
             child: ColoredBox(
               color: Colors.pink.shade100,
             ),

@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
+import 'package:flutter_e_commerce/utils/int_extension.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/utils/scale_func.dart';
 import 'package:flutter_e_commerce/views/single_recipe/cubit/single_recipe_cubit.dart';
@@ -16,8 +17,10 @@ import 'package:flutter_e_commerce/widgets/categorization_bar.dart';
 import 'package:flutter_e_commerce/widgets/ingredients_table.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
+import 'package:flutter_e_commerce/widgets/small_text.dart';
 
 import '../../models/recipe/recipe_model.dart';
+import '../../widgets/time_chip.dart';
 
 class RecipePage extends StatefulWidget {
   const RecipePage({
@@ -117,73 +120,101 @@ class _RecipePageState extends State<RecipePage> {
                       controller: scrollController,
                       child: Column(
                         children: [
-                          FutureBuilder<double>(
-                            future: _height,
-                            initialData: Dimensions.recipeImgSize,
-                            builder: (context, snapshot) {
-                              return AnimatedContainer(
-                                curve: Curves.easeInCubic,
-                                duration: Duration(milliseconds: 200),
-                                height: snapshot.data,
-                              );
-                            },
+                          AnimatedContainer(
+                            curve: Curves.easeInCubic,
+                            duration: const Duration(milliseconds: 200),
+                            height: Dimensions.recipeImgSize,
                           ),
                           Container(
                             padding: EdgeInsets.symmetric(vertical: Dimensions.width15, horizontal: Dimensions.width20),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(Dimensions.radius20),
-                              color: RecipeAppTheme.colors.pinkLight,
+                              color: Colors.white,
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    if (recipe!.name != null) Expanded(child: LargeText(text: recipe.name!)),
+                                    if (recipe!.name != null)
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            LargeText(
+                                              text: recipe.name!,
+                                              size: 22,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     BlocBuilder<UserDataCubit, UserDataState>(
                                       builder: (context, state) {
                                         final userDataCubit = BlocProvider.of<UserDataCubit>(context);
-                                        if (state.status == UserDataStateStatus.loaded) {
-                                          final result = state.favorites.where((favorite) => favorite.id == recipe.id);
-                                          final bool favorited = result.isEmpty ? false : true;
+                                        final result = state.favorites.where((favorite) => favorite.id == recipe.id);
+                                        final bool favorited = result.isEmpty ? false : true;
 
-                                          return IconButton(
-                                              onPressed: () {
-                                                userDataCubit.toggleFavorites(recipe);
-                                                _showToast(context, !favorited);
-                                              },
-                                              icon: favorited
-                                                  ? const Icon(
-                                                      Icons.favorite,
-                                                      size: 30,
-                                                    )
-                                                  : const Icon(
+                                        return Stack(
+                                          children: [
+                                            state.status == UserDataStateStatus.loaded
+                                                ? Container(
+                                                    padding: EdgeInsets.all(2),
+                                                    decoration: BoxDecoration(
+                                                      // color: RecipeAppTheme.colors.pinkLightLow,
+                                                      borderRadius: BorderRadius.all(
+                                                        Radius.circular(Dimensions.radius15),
+                                                      ),
+                                                    ),
+                                                    child: IconButton(
+                                                      onPressed: () {
+                                                        userDataCubit.toggleFavorites(recipe);
+                                                        _showToast(context, !favorited);
+                                                      },
+                                                      icon: favorited
+                                                          ? const Icon(
+                                                              Icons.favorite,
+                                                              size: 30,
+                                                            )
+                                                          : const Icon(
+                                                              Icons.favorite_border_rounded,
+                                                              size: 30,
+                                                            ),
+                                                    ),
+                                                  )
+                                                : IconButton(
+                                                    onPressed: () {},
+                                                    icon: const Icon(
                                                       Icons.favorite_border_rounded,
                                                       size: 30,
-                                                    ));
-                                        }
-                                        return IconButton(
-                                            icon: const Icon(
-                                              Icons.favorite_border_rounded,
-                                              color: Colors.transparent,
-                                              size: 30,
-                                            ),
-                                            onPressed: () {
-                                              return;
-                                            });
+                                                    ),
+                                                  ),
+                                            // Positioned.fill(
+                                            //   bottom: 2,
+                                            //   child: Align(
+                                            //     alignment: Alignment.bottomCenter,
+                                            //     child: SmallText(
+                                            //         text: favorited
+                                            //             ? (int.parse(recipe.favoritesCount!) + 1).toString()
+                                            //             : recipe.favoritesCount!),
+                                            //   ),
+                                            // )
+                                          ],
+                                        );
                                       },
                                     ),
                                   ],
                                 ),
-                                SizedBox(
-                                  height: Dimensions.height10,
+                                const SizedBox(
+                                  height: 12,
                                 ),
                                 if (recipe.difficulty != null && recipe.preparationTime != null)
                                   InformationBar(
                                     status: recipe.difficulty!,
-                                    timeEstimate: recipe.preparationTime!,
+                                    preparationTime: recipe.preparationTime!,
                                   ),
                                 SizedBox(
                                   height: Dimensions.height20,
@@ -198,9 +229,9 @@ class _RecipePageState extends State<RecipePage> {
                                       size: 16,
                                       text: "Ingredients",
                                     )),
-                                ingredientsTable(ingredients: recipe.ingredients),
-                                const Divider(
-                                  height: 24,
+                                IngredientsTable(ingredients: recipe.ingredients),
+                                const SizedBox(
+                                  height: 12,
                                 ),
                                 Align(
                                     alignment: Alignment.centerLeft, child: LargeText(size: 16, text: "Instructions")),

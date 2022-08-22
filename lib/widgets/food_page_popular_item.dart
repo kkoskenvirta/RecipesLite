@@ -69,7 +69,7 @@ class PopularListItem extends StatelessWidget {
                     ),
                     InformationBar(
                       status: difficulty,
-                      timeEstimate: timeEstimate,
+                      preparationTime: timeEstimate,
                     )
                   ],
                 ),

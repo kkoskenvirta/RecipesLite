@@ -17,7 +17,9 @@ class RecipeFetchCubit extends Cubit<RecipeFetchState> {
 
   Future<void> fetchHomePageRecipes() async {
     try {
-      emit(state.copyWith(status: RecipeFetchStateStatus.loading));
+      emit(state.copyWith(
+        status: RecipeFetchStateStatus.loading,
+      ));
       await fetchFeatured();
       await fetchPopular();
       emit(state.copyWith(status: RecipeFetchStateStatus.loaded));
@@ -34,8 +36,7 @@ class RecipeFetchCubit extends Cubit<RecipeFetchState> {
       errorOrPopularList.fold(
         (err) => emit(state.copyWith(status: RecipeFetchStateStatus.error)),
         (featured) {
-          emit(state.copyWith(featured: featured!));
-          emit(state.copyWith(featuredStatus: RecipeFetchStateStatus.loaded));
+          emit(state.copyWith(featured: featured!, featuredStatus: RecipeFetchStateStatus.loaded));
 
           if (state.popularStatus == RecipeFetchStateStatus.loaded) {
             emit(state.copyWith(status: RecipeFetchStateStatus.loaded));
@@ -56,8 +57,7 @@ class RecipeFetchCubit extends Cubit<RecipeFetchState> {
       errorOrPopularList.fold(
         (err) => emit(state.copyWith(status: RecipeFetchStateStatus.error)),
         (popular) {
-          emit(state.copyWith(popular: popular!));
-          emit(state.copyWith(popularStatus: RecipeFetchStateStatus.loading));
+          emit(state.copyWith(popular: popular!, popularStatus: RecipeFetchStateStatus.loaded));
 
           if (state.featuredStatus == RecipeFetchStateStatus.loaded) {
             emit(state.copyWith(status: RecipeFetchStateStatus.loaded));

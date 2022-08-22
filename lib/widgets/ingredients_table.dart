@@ -5,58 +5,59 @@ import 'package:flutter_e_commerce/utils/string_extension.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
 
-class ingredientsTable extends StatelessWidget {
-  ingredientsTable({Key? key, required this.ingredients}) : super(key: key);
+class IngredientsTable extends StatelessWidget {
+  IngredientsTable({Key? key, required this.ingredients}) : super(key: key);
   List<IngredientModel>? ingredients = [];
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ingredients != null
-              ? ListView.separated(
-                  padding: EdgeInsets.symmetric(vertical: Dimensions.height10),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        ingredientRow(
-                          index: index,
-                          ingredient: ingredients![index],
-                        ),
-                      ],
-                    );
-                  },
-                  separatorBuilder: ((context, index) {
-                    return const Divider(
-                      height: 0,
-                    );
-                  }),
-                  itemCount: ingredients!.length,
-                )
-              : const SizedBox(),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ingredients != null
+            ? ListView.separated(
+                padding: EdgeInsets.symmetric(vertical: Dimensions.height10),
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      IngredientRow(
+                        index: index,
+                        ingredient: ingredients![index],
+                      ),
+                    ],
+                  );
+                },
+                separatorBuilder: ((context, index) {
+                  return const Divider(
+                    height: 0,
+                  );
+                }),
+                itemCount: ingredients!.length,
+              )
+            : const SizedBox(),
+      ],
     );
   }
 }
 
-class ingredientRow extends StatelessWidget {
-  ingredientRow({Key? key, required this.index, required this.ingredient}) : super(key: key);
+class IngredientRow extends StatelessWidget {
+  const IngredientRow({Key? key, required this.index, required this.ingredient}) : super(key: key);
   final IngredientModel ingredient;
   final int index;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SmallText(text: "${index + 1}."),
+          SmallText(
+            text: "${index + 1}.",
+            size: 11,
+          ),
           const SizedBox(
             width: 8,
           ),

@@ -151,7 +151,7 @@ class ReviewSlide extends StatelessWidget {
                   if (recipe.difficulty != null && recipe.preparationTime != null)
                     InformationBar(
                       status: recipe.difficulty!,
-                      timeEstimate: recipe.preparationTime!,
+                      preparationTime: recipe.preparationTime!,
                     ),
                   SizedBox(
                     height: Dimensions.height20,
@@ -170,7 +170,7 @@ class ReviewSlide extends StatelessWidget {
                   const SizedBox(
                     height: 12,
                   ),
-                  ingredientsTable(ingredients: state.ingredients),
+                  IngredientsTable(ingredients: state.ingredients),
                   const SizedBox(
                     height: 12,
                   ),

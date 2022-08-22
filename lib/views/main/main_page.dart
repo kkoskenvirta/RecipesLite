@@ -32,8 +32,6 @@ class BottomNavigationItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<NavigationCubit, NavigationState>(
       builder: (context, state) {
-        final navigationCubit = BlocProvider.of<NavigationCubit>(context);
-
         return BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           selectedItemColor: Colors.pink.shade400,
@@ -53,6 +51,21 @@ class BottomNavigationItems extends StatelessWidget {
             ),
           ],
           onTap: (index) {
+            if (index == tabsRouter.activeIndex) {
+              //If currently selected tab is pressed again, pops back to root route
+              switch (index) {
+                case 0:
+                  context.router.navigate(const HomeRoute());
+                  break;
+                case 1:
+                  context.router.navigate(const CategoriesRoute());
+                  break;
+                case 2:
+                  context.router.navigate(const ProfileRoute());
+                  break;
+                default:
+              }
+            }
             tabsRouter.setActiveIndex(index);
           },
         );
