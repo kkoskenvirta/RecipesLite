@@ -25,6 +25,9 @@ _$_RecipeModel _$$_RecipeModelFromJson(Map<String, dynamic> json) =>
       ingredients: (json['ingredients'] as List<dynamic>?)
           ?.map((e) => IngredientModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      ingredientGroups: (json['ingredientGroups'] as List<dynamic>?)
+          ?.map((e) => IngredientGroupModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       tags: (json['tags'] as List<dynamic>?)
           ?.map((e) => TagModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -54,6 +57,7 @@ Map<String, dynamic> _$$_RecipeModelToJson(_$_RecipeModel instance) =>
       'rating': instance.rating,
       'userCreated': instance.userCreated,
       'ingredients': instance.ingredients,
+      'ingredientGroups': instance.ingredientGroups,
       'tags': instance.tags,
       'categories': instance.categories,
       'dateCreated': instance.dateCreated?.toIso8601String(),

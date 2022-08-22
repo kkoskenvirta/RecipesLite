@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
+import 'package:flutter_e_commerce/models/ingredient_group/ingredient_group_model.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/int_extension.dart';
@@ -81,6 +82,22 @@ class _RecipePageState extends State<RecipePage> {
       backgroundColor: backgroundColor,
       duration: const Duration(seconds: 1, milliseconds: 500),
     ).show(context);
+  }
+
+  List<Widget> buildIngredientsTable(List<IngredientGroupModel> ingredientGroups) {
+    List<Widget> widgets = [];
+
+    for (var group in ingredientGroups) {
+      widgets.add(LargeText(
+        text: group.name!,
+        size: 16,
+      ));
+      widgets.add(IngredientsTable(ingredients: group.ingredients));
+      widgets.add(const SizedBox(
+        height: 16,
+      ));
+    }
+    return widgets;
   }
 
   @override
@@ -223,13 +240,17 @@ class _RecipePageState extends State<RecipePage> {
                                 const Divider(
                                   height: 24,
                                 ),
-                                Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: LargeText(
-                                      size: 16,
-                                      text: "Ingredients",
-                                    )),
-                                IngredientsTable(ingredients: recipe.ingredients),
+                                // Align(
+                                //   alignment: Alignment.centerLeft,
+                                //   child: LargeText(
+                                //     size: 16,
+                                //     text: "Ingredients",
+                                //   ),
+                                // ),
+                                if (recipe.ingredientGroups != null)
+                                  Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: buildIngredientsTable(recipe.ingredientGroups!)),
                                 const SizedBox(
                                   height: 12,
                                 ),

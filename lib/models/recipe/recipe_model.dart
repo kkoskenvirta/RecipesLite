@@ -2,6 +2,7 @@ import 'package:flutter_e_commerce/models/category/category_model.dart';
 import 'package:flutter_e_commerce/models/favorite/dto/favorite_dto.dart';
 import 'package:flutter_e_commerce/models/ingredient/dto/ingredient_id_dto.dart';
 import 'package:flutter_e_commerce/models/ingredient/ingredient_model.dart';
+import 'package:flutter_e_commerce/models/ingredient_group/ingredient_group_model.dart';
 import 'package:flutter_e_commerce/models/recipe/dto/recipe_post_request_dto.dart';
 import 'package:flutter_e_commerce/models/relation_details.dart/relation_details.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
@@ -29,6 +30,7 @@ class RecipeModel with _$RecipeModel {
     double? rating,
     String? userCreated,
     List<IngredientModel>? ingredients,
+    List<IngredientGroupModel>? ingredientGroups,
     List<TagModel>? tags,
     List<CategoryModel>? categories,
     DateTime? dateCreated,

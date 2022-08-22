@@ -25,6 +25,8 @@ mixin _$FormDataState {
   bool get featured => throw _privateConstructorUsedError;
   String get instructions => throw _privateConstructorUsedError;
   List<IngredientModel> get ingredients => throw _privateConstructorUsedError;
+  List<IngredientGroupModel> get ingredientGroups =>
+      throw _privateConstructorUsedError;
   List<CategoryModel> get categories => throw _privateConstructorUsedError;
   List<TagModel> get tags => throw _privateConstructorUsedError;
   RecipeModel get recipe => throw _privateConstructorUsedError;
@@ -56,6 +58,7 @@ abstract class $FormDataStateCopyWith<$Res> {
       bool featured,
       String instructions,
       List<IngredientModel> ingredients,
+      List<IngredientGroupModel> ingredientGroups,
       List<CategoryModel> categories,
       List<TagModel> tags,
       RecipeModel recipe,
@@ -90,6 +93,7 @@ class _$FormDataStateCopyWithImpl<$Res>
     Object? featured = freezed,
     Object? instructions = freezed,
     Object? ingredients = freezed,
+    Object? ingredientGroups = freezed,
     Object? categories = freezed,
     Object? tags = freezed,
     Object? recipe = freezed,
@@ -135,6 +139,10 @@ class _$FormDataStateCopyWithImpl<$Res>
           ? _value.ingredients
           : ingredients // ignore: cast_nullable_to_non_nullable
               as List<IngredientModel>,
+      ingredientGroups: ingredientGroups == freezed
+          ? _value.ingredientGroups
+          : ingredientGroups // ignore: cast_nullable_to_non_nullable
+              as List<IngredientGroupModel>,
       categories: categories == freezed
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
@@ -206,6 +214,7 @@ abstract class _$$_FormDataStateCopyWith<$Res>
       bool featured,
       String instructions,
       List<IngredientModel> ingredients,
+      List<IngredientGroupModel> ingredientGroups,
       List<CategoryModel> categories,
       List<TagModel> tags,
       RecipeModel recipe,
@@ -243,6 +252,7 @@ class __$$_FormDataStateCopyWithImpl<$Res>
     Object? featured = freezed,
     Object? instructions = freezed,
     Object? ingredients = freezed,
+    Object? ingredientGroups = freezed,
     Object? categories = freezed,
     Object? tags = freezed,
     Object? recipe = freezed,
@@ -288,6 +298,10 @@ class __$$_FormDataStateCopyWithImpl<$Res>
           ? _value._ingredients
           : ingredients // ignore: cast_nullable_to_non_nullable
               as List<IngredientModel>,
+      ingredientGroups: ingredientGroups == freezed
+          ? _value._ingredientGroups
+          : ingredientGroups // ignore: cast_nullable_to_non_nullable
+              as List<IngredientGroupModel>,
       categories: categories == freezed
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
@@ -348,6 +362,7 @@ class _$_FormDataState implements _FormDataState {
       required this.featured,
       required this.instructions,
       required final List<IngredientModel> ingredients,
+      required final List<IngredientGroupModel> ingredientGroups,
       required final List<CategoryModel> categories,
       required final List<TagModel> tags,
       required this.recipe,
@@ -360,6 +375,7 @@ class _$_FormDataState implements _FormDataState {
       this.image,
       this.blurHash})
       : _ingredients = ingredients,
+        _ingredientGroups = ingredientGroups,
         _categories = categories,
         _tags = tags;
 
@@ -382,6 +398,13 @@ class _$_FormDataState implements _FormDataState {
   List<IngredientModel> get ingredients {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_ingredients);
+  }
+
+  final List<IngredientGroupModel> _ingredientGroups;
+  @override
+  List<IngredientGroupModel> get ingredientGroups {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_ingredientGroups);
   }
 
   final List<CategoryModel> _categories;
@@ -419,7 +442,7 @@ class _$_FormDataState implements _FormDataState {
 
   @override
   String toString() {
-    return 'FormDataState(editMode: $editMode, status: $status, requestStatus: $requestStatus, recipeFetchStatus: $recipeFetchStatus, blurHashStatus: $blurHashStatus, featured: $featured, instructions: $instructions, ingredients: $ingredients, categories: $categories, tags: $tags, recipe: $recipe, id: $id, preparationTime: $preparationTime, name: $name, shortDescription: $shortDescription, difficulty: $difficulty, picture: $picture, image: $image, blurHash: $blurHash)';
+    return 'FormDataState(editMode: $editMode, status: $status, requestStatus: $requestStatus, recipeFetchStatus: $recipeFetchStatus, blurHashStatus: $blurHashStatus, featured: $featured, instructions: $instructions, ingredients: $ingredients, ingredientGroups: $ingredientGroups, categories: $categories, tags: $tags, recipe: $recipe, id: $id, preparationTime: $preparationTime, name: $name, shortDescription: $shortDescription, difficulty: $difficulty, picture: $picture, image: $image, blurHash: $blurHash)';
   }
 
   @override
@@ -440,6 +463,8 @@ class _$_FormDataState implements _FormDataState {
                 .equals(other.instructions, instructions) &&
             const DeepCollectionEquality()
                 .equals(other._ingredients, _ingredients) &&
+            const DeepCollectionEquality()
+                .equals(other._ingredientGroups, _ingredientGroups) &&
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
@@ -468,6 +493,7 @@ class _$_FormDataState implements _FormDataState {
         const DeepCollectionEquality().hash(featured),
         const DeepCollectionEquality().hash(instructions),
         const DeepCollectionEquality().hash(_ingredients),
+        const DeepCollectionEquality().hash(_ingredientGroups),
         const DeepCollectionEquality().hash(_categories),
         const DeepCollectionEquality().hash(_tags),
         const DeepCollectionEquality().hash(recipe),
@@ -497,6 +523,7 @@ abstract class _FormDataState implements FormDataState {
       required final bool featured,
       required final String instructions,
       required final List<IngredientModel> ingredients,
+      required final List<IngredientGroupModel> ingredientGroups,
       required final List<CategoryModel> categories,
       required final List<TagModel> tags,
       required final RecipeModel recipe,
@@ -525,6 +552,8 @@ abstract class _FormDataState implements FormDataState {
   String get instructions;
   @override
   List<IngredientModel> get ingredients;
+  @override
+  List<IngredientGroupModel> get ingredientGroups;
   @override
   List<CategoryModel> get categories;
   @override

@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_e_commerce/models/category/category_model.dart';
 import 'package:flutter_e_commerce/models/ingredient/ingredient_model.dart';
+import 'package:flutter_e_commerce/models/ingredient_group/ingredient_group_model.dart';
 import 'package:flutter_e_commerce/models/recipe/dto/recipe_data_dto.dart';
 import 'package:flutter_e_commerce/models/recipe/dto/recipe_dto.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
@@ -39,6 +40,7 @@ class FormDataCubit extends Cubit<FormDataState> {
           tags: recipe.tags!,
           blurHash: recipe.blurhash,
           ingredients: recipe.ingredients!,
+          ingredientGroups: recipe.ingredientGroups!,
           difficulty: recipe.difficulty!.toLowerCase(),
           preparationTime: recipe.preparationTime,
           editMode: true,
@@ -63,6 +65,30 @@ class FormDataCubit extends Cubit<FormDataState> {
 
   updateBlurHashStatus(BlurHashStatus status) {
     emit(state.copyWith(blurHashStatus: status));
+  }
+
+  addIngredientGroup(String name) {
+    List<IngredientGroupModel> ingredientGroups = [...state.ingredientGroups];
+    ingredientGroups.add(IngredientGroupModel(name: name.capitalize()));
+    emit(state.copyWith(ingredientGroups: ingredientGroups));
+  }
+
+  updateIngredientGroupName(String name, int index) {
+    List<IngredientGroupModel> ingredientGroups = [...state.ingredientGroups];
+    ingredientGroups[index] = ingredientGroups[index].copyWith(name: name);
+    emit(state.copyWith(ingredientGroups: ingredientGroups));
+  }
+
+  removeIngredientGroup(index) {
+    List<IngredientGroupModel> ingredientGroups = [...state.ingredientGroups];
+    ingredientGroups.removeAt(index);
+    emit(state.copyWith(ingredientGroups: ingredientGroups));
+  }
+
+  removeIngredientFromGroup(groupIndex, recipeIndex) {
+    List<IngredientGroupModel> ingredientGroups = [...state.ingredientGroups];
+    ingredientGroups[groupIndex].ingredients!.removeAt(recipeIndex);
+    emit(state.copyWith(ingredientGroups: ingredientGroups));
   }
 
   addIngredient(String name, String amount, String unit) {
