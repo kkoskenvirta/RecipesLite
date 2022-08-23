@@ -26,8 +26,10 @@ mixin _$RecipePostRequestDTO {
   String get instructions => throw _privateConstructorUsedError;
   Map<String, dynamic> get categories => throw _privateConstructorUsedError;
   Map<String, dynamic> get tags => throw _privateConstructorUsedError;
-  Map<String, dynamic> get ingredients => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  @JsonKey(name: 'ingredient_groups')
+  Map<String, dynamic> get ingredientGroups =>
+      throw _privateConstructorUsedError;
   @JsonKey(name: 'preparation_time')
   int? get preparationTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'short_description')
@@ -51,8 +53,8 @@ abstract class $RecipePostRequestDTOCopyWith<$Res> {
       String instructions,
       Map<String, dynamic> categories,
       Map<String, dynamic> tags,
-      Map<String, dynamic> ingredients,
       String name,
+      @JsonKey(name: 'ingredient_groups') Map<String, dynamic> ingredientGroups,
       @JsonKey(name: 'preparation_time') int? preparationTime,
       @JsonKey(name: 'short_description') String? shortDescription});
 }
@@ -74,8 +76,8 @@ class _$RecipePostRequestDTOCopyWithImpl<$Res>
     Object? instructions = freezed,
     Object? categories = freezed,
     Object? tags = freezed,
-    Object? ingredients = freezed,
     Object? name = freezed,
+    Object? ingredientGroups = freezed,
     Object? preparationTime = freezed,
     Object? shortDescription = freezed,
   }) {
@@ -104,14 +106,14 @@ class _$RecipePostRequestDTOCopyWithImpl<$Res>
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
-      ingredients: ingredients == freezed
-          ? _value.ingredients
-          : ingredients // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      ingredientGroups: ingredientGroups == freezed
+          ? _value.ingredientGroups
+          : ingredientGroups // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
       preparationTime: preparationTime == freezed
           ? _value.preparationTime
           : preparationTime // ignore: cast_nullable_to_non_nullable
@@ -138,8 +140,8 @@ abstract class _$$_RecipePostRequestDTOCopyWith<$Res>
       String instructions,
       Map<String, dynamic> categories,
       Map<String, dynamic> tags,
-      Map<String, dynamic> ingredients,
       String name,
+      @JsonKey(name: 'ingredient_groups') Map<String, dynamic> ingredientGroups,
       @JsonKey(name: 'preparation_time') int? preparationTime,
       @JsonKey(name: 'short_description') String? shortDescription});
 }
@@ -163,8 +165,8 @@ class __$$_RecipePostRequestDTOCopyWithImpl<$Res>
     Object? instructions = freezed,
     Object? categories = freezed,
     Object? tags = freezed,
-    Object? ingredients = freezed,
     Object? name = freezed,
+    Object? ingredientGroups = freezed,
     Object? preparationTime = freezed,
     Object? shortDescription = freezed,
   }) {
@@ -193,14 +195,14 @@ class __$$_RecipePostRequestDTOCopyWithImpl<$Res>
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
-      ingredients: ingredients == freezed
-          ? _value._ingredients
-          : ingredients // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      ingredientGroups: ingredientGroups == freezed
+          ? _value._ingredientGroups
+          : ingredientGroups // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
       preparationTime: preparationTime == freezed
           ? _value.preparationTime
           : preparationTime // ignore: cast_nullable_to_non_nullable
@@ -223,13 +225,16 @@ class _$_RecipePostRequestDTO extends _RecipePostRequestDTO {
       required this.instructions,
       required final Map<String, dynamic> categories,
       required final Map<String, dynamic> tags,
-      required final Map<String, dynamic> ingredients,
       required this.name,
-      @JsonKey(name: 'preparation_time') this.preparationTime,
-      @JsonKey(name: 'short_description') this.shortDescription})
+      @JsonKey(name: 'ingredient_groups')
+          required final Map<String, dynamic> ingredientGroups,
+      @JsonKey(name: 'preparation_time')
+          this.preparationTime,
+      @JsonKey(name: 'short_description')
+          this.shortDescription})
       : _categories = categories,
         _tags = tags,
-        _ingredients = ingredients,
+        _ingredientGroups = ingredientGroups,
         super._();
 
   factory _$_RecipePostRequestDTO.fromJson(Map<String, dynamic> json) =>
@@ -257,15 +262,16 @@ class _$_RecipePostRequestDTO extends _RecipePostRequestDTO {
     return EqualUnmodifiableMapView(_tags);
   }
 
-  final Map<String, dynamic> _ingredients;
-  @override
-  Map<String, dynamic> get ingredients {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_ingredients);
-  }
-
   @override
   final String name;
+  final Map<String, dynamic> _ingredientGroups;
+  @override
+  @JsonKey(name: 'ingredient_groups')
+  Map<String, dynamic> get ingredientGroups {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_ingredientGroups);
+  }
+
   @override
   @JsonKey(name: 'preparation_time')
   final int? preparationTime;
@@ -275,7 +281,7 @@ class _$_RecipePostRequestDTO extends _RecipePostRequestDTO {
 
   @override
   String toString() {
-    return 'RecipePostRequestDTO(difficulty: $difficulty, blurhash: $blurhash, picture: $picture, instructions: $instructions, categories: $categories, tags: $tags, ingredients: $ingredients, name: $name, preparationTime: $preparationTime, shortDescription: $shortDescription)';
+    return 'RecipePostRequestDTO(difficulty: $difficulty, blurhash: $blurhash, picture: $picture, instructions: $instructions, categories: $categories, tags: $tags, name: $name, ingredientGroups: $ingredientGroups, preparationTime: $preparationTime, shortDescription: $shortDescription)';
   }
 
   @override
@@ -292,9 +298,9 @@ class _$_RecipePostRequestDTO extends _RecipePostRequestDTO {
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
-            const DeepCollectionEquality()
-                .equals(other._ingredients, _ingredients) &&
             const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality()
+                .equals(other._ingredientGroups, _ingredientGroups) &&
             const DeepCollectionEquality()
                 .equals(other.preparationTime, preparationTime) &&
             const DeepCollectionEquality()
@@ -311,8 +317,8 @@ class _$_RecipePostRequestDTO extends _RecipePostRequestDTO {
       const DeepCollectionEquality().hash(instructions),
       const DeepCollectionEquality().hash(_categories),
       const DeepCollectionEquality().hash(_tags),
-      const DeepCollectionEquality().hash(_ingredients),
       const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(_ingredientGroups),
       const DeepCollectionEquality().hash(preparationTime),
       const DeepCollectionEquality().hash(shortDescription));
 
@@ -332,17 +338,19 @@ class _$_RecipePostRequestDTO extends _RecipePostRequestDTO {
 
 abstract class _RecipePostRequestDTO extends RecipePostRequestDTO {
   factory _RecipePostRequestDTO(
-          {final String? difficulty,
-          final String? blurhash,
-          final String? picture,
-          required final String instructions,
-          required final Map<String, dynamic> categories,
-          required final Map<String, dynamic> tags,
-          required final Map<String, dynamic> ingredients,
-          required final String name,
-          @JsonKey(name: 'preparation_time') final int? preparationTime,
-          @JsonKey(name: 'short_description') final String? shortDescription}) =
-      _$_RecipePostRequestDTO;
+      {final String? difficulty,
+      final String? blurhash,
+      final String? picture,
+      required final String instructions,
+      required final Map<String, dynamic> categories,
+      required final Map<String, dynamic> tags,
+      required final String name,
+      @JsonKey(name: 'ingredient_groups')
+          required final Map<String, dynamic> ingredientGroups,
+      @JsonKey(name: 'preparation_time')
+          final int? preparationTime,
+      @JsonKey(name: 'short_description')
+          final String? shortDescription}) = _$_RecipePostRequestDTO;
   _RecipePostRequestDTO._() : super._();
 
   factory _RecipePostRequestDTO.fromJson(Map<String, dynamic> json) =
@@ -361,9 +369,10 @@ abstract class _RecipePostRequestDTO extends RecipePostRequestDTO {
   @override
   Map<String, dynamic> get tags;
   @override
-  Map<String, dynamic> get ingredients;
-  @override
   String get name;
+  @override
+  @JsonKey(name: 'ingredient_groups')
+  Map<String, dynamic> get ingredientGroups;
   @override
   @JsonKey(name: 'preparation_time')
   int? get preparationTime;

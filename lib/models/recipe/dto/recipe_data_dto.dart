@@ -58,7 +58,6 @@ class RecipeDataDTO with _$RecipeDataDTO {
       instructions: instructions,
       categories: categories != null ? categories!.map((category) => category.toDomain()).toList() : [],
       tags: tags != null ? tags!.map((tag) => tag.toDomain()).toList() : [],
-      ingredients: ingredients != null ? ingredients!.map((ingredient) => ingredient.toDomain()).toList() : [],
       ingredientGroups: ingredientGroups != null
           ? ingredientGroups!.map((ingredientGroup) => ingredientGroup.toDomain()).toList()
           : [],

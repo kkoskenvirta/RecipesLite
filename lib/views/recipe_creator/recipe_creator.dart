@@ -361,11 +361,7 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                               key: ingredientsKey,
                               child: Column(
                                 children: [
-                                  Align(alignment: Alignment.centerLeft, child: SmallText(text: "Ingredient list")),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  IngredientsSelector(ingredients: [...formDataCubit.state.ingredients]),
+                                  IngredientsSelector(ingredientGroups: [...formDataCubit.state.ingredientGroups]),
                                 ],
                               ),
                             ),
@@ -448,7 +444,7 @@ class CustomStepperControls extends StatelessWidget {
 
     validateStep(int currentStep) {
       final formDataState = BlocProvider.of<FormDataCubit>(context).state;
-      final ingredients = formDataState.ingredients;
+      final ingredientGroups = formDataState.ingredientGroups;
       final categories = formDataState.categories;
       final name = formDataState.name;
       final description = formDataState.shortDescription;
@@ -467,7 +463,7 @@ class CustomStepperControls extends StatelessWidget {
           return state;
         case 1:
           bool state;
-          state = ingredients.isNotEmpty;
+          state = ingredientGroups[0].ingredients.isNotEmpty;
           return state;
         case 2:
           bool state;
@@ -482,7 +478,7 @@ class CustomStepperControls extends StatelessWidget {
 
     return Container(
       decoration: const BoxDecoration(
-          border: const Border(
+          border: Border(
         top: BorderSide(width: 1, color: Colors.black12),
       )),
       margin: const EdgeInsets.only(top: 0.0),

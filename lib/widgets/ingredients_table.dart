@@ -1,9 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/models/ingredient/ingredient_model.dart';
+import 'package:flutter_e_commerce/models/ingredient_group/ingredient_group_model.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/string_extension.dart';
 import 'package:flutter_e_commerce/widgets/large_text.dart';
 import 'package:flutter_e_commerce/widgets/small_text.dart';
+
+List<Widget> buildIngredientsTable(List<IngredientGroupModel> ingredientGroups) {
+  List<Widget> widgets = [];
+
+  for (var group in ingredientGroups) {
+    widgets.add(LargeText(
+      text: group.name,
+      size: 16,
+    ));
+    widgets.add(IngredientsTable(ingredients: group.ingredients));
+    widgets.add(const SizedBox(
+      height: 16,
+    ));
+  }
+  return widgets;
+}
 
 class IngredientsTable extends StatelessWidget {
   IngredientsTable({Key? key, required this.ingredients}) : super(key: key);

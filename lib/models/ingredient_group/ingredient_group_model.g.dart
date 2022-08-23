@@ -11,9 +11,9 @@ _$_IngredientGroupModel _$$_IngredientGroupModelFromJson(
     _$_IngredientGroupModel(
       relationId: json['relationId'] as int?,
       id: json['id'] as String?,
-      name: json['name'] as String?,
-      ingredients: (json['ingredients'] as List<dynamic>?)
-          ?.map((e) => IngredientModel.fromJson(e as Map<String, dynamic>))
+      name: json['name'] as String,
+      ingredients: (json['ingredients'] as List<dynamic>)
+          .map((e) => IngredientModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

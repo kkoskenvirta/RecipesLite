@@ -43,7 +43,7 @@ class FormDataState with _$FormDataState {
       id: null,
       instructions: "",
       ingredients: [],
-      ingredientGroups: [IngredientGroupModel(name: "Ingredients")],
+      ingredientGroups: [IngredientGroupModel(name: "Ingredients", ingredients: [])],
       categories: [],
       tags: [],
       name: null,

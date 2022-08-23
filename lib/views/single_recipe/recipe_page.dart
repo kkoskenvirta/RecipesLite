@@ -84,22 +84,6 @@ class _RecipePageState extends State<RecipePage> {
     ).show(context);
   }
 
-  List<Widget> buildIngredientsTable(List<IngredientGroupModel> ingredientGroups) {
-    List<Widget> widgets = [];
-
-    for (var group in ingredientGroups) {
-      widgets.add(LargeText(
-        text: group.name!,
-        size: 16,
-      ));
-      widgets.add(IngredientsTable(ingredients: group.ingredients));
-      widgets.add(const SizedBox(
-        height: 16,
-      ));
-    }
-    return widgets;
-  }
-
   @override
   Widget build(BuildContext context) {
     _scaleFactor = createScaling(_currScrollPosition);
@@ -240,17 +224,11 @@ class _RecipePageState extends State<RecipePage> {
                                 const Divider(
                                   height: 24,
                                 ),
-                                // Align(
-                                //   alignment: Alignment.centerLeft,
-                                //   child: LargeText(
-                                //     size: 16,
-                                //     text: "Ingredients",
-                                //   ),
-                                // ),
                                 if (recipe.ingredientGroups != null)
                                   Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: buildIngredientsTable(recipe.ingredientGroups!)),
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: buildIngredientsTable(recipe.ingredientGroups!),
+                                  ),
                                 const SizedBox(
                                   height: 12,
                                 ),

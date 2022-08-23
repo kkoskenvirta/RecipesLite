@@ -29,7 +29,6 @@ class RecipeModel with _$RecipeModel {
     String? status,
     double? rating,
     String? userCreated,
-    List<IngredientModel>? ingredients,
     List<IngredientGroupModel>? ingredientGroups,
     List<TagModel>? tags,
     List<CategoryModel>? categories,
@@ -42,8 +41,7 @@ class RecipeModel with _$RecipeModel {
   factory RecipeModel.fromJson(Map<String, dynamic> json) => _$RecipeModelFromJson(json);
 
   RecipePostRequestDTO fromDomain(RecipeModel recipe, RecipeModel? editableRecipe) {
-    List<int?> deleteIngredients = [];
-    List<int?> updateingredients = [];
+    List<int?> deleteIngredientGroups = [];
     List<int?> deleteCategories = [];
     List<int?> deleteTags = [];
 
@@ -73,22 +71,11 @@ class RecipeModel with _$RecipeModel {
         }
       }
 
-      List<IngredientModel> deleteIngredientsList = [...editableRecipe.ingredients!];
-
-      for (var newIngredient in recipe.ingredients!) {
-        if (newIngredient.relationId != null) {
-          final match = deleteIngredientsList.indexWhere(
-            (oldIngredient) => oldIngredient.relationId == newIngredient.relationId,
-          );
-          if (match != -1) {
-            deleteIngredientsList.removeAt(match);
-          }
-        }
-      }
+      List<IngredientGroupModel> deleteIngredientGroupsList = [...editableRecipe.ingredientGroups!];
 
       deleteCategories = deleteCategoriesList.map((category) => category.relationId).toList();
       deleteTags = deleteTagsList.map((tag) => tag.relationId).toList();
-      deleteIngredients = deleteIngredientsList.map((ingredient) => ingredient.relationId).toList();
+      deleteIngredientGroups = deleteIngredientGroupsList.map((group) => group.relationId).toList();
     }
 
     return RecipePostRequestDTO(
@@ -121,37 +108,33 @@ class RecipeModel with _$RecipeModel {
         }).toList(),
         delete: deleteTags,
       ).toJson(),
-      ingredients: RelationDetails(
-        create: recipe.ingredients!.where((ingredient) => ingredient.relationId == null).map(
-          (ingredient) {
+      ingredientGroups: RelationDetails(
+        create: recipe.ingredientGroups!.map(
+          (group) {
             final createObj = {};
-            final ingredientObj = {};
-            ingredientObj["name"] = ingredient.name;
-            ingredientObj["amount"] = ingredient.amount;
-            ingredientObj["unit"] = ingredient.unit;
-            createObj["ingredient_id"] = ingredientObj;
+            final groupObj = {};
+            groupObj["name"] = group.name;
+            groupObj["ingredients"] = RelationDetails(
+              create: group.ingredients.map(
+                (ingredient) {
+                  final createObj = {};
+                  final ingredientObj = {};
+                  ingredientObj["name"] = ingredient.name;
+                  ingredientObj["amount"] = ingredient.amount;
+                  ingredientObj["unit"] = ingredient.unit;
+                  createObj["ingredient_id"] = ingredientObj;
+                  return createObj;
+                },
+              ).toList(),
+              update: [],
+              delete: [],
+            );
+            createObj["ingredient_group_id"] = groupObj;
             return createObj;
           },
         ).toList(),
-        update: recipe.ingredients!.where((ingredient) => ingredient.relationId != null).map(
-          (ingredient) {
-            if (editableRecipe != null) {
-              final modifyRecipe = editableRecipe.ingredients
-                  ?.firstWhere((editableingredient) => editableingredient.relationId == ingredient.relationId);
-              if (modifyRecipe != null) {
-                final mofidyObj = {};
-                final ingredientObj = {};
-                ingredientObj["name"] = ingredient.name;
-                ingredientObj["amount"] = ingredient.amount;
-                ingredientObj["unit"] = ingredient.unit;
-                mofidyObj["id"] = ingredient.relationId;
-                mofidyObj["ingredient_id"] = ingredientObj;
-                return mofidyObj;
-              }
-            }
-          },
-        ).toList(),
-        delete: deleteIngredients,
+        update: [],
+        delete: deleteIngredientGroups,
       ).toJson(),
     );
   }

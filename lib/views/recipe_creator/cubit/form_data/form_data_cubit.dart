@@ -39,7 +39,6 @@ class FormDataCubit extends Cubit<FormDataState> {
           categories: recipe.categories!,
           tags: recipe.tags!,
           blurHash: recipe.blurhash,
-          ingredients: recipe.ingredients!,
           ingredientGroups: recipe.ingredientGroups!,
           difficulty: recipe.difficulty!.toLowerCase(),
           preparationTime: recipe.preparationTime,
@@ -69,26 +68,41 @@ class FormDataCubit extends Cubit<FormDataState> {
 
   addIngredientGroup(String name) {
     List<IngredientGroupModel> ingredientGroups = [...state.ingredientGroups];
-    ingredientGroups.add(IngredientGroupModel(name: name.capitalize()));
+    ingredientGroups.add(IngredientGroupModel(name: name.capitalize(), ingredients: []));
     emit(state.copyWith(ingredientGroups: ingredientGroups));
   }
 
-  updateIngredientGroupName(String name, int index) {
+  updateIngredientGroupName({required int groupIndex, required String name}) {
     List<IngredientGroupModel> ingredientGroups = [...state.ingredientGroups];
-    ingredientGroups[index] = ingredientGroups[index].copyWith(name: name);
+    ingredientGroups[groupIndex] = ingredientGroups[groupIndex].copyWith(name: name);
     emit(state.copyWith(ingredientGroups: ingredientGroups));
   }
 
-  removeIngredientGroup(index) {
+  removeIngredientGroup({required int groupIndex}) {
     List<IngredientGroupModel> ingredientGroups = [...state.ingredientGroups];
-    ingredientGroups.removeAt(index);
+    ingredientGroups.removeAt(groupIndex);
     emit(state.copyWith(ingredientGroups: ingredientGroups));
   }
 
-  removeIngredientFromGroup(groupIndex, recipeIndex) {
+  removeIngredientFromGroup({required int groupIndex, required int ingredientIndex}) {
+    List<IngredientModel> ingredientList = [...state.ingredientGroups[groupIndex].ingredients];
     List<IngredientGroupModel> ingredientGroups = [...state.ingredientGroups];
-    ingredientGroups[groupIndex].ingredients!.removeAt(recipeIndex);
+
+    ingredientList.removeAt(ingredientIndex);
+    ingredientGroups[groupIndex] = ingredientGroups[groupIndex].copyWith(ingredients: ingredientList);
+
     emit(state.copyWith(ingredientGroups: ingredientGroups));
+  }
+
+  addIngredientToGroup({required int groupIndex, required String name, required String amount, required String unit}) {
+    List<IngredientGroupModel> ingredientGroups = [...state.ingredientGroups];
+    List<IngredientModel> ingredientList = [...state.ingredientGroups[groupIndex].ingredients];
+
+    ingredientList
+        .add(IngredientModel(name: name.capitalize(), amount: double.parse(amount.replaceAll(',', '.')), unit: unit));
+    ingredientGroups[groupIndex] = ingredientGroups[groupIndex].copyWith(ingredients: ingredientList);
+    emit(state.copyWith(ingredientGroups: ingredientGroups));
+    print(state.ingredientGroups[groupIndex]);
   }
 
   addIngredient(String name, String amount, String unit) {
@@ -126,6 +140,44 @@ class FormDataCubit extends Cubit<FormDataState> {
 
   updateRecipeShortDescription(String shortDescription) {
     emit(state.copyWith(shortDescription: shortDescription));
+  }
+
+  updateIngredientNameFromGroup({required int groupIndex, required int ingredientIndex, required String name}) {
+    List<IngredientModel> ingredientList = [...state.ingredientGroups[groupIndex].ingredients];
+    List<IngredientGroupModel> ingredientGroups = [...state.ingredientGroups];
+    ingredientList[ingredientIndex] =
+        state.ingredientGroups[groupIndex].ingredients[ingredientIndex].copyWith(name: name);
+    ingredientGroups[groupIndex] = ingredientGroups[groupIndex].copyWith(ingredients: ingredientList);
+    emit(state.copyWith(ingredientGroups: ingredientGroups));
+  }
+
+  updateIngredientAmountFromGroup({required int groupIndex, required int ingredientIndex, required String amount}) {
+    try {
+      List<IngredientModel> ingredientList = [...state.ingredientGroups[groupIndex].ingredients];
+      List<IngredientGroupModel> ingredientGroups = [...state.ingredientGroups];
+      final doubleAmount = double.parse(amount);
+      ingredientList[ingredientIndex] =
+          state.ingredientGroups[groupIndex].ingredients[ingredientIndex].copyWith(amount: doubleAmount);
+      ingredientGroups[groupIndex] = ingredientGroups[groupIndex].copyWith(ingredients: ingredientList);
+      emit(state.copyWith(ingredientGroups: ingredientGroups));
+    } catch (e) {
+      List<IngredientModel> ingredientList = [...state.ingredientGroups[groupIndex].ingredients];
+      List<IngredientGroupModel> ingredientGroups = [...state.ingredientGroups];
+      final doubleAmount = double.parse(amount);
+      ingredientList[ingredientIndex] =
+          state.ingredientGroups[groupIndex].ingredients[ingredientIndex].copyWith(amount: null);
+      ingredientGroups[groupIndex] = ingredientGroups[groupIndex].copyWith(ingredients: ingredientList);
+      emit(state.copyWith(ingredientGroups: ingredientGroups));
+    }
+  }
+
+  updateIngredientUnitFromGroup({required int groupIndex, required int ingredientIndex, required String unit}) {
+    List<IngredientModel> ingredientList = [...state.ingredientGroups[groupIndex].ingredients];
+    List<IngredientGroupModel> ingredientGroups = [...state.ingredientGroups];
+    ingredientList[ingredientIndex] =
+        state.ingredientGroups[groupIndex].ingredients[ingredientIndex].copyWith(unit: unit);
+    ingredientGroups[groupIndex] = ingredientGroups[groupIndex].copyWith(ingredients: ingredientList);
+    emit(state.copyWith(ingredientGroups: ingredientGroups));
   }
 
   updateIngredientName(int index, String name) {
@@ -223,7 +275,7 @@ class FormDataCubit extends Cubit<FormDataState> {
         instructions: state.instructions,
         categories: state.categories,
         tags: state.tags,
-        ingredients: state.ingredients,
+        ingredientGroups: state.ingredientGroups,
         blurhash: state.blurHash,
         picture: pictureId,
         status: "draft",

@@ -22,8 +22,8 @@ IngredientGroupModel _$IngredientGroupModelFromJson(Map<String, dynamic> json) {
 mixin _$IngredientGroupModel {
   int? get relationId => throw _privateConstructorUsedError;
   String? get id => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
-  List<IngredientModel>? get ingredients => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  List<IngredientModel> get ingredients => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,8 +39,8 @@ abstract class $IngredientGroupModelCopyWith<$Res> {
   $Res call(
       {int? relationId,
       String? id,
-      String? name,
-      List<IngredientModel>? ingredients});
+      String name,
+      List<IngredientModel> ingredients});
 }
 
 /// @nodoc
@@ -71,11 +71,11 @@ class _$IngredientGroupModelCopyWithImpl<$Res>
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       ingredients: ingredients == freezed
           ? _value.ingredients
           : ingredients // ignore: cast_nullable_to_non_nullable
-              as List<IngredientModel>?,
+              as List<IngredientModel>,
     ));
   }
 }
@@ -90,8 +90,8 @@ abstract class _$$_IngredientGroupModelCopyWith<$Res>
   $Res call(
       {int? relationId,
       String? id,
-      String? name,
-      List<IngredientModel>? ingredients});
+      String name,
+      List<IngredientModel> ingredients});
 }
 
 /// @nodoc
@@ -124,11 +124,11 @@ class __$$_IngredientGroupModelCopyWithImpl<$Res>
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       ingredients: ingredients == freezed
           ? _value._ingredients
           : ingredients // ignore: cast_nullable_to_non_nullable
-              as List<IngredientModel>?,
+              as List<IngredientModel>,
     ));
   }
 }
@@ -139,8 +139,8 @@ class _$_IngredientGroupModel extends _IngredientGroupModel {
   _$_IngredientGroupModel(
       {this.relationId,
       this.id,
-      this.name,
-      final List<IngredientModel>? ingredients})
+      required this.name,
+      required final List<IngredientModel> ingredients})
       : _ingredients = ingredients,
         super._();
 
@@ -152,14 +152,12 @@ class _$_IngredientGroupModel extends _IngredientGroupModel {
   @override
   final String? id;
   @override
-  final String? name;
-  final List<IngredientModel>? _ingredients;
+  final String name;
+  final List<IngredientModel> _ingredients;
   @override
-  List<IngredientModel>? get ingredients {
-    final value = _ingredients;
-    if (value == null) return null;
+  List<IngredientModel> get ingredients {
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableListView(_ingredients);
   }
 
   @override
@@ -205,10 +203,11 @@ class _$_IngredientGroupModel extends _IngredientGroupModel {
 
 abstract class _IngredientGroupModel extends IngredientGroupModel {
   factory _IngredientGroupModel(
-      {final int? relationId,
-      final String? id,
-      final String? name,
-      final List<IngredientModel>? ingredients}) = _$_IngredientGroupModel;
+          {final int? relationId,
+          final String? id,
+          required final String name,
+          required final List<IngredientModel> ingredients}) =
+      _$_IngredientGroupModel;
   _IngredientGroupModel._() : super._();
 
   factory _IngredientGroupModel.fromJson(Map<String, dynamic> json) =
@@ -219,9 +218,9 @@ abstract class _IngredientGroupModel extends IngredientGroupModel {
   @override
   String? get id;
   @override
-  String? get name;
+  String get name;
   @override
-  List<IngredientModel>? get ingredients;
+  List<IngredientModel> get ingredients;
   @override
   @JsonKey(ignore: true)
   _$$_IngredientGroupModelCopyWith<_$_IngredientGroupModel> get copyWith =>

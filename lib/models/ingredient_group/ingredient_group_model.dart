@@ -9,8 +9,8 @@ class IngredientGroupModel with _$IngredientGroupModel {
   factory IngredientGroupModel({
     int? relationId,
     String? id,
-    String? name,
-    List<IngredientModel>? ingredients,
+    required String name,
+    required List<IngredientModel> ingredients,
   }) = _IngredientGroupModel;
 
   const IngredientGroupModel._();
