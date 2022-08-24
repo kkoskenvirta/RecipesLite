@@ -128,7 +128,7 @@ class RecipeModel with _$RecipeModel {
               ).toList(),
               update: [],
               delete: [],
-            );
+            ).toJson();
             createObj["ingredient_group_id"] = groupObj;
             return createObj;
           },
