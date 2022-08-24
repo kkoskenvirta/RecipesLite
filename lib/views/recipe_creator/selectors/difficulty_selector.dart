@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/utils/int_extension.dart';
+import 'package:flutter_e_commerce/utils/string_extension.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_data/form_data_cubit.dart';
 
 class DifficultySelector extends StatelessWidget {
@@ -20,7 +21,7 @@ class DifficultySelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<FormDataCubit, FormDataState>(
       builder: (context, state) {
-        difficultyController.text = state.difficulty != null ? state.difficulty! : "";
+        difficultyController.text = state.difficulty != null ? state.difficulty!.capitalize() : "";
         preparationTimeController.text =
             state.preparationTime != null ? state.preparationTime!.parseToTimeString() : "";
 
@@ -35,8 +36,9 @@ class DifficultySelector extends StatelessWidget {
         void showDatePicker(currentTime) {
           showCupertinoModalPopup(
             context: context,
+            semanticsDismissible: true,
             builder: (BuildContext builder) {
-              Duration timer = const Duration(minutes: 0);
+              Duration timer = currentTime != null ? Duration(minutes: currentTime) : const Duration(minutes: 0);
               return Container(
                 height: 290,
                 color: Colors.white,
@@ -69,11 +71,11 @@ class DifficultySelector extends StatelessWidget {
           );
         }
 
-        void showDifficultyPicker(currentTime) {
+        void showDifficultyPicker(currentDifficulty) {
           showCupertinoModalPopup(
             context: context,
             builder: (BuildContext builder) {
-              String text = "";
+              String text = currentDifficulty ?? "";
               return Container(
                 height: 290,
                 color: Colors.white,
@@ -82,6 +84,7 @@ class DifficultySelector extends StatelessWidget {
                     SizedBox(
                       height: 200,
                       child: CupertinoPicker(
+                          scrollController: FixedExtentScrollController(initialItem: difficulty.indexOf(text)),
                           itemExtent: 36,
                           children: difficulty.map((unit) => Center(child: Text(unit))).toList(),
                           onSelectedItemChanged: (index) {
@@ -123,7 +126,7 @@ class DifficultySelector extends StatelessWidget {
                   ),
                   validator: ((value) => null),
                   readOnly: true,
-                  onTap: () => showDifficultyPicker(state.preparationTime),
+                  onTap: () => showDifficultyPicker(state.difficulty),
                 ),
               ),
               const SizedBox(

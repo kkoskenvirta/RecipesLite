@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_e_commerce/repositorys/auth_repository.dart';
 import 'package:flutter_e_commerce/repositorys/secure_storage_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -45,19 +46,19 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  loginWithProvider(String provider) async {
-    emit(state.copyWith(status: AuthStateStatus.uninitialized, inProgress: true));
+  // loginWithProvider(String provider) async {
+  //   emit(state.copyWith(status: AuthStateStatus.uninitialized, inProgress: true));
 
-    final failureOrAuth = await _authRepository.loginWithProvider(provider: provider);
-    failureOrAuth.fold(
-      (error) => emit(state.copyWith(
-        inProgress: false,
-        status: AuthStateStatus.unauthenticated,
-        error: error,
-      )),
-      (_) {},
-    );
-  }
+  //   final failureOrAuth = await _authRepository.loginWithProvider(provider: provider);
+  //   failureOrAuth.fold(
+  //     (error) => emit(state.copyWith(
+  //       inProgress: false,
+  //       status: AuthStateStatus.unauthenticated,
+  //       error: error,
+  //     )),
+  //     (_) {},
+  //   );
+  // }
 
   logout() async {
     try {
@@ -67,7 +68,9 @@ class AuthCubit extends Cubit<AuthState> {
       emit(state.copyWith(status: AuthStateStatus.unauthenticated));
       _authRepository.logout(refreshToken: refreshToken.toString());
     } catch (e) {
-      print("error when logging out");
+      if (kDebugMode) {
+        print("error when logging out");
+      }
     }
   }
 

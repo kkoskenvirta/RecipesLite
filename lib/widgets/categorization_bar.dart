@@ -4,8 +4,8 @@ import 'package:flutter_e_commerce/models/category/category_model.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
-import 'package:flutter_e_commerce/widgets/large_text.dart';
-import 'package:flutter_e_commerce/widgets/small_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
 
 class CategorizationBar extends StatelessWidget {
   const CategorizationBar({Key? key, this.tags, this.categories, this.disableChipButtons = false}) : super(key: key);

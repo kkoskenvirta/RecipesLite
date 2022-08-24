@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_e_commerce/config/api_config.dart';
 import 'package:flutter_e_commerce/models/auth/auth_model.dart';
 import 'package:flutter_e_commerce/models/auth/dto/auth_dto.dart';
@@ -24,7 +25,9 @@ class DioModule {
       InterceptorsWrapper(onRequest: (options, handler) async {
         final accessToken = await SecureStorageRepository().getWithKey(StorageKeys.accessToken);
         options.headers["Authorization"] = 'Bearer $accessToken';
-        print(accessToken);
+        if (kDebugMode) {
+          print(accessToken);
+        }
         return handler.next(options);
       }, onError: (DioError e, handler) async {
         if (e.response?.statusCode == 401) {

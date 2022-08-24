@@ -19,8 +19,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // PaintingBinding.instance.imageCache.maximumSizeBytes = 1000 << 20;
-
     return GlobalRepos(
       child: GlobalBlocs(
         child: AuthGuard(

@@ -1,13 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/auth/cubit/auth_cubit.dart';
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
-import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
-import 'package:flutter_e_commerce/widgets/large_text.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   MainAppBar({
@@ -68,7 +65,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
               //   barrierColor: Colors.black87,
               //   builder: (context) => const SearchModal(),
               // ),
-              onPressed: (() => router.navigate(SearchRoute())),
+              onPressed: (() => router.navigate(const SearchRoute())),
               icon: const Icon(
                 Icons.search,
                 size: 30,

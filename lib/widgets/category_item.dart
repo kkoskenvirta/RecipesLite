@@ -1,13 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_e_commerce/config/api_config.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
-import 'package:flutter_e_commerce/widgets/large_text.dart';
-import 'package:flutter_e_commerce/widgets/small_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
 
-class CategoryListItem extends StatelessWidget {
+class CategoryItem extends StatelessWidget {
   final String? imageUrl;
   final String? blurhash;
   final String title;
@@ -15,7 +13,7 @@ class CategoryListItem extends StatelessWidget {
 
   final VoidCallback? onTap;
 
-  const CategoryListItem({
+  const CategoryItem({
     Key? key,
     this.imageUrl,
     this.title = "",

@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_e_commerce/global/blocks/auth/cubit/auth_cubit.dart';
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
@@ -9,7 +8,7 @@ import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/views/single_recipe/cubit/single_recipe_cubit.dart';
 
 class RecipeAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const RecipeAppBar({
+  RecipeAppBar({
     Key? key,
     this.transparent = false,
     this.creator,
@@ -27,7 +26,7 @@ class RecipeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   final String? creator;
   final VoidCallback? editRecipe;
-  final RecipeModel? loadedRecipe;
+  RecipeModel? loadedRecipe;
 
   final bool showLogoutButton;
   final bool showSearchButton;
@@ -42,11 +41,11 @@ class RecipeAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final currentUser = BlocProvider.of<UserDataCubit>(context).state.currUser;
     final permission = creator == currentUser?.id ? true : false;
-    final authCubit = BlocProvider.of<AuthCubit>(context);
     final router = AutoRouter.of(context);
 
     return BlocBuilder<SingleRecipeCubit, SingleRecipeState>(
       builder: (context, state) {
+        loadedRecipe = state.recipe;
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: AppBar(

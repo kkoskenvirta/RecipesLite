@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_e_commerce/utils/color_generator.dart';
+import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RecipeAppTheme {
@@ -12,9 +13,23 @@ class RecipeAppTheme {
       labelStyle: TextStyle(
         decorationColor: colors.pinkMediumPlus,
       ),
+      focusColor: colors.pinkMedium,
+      contentPadding: const EdgeInsets.symmetric(
+        vertical: 14,
+        horizontal: 14,
+      ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: const BorderSide(
+          width: 0,
+          style: BorderStyle.none,
+        ),
+      ),
       filled: true,
       fillColor: colors.pinkLightLow,
     ),
+
+    dividerColor: Colors.black26,
     appBarTheme: AppBarTheme(
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: RecipeAppTheme.colors.pinkLight,
@@ -22,7 +37,7 @@ class RecipeAppTheme {
         statusBarBrightness: Brightness.light, // For iOS (dark icons)
       ),
       centerTitle: true,
-      backgroundColor: colors.pinkLight,
+      backgroundColor: colors.pinkBackground,
       scrolledUnderElevation: 12,
       shadowColor: colors.pinkLightLow,
       elevation: 0,
@@ -33,8 +48,8 @@ class RecipeAppTheme {
       ),
       iconTheme: IconThemeData(color: colors.pinkAccent),
     ),
-    bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: colors.pinkLight),
-    canvasColor: colors.pinkLight,
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: colors.pinkBackground),
+    canvasColor: colors.pinkBackground,
     listTileTheme: ListTileThemeData(
       visualDensity: const VisualDensity(vertical: -3),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
@@ -61,11 +76,11 @@ class RecipeAppTheme {
         surfaceTintColor: colors.pinkAccent,
       ),
     ),
-    textButtonTheme: TextButtonThemeData(),
+    textButtonTheme: const TextButtonThemeData(),
     // primarySwatch: Palette.pToLight,
     primarySwatch: createMaterialColor(colors.pinkAccent),
 
-    scaffoldBackgroundColor: colors.pinkLight, // primaryColor: const Color.fromARGB(255, 252, 242, 246),
+    scaffoldBackgroundColor: colors.pinkBackground, // primaryColor: const Color.fromARGB(255, 252, 242, 246),
     textTheme: TextTheme(
       headline1: GoogleFonts.raleway(fontSize: 52, fontWeight: FontWeight.w600, letterSpacing: -1.5),
       headline2: GoogleFonts.raleway(fontSize: 42, fontWeight: FontWeight.w600, letterSpacing: -0.5),
@@ -131,19 +146,21 @@ class AppColors {
   final blueMedium = const Color(0xff99c3f8);
   final blueLight = const Color(0xffebf3fe);
   final pinkAccent = const Color.fromARGB(255, 245, 128, 167);
-  final pinkMediumPlus = const Color(0xfff6a1be);
+  final pinkMediumPlus = Color.fromARGB(255, 253, 185, 207);
   final pinkMedium = const Color(0xfff6a1be);
-  final pinkLightPlus = const Color.fromARGB(255, 248, 209, 221);
+  final pinkLightPlus = Color.fromARGB(255, 255, 229, 237);
   final pinkLightLow = const Color(0xFFFCE4EC);
 
-  final pinkLight = Color.fromARGB(255, 250, 244, 246);
+  final pinkLight = const Color.fromARGB(255, 250, 244, 246);
+  final pinkLines = Color.fromARGB(255, 232, 165, 187);
+  final pinkBackground = Color.fromARGB(255, 255, 251, 252);
 
   AppColors();
 }
 
 class AppShadows {
   final normal = const BoxShadow(
-    blurRadius: 4,
+    blurRadius: 5,
     color: Colors.black12,
   );
 

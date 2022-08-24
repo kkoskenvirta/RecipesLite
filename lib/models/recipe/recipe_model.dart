@@ -1,13 +1,12 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_e_commerce/models/category/category_model.dart';
 import 'package:flutter_e_commerce/models/favorite/dto/favorite_dto.dart';
-import 'package:flutter_e_commerce/models/ingredient/dto/ingredient_id_dto.dart';
 import 'package:flutter_e_commerce/models/ingredient/ingredient_model.dart';
 import 'package:flutter_e_commerce/models/ingredient_group/ingredient_group_model.dart';
 import 'package:flutter_e_commerce/models/recipe/dto/recipe_post_request_dto.dart';
 import 'package:flutter_e_commerce/models/relation_details.dart/relation_details.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:http/http.dart';
 
 part 'recipe_model.freezed.dart';
 part 'recipe_model.g.dart';
@@ -72,7 +71,16 @@ class RecipeModel with _$RecipeModel {
       }
 
       List<IngredientGroupModel> deleteIngredientGroupsList = [...editableRecipe.ingredientGroups!];
-
+      for (var newGroup in recipe.ingredientGroups!) {
+        if (newGroup.relationId != null) {
+          final match = deleteIngredientGroupsList.indexWhere(
+            (oldGroup) => oldGroup.relationId == newGroup.relationId,
+          );
+          if (match != -1) {
+            deleteIngredientGroupsList.removeAt(match);
+          }
+        }
+      }
       deleteCategories = deleteCategoriesList.map((category) => category.relationId).toList();
       deleteTags = deleteTagsList.map((tag) => tag.relationId).toList();
       deleteIngredientGroups = deleteIngredientGroupsList.map((group) => group.relationId).toList();
@@ -109,7 +117,7 @@ class RecipeModel with _$RecipeModel {
         delete: deleteTags,
       ).toJson(),
       ingredientGroups: RelationDetails(
-        create: recipe.ingredientGroups!.map(
+        create: recipe.ingredientGroups!.where((group) => group.relationId == null).map(
           (group) {
             final createObj = {};
             final groupObj = {};
@@ -133,7 +141,68 @@ class RecipeModel with _$RecipeModel {
             return createObj;
           },
         ).toList(),
-        update: [],
+        update: recipe.ingredientGroups!.where((ingredient) => ingredient.relationId != null).mapIndexed(
+          (index, group) {
+            List<int?> deleteIngredients = [];
+            if (editableRecipe != null) {
+              List<IngredientModel> deleteIngredientsList = [...editableRecipe.ingredientGroups![index].ingredients];
+              for (var newIngredient in recipe.ingredientGroups![index].ingredients) {
+                if (newIngredient.relationId != null) {
+                  final match = deleteIngredientsList.indexWhere(
+                    (oldIngredient) => oldIngredient.relationId == newIngredient.relationId,
+                  );
+                  if (match != -1) {
+                    deleteIngredientsList.removeAt(match);
+                  }
+                }
+              }
+              deleteIngredients = deleteIngredientsList.map((ingredient) => ingredient.relationId).toList();
+            }
+
+            final mofidyObj = {};
+            final groupObj = {};
+            groupObj["id"] = group.id;
+            groupObj["name"] = group.name;
+            groupObj["ingredients"] = RelationDetails(
+              create: group.ingredients.where((ingredient) => ingredient.relationId == null).map(
+                (ingredient) {
+                  final createObj = {};
+                  final ingredientObj = {};
+                  ingredientObj["name"] = ingredient.name;
+                  ingredientObj["amount"] = ingredient.amount;
+                  ingredientObj["unit"] = ingredient.unit;
+                  createObj["ingredient_id"] = ingredientObj;
+                  return createObj;
+                },
+              ).toList(),
+              update: group.ingredients.where((ingredient) => ingredient.relationId != null).map(
+                (ingredient) {
+                  if (editableRecipe != null) {
+                    try {
+                      // final modifyRecipe = editableRecipe.ingredientGroups![index].ingredients
+                      //     .firstWhere((editableingredient) => editableingredient.relationId == ingredient.relationId);
+                      final mofidyObj = {};
+                      final ingredientObj = {};
+                      ingredientObj["name"] = ingredient.name;
+                      ingredientObj["amount"] = ingredient.amount;
+                      ingredientObj["unit"] = ingredient.unit;
+                      ingredientObj["id"] = ingredient.id;
+                      mofidyObj["id"] = ingredient.relationId;
+                      mofidyObj["ingredient_id"] = ingredientObj;
+                      return mofidyObj;
+                    } catch (e) {
+                      print(e);
+                    }
+                  }
+                },
+              ).toList(),
+              delete: deleteIngredients,
+            ).toJson();
+            mofidyObj["id"] = group.relationId;
+            mofidyObj["ingredient_group_id"] = groupObj;
+            return mofidyObj;
+          },
+        ).toList(),
         delete: deleteIngredientGroups,
       ).toJson(),
     );

@@ -82,7 +82,6 @@ class RecipesRepository {
       if (tags.isNotEmpty && categories.isNotEmpty) {
         filterQuery =
             '&filter={"_and":[{"_and":[{"_and":[$tagQueryString,$categoryQueryString]}]},{"status":{"_neq":"archived"}}]}';
-        print(filterQuery);
       }
 
       final Response response = await _tokenDio.get('$baseUrl$recipesPathFields$filterQuery$resultLimit');
@@ -150,11 +149,9 @@ class RecipesRepository {
 
   Future<Either<FetchError, dynamic>> addRecipe(RecipePostRequestDTO recipe) async {
     try {
-      final Response? response;
       final body = recipe.toJson();
-      print(body);
       _dio.options.headers['Content-Type'] = "application/json; charset=utf-8";
-      response = await _dio.post(recipesPath, data: body);
+      await _dio.post(recipesPath, data: body);
       return right(Unit);
     } catch (e) {
       if (e is DioError && e.response?.statusCode == 400) return left(FetchError.invalidPayload);
@@ -192,11 +189,9 @@ class RecipesRepository {
 
   Future<Either<FetchError, dynamic>> modifyRecipe(RecipePostRequestDTO recipe, String id) async {
     try {
-      final Response? response;
       final body = recipe.toJson();
-      print(body);
       _dio.options.headers['Content-Type'] = "application/json; charset=utf-8";
-      response = await _dio.patch('$recipesPath$id', data: body);
+      await _dio.patch('$recipesPath$id', data: body);
       return right(Unit);
     } catch (e) {
       if (e is DioError && e.response?.statusCode == 400) return left(FetchError.invalidPayload);

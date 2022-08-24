@@ -1,17 +1,12 @@
-import 'package:auto_animated/auto_animated.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_e_commerce/models/category/category_model.dart';
-import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
-import 'package:flutter_e_commerce/models/tag/tag_model.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
-import 'package:flutter_e_commerce/views/recipe_list_page/cubit/recipe_list_cubit.dart';
+import 'package:flutter_e_commerce/views/recipe_list/cubit/recipe_list_cubit.dart';
 import 'package:flutter_e_commerce/views/search/search_results.dart';
-import 'package:flutter_e_commerce/widgets/large_text.dart';
-import 'package:flutter_e_commerce/widgets/recipe_item.dart';
-import 'package:flutter_e_commerce/widgets/small_text.dart';
+import 'package:flutter_e_commerce/widgets/sliver_recipe_list/sliver_appbar_filter_tags.dart';
+import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
+import 'package:flutter_e_commerce/widgets/sliver_recipe_list/sliver_recipe_list.dart';
 
 class RecipeListPage extends StatelessWidget {
   const RecipeListPage({
@@ -80,7 +75,7 @@ class _RecipeListScrollViewState extends State<RecipeListScrollView> {
       slivers: [
         SliverAppBar(
           floating: true,
-          // pinned: true,
+          pinned: true,
           snap: true,
           scrolledUnderElevation: 0,
           title: LargeText(text: "Browse"),
@@ -119,7 +114,7 @@ class _Body extends StatelessWidget {
           case RecipeListStatus.loaded:
             final recipeList = state.recipeList;
             if (recipeList != null && recipeList.isNotEmpty) {
-              return SliverList(recipeList: recipeList, tagFilters: state.tagFilters);
+              return SliverRecipeList(recipeList: recipeList, tagFilters: state.tagFilters);
             } else {
               return const SliverToBoxAdapter(
                 child: Center(
@@ -132,45 +127,6 @@ class _Body extends StatelessWidget {
             return const SliverToBoxAdapter(child: Text("Error"));
         }
       },
-    );
-  }
-}
-
-class SliverList extends StatelessWidget {
-  const SliverList({Key? key, required this.recipeList, required this.tagFilters}) : super(key: key);
-
-  final List<TagModel> tagFilters;
-  final List<RecipeModel> recipeList;
-  @override
-  Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      sliver: LiveSliverList(
-          controller: ScrollController(),
-          itemCount: recipeList.length,
-          showItemDuration: const Duration(milliseconds: 150),
-          showItemInterval: const Duration(milliseconds: 50),
-          itemBuilder: (context, index, animation) {
-            final recipe = recipeList[index];
-            return FadeTransition(
-              opacity: Tween<double>(
-                begin: 0,
-                end: 1,
-              ).animate(animation),
-              // And slide transition
-              child: SlideTransition(
-                position: Tween<Offset>(
-                  begin: const Offset(0, -0.1),
-                  end: Offset.zero,
-                ).animate(animation),
-                // Paste you Widget
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 14),
-                  child: RecipeItem(recipe: recipe, tagFilters: tagFilters),
-                ),
-              ),
-            );
-          }),
     );
   }
 }
@@ -197,14 +153,12 @@ class _FilterChipsState extends State<FilterChips> with TickerProviderStateMixin
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
-
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   void dispose() {
-    // _animationController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -222,38 +176,11 @@ class _FilterChipsState extends State<FilterChips> with TickerProviderStateMixin
             final List tagList = Set.from(tags!).toList();
             _animationController.forward();
 
-            return Padding(
-              padding: const EdgeInsets.only(
-                top: 0.0,
-                bottom: 4.0,
-                left: 16.0,
-                right: 16.0,
-              ),
-              child: Column(
-                children: [
-                  Wrap(
-                    spacing: 8,
-                    alignment: WrapAlignment.center,
-                    direction: Axis.horizontal,
-                    children: tagList.map((tag) {
-                      final match = state.tagFilters.indexWhere((filter) => filter.id == tag.id);
-                      final status = match == -1 ? false : true;
-                      return FilterChip(
-                        selected: status,
-                        showCheckmark: false,
-                        label: SmallText(
-                          text: tag.name,
-                          color: status ? Colors.white : Colors.black87,
-                          size: 14,
-                        ),
-                        onSelected: ((status) {
-                          BlocProvider.of<RecipeListCubit>(context).updateTagList(tag, status);
-                        }),
-                      );
-                    }).toList(),
-                  ),
-                ],
-              ),
+            return AppBarFilterTags(
+              tagList: tagList,
+              animationController: _animationController,
+              tagFilters: state.tagFilters,
+              onSelect: BlocProvider.of<RecipeListCubit>(context).updateTagList,
             );
           default:
             return const SizedBox();

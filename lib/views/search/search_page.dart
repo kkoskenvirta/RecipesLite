@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:flutter_e_commerce/views/main/cubit/recipe_search_cubit.dart';
 import 'package:flutter_e_commerce/views/search/search_results.dart';
-import 'package:flutter_e_commerce/widgets/appbars/sliver_search_appbar.dart';
+import 'package:flutter_e_commerce/widgets/sliver_recipe_list/sliver_search_appbar.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);

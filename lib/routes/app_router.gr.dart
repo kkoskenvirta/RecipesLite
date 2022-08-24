@@ -10,22 +10,23 @@
 //
 // ignore_for_file: type=lint
 
+// ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i7;
 import 'package:flutter/material.dart' as _i14;
 
 import '../models/category/category_model.dart' as _i16;
 import '../models/recipe/recipe_model.dart' as _i15;
+import '../views/categories/categories_page.dart' as _i10;
 import '../views/login/login_page.dart' as _i1;
-import '../views/main/categories/categories_page.dart' as _i10;
 import '../views/main/home_page.dart' as _i8;
 import '../views/main/main_page.dart' as _i3;
 import '../views/profile/profile_page.dart' as _i12;
 import '../views/profile/profile_recipe_view.dart' as _i13;
 import '../views/recipe_creator/recipe_creator.dart' as _i5;
-import '../views/recipe_list_page/recipe_list_page.dart' as _i9;
-import '../views/register/register_page.dart' as _i2;
+import '../views/recipe_list/recipe_list_page.dart' as _i9;
 import '../views/search/search_page.dart' as _i6;
-import '../views/single_category_page/single_category_page.dart' as _i11;
+import '../views/sign_up/sign_up_page.dart' as _i2;
+import '../views/single_category/single_category_page.dart' as _i11;
 import '../views/single_recipe/recipe_page.dart' as _i4;
 
 class AppRouter extends _i7.RootStackRouter {
@@ -38,9 +39,9 @@ class AppRouter extends _i7.RootStackRouter {
       return _i7.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i1.LoginPage());
     },
-    RegisterRoute.name: (routeData) {
+    SignUpRoute.name: (routeData) {
       return _i7.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i2.RegisterPage());
+          routeData: routeData, child: const _i2.SignUpPage());
     },
     MainRoute.name: (routeData) {
       return _i7.MaterialPageX<dynamic>(
@@ -150,7 +151,7 @@ class AppRouter extends _i7.RootStackRouter {
         _i7.RouteConfig('/#redirect',
             path: '/', redirectTo: '/login', fullMatch: true),
         _i7.RouteConfig(LoginRoute.name, path: '/login'),
-        _i7.RouteConfig(RegisterRoute.name, path: '/register'),
+        _i7.RouteConfig(SignUpRoute.name, path: '/sign-up'),
         _i7.RouteConfig(MainRoute.name, path: '/main', children: [
           _i7.RouteConfig(HomeRouter.name,
               path: 'home',
@@ -198,11 +199,11 @@ class LoginRoute extends _i7.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i2.RegisterPage]
-class RegisterRoute extends _i7.PageRouteInfo<void> {
-  const RegisterRoute() : super(RegisterRoute.name, path: '/register');
+/// [_i2.SignUpPage]
+class SignUpRoute extends _i7.PageRouteInfo<void> {
+  const SignUpRoute() : super(SignUpRoute.name, path: '/sign-up');
 
-  static const String name = 'RegisterRoute';
+  static const String name = 'SignUpRoute';
 }
 
 /// generated route for

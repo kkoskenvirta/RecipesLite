@@ -1,5 +1,3 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,8 +8,8 @@ import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/utils/string_extension.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_data/form_data_cubit.dart';
-import 'package:flutter_e_commerce/widgets/large_text.dart';
-import 'package:flutter_e_commerce/widgets/small_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class IngredientsSelector extends StatelessWidget {
@@ -46,6 +44,7 @@ class IngredientsSelector extends StatelessWidget {
                   IngredientGroup(
                     ingredientGroup: ingredientGroups[index],
                     groupIndex: index,
+                    groupCount: ingredientGroups.length,
                   ),
                 ],
               );
@@ -80,9 +79,15 @@ class IngredientsSelector extends StatelessWidget {
 }
 
 class IngredientGroup extends StatelessWidget {
-  const IngredientGroup({Key? key, required this.ingredientGroup, required this.groupIndex}) : super(key: key);
+  const IngredientGroup({
+    Key? key,
+    required this.ingredientGroup,
+    required this.groupIndex,
+    required this.groupCount,
+  }) : super(key: key);
   final IngredientGroupModel ingredientGroup;
   final int groupIndex;
+  final int groupCount;
 
   _showConfirmationDialog(BuildContext context) async {
     final shouldPop = showDialog<bool>(
@@ -144,7 +149,7 @@ class IngredientGroup extends StatelessWidget {
       children: [
         Dismissible(
           key: UniqueKey(),
-          direction: groupIndex == 0 ? DismissDirection.none : DismissDirection.endToStart,
+          direction: groupCount < 2 ? DismissDirection.none : DismissDirection.endToStart,
           confirmDismiss: (direction) async {
             final bool shouldDelete = await _showConfirmationDialog(context);
             return shouldDelete;
@@ -228,26 +233,37 @@ class IngredientGroup extends StatelessWidget {
                         subtitle: const Text('Add ingredients to the group by pressing +'),
                       ),
                     if (ingredientGroup.ingredients.isNotEmpty)
-                      ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              IngredientRow(
-                                groupIndex: groupIndex,
-                                ingredientIndex: index,
-                              ),
-                            ],
-                          );
-                        },
-                        separatorBuilder: ((context, index) {
-                          return const SizedBox(
-                            height: 0,
-                          );
-                        }),
-                        itemCount: ingredientGroup.ingredients.length,
+                      FractionallySizedBox(
+                        widthFactor: 0.925,
+                        child: Container(
+                          color: RecipeAppTheme.colors.pinkLines,
+                          height: 1,
+                        ),
                       ),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            IngredientRow(
+                              groupIndex: groupIndex,
+                              ingredientIndex: index,
+                            ),
+                          ],
+                        );
+                      },
+                      separatorBuilder: ((context, index) {
+                        return FractionallySizedBox(
+                          widthFactor: 0.925,
+                          child: Container(
+                            color: RecipeAppTheme.colors.pinkLines,
+                            height: 1,
+                          ),
+                        );
+                      }),
+                      itemCount: ingredientGroup.ingredients.length,
+                    ),
                   ],
                 ),
               ),
@@ -266,6 +282,19 @@ class IngredientRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void showMyBottomSheet(child) {
+      final formDataCubit = BlocProvider.of<FormDataCubit>(context);
+      showBarModalBottomSheet(
+        expand: false,
+        context: context,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        builder: (context) => BlocProvider.value(
+          value: formDataCubit,
+          child: child,
+        ),
+      );
+    }
+
     return BlocBuilder<FormDataCubit, FormDataState>(
       builder: (context, state) {
         final ingredient = state.ingredientGroups[groupIndex].ingredients[ingredientIndex];
@@ -307,6 +336,28 @@ class IngredientRow extends StatelessWidget {
               color: RecipeAppTheme.colors.pinkLightLow,
             ),
             child: ListTile(
+              hoverColor: RecipeAppTheme.colors.blueAccent,
+              onLongPress: () {
+                HapticFeedback.heavyImpact();
+                showCupertinoModalPopup(
+                  context: context,
+                  builder: (BuildContext context) => CupertinoActionSheet(
+                    actions: [
+                      CupertinoActionSheetAction(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          showMyBottomSheet(IngredientSheet(
+                            groupIndex: groupIndex,
+                            ingredient: ingredient,
+                            ingredientIndex: ingredientIndex,
+                          ));
+                        },
+                        child: const Text('Edit ingredient'),
+                      ),
+                    ],
+                  ),
+                );
+              },
               title: LargeText(
                 text: ingredient.name.capitalize(),
                 size: 15,
@@ -363,7 +414,6 @@ class _IngredientSheetState extends State<IngredientSheet> {
 
   @override
   Widget build(BuildContext context) {
-    print("rerender");
     final FormDataCubit formDataCubit = BlocProvider.of<FormDataCubit>(context);
 
     return BlocBuilder<FormDataCubit, FormDataState>(
@@ -404,9 +454,7 @@ class _IngredientSheetState extends State<IngredientSheet> {
                     fontSize: 16,
                   ),
                   decoration: const InputDecoration(
-                    alignLabelWithHint: true,
                     labelText: "Ingredient",
-                    filled: false,
                   ),
                   textInputAction: TextInputAction.next,
                   controller: nameController,
@@ -432,9 +480,7 @@ class _IngredientSheetState extends State<IngredientSheet> {
                           fontSize: 16,
                         ),
                         decoration: const InputDecoration(
-                          alignLabelWithHint: true,
                           labelText: "Amount",
-                          filled: false,
                           helperText: "",
                         ),
                         controller: amountController,
@@ -450,7 +496,6 @@ class _IngredientSheetState extends State<IngredientSheet> {
                           try {
                             double.parse(value!.replaceAll(',', '.'));
                           } catch (e) {
-                            print(e);
                             return "Invalid amount";
                           }
                           return null;
@@ -467,9 +512,7 @@ class _IngredientSheetState extends State<IngredientSheet> {
                           fontSize: 16,
                         ),
                         decoration: const InputDecoration(
-                          alignLabelWithHint: true,
                           labelText: "Unit",
-                          filled: false,
                           helperText: "",
                           hintText: "Unit",
                         ),
@@ -627,7 +670,6 @@ class _IngredientGroupSheetState extends State<IngredientGroupSheet> {
                   decoration: const InputDecoration(
                     alignLabelWithHint: true,
                     labelText: 'Group name',
-                    filled: false,
                   ),
                   textInputAction: TextInputAction.next,
                   controller: nameController,

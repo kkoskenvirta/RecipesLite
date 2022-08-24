@@ -2,12 +2,9 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_e_commerce/models/category/category_model.dart';
 import 'package:flutter_e_commerce/models/ingredient/ingredient_model.dart';
 import 'package:flutter_e_commerce/models/ingredient_group/ingredient_group_model.dart';
-import 'package:flutter_e_commerce/models/recipe/dto/recipe_data_dto.dart';
-import 'package:flutter_e_commerce/models/recipe/dto/recipe_dto.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:flutter_e_commerce/utils/string_extension.dart';
@@ -102,7 +99,6 @@ class FormDataCubit extends Cubit<FormDataState> {
         .add(IngredientModel(name: name.capitalize(), amount: double.parse(amount.replaceAll(',', '.')), unit: unit));
     ingredientGroups[groupIndex] = ingredientGroups[groupIndex].copyWith(ingredients: ingredientList);
     emit(state.copyWith(ingredientGroups: ingredientGroups));
-    print(state.ingredientGroups[groupIndex]);
   }
 
   addIngredient(String name, String amount, String unit) {
@@ -155,7 +151,7 @@ class FormDataCubit extends Cubit<FormDataState> {
     try {
       List<IngredientModel> ingredientList = [...state.ingredientGroups[groupIndex].ingredients];
       List<IngredientGroupModel> ingredientGroups = [...state.ingredientGroups];
-      final doubleAmount = double.parse(amount);
+      final doubleAmount = double.parse(amount.replaceAll(',', '.'));
       ingredientList[ingredientIndex] =
           state.ingredientGroups[groupIndex].ingredients[ingredientIndex].copyWith(amount: doubleAmount);
       ingredientGroups[groupIndex] = ingredientGroups[groupIndex].copyWith(ingredients: ingredientList);
@@ -163,7 +159,6 @@ class FormDataCubit extends Cubit<FormDataState> {
     } catch (e) {
       List<IngredientModel> ingredientList = [...state.ingredientGroups[groupIndex].ingredients];
       List<IngredientGroupModel> ingredientGroups = [...state.ingredientGroups];
-      final doubleAmount = double.parse(amount);
       ingredientList[ingredientIndex] =
           state.ingredientGroups[groupIndex].ingredients[ingredientIndex].copyWith(amount: null);
       ingredientGroups[groupIndex] = ingredientGroups[groupIndex].copyWith(ingredients: ingredientList);

@@ -48,7 +48,7 @@ class FormDataState with _$FormDataState {
       tags: [],
       name: null,
       shortDescription: null,
-      difficulty: "easy",
+      difficulty: "Easy",
       picture: null,
       image: null,
       blurHash: "",

@@ -5,18 +5,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
-import 'package:flutter_e_commerce/utils/int_extension.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
-import 'package:flutter_e_commerce/widgets/large_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
 import 'package:flutter_e_commerce/widgets/recipe_item.dart';
-import 'package:flutter_e_commerce/widgets/small_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
 
 import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
 import 'package:flutter_e_commerce/widgets/tag_list.dart';
-import 'package:flutter_e_commerce/widgets/time_chip.dart';
 import 'package:skeletons/skeletons.dart';
 
 class HomePage extends StatelessWidget {
@@ -54,8 +52,8 @@ class _HomePageBodyState extends State<HomePageBody> {
   PageController pageController = PageController(viewportFraction: 0.9);
 
   var _currPageValue = 0.0;
-  double _scaleFactor = 0.85;
-  double _height = 220;
+  final double _scaleFactor = 0.85;
+  final double _height = 220;
 
   @override
   void initState() {
@@ -215,7 +213,7 @@ class _HomePageBodyState extends State<HomePageBody> {
   Widget _buildPageItem(int index, RecipeModel recipe) {
     //Mathematics for the scaling effect on slides
     createScalingMatrix() {
-      Matrix4 matrix = new Matrix4.identity();
+      Matrix4 matrix = Matrix4.identity();
       if (index == _currPageValue.floor()) {
         var currScale = 1 - (_currPageValue - index) * (1 - _scaleFactor);
         var currTrans = _height * (1 - currScale) / 2;
@@ -281,13 +279,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(Dimensions.radius20),
                               color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black12.withOpacity(0.025),
-                                  spreadRadius: 10,
-                                  blurRadius: 26,
-                                ),
-                              ]),
+                              boxShadow: [RecipeAppTheme.shadows.normal]),
                           child: Container(
                             padding: EdgeInsets.only(
                                 top: Dimensions.height10,

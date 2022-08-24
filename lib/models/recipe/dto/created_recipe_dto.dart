@@ -1,5 +1,4 @@
 import 'package:flutter_e_commerce/models/category/dto/category_id_dto.dart';
-import 'package:flutter_e_commerce/models/ingredient/dto/ingredient_id_dto.dart';
 import 'package:flutter_e_commerce/models/ingredient_group/dto/ingredient_group_id_dto.dart';
 
 import 'package:flutter_e_commerce/models/tag/dto/tag_id_dto.dart';

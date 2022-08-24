@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/models/category/category_model.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
-import 'package:flutter_e_commerce/widgets/tag_chip.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class TagList extends StatelessWidget {
-  TagList({Key? key, required this.categories, required this.tags, required this.tagFilters}) : super(key: key);
+  const TagList({Key? key, required this.categories, required this.tags, required this.tagFilters}) : super(key: key);
 
   final List<TagModel> tagFilters;
   final List<CategoryModel> categories;
@@ -57,5 +57,43 @@ class TagList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return getTagWidgets(categories, tags);
+  }
+}
+
+class TagChip extends StatelessWidget {
+  final String text;
+  final double size;
+  final double height;
+  final Color backgroundColor;
+  final Color textColor;
+
+  const TagChip({
+    Key? key,
+    required this.text,
+    this.size = 13,
+    this.height = 1.2,
+    required this.backgroundColor,
+    required this.textColor,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        text,
+        style: GoogleFonts.lato(
+          textStyle: TextStyle(
+            color: textColor,
+            fontSize: size,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
   }
 }

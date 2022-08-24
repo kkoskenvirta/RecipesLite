@@ -3,14 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/category/categories_cubit.dart';
 import 'package:flutter_e_commerce/models/category/category_model.dart';
-import 'package:flutter_e_commerce/routes/route_service.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
-import 'package:flutter_e_commerce/widgets/category_list_item.dart';
-import 'package:flutter_e_commerce/widgets/large_text.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:flutter_e_commerce/widgets/category_item.dart';
 
-import '../../../routes/app_router.gr.dart';
+import '../../routes/app_router.gr.dart';
 
 class CategoriesPage extends StatelessWidget {
   const CategoriesPage({
@@ -49,7 +46,7 @@ class CategoriesPageBody extends StatelessWidget {
           builder: (context, state) {
             switch (state.status) {
               case CategoriesStateStatus.loading:
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               case CategoriesStateStatus.loaded:
                 final categoryList = state.categories;
                 return Padding(
@@ -62,7 +59,7 @@ class CategoriesPageBody extends StatelessWidget {
                     itemCount: categoryList.length,
                     itemBuilder: (context, index) {
                       final CategoryModel category = categoryList[index];
-                      return CategoryListItem(
+                      return CategoryItem(
                         title: category.name,
                         imageUrl: category.picture,
                         blurhash: category.blurhash,
@@ -75,7 +72,7 @@ class CategoriesPageBody extends StatelessWidget {
                   ),
                 );
               default:
-                return SizedBox();
+                return const SizedBox();
             }
           },
         )

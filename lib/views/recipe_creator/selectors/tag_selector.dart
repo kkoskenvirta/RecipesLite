@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_e_commerce/models/category/category_model.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_data/form_data_cubit.dart';
-import 'package:flutter_e_commerce/widgets/small_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
 
 class TagSelector extends StatelessWidget {
   const TagSelector({
@@ -24,7 +23,7 @@ class TagSelector extends StatelessWidget {
     return BlocBuilder<FormDataCubit, FormDataState>(
       builder: (context, state) {
         return Wrap(
-          spacing: 8,
+          spacing: 10,
           alignment: WrapAlignment.start,
           direction: Axis.horizontal,
           children: tagList.map((tag) {

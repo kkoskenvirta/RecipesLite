@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/int_extension.dart';
-import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/utils/string_extension.dart';
 import 'package:flutter_e_commerce/widgets/time_chip.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'label_with_icon.dart';
 
 class InformationBar extends StatelessWidget {
   final String status;
@@ -61,7 +59,7 @@ class DifficultyChip extends StatelessWidget {
     if (status.toLowerCase() == "easy") {
       return Colors.green.shade400;
     } else if (status.toLowerCase() == "medium") {
-      return Color.fromARGB(255, 251, 187, 24);
+      return const Color.fromARGB(255, 251, 187, 24);
     } else if (status.toLowerCase() == "hard") {
       return Colors.red.shade300;
     }

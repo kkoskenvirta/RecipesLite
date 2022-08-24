@@ -25,7 +25,9 @@ class NavigationCubit extends Cubit<NavigationState> {
   }
 
   setCurrentPath(String? path) {
-    print(path);
+    if (kDebugMode) {
+      print(path);
+    }
     emit(state.copyWith(currentPath: path));
   }
 }

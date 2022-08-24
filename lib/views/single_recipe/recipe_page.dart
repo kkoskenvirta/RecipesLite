@@ -1,27 +1,21 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
-import 'package:flutter_e_commerce/models/ingredient_group/ingredient_group_model.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
-import 'package:flutter_e_commerce/utils/int_extension.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/utils/scale_func.dart';
 import 'package:flutter_e_commerce/views/single_recipe/cubit/single_recipe_cubit.dart';
-import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/appbars/recipe_appbar.dart';
 import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
 import 'package:flutter_e_commerce/widgets/categorization_bar.dart';
 import 'package:flutter_e_commerce/widgets/ingredients_table.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
-import 'package:flutter_e_commerce/widgets/large_text.dart';
-import 'package:flutter_e_commerce/widgets/small_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
 
 import '../../models/recipe/recipe_model.dart';
-import '../../widgets/time_chip.dart';
 
 class RecipePage extends StatefulWidget {
   const RecipePage({
@@ -39,7 +33,6 @@ class RecipePage extends StatefulWidget {
 
 class _RecipePageState extends State<RecipePage> {
   ScrollController scrollController = ScrollController();
-  Future<double> get _height => Future<double>.value(Dimensions.recipeImgSize);
 
   var _currScrollPosition = 0.0;
   double _scaleFactor = 0.85;
@@ -163,7 +156,7 @@ class _RecipePageState extends State<RecipePage> {
                                           children: [
                                             state.status == UserDataStateStatus.loaded
                                                 ? Container(
-                                                    padding: EdgeInsets.all(2),
+                                                    padding: const EdgeInsets.all(2),
                                                     decoration: BoxDecoration(
                                                       // color: RecipeAppTheme.colors.pinkLightLow,
                                                       borderRadius: BorderRadius.all(

@@ -1,6 +1,7 @@
 import 'package:flutter_e_commerce/models/category/dto/category_id_dto.dart';
 import 'package:flutter_e_commerce/models/ingredient/dto/ingredient_id_dto.dart';
 import 'package:flutter_e_commerce/models/ingredient_group/dto/ingredient_group_id_dto.dart';
+import 'package:flutter_e_commerce/utils/string_extension.dart';
 
 import 'package:flutter_e_commerce/models/tag/dto/tag_id_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -45,7 +46,7 @@ class RecipeDataDTO with _$RecipeDataDTO {
       dateUpdated: dateUpdated,
       commentCount: commentCount,
       favoritesCount: favoritesCount,
-      difficulty: difficulty,
+      difficulty: difficulty!.capitalize(),
       featured: featured,
       name: name,
       blurhash: blurhash,

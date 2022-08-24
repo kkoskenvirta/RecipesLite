@@ -12,10 +12,11 @@ import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
 import 'package:flutter_e_commerce/widgets/categorization_bar.dart';
 import 'package:flutter_e_commerce/widgets/ingredients_table.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
-import 'package:flutter_e_commerce/widgets/large_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:blurhash_dart/blurhash_dart.dart';
+// ignore: depend_on_referenced_packages
 import 'package:image/image.dart' as img;
 
 class ReviewSlide extends StatelessWidget {
@@ -57,7 +58,9 @@ class ReviewSlide extends StatelessWidget {
 
       return;
     } on PlatformException catch (e) {
-      print("failed to pick an image" + e.toString());
+      if (kDebugMode) {
+        print("failed to pick an image$e");
+      }
     }
   }
 
@@ -66,11 +69,7 @@ class ReviewSlide extends StatelessWidget {
     return BlocBuilder<FormDataCubit, FormDataState>(
       builder: (context, state) {
         final recipe = state;
-        final ingredients = state.ingredients;
-        final categories = state.categories;
-        final tags = state.tags;
         final image = state.image;
-
         return Column(children: [
           ClipRect(
             child: BlocBuilder<FormDataCubit, FormDataState>(
@@ -166,11 +165,10 @@ class ReviewSlide extends StatelessWidget {
                   const SizedBox(
                     height: 12,
                   ),
-                  if (recipe.ingredientGroups != null)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: buildIngredientsTable(recipe.ingredientGroups),
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: buildIngredientsTable(recipe.ingredientGroups),
+                  ),
                   const SizedBox(
                     height: 12,
                   ),

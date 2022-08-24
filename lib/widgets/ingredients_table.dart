@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/models/ingredient/ingredient_model.dart';
 import 'package:flutter_e_commerce/models/ingredient_group/ingredient_group_model.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
-import 'package:flutter_e_commerce/utils/string_extension.dart';
-import 'package:flutter_e_commerce/widgets/large_text.dart';
-import 'package:flutter_e_commerce/widgets/small_text.dart';
+import 'package:flutter_e_commerce/utils/double_extension.dart';
+import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
 
 List<Widget> buildIngredientsTable(List<IngredientGroupModel> ingredientGroups) {
   List<Widget> widgets = [];
@@ -23,8 +23,8 @@ List<Widget> buildIngredientsTable(List<IngredientGroupModel> ingredientGroups) 
 }
 
 class IngredientsTable extends StatelessWidget {
-  IngredientsTable({Key? key, required this.ingredients}) : super(key: key);
-  List<IngredientModel>? ingredients = [];
+  const IngredientsTable({Key? key, required this.ingredients}) : super(key: key);
+  final List<IngredientModel>? ingredients;
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +88,7 @@ class IngredientRow extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              '${ingredient.amount.toString()} ${ingredient.unit!}',
+              '${ingredient.amount!.doubleToPrettyString()} ${ingredient.unit!}',
               textAlign: TextAlign.end,
             ),
           ),

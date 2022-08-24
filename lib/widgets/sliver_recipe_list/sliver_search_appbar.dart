@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/views/main/cubit/recipe_search_cubit.dart';
-import 'package:flutter_e_commerce/widgets/large_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
 
 class SliverSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
   SliverSearchAppBar({
@@ -59,7 +59,7 @@ class SliverSearchAppBar extends StatelessWidget implements PreferredSizeWidget 
       title: LargeText(text: title!),
       leading: showSearchButton
           ? IconButton(
-              onPressed: (() => router.push(SearchRoute())),
+              onPressed: (() => router.push(const SearchRoute())),
               icon: const Icon(
                 Icons.search,
                 size: 30,

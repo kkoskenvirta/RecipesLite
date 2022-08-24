@@ -6,7 +6,7 @@ import 'package:flutter_e_commerce/models/user/user_model.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/routes/route_service.dart';
 
-import 'package:flutter_e_commerce/widgets/large_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
 import 'package:skeletons/skeletons.dart';
 
 import '../../widgets/appbars/main_appbar.dart';

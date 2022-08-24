@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 // import 'button_style.dart';
 // import 'color_scheme.dart';
@@ -140,9 +139,7 @@ class CustomStep {
     required this.content,
     this.state = CustomStepState.indexed,
     this.isActive = false,
-  })  : assert(title != null),
-        assert(content != null),
-        assert(state != null);
+  });
 
   /// The title of the step that typically describes it.
   final Widget title;
@@ -206,10 +203,7 @@ class CustomStepper extends StatefulWidget {
     this.controlsBuilder,
     this.elevation,
     this.margin,
-  })  : assert(steps != null),
-        assert(type != null),
-        assert(currentStep != null),
-        assert(0 <= currentStep && currentStep < steps.length),
+  })  : assert(0 <= currentStep && currentStep < steps.length),
         super(key: key);
 
   /// The steps of the stepper whose titles, subtitles, icons always get shown.
@@ -325,7 +319,9 @@ class _CustomStepperState extends State<CustomStepper> with TickerProviderStateM
       (int i) => GlobalKey(),
     );
 
-    for (int i = 0; i < widget.steps.length; i += 1) _oldStates[i] = widget.steps[i].state;
+    for (int i = 0; i < widget.steps.length; i += 1) {
+      _oldStates[i] = widget.steps[i].state;
+    }
   }
 
   @override
@@ -333,7 +329,9 @@ class _CustomStepperState extends State<CustomStepper> with TickerProviderStateM
     super.didUpdateWidget(oldWidget);
     assert(widget.steps.length == oldWidget.steps.length);
 
-    for (int i = 0; i < oldWidget.steps.length; i += 1) _oldStates[i] = oldWidget.steps[i].state;
+    for (int i = 0; i < oldWidget.steps.length; i += 1) {
+      _oldStates[i] = oldWidget.steps[i].state;
+    }
   }
 
   bool _isFirst(int index) {
@@ -363,7 +361,6 @@ class _CustomStepperState extends State<CustomStepper> with TickerProviderStateM
   Widget _buildCircleChild(int index, bool oldState) {
     final CustomStepState state = oldState ? _oldStates[index]! : widget.steps[index].state;
     final bool isDarkActive = _isDark() && widget.steps[index].isActive;
-    assert(state != null);
     switch (state) {
       case CustomStepState.indexed:
       case CustomStepState.disabled:
@@ -452,15 +449,16 @@ class _CustomStepperState extends State<CustomStepper> with TickerProviderStateM
         duration: kThemeAnimationDuration,
       );
     } else {
-      if (widget.steps[index].state != StepState.error)
+      if (widget.steps[index].state != StepState.error) {
         return _buildCircle(index, false);
-      else
+      } else {
         return _buildTriangle(index, false);
+      }
     }
   }
 
   Widget _buildVerticalControls(int stepIndex) {
-    if (widget.controlsBuilder != null)
+    if (widget.controlsBuilder != null) {
       return widget.controlsBuilder!(
         context,
         CustomControlsDetails(
@@ -470,6 +468,7 @@ class _CustomStepperState extends State<CustomStepper> with TickerProviderStateM
           stepIndex: stepIndex,
         ),
       );
+    }
 
     final Color cancelColor;
     switch (Theme.of(context).brightness) {
@@ -489,10 +488,11 @@ class _CustomStepperState extends State<CustomStepper> with TickerProviderStateM
     const EdgeInsets buttonPadding = EdgeInsets.symmetric(horizontal: 16.0);
 
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
+          color: Colors.white,
           border: Border(
-        top: BorderSide(width: 1, color: Colors.black12),
-      )),
+            top: BorderSide(width: 1, color: Colors.black12),
+          )),
       margin: const EdgeInsets.only(top: 0.0),
       padding: const EdgeInsets.only(left: 16, right: 16, top: 12),
       child: ConstrainedBox(
@@ -508,7 +508,7 @@ class _CustomStepperState extends State<CustomStepper> with TickerProviderStateM
               child: TextButton(
                 onPressed: widget.onStepCancel,
                 style: TextButton.styleFrom(
-                  primary: cancelColor,
+                  backgroundColor: cancelColor,
                   padding: buttonPadding,
                   shape: buttonShape,
                 ),
@@ -541,7 +541,6 @@ class _CustomStepperState extends State<CustomStepper> with TickerProviderStateM
     final ThemeData themeData = Theme.of(context);
     final TextTheme textTheme = themeData.textTheme;
 
-    assert(widget.steps[index].state != null);
     switch (widget.steps[index].state) {
       case CustomStepState.indexed:
       case CustomStepState.editing:
@@ -562,7 +561,6 @@ class _CustomStepperState extends State<CustomStepper> with TickerProviderStateM
     final ThemeData themeData = Theme.of(context);
     final TextTheme textTheme = themeData.textTheme;
 
-    assert(widget.steps[index].state != null);
     switch (widget.steps[index].state) {
       case CustomStepState.indexed:
       case CustomStepState.editing:
@@ -606,6 +604,7 @@ class _CustomStepperState extends State<CustomStepper> with TickerProviderStateM
 
   Widget _buildVerticalHeader(int index) {
     return Container(
+      color: Colors.white,
       margin: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Row(
         children: <Widget>[
@@ -791,16 +790,16 @@ class _CustomStepperState extends State<CustomStepper> with TickerProviderStateM
     assert(debugCheckHasMaterial(context));
     assert(debugCheckHasMaterialLocalizations(context));
     assert(() {
-      if (context.findAncestorWidgetOfExactType<CustomStepper>() != null)
+      if (context.findAncestorWidgetOfExactType<CustomStepper>() != null) {
         throw FlutterError(
           'Steppers must not be nested.\n'
           'The material specification advises that one should avoid embedding '
           'steppers within steppers. '
           'https://material.io/archive/guidelines/components/steppers.html#steppers-usage',
         );
+      }
       return true;
     }());
-    assert(widget.type != null);
     switch (widget.type) {
       case CustomStepperType.vertical:
         return _buildVertical();
