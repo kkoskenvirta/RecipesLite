@@ -152,7 +152,7 @@ class AppColors {
   final pinkLightLow = const Color(0xFFFCE4EC);
 
   final pinkLight = const Color.fromARGB(255, 250, 244, 246);
-  final pinkLines = Color.fromARGB(255, 232, 165, 187);
+  final pinkLines = Color.fromARGB(255, 245, 198, 214);
   final pinkBackground = Color.fromARGB(255, 255, 251, 252);
 
   AppColors();
