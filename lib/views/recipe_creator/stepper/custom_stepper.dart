@@ -545,13 +545,13 @@ class _CustomStepperState extends State<CustomStepper> with TickerProviderStateM
       case CustomStepState.indexed:
       case CustomStepState.editing:
       case CustomStepState.complete:
-        return textTheme.bodyText1!;
+        return textTheme.bodyLarge!;
       case CustomStepState.disabled:
-        return textTheme.bodyText1!.copyWith(
+        return textTheme.bodyLarge!.copyWith(
           color: _isDark() ? _kDisabledDark : _kDisabledLight,
         );
       case CustomStepState.error:
-        return textTheme.bodyText1!.copyWith(
+        return textTheme.bodyLarge!.copyWith(
           color: _isDark() ? _kErrorDark : _kErrorLight,
         );
     }
@@ -565,13 +565,13 @@ class _CustomStepperState extends State<CustomStepper> with TickerProviderStateM
       case CustomStepState.indexed:
       case CustomStepState.editing:
       case CustomStepState.complete:
-        return textTheme.caption!;
+        return textTheme.bodySmall!;
       case CustomStepState.disabled:
-        return textTheme.caption!.copyWith(
+        return textTheme.bodySmall!.copyWith(
           color: _isDark() ? _kDisabledDark : _kDisabledLight,
         );
       case CustomStepState.error:
-        return textTheme.caption!.copyWith(
+        return textTheme.bodySmall!.copyWith(
           color: _isDark() ? _kErrorDark : _kErrorLight,
         );
     }

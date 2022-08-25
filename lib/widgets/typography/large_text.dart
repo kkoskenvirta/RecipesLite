@@ -1,24 +1,22 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
-import 'package:flutter_e_commerce/utils/dimensions.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LargeText extends StatelessWidget {
-  final Color? color;
-  final String text;
-  FontWeight? fontWeight;
-  double size;
-  TextOverflow overFlow;
-
-  LargeText(
+  const LargeText(
       {Key? key,
       this.color = Colors.black87,
       required this.text,
       this.overFlow = TextOverflow.ellipsis,
-      this.size = 0,
-      this.fontWeight = FontWeight.w600})
+      this.fontSize = FontSize.mediumPlus,
+      this.fontWeight = FontWeight.w500})
       : super(key: key);
+
+  final Color? color;
+  final String text;
+  final FontWeight? fontWeight;
+  final FontSize fontSize;
+  final TextOverflow overFlow;
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +24,10 @@ class LargeText extends StatelessWidget {
       text,
       maxLines: 2,
       overflow: overFlow,
-      style: GoogleFonts.raleway(
+      style: GoogleFonts.barlowCondensed(
         textStyle: TextStyle(
           color: color,
-          fontSize: size == 0 ? Dimensions.font20 : size,
+          fontSize: largeTextFontSize(fontSize).toDouble(),
           fontWeight: fontWeight,
         ),
       ),

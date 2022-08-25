@@ -7,6 +7,7 @@ import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/selectors/category_selector.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_data/form_data_cubit.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_fetch/form_fetch_cubit.dart';
@@ -103,7 +104,7 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
       icon: icon,
       messageText: LargeText(
         text: message,
-        size: 15,
+        fontSize: FontSize.medium,
       ),
       backgroundColor: backgroundColor,
       duration: const Duration(seconds: 2, milliseconds: 500),
@@ -495,7 +496,7 @@ class CustomStepperControls extends StatelessWidget {
                     ? SmallText(
                         text: "Continue",
                         color: Colors.white,
-                        size: 14,
+                        fontSize: FontSize.smallPlus,
                       )
                     : BlocBuilder<FormDataCubit, FormDataState>(
                         builder: (context, state) {
@@ -504,12 +505,12 @@ class CustomStepperControls extends StatelessWidget {
                               return editMode
                                   ? SmallText(
                                       text: "Save",
-                                      size: 14,
+                                      fontSize: FontSize.smallPlus,
                                       color: Colors.white,
                                     )
                                   : SmallText(
                                       text: "Submit",
-                                      size: 14,
+                                      fontSize: FontSize.smallPlus,
                                       color: Colors.white,
                                     );
                             case DirectusRequestStatus.loading:

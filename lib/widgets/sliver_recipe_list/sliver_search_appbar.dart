@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/views/main/cubit/recipe_search_cubit.dart';
 import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
 
@@ -56,7 +57,10 @@ class SliverSearchAppBar extends StatelessWidget implements PreferredSizeWidget 
       bottom: SearchBar(
         size: 50.0,
       ),
-      title: LargeText(text: title!),
+      title: LargeText(
+        text: title!,
+        fontSize: FontSize.large,
+      ),
       leading: showSearchButton
           ? IconButton(
               onPressed: (() => router.push(const SearchRoute())),

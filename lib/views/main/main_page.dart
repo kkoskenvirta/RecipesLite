@@ -15,13 +15,13 @@ class MainPage extends StatelessWidget {
         CategoriesRouter(),
         ProfileRouter(),
       ],
-      bottomNavigationBuilder: (context, tabsRouter) => BottomNavigationItems(tabsRouter: tabsRouter),
+      bottomNavigationBuilder: (context, tabsRouter) => _BottomNavigationItems(tabsRouter: tabsRouter),
     );
   }
 }
 
-class BottomNavigationItems extends StatelessWidget {
-  const BottomNavigationItems({
+class _BottomNavigationItems extends StatelessWidget {
+  const _BottomNavigationItems({
     Key? key,
     required this.tabsRouter,
   }) : super(key: key);

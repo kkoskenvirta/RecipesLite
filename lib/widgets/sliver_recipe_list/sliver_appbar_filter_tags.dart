@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
 
 class AppBarFilterTags extends StatelessWidget {
@@ -42,7 +43,7 @@ class AppBarFilterTags extends StatelessWidget {
                   label: SmallText(
                     text: tag.name,
                     color: status ? Colors.white : Colors.black87,
-                    size: 14,
+                    fontSize: FontSize.smallPlus,
                   ),
                   onSelected: ((status) => onSelect(tag, status)),
                 ),

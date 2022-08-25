@@ -7,6 +7,7 @@ import 'package:flutter_e_commerce/models/ingredient_group/ingredient_group_mode
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/utils/string_extension.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_data/form_data_cubit.dart';
 import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
 import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
@@ -67,9 +68,9 @@ class IngredientsSelector extends StatelessWidget {
             surfaceTintColor: Theme.of(context).primaryColor,
           ),
           onPressed: () => showMyBottomSheet(const IngredientGroupSheet()),
-          child: SmallText(
+          child: const SmallText(
             text: "ADD NEW GROUP",
-            size: 14,
+            fontSize: FontSize.smallPlus,
             color: Colors.white,
           ),
         ),
@@ -105,18 +106,18 @@ class IngredientGroup extends StatelessWidget {
           ),
           actions: <Widget>[
             TextButton(
-              child: SmallText(
+              child: const SmallText(
                 text: 'Delete',
-                size: 14,
+                fontSize: FontSize.smallPlus,
               ),
               onPressed: () {
                 Navigator.pop(context, true);
               },
             ),
             ElevatedButton(
-              child: SmallText(
+              child: const SmallText(
                 text: 'Cancel',
-                size: 14,
+                fontSize: FontSize.smallPlus,
                 color: Colors.white,
               ),
               onPressed: () {
@@ -177,10 +178,16 @@ class IngredientGroup extends StatelessWidget {
               showCupertinoModalPopup(
                 context: context,
                 builder: (BuildContext context) => CupertinoActionSheet(
+                  cancelButton: CupertinoActionSheetAction(
+                    child: const Text('Cancel'),
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop("Cancel");
+                    },
+                  ),
                   actions: [
                     CupertinoActionSheetAction(
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.of(context, rootNavigator: true).pop("Cancel");
                         showMyBottomSheet(IngredientGroupSheet(
                           groupIndex: groupIndex,
                           ingredientGroup: ingredientGroup,
@@ -219,18 +226,18 @@ class IngredientGroup extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     text: ingredientGroup.name,
                     color: Colors.black87,
-                    size: 17,
+                    fontSize: FontSize.mediumPlus,
                   ),
                   children: [
                     if (ingredientGroup.ingredients.isEmpty)
-                      ListTile(
+                      const ListTile(
                         title: LargeText(
                           text: "Group is still empty",
-                          size: 15,
+                          fontSize: FontSize.medium,
                         ),
-                        visualDensity: const VisualDensity(vertical: -2),
+                        visualDensity: VisualDensity(vertical: 0),
                         minVerticalPadding: 14,
-                        subtitle: const Text('Add ingredients to the group by pressing +'),
+                        subtitle: SmallText(text: 'Add ingredients to the group by pressing +'),
                       ),
                     if (ingredientGroup.ingredients.isNotEmpty)
                       FractionallySizedBox(
@@ -342,6 +349,13 @@ class IngredientRow extends StatelessWidget {
                 showCupertinoModalPopup(
                   context: context,
                   builder: (BuildContext context) => CupertinoActionSheet(
+                    title: SmallText(text: ingredient.name.capitalize()),
+                    cancelButton: CupertinoActionSheetAction(
+                      child: const Text('Cancel'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
                     actions: [
                       CupertinoActionSheetAction(
                         onPressed: () {
@@ -358,13 +372,18 @@ class IngredientRow extends StatelessWidget {
                   ),
                 );
               },
-              title: LargeText(
+              title: SmallText(
                 text: ingredient.name.capitalize(),
-                size: 15,
+                fontSize: FontSize.smallPlus,
+                fontWeight: FontWeight.w500,
+                color: Colors.black87,
               ),
-              visualDensity: const VisualDensity(vertical: -2),
+              visualDensity: const VisualDensity(vertical: -1),
               minVerticalPadding: 14,
-              subtitle: Text('${ingredient.amount.toString()} ${ingredient.unit}'),
+              subtitle: SmallText(
+                text: '${ingredient.amount.toString()} ${ingredient.unit}',
+                fontSize: FontSize.smallPlus,
+              ),
               trailing: const Icon(
                 Icons.edit,
                 size: 24,
@@ -450,9 +469,6 @@ class _IngredientSheetState extends State<IngredientSheet> {
                   height: 16,
                 ),
                 TextFormField(
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
                   decoration: const InputDecoration(
                     labelText: "Ingredient",
                   ),
@@ -476,9 +492,6 @@ class _IngredientSheetState extends State<IngredientSheet> {
                   children: [
                     Expanded(
                       child: TextFormField(
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
                         decoration: const InputDecoration(
                           labelText: "Amount",
                           helperText: "",
@@ -508,9 +521,6 @@ class _IngredientSheetState extends State<IngredientSheet> {
                     Expanded(
                       child: TextFormField(
                         controller: unitController,
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
                         decoration: const InputDecoration(
                           labelText: "Unit",
                           helperText: "",
@@ -605,9 +615,9 @@ class _IngredientSheetState extends State<IngredientSheet> {
                             Navigator.pop(context);
                           }
                         },
-                        child: SmallText(
+                        child: const SmallText(
                           text: "Save",
-                          size: 14,
+                          fontSize: FontSize.smallPlus,
                           color: Colors.white,
                         ),
                       ),
@@ -715,7 +725,11 @@ class _IngredientGroupSheetState extends State<IngredientGroupSheet> {
                             Navigator.pop(context);
                           }
                         },
-                        child: SmallText(text: "Save", size: 14, color: Colors.white),
+                        child: const SmallText(
+                          text: "Save",
+                          fontSize: FontSize.smallPlus,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),

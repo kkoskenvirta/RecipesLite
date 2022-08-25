@@ -7,6 +7,7 @@ import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/utils/scale_func.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/views/single_recipe/cubit/single_recipe_cubit.dart';
 import 'package:flutter_e_commerce/widgets/appbars/recipe_appbar.dart';
 import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
@@ -14,7 +15,7 @@ import 'package:flutter_e_commerce/widgets/categorization_bar.dart';
 import 'package:flutter_e_commerce/widgets/ingredients_table.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
 import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
-
+import 'package:flutter_e_commerce/widgets/typography/content_text.dart';
 import '../../models/recipe/recipe_model.dart';
 
 class RecipePage extends StatefulWidget {
@@ -70,7 +71,7 @@ class _RecipePageState extends State<RecipePage> {
       icon: icon,
       messageText: LargeText(
         text: message,
-        size: 15,
+        fontSize: FontSize.medium,
       ),
       backgroundColor: backgroundColor,
       duration: const Duration(seconds: 1, milliseconds: 500),
@@ -140,8 +141,7 @@ class _RecipePageState extends State<RecipePage> {
                                           children: [
                                             LargeText(
                                               text: recipe.name!,
-                                              size: 22,
-                                              fontWeight: FontWeight.w600,
+                                              fontSize: FontSize.veryLarge,
                                             ),
                                           ],
                                         ),
@@ -225,13 +225,16 @@ class _RecipePageState extends State<RecipePage> {
                                 const SizedBox(
                                   height: 12,
                                 ),
-                                Align(
-                                    alignment: Alignment.centerLeft, child: LargeText(size: 16, text: "Instructions")),
+                                const Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: LargeText(fontSize: FontSize.mediumPlus, text: "Instructions"),
+                                ),
                                 const SizedBox(
                                   height: 12,
                                 ),
-                                Text(
-                                  recipe.instructions!,
+                                ContentText(
+                                  text: recipe.instructions!,
+                                  fontSize: FontSize.smallPlus,
                                 ),
                                 SizedBox(
                                   height: Dimensions.height45,

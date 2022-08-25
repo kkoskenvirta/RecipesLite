@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
 import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
@@ -39,7 +40,7 @@ class SignUpPage extends StatelessWidget {
                     alignment: Alignment.center,
                     child: LargeText(
                       text: "🥘",
-                      size: 26,
+                      fontSize: FontSize.veryLarge,
                     ),
                   ),
                   const SizedBox(
@@ -103,7 +104,7 @@ class SignUpPage extends StatelessWidget {
                               )
                             : LargeText(
                                 text: 'CONTINUE',
-                                size: 16,
+                                fontSize: FontSize.medium,
                                 color: Colors.white,
                               ),
                       );

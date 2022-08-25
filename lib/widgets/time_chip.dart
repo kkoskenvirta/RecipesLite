@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
+import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
 
 class TimeChip extends StatelessWidget {
   final String text;
-  final double size;
+  final FontSize fontSize;
   final double height;
   final double horizontal;
   final double vertical;
@@ -14,7 +15,7 @@ class TimeChip extends StatelessWidget {
   const TimeChip({
     Key? key,
     required this.text,
-    this.size = 13,
+    this.fontSize = FontSize.small,
     this.height = 1.2,
     this.horizontal = 10.0,
     this.vertical = 8.0,
@@ -51,15 +52,10 @@ class TimeChip extends StatelessWidget {
           const SizedBox(
             width: 2,
           ),
-          Text(
-            text,
-            style: GoogleFonts.lato(
-              textStyle: TextStyle(
-                color: RecipeAppTheme.colors.blueAccent,
-                fontSize: size,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+          SmallText(
+            text: text,
+            fontSize: fontSize,
+            color: RecipeAppTheme.colors.blueAccent,
           ),
         ],
       ),

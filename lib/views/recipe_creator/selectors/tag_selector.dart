@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_data/form_data_cubit.dart';
 import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
 
@@ -34,7 +35,7 @@ class TagSelector extends StatelessWidget {
                 label: SmallText(
                   text: tag.name,
                   color: status ? Colors.white : Colors.black87,
-                  size: 14,
+                  fontSize: FontSize.smallPlus,
                 ),
                 selected: status,
                 onSelected: (status) => updateTag(tag, status));

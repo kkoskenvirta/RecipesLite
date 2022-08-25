@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
+import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
 import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
@@ -38,7 +40,7 @@ class LoginPage extends StatelessWidget {
                   alignment: Alignment.center,
                   child: LargeText(
                     text: "🥘",
-                    size: 26,
+                    fontSize: FontSize.veryLarge,
                   ),
                 ),
                 const SizedBox(
@@ -48,7 +50,7 @@ class LoginPage extends StatelessWidget {
                   alignment: Alignment.center,
                   child: LargeText(
                     text: "Register or sign in",
-                    size: 26,
+                    fontSize: FontSize.veryLarge,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -79,7 +81,7 @@ class LoginPage extends StatelessWidget {
                             )
                           : LargeText(
                               text: 'LOGIN',
-                              size: 16,
+                              fontSize: FontSize.medium,
                               color: Colors.white,
                             ),
                     );
@@ -146,7 +148,7 @@ class LoginPage extends StatelessWidget {
                   alignment: Alignment.center,
                   child: SmallText(
                     text: "or",
-                    size: 14,
+                    fontSize: FontSize.smallPlus,
                   ),
                 ),
                 const SizedBox(
@@ -156,8 +158,10 @@ class LoginPage extends StatelessWidget {
                   alignment: Alignment.center,
                   child: TextButton(
                     onPressed: () => router.navigate(const SignUpRoute()),
-                    child: const Text(
-                      "Create an account",
+                    child: SmallText(
+                      text: "Create an account",
+                      fontSize: FontSize.medium,
+                      color: RecipeAppTheme.colors.pinkAccent,
                     ),
                   ),
                 ),

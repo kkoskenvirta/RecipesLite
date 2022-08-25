@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/models/category/category_model.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
+import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
 
 class TagList extends StatelessWidget {
   const TagList({Key? key, required this.categories, required this.tags, required this.tagFilters}) : super(key: key);
@@ -33,7 +34,7 @@ class TagList extends StatelessWidget {
           backgroundColor: RecipeAppTheme.colors.pinkAccent,
           textColor: Colors.white,
           text: tagList[i].name,
-          size: 11,
+          fontSize: FontSize.verySmall,
         ));
         list.add(const SizedBox(
           width: 5,
@@ -44,7 +45,7 @@ class TagList extends StatelessWidget {
           backgroundColor: RecipeAppTheme.colors.pinkAccent,
           textColor: Colors.white,
           text: '+${tagList.length - 2} more',
-          size: 11,
+          fontSize: FontSize.verySmall,
         ));
       }
     }
@@ -62,7 +63,7 @@ class TagList extends StatelessWidget {
 
 class TagChip extends StatelessWidget {
   final String text;
-  final double size;
+  final FontSize fontSize;
   final double height;
   final Color backgroundColor;
   final Color textColor;
@@ -70,7 +71,7 @@ class TagChip extends StatelessWidget {
   const TagChip({
     Key? key,
     required this.text,
-    this.size = 13,
+    this.fontSize = FontSize.small,
     this.height = 1.2,
     required this.backgroundColor,
     required this.textColor,
@@ -84,15 +85,10 @@ class TagChip extends StatelessWidget {
         color: backgroundColor,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Text(
-        text,
-        style: GoogleFonts.lato(
-          textStyle: TextStyle(
-            color: textColor,
-            fontSize: size,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
+      child: SmallText(
+        text: text,
+        fontSize: fontSize,
+        color: textColor,
       ),
     );
   }

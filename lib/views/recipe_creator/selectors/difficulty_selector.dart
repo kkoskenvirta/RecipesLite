@@ -117,9 +117,6 @@ class DifficultySelector extends StatelessWidget {
                 flex: 3,
                 child: TextFormField(
                   controller: difficultyController,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
                   decoration: const InputDecoration(
                     hintText: "Difficulty",
                     filled: true,
@@ -136,9 +133,6 @@ class DifficultySelector extends StatelessWidget {
                 flex: 3,
                 child: TextFormField(
                   controller: preparationTimeController,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
                   decoration: const InputDecoration(
                     hintText: "Preparation time",
                     filled: true,

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/auth/cubit/auth_cubit.dart';
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -102,7 +103,12 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
             child: const Text("Close"),
           )
       ],
-      title: title == null ? const SizedBox() : LargeText(text: title!),
+      title: title == null
+          ? const SizedBox()
+          : LargeText(
+              text: title!,
+              fontSize: FontSize.large,
+            ),
     );
   }
 }

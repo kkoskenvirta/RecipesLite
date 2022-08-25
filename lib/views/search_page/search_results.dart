@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/views/main/cubit/recipe_search_cubit.dart';
 import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
 import 'package:flutter_e_commerce/widgets/recipe_item.dart';
@@ -118,7 +119,7 @@ class SearchRecommendations extends StatelessWidget {
                 label: SmallText(
                   text: recommendation,
                   color: Colors.white,
-                  size: 14,
+                  fontSize: FontSize.smallPlus,
                 ),
                 onPressed: () {
                   BlocProvider.of<RecipeSearchCubit>(context).searchRecipes(recommendation);

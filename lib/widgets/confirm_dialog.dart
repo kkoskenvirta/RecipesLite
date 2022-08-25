@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
 
 class ConfirmationDialog extends StatelessWidget {
@@ -24,7 +25,7 @@ class ConfirmationDialog extends StatelessWidget {
         TextButton(
           child: SmallText(
             text: confirmText,
-            size: 14,
+            fontSize: FontSize.smallPlus,
           ),
           onPressed: () {
             Navigator.pop(context, true);
@@ -33,7 +34,7 @@ class ConfirmationDialog extends StatelessWidget {
         ElevatedButton(
           child: SmallText(
             text: declineText,
-            size: 14,
+            fontSize: FontSize.smallPlus,
             color: Colors.white,
           ),
           onPressed: () {

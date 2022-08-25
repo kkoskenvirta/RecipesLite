@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
 import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
 import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
@@ -53,7 +54,7 @@ class CategoryItem extends StatelessWidget {
                 children: [
                   LargeText(
                     text: title,
-                    size: 18,
+                    fontSize: FontSize.mediumPlus,
                   ),
                   const SizedBox(
                     height: 2,

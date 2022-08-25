@@ -7,6 +7,7 @@ import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/int_extension.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
 import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
 import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
@@ -60,7 +61,7 @@ class RecipeItem extends StatelessWidget {
                       left: 3,
                       top: 3,
                       child: TimeChip(
-                        size: 12,
+                        fontSize: FontSize.small,
                         text: recipe.preparationTime!.parseToTimeString(),
                         horizontal: 8,
                         vertical: 7,
@@ -84,7 +85,7 @@ class RecipeItem extends StatelessWidget {
                         child: LargeText(
                           text: recipe.name!,
                           overFlow: TextOverflow.ellipsis,
-                          size: 18,
+                          fontSize: FontSize.large,
                         ),
                       ),
                       const SizedBox(height: 4),

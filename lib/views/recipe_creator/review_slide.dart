@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 
 import 'package:flutter_e_commerce/utils/dimensions.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_data/form_data_cubit.dart';
 import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
 import 'package:flutter_e_commerce/widgets/categorization_bar.dart';
@@ -175,7 +176,10 @@ class ReviewSlide extends StatelessWidget {
                   SizedBox(
                     height: Dimensions.height20,
                   ),
-                  Align(alignment: Alignment.centerLeft, child: LargeText(size: 16, text: "Instructions")),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: LargeText(fontSize: FontSize.medium, text: "Instructions"),
+                  ),
                   const SizedBox(
                     height: 12,
                   ),
