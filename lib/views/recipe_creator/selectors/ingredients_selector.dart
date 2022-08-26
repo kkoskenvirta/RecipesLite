@@ -178,6 +178,11 @@ class IngredientGroup extends StatelessWidget {
               showCupertinoModalPopup(
                 context: context,
                 builder: (BuildContext context) => CupertinoActionSheet(
+                  title: Center(
+                      child: SmallText(
+                    text: ingredientGroup.name.capitalize(),
+                    fontSize: FontSize.medium,
+                  )),
                   cancelButton: CupertinoActionSheetAction(
                     child: const Text('Cancel'),
                     onPressed: () {
@@ -349,7 +354,11 @@ class IngredientRow extends StatelessWidget {
                 showCupertinoModalPopup(
                   context: context,
                   builder: (BuildContext context) => CupertinoActionSheet(
-                    title: SmallText(text: ingredient.name.capitalize()),
+                    title: Center(
+                        child: SmallText(
+                      text: "${ingredient.name.capitalize()} - ${ingredient.amount.toString()} ${ingredient.unit}",
+                      fontSize: FontSize.medium,
+                    )),
                     cancelButton: CupertinoActionSheetAction(
                       child: const Text('Cancel'),
                       onPressed: () {
@@ -466,7 +475,7 @@ class _IngredientSheetState extends State<IngredientSheet> {
                 ),
                 LargeText(text: widget.ingredient == null ? "Add an ingredient" : "Edit ingredient"),
                 const SizedBox(
-                  height: 16,
+                  height: 24,
                 ),
                 TextFormField(
                   decoration: const InputDecoration(

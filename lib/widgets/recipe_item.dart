@@ -44,32 +44,29 @@ class RecipeItem extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Hero(
-              tag: heroTag,
-              child: Material(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(Dimensions.radius15),
-                child: Stack(
-                  children: [
-                    BlurhashImage(
-                      aspectRatio: 1,
-                      image: recipe.picture,
-                      blurhash: recipe.blurhash!,
-                      borderRadius: BorderRadius.circular(Dimensions.radius15),
+            Material(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(Dimensions.radius15),
+              child: Stack(
+                children: [
+                  BlurhashImage(
+                    aspectRatio: 1,
+                    image: recipe.picture,
+                    blurhash: recipe.blurhash!,
+                    borderRadius: BorderRadius.circular(Dimensions.radius15),
+                  ),
+                  Positioned(
+                    left: 3,
+                    top: 3,
+                    child: TimeChip(
+                      fontSize: FontSize.small,
+                      text: recipe.preparationTime!.parseToTimeString(),
+                      horizontal: 8,
+                      vertical: 7,
+                      rounded: true,
                     ),
-                    Positioned(
-                      left: 3,
-                      top: 3,
-                      child: TimeChip(
-                        fontSize: FontSize.small,
-                        text: recipe.preparationTime!.parseToTimeString(),
-                        horizontal: 8,
-                        vertical: 7,
-                        rounded: true,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(width: 12),
@@ -85,7 +82,7 @@ class RecipeItem extends StatelessWidget {
                         child: LargeText(
                           text: recipe.name!,
                           overFlow: TextOverflow.ellipsis,
-                          fontSize: FontSize.large,
+                          fontSize: FontSize.mediumPlus,
                         ),
                       ),
                       const SizedBox(height: 4),

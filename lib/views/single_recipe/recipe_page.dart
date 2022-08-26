@@ -32,11 +32,23 @@ class RecipePage extends StatefulWidget {
   State<RecipePage> createState() => _RecipePageState();
 }
 
-class _RecipePageState extends State<RecipePage> {
+class _RecipePageState extends State<RecipePage> with TickerProviderStateMixin {
   ScrollController scrollController = ScrollController();
 
+  var _animateHeight = Dimensions.recipeImgSize + 0;
   var _currScrollPosition = 0.0;
   double _scaleFactor = 0.85;
+
+  @override
+  void initState() {
+    Future.delayed(Duration(milliseconds: 0)).then(
+      (value) => setState(() {
+        _animateHeight = Dimensions.recipeImgSize - 40;
+      }),
+    );
+    super.initState();
+  }
+
   @override
   void dispose() {
     scrollController.dispose();
@@ -116,9 +128,11 @@ class _RecipePageState extends State<RecipePage> {
                       child: Column(
                         children: [
                           AnimatedContainer(
-                            curve: Curves.easeInCubic,
-                            duration: const Duration(milliseconds: 200),
-                            height: Dimensions.recipeImgSize,
+                            // curve: Curves.easeInOutSine,
+                            curve: Curves.easeInOutSine,
+                            duration: const Duration(milliseconds: 500),
+                            height: _animateHeight,
+                            // height: Dimensions.recipeImgSize,
                           ),
                           Container(
                             padding: EdgeInsets.symmetric(vertical: Dimensions.width15, horizontal: Dimensions.width20),

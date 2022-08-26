@@ -24,6 +24,7 @@ class LargeText extends StatelessWidget {
       text,
       maxLines: 2,
       overflow: overFlow,
+      // style: GoogleFonts.barlowCondensed(
       style: GoogleFonts.barlowCondensed(
         textStyle: TextStyle(
           color: color,

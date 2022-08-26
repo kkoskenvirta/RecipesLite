@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
+import 'package:flutter_e_commerce/utils/custom_transitions.dart';
 import 'package:flutter_e_commerce/views/login/login_page.dart';
 import 'package:flutter_e_commerce/views/categories/categories_page.dart';
 import 'package:flutter_e_commerce/views/main/home_page.dart';
@@ -47,7 +48,11 @@ import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
         ],
       ),
     ]),
-    MaterialRoute(path: '/recipes/:recipeId', page: RecipePage),
+    CustomRoute(
+      path: '/recipes/:recipeId',
+      page: RecipePage,
+      transitionsBuilder: CustomTransitions.slideLeftWithFade,
+    ),
     MaterialRoute<RecipeModel>(name: "RecipeCreator", page: RecipeCreatorScreen, path: '/recipe-creator'),
     MaterialRoute<RecipeModel>(name: "RecipeEditor", page: RecipeCreatorScreen, path: '/recipe-editor'),
     MaterialRoute(

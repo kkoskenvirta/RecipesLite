@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/views/recipe_list/cubit/recipe_list_cubit.dart';
 import 'package:flutter_e_commerce/views/search/search_results.dart';
 import 'package:flutter_e_commerce/widgets/sliver_recipe_list/sliver_appbar_filter_tags.dart';
@@ -78,7 +79,10 @@ class _RecipeListScrollViewState extends State<RecipeListScrollView> {
           pinned: true,
           snap: true,
           scrolledUnderElevation: 0,
-          title: LargeText(text: "Browse"),
+          title: const LargeText(
+            text: "Browse",
+            fontSize: FontSize.large,
+          ),
           bottom: FilterChips(size: 148.0),
         ),
         const _Body(),

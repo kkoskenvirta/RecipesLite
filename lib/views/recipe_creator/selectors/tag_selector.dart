@@ -35,7 +35,7 @@ class TagSelector extends StatelessWidget {
                 label: SmallText(
                   text: tag.name,
                   color: status ? Colors.white : Colors.black87,
-                  fontSize: FontSize.smallPlus,
+                  fontSize: FontSize.small,
                 ),
                 selected: status,
                 onSelected: (status) => updateTag(tag, status));

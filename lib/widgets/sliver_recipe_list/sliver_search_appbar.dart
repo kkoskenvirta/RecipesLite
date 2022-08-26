@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
+import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/views/main/cubit/recipe_search_cubit.dart';
 import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
@@ -103,7 +104,10 @@ class SearchBar extends StatelessWidget implements PreferredSizeWidget {
           child: CupertinoSearchTextField(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
             placeholder: "Search for recipes",
-            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
+            decoration: BoxDecoration(
+              color: RecipeAppTheme.colors.pinkLightLow,
+              borderRadius: BorderRadius.circular(8),
+            ),
             itemSize: 26,
             controller: searchController,
             prefixIcon: const Icon(

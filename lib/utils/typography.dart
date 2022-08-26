@@ -40,9 +40,9 @@ largeTextFontSize(FontSize fontSize) {
     case FontSize.medium:
       return 16;
     case FontSize.mediumPlus:
-      return 19;
-    case FontSize.large:
       return 20;
+    case FontSize.large:
+      return 22;
     case FontSize.veryLarge:
       return 26;
     default:

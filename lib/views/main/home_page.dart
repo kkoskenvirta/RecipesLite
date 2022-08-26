@@ -96,7 +96,7 @@ class _HomePageBodyState extends State<HomePageBody> {
           },
         ),
         SizedBox(
-          height: Dimensions.height20,
+          height: Dimensions.height15,
         ),
         Container(
           margin: EdgeInsets.only(left: Dimensions.width15, right: Dimensions.width15),
@@ -177,7 +177,7 @@ class _HomePageBodyState extends State<HomePageBody> {
               : const SizedBox(),
         ),
         const SizedBox(
-          height: 10,
+          height: 4,
         ),
         if (featuredList.isNotEmpty)
           DotsIndicator(
@@ -230,74 +230,71 @@ class _HomePageBodyState extends State<HomePageBody> {
       },
       child: Transform(
         transform: matrix,
-        child: Hero(
-          tag: heroTag,
-          child: Material(
-            child: Stack(
-              children: [
-                Container(
-                  height: Dimensions.pageViewContainer,
-                  margin:
-                      EdgeInsets.only(bottom: Dimensions.height10, left: Dimensions.width10, right: Dimensions.width10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(Dimensions.radius20),
-                    boxShadow: [RecipeAppTheme.shadows.normal],
-                  ),
-                  child: BlurhashImage(
-                    aspectRatio: 1.6,
-                    image: recipe.picture,
-                    blurhash: recipe.blurhash,
-                    height: Dimensions.pageViewContainer,
-                    boxShadow: [RecipeAppTheme.shadows.normal],
-                  ),
+        child: Material(
+          child: Stack(
+            children: [
+              Container(
+                height: Dimensions.pageViewContainer,
+                margin:
+                    EdgeInsets.only(bottom: Dimensions.height10, left: Dimensions.width10, right: Dimensions.width10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(Dimensions.radius20),
+                  boxShadow: [RecipeAppTheme.shadows.normal],
                 ),
-                Column(
-                  children: [
-                    const Spacer(),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: Dimensions.width15),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
+                child: BlurhashImage(
+                  aspectRatio: 1.6,
+                  image: recipe.picture,
+                  blurhash: recipe.blurhash,
+                  height: Dimensions.pageViewContainer,
+                  boxShadow: [RecipeAppTheme.shadows.normal],
+                ),
+              ),
+              Column(
+                children: [
+                  const Spacer(),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: Dimensions.width15),
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: Dimensions.width20),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(Dimensions.radius20),
+                            color: Colors.white,
+                            boxShadow: [RecipeAppTheme.shadows.normal]),
                         child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: Dimensions.width20),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(Dimensions.radius20),
-                              color: Colors.white,
-                              boxShadow: [RecipeAppTheme.shadows.normal]),
-                          child: Container(
-                            padding: EdgeInsets.only(
-                                top: Dimensions.height10,
-                                bottom: Dimensions.height10,
-                                left: Dimensions.width15,
-                                right: Dimensions.width15),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TagList(categories: recipe.categories!, tags: recipe.tags!, tagFilters: const []),
-                                const SizedBox(height: 8),
-                                LargeText(
-                                  text: recipe.name!,
-                                  fontSize: FontSize.large,
-                                ),
-                                const SizedBox(height: 8),
-                                SmallText(text: recipe.shortDescription!),
-                                SizedBox(
-                                  height: Dimensions.height15,
-                                ),
-                                InformationBar(
-                                  status: recipe.difficulty!,
-                                  preparationTime: recipe.preparationTime!,
-                                )
-                              ],
-                            ),
+                          padding: EdgeInsets.only(
+                              top: Dimensions.height10,
+                              bottom: Dimensions.height10,
+                              left: Dimensions.width15,
+                              right: Dimensions.width15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TagList(categories: recipe.categories!, tags: recipe.tags!, tagFilters: const []),
+                              const SizedBox(height: 8),
+                              LargeText(
+                                text: recipe.name!,
+                                fontSize: FontSize.large,
+                              ),
+                              const SizedBox(height: 8),
+                              SmallText(text: recipe.shortDescription!),
+                              SizedBox(
+                                height: Dimensions.height15,
+                              ),
+                              InformationBar(
+                                status: recipe.difficulty!,
+                                preparationTime: recipe.preparationTime!,
+                              )
+                            ],
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
@@ -325,7 +322,7 @@ class _FeaturedItemsLoading extends StatelessWidget {
           child: const FeaturedItemSkeleton(),
         ),
         const SizedBox(
-          height: 10,
+          height: 4,
         ),
         DotsIndicator(
           dotsCount: 1,

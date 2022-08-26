@@ -43,7 +43,7 @@ class AppBarFilterTags extends StatelessWidget {
                   label: SmallText(
                     text: tag.name,
                     color: status ? Colors.white : Colors.black87,
-                    fontSize: FontSize.smallPlus,
+                    fontSize: FontSize.small,
                   ),
                   onSelected: ((status) => onSelect(tag, status)),
                 ),

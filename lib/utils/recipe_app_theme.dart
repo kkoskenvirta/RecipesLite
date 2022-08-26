@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_e_commerce/utils/color_generator.dart';
-import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RecipeAppTheme {
@@ -88,13 +87,13 @@ class RecipeAppTheme {
       headlineMedium: GoogleFonts.barlowCondensed(fontSize: 35, fontWeight: FontWeight.w600, letterSpacing: 0.25),
       headlineSmall: GoogleFonts.barlowCondensed(fontSize: 24, fontWeight: FontWeight.w600),
       titleLarge: GoogleFonts.barlowCondensed(fontSize: 20, fontWeight: FontWeight.w600, letterSpacing: 0.25),
-      titleMedium: GoogleFonts.barlowCondensed(fontSize: 18, fontWeight: FontWeight.w400, letterSpacing: 0.25),
+      titleMedium: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.w400, letterSpacing: 0.25),
       titleSmall: GoogleFonts.barlowCondensed(fontSize: 16, fontWeight: FontWeight.w500, letterSpacing: 0.25),
       bodyLarge: GoogleFonts.montserrat(fontSize: 17, fontWeight: FontWeight.w400, letterSpacing: 0.5),
       bodyMedium: GoogleFonts.montserrat(fontSize: 15, fontWeight: FontWeight.w400, letterSpacing: 0.25),
       labelLarge: GoogleFonts.montserrat(fontSize: 15, fontWeight: FontWeight.w500, letterSpacing: 1.25),
-      bodySmall: GoogleFonts.montserrat(fontSize: 13, fontWeight: FontWeight.w400, letterSpacing: 0.4),
-      labelSmall: GoogleFonts.montserrat(fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 1.5),
+      bodySmall: GoogleFonts.montserrat(fontSize: 15, fontWeight: FontWeight.w400, letterSpacing: 0.4),
+      labelSmall: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.w400, letterSpacing: 1.5),
     ),
     switchTheme: SwitchThemeData(
       thumbColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
