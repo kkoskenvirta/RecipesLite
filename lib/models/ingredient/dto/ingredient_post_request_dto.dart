@@ -4,19 +4,19 @@ part 'ingredient_post_request_dto.freezed.dart';
 part 'ingredient_post_request_dto.g.dart';
 
 @freezed
-class ingredientPostRequestDTO with _$ingredientPostRequestDTO {
-  factory ingredientPostRequestDTO({
+class IngredientPostRequestDTO with _$IngredientPostRequestDTO {
+  factory IngredientPostRequestDTO({
     String? name,
     double? amount,
     String? unit,
-  }) = _ingredientPostRequestDTO;
+  }) = _IngredientPostRequestDTO;
 
-  const ingredientPostRequestDTO._();
+  const IngredientPostRequestDTO._();
 
-  factory ingredientPostRequestDTO.fromJson(Map<String, dynamic> json) => _$ingredientPostRequestDTOFromJson(json);
+  factory IngredientPostRequestDTO.fromJson(Map<String, dynamic> json) => _$IngredientPostRequestDTOFromJson(json);
 
-  factory ingredientPostRequestDTO.create() {
-    return ingredientPostRequestDTO(
+  factory IngredientPostRequestDTO.create() {
+    return IngredientPostRequestDTO(
       name: "",
       amount: null,
       unit: "gram",

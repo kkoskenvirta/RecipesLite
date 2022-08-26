@@ -14,39 +14,39 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-ingredientPostRequestDTO _$ingredientPostRequestDTOFromJson(
+IngredientPostRequestDTO _$IngredientPostRequestDTOFromJson(
     Map<String, dynamic> json) {
-  return _ingredientPostRequestDTO.fromJson(json);
+  return _IngredientPostRequestDTO.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ingredientPostRequestDTO {
+mixin _$IngredientPostRequestDTO {
   String? get name => throw _privateConstructorUsedError;
   double? get amount => throw _privateConstructorUsedError;
   String? get unit => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ingredientPostRequestDTOCopyWith<ingredientPostRequestDTO> get copyWith =>
+  $IngredientPostRequestDTOCopyWith<IngredientPostRequestDTO> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ingredientPostRequestDTOCopyWith<$Res> {
-  factory $ingredientPostRequestDTOCopyWith(ingredientPostRequestDTO value,
-          $Res Function(ingredientPostRequestDTO) then) =
-      _$ingredientPostRequestDTOCopyWithImpl<$Res>;
+abstract class $IngredientPostRequestDTOCopyWith<$Res> {
+  factory $IngredientPostRequestDTOCopyWith(IngredientPostRequestDTO value,
+          $Res Function(IngredientPostRequestDTO) then) =
+      _$IngredientPostRequestDTOCopyWithImpl<$Res>;
   $Res call({String? name, double? amount, String? unit});
 }
 
 /// @nodoc
-class _$ingredientPostRequestDTOCopyWithImpl<$Res>
-    implements $ingredientPostRequestDTOCopyWith<$Res> {
-  _$ingredientPostRequestDTOCopyWithImpl(this._value, this._then);
+class _$IngredientPostRequestDTOCopyWithImpl<$Res>
+    implements $IngredientPostRequestDTOCopyWith<$Res> {
+  _$IngredientPostRequestDTOCopyWithImpl(this._value, this._then);
 
-  final ingredientPostRequestDTO _value;
+  final IngredientPostRequestDTO _value;
   // ignore: unused_field
-  final $Res Function(ingredientPostRequestDTO) _then;
+  final $Res Function(IngredientPostRequestDTO) _then;
 
   @override
   $Res call({
@@ -72,27 +72,27 @@ class _$ingredientPostRequestDTOCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$_ingredientPostRequestDTOCopyWith<$Res>
-    implements $ingredientPostRequestDTOCopyWith<$Res> {
-  factory _$$_ingredientPostRequestDTOCopyWith(
-          _$_ingredientPostRequestDTO value,
-          $Res Function(_$_ingredientPostRequestDTO) then) =
-      __$$_ingredientPostRequestDTOCopyWithImpl<$Res>;
+abstract class _$$_IngredientPostRequestDTOCopyWith<$Res>
+    implements $IngredientPostRequestDTOCopyWith<$Res> {
+  factory _$$_IngredientPostRequestDTOCopyWith(
+          _$_IngredientPostRequestDTO value,
+          $Res Function(_$_IngredientPostRequestDTO) then) =
+      __$$_IngredientPostRequestDTOCopyWithImpl<$Res>;
   @override
   $Res call({String? name, double? amount, String? unit});
 }
 
 /// @nodoc
-class __$$_ingredientPostRequestDTOCopyWithImpl<$Res>
-    extends _$ingredientPostRequestDTOCopyWithImpl<$Res>
-    implements _$$_ingredientPostRequestDTOCopyWith<$Res> {
-  __$$_ingredientPostRequestDTOCopyWithImpl(_$_ingredientPostRequestDTO _value,
-      $Res Function(_$_ingredientPostRequestDTO) _then)
-      : super(_value, (v) => _then(v as _$_ingredientPostRequestDTO));
+class __$$_IngredientPostRequestDTOCopyWithImpl<$Res>
+    extends _$IngredientPostRequestDTOCopyWithImpl<$Res>
+    implements _$$_IngredientPostRequestDTOCopyWith<$Res> {
+  __$$_IngredientPostRequestDTOCopyWithImpl(_$_IngredientPostRequestDTO _value,
+      $Res Function(_$_IngredientPostRequestDTO) _then)
+      : super(_value, (v) => _then(v as _$_IngredientPostRequestDTO));
 
   @override
-  _$_ingredientPostRequestDTO get _value =>
-      super._value as _$_ingredientPostRequestDTO;
+  _$_IngredientPostRequestDTO get _value =>
+      super._value as _$_IngredientPostRequestDTO;
 
   @override
   $Res call({
@@ -100,7 +100,7 @@ class __$$_ingredientPostRequestDTOCopyWithImpl<$Res>
     Object? amount = freezed,
     Object? unit = freezed,
   }) {
-    return _then(_$_ingredientPostRequestDTO(
+    return _then(_$_IngredientPostRequestDTO(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -119,11 +119,11 @@ class __$$_ingredientPostRequestDTOCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ingredientPostRequestDTO extends _ingredientPostRequestDTO {
-  _$_ingredientPostRequestDTO({this.name, this.amount, this.unit}) : super._();
+class _$_IngredientPostRequestDTO extends _IngredientPostRequestDTO {
+  _$_IngredientPostRequestDTO({this.name, this.amount, this.unit}) : super._();
 
-  factory _$_ingredientPostRequestDTO.fromJson(Map<String, dynamic> json) =>
-      _$$_ingredientPostRequestDTOFromJson(json);
+  factory _$_IngredientPostRequestDTO.fromJson(Map<String, dynamic> json) =>
+      _$$_IngredientPostRequestDTOFromJson(json);
 
   @override
   final String? name;
@@ -134,14 +134,14 @@ class _$_ingredientPostRequestDTO extends _ingredientPostRequestDTO {
 
   @override
   String toString() {
-    return 'ingredientPostRequestDTO(name: $name, amount: $amount, unit: $unit)';
+    return 'IngredientPostRequestDTO(name: $name, amount: $amount, unit: $unit)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ingredientPostRequestDTO &&
+            other is _$_IngredientPostRequestDTO &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.amount, amount) &&
             const DeepCollectionEquality().equals(other.unit, unit));
@@ -157,27 +157,27 @@ class _$_ingredientPostRequestDTO extends _ingredientPostRequestDTO {
 
   @JsonKey(ignore: true)
   @override
-  _$$_ingredientPostRequestDTOCopyWith<_$_ingredientPostRequestDTO>
-      get copyWith => __$$_ingredientPostRequestDTOCopyWithImpl<
-          _$_ingredientPostRequestDTO>(this, _$identity);
+  _$$_IngredientPostRequestDTOCopyWith<_$_IngredientPostRequestDTO>
+      get copyWith => __$$_IngredientPostRequestDTOCopyWithImpl<
+          _$_IngredientPostRequestDTO>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ingredientPostRequestDTOToJson(
+    return _$$_IngredientPostRequestDTOToJson(
       this,
     );
   }
 }
 
-abstract class _ingredientPostRequestDTO extends ingredientPostRequestDTO {
-  factory _ingredientPostRequestDTO(
+abstract class _IngredientPostRequestDTO extends IngredientPostRequestDTO {
+  factory _IngredientPostRequestDTO(
       {final String? name,
       final double? amount,
-      final String? unit}) = _$_ingredientPostRequestDTO;
-  _ingredientPostRequestDTO._() : super._();
+      final String? unit}) = _$_IngredientPostRequestDTO;
+  _IngredientPostRequestDTO._() : super._();
 
-  factory _ingredientPostRequestDTO.fromJson(Map<String, dynamic> json) =
-      _$_ingredientPostRequestDTO.fromJson;
+  factory _IngredientPostRequestDTO.fromJson(Map<String, dynamic> json) =
+      _$_IngredientPostRequestDTO.fromJson;
 
   @override
   String? get name;
@@ -187,6 +187,6 @@ abstract class _ingredientPostRequestDTO extends ingredientPostRequestDTO {
   String? get unit;
   @override
   @JsonKey(ignore: true)
-  _$$_ingredientPostRequestDTOCopyWith<_$_ingredientPostRequestDTO>
+  _$$_IngredientPostRequestDTOCopyWith<_$_IngredientPostRequestDTO>
       get copyWith => throw _privateConstructorUsedError;
 }

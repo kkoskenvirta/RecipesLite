@@ -1,13 +1,13 @@
 import 'package:auto_animated/auto_animated.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/views/main/cubit/recipe_search_cubit.dart';
-import 'package:flutter_e_commerce/widgets/large_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
 import 'package:flutter_e_commerce/widgets/recipe_item.dart';
-import 'package:flutter_e_commerce/widgets/small_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
 
 class SearchResultList extends StatelessWidget {
   const SearchResultList({Key? key}) : super(key: key);
@@ -15,7 +15,6 @@ class SearchResultList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scrollController = ScrollController();
-    final router = AutoRouter.of(context);
     return BlocBuilder<RecipeSearchCubit, RecipeSearchState>(builder: (context, state) {
       switch (state.status) {
         case RecipeSearchStatus.initial:
@@ -113,14 +112,14 @@ class SearchRecommendations extends StatelessWidget {
             alignment: WrapAlignment.center,
             direction: Axis.horizontal,
             children: recommendations.map((recommendation) {
-              final _key = GlobalKey();
+              final key = GlobalKey();
               return ActionChip(
-                key: _key,
+                key: key,
                 backgroundColor: RecipeAppTheme.colors.pinkAccent,
                 label: SmallText(
                   text: recommendation,
                   color: Colors.white,
-                  size: 14,
+                  fontSize: FontSize.small,
                 ),
                 onPressed: () {
                   BlocProvider.of<RecipeSearchCubit>(context).searchRecipes(recommendation);

@@ -26,6 +26,9 @@ _$_RecipeDataDTO _$$_RecipeDataDTOFromJson(Map<String, dynamic> json) =>
           .toList(),
       name: json['name'] as String?,
       featured: json['featured'] as bool?,
+      ingredientGroups: (json['ingredient_groups'] as List<dynamic>?)
+          ?.map((e) => IngredientGroupIdDTO.fromJson(e as Map<String, dynamic>))
+          .toList(),
       favoritesCount: json['favorites_count'] as String?,
       preparationTime: json['preparation_time'] as int?,
       shortDescription: json['short_description'] as String?,
@@ -51,6 +54,7 @@ Map<String, dynamic> _$$_RecipeDataDTOToJson(_$_RecipeDataDTO instance) =>
       'ingredients': instance.ingredients,
       'name': instance.name,
       'featured': instance.featured,
+      'ingredient_groups': instance.ingredientGroups,
       'favorites_count': instance.favoritesCount,
       'preparation_time': instance.preparationTime,
       'short_description': instance.shortDescription,

@@ -7,9 +7,10 @@ import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/int_extension.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
-import 'package:flutter_e_commerce/widgets/large_text.dart';
-import 'package:flutter_e_commerce/widgets/small_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
 import 'package:flutter_e_commerce/widgets/tag_list.dart';
 import 'package:flutter_e_commerce/widgets/time_chip.dart';
 import 'package:skeletons/skeletons.dart';
@@ -43,32 +44,29 @@ class RecipeItem extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Hero(
-              tag: heroTag,
-              child: Material(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(Dimensions.radius15),
-                child: Stack(
-                  children: [
-                    BlurhashImage(
-                      aspectRatio: 1,
-                      image: recipe.picture,
-                      blurhash: recipe.blurhash!,
-                      borderRadius: BorderRadius.circular(Dimensions.radius15),
+            Material(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(Dimensions.radius15),
+              child: Stack(
+                children: [
+                  BlurhashImage(
+                    aspectRatio: 1,
+                    image: recipe.picture,
+                    blurhash: recipe.blurhash!,
+                    borderRadius: BorderRadius.circular(Dimensions.radius15),
+                  ),
+                  Positioned(
+                    left: 3,
+                    top: 3,
+                    child: TimeChip(
+                      fontSize: FontSize.small,
+                      text: recipe.preparationTime!.parseToTimeString(),
+                      horizontal: 8,
+                      vertical: 7,
+                      rounded: true,
                     ),
-                    Positioned(
-                      left: 3,
-                      top: 3,
-                      child: TimeChip(
-                        size: 12,
-                        text: recipe.preparationTime!.parseToTimeString(),
-                        horizontal: 8,
-                        vertical: 7,
-                        rounded: true,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(width: 12),
@@ -84,7 +82,7 @@ class RecipeItem extends StatelessWidget {
                         child: LargeText(
                           text: recipe.name!,
                           overFlow: TextOverflow.ellipsis,
-                          size: 18,
+                          fontSize: FontSize.mediumPlus,
                         ),
                       ),
                       const SizedBox(height: 4),

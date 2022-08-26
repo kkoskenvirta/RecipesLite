@@ -1,5 +1,4 @@
 import 'package:another_flushbar/flushbar.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
@@ -7,20 +6,21 @@ import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
-import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
-import 'package:flutter_e_commerce/views/recipe_creator/category_selector.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
+import 'package:flutter_e_commerce/views/recipe_creator/selectors/category_selector.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_data/form_data_cubit.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_fetch/form_fetch_cubit.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/cubit/form_stepper/stepper_cubit.dart';
-import 'package:flutter_e_commerce/views/recipe_creator/difficulty_selector.dart';
-import 'package:flutter_e_commerce/views/recipe_creator/ingredients_selector.dart';
+import 'package:flutter_e_commerce/views/recipe_creator/selectors/difficulty_selector.dart';
+import 'package:flutter_e_commerce/views/recipe_creator/selectors/ingredients_selector.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/review_slide.dart';
-import 'package:flutter_e_commerce/views/recipe_creator/tag_selector.dart';
+import 'package:flutter_e_commerce/views/recipe_creator/selectors/tag_selector.dart';
 import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
-import 'package:flutter_e_commerce/widgets/custom_stepper/custom_stepper.dart';
-import 'package:flutter_e_commerce/widgets/large_text.dart';
-import 'package:flutter_e_commerce/widgets/small_text.dart';
+import 'package:flutter_e_commerce/views/recipe_creator/stepper/custom_stepper.dart';
+import 'package:flutter_e_commerce/widgets/confirm_dialog.dart';
+import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
 
 class RecipeCreatorScreen extends StatelessWidget {
   const RecipeCreatorScreen({
@@ -104,7 +104,7 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
       icon: icon,
       messageText: LargeText(
         text: message,
-        size: 15,
+        fontSize: FontSize.medium,
       ),
       backgroundColor: backgroundColor,
       duration: const Duration(seconds: 2, milliseconds: 500),
@@ -115,39 +115,12 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
     final shouldPop = showDialog<bool>(
       context: context,
       barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Leaving recipe creator'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: const <Widget>[
-                Text('Do you wish to close the editor? All current changes will be lost.'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: SmallText(
-                text: 'Quit',
-                size: 14,
-              ),
-              onPressed: () {
-                Navigator.pop(context, true);
-              },
-            ),
-            ElevatedButton(
-              child: SmallText(
-                text: 'Stay',
-                size: 14,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Navigator.pop(context, false);
-              },
-            ),
-          ],
-        );
-      },
+      builder: (BuildContext context) => const ConfirmationDialog(
+        title: "Discard changes",
+        text: "Current changes done to the recipe will be lost, do you wish to quit?",
+        confirmText: "Quit",
+        declineText: "Stay",
+      ),
     );
     return shouldPop;
   }
@@ -233,6 +206,7 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
 
                                 _showToast(context);
                               } else {
+                                if (!mounted) return;
                                 Navigator.pop(context);
                                 _showToast(context);
                               }
@@ -331,7 +305,7 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                                     height: 6,
                                   ),
                                   TextFormField(
-                                    maxLines: 8,
+                                    maxLines: null,
                                     keyboardType: TextInputType.multiline,
                                     decoration: const InputDecoration(
                                       hintText: "Instructions on how to prepare the recipe",
@@ -361,11 +335,7 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                               key: ingredientsKey,
                               child: Column(
                                 children: [
-                                  Align(alignment: Alignment.centerLeft, child: SmallText(text: "Ingredient list")),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  IngredientsSelector(ingredients: [...formDataCubit.state.ingredients]),
+                                  IngredientsSelector(ingredientGroups: [...formDataCubit.state.ingredientGroups]),
                                 ],
                               ),
                             ),
@@ -442,13 +412,13 @@ class CustomStepperControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool _isDark() {
+    bool isDark() {
       return Theme.of(context).brightness == Brightness.dark;
     }
 
     validateStep(int currentStep) {
       final formDataState = BlocProvider.of<FormDataCubit>(context).state;
-      final ingredients = formDataState.ingredients;
+      final ingredientGroups = formDataState.ingredientGroups;
       final categories = formDataState.categories;
       final name = formDataState.name;
       final description = formDataState.shortDescription;
@@ -467,7 +437,7 @@ class CustomStepperControls extends StatelessWidget {
           return state;
         case 1:
           bool state;
-          state = ingredients.isNotEmpty;
+          state = ingredientGroups[0].ingredients.isNotEmpty;
           return state;
         case 2:
           bool state;
@@ -482,7 +452,7 @@ class CustomStepperControls extends StatelessWidget {
 
     return Container(
       decoration: const BoxDecoration(
-          border: const Border(
+          border: Border(
         top: BorderSide(width: 1, color: Colors.black12),
       )),
       margin: const EdgeInsets.only(top: 0.0),
@@ -512,10 +482,10 @@ class CustomStepperControls extends StatelessWidget {
                   foregroundColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
                     return states.contains(MaterialState.disabled)
                         ? null
-                        : (_isDark() ? colorScheme.onSurface : RecipeAppTheme.colors.pinkLightLow);
+                        : (isDark() ? colorScheme.onSurface : RecipeAppTheme.colors.pinkLightLow);
                   }),
                   backgroundColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
-                    return _isDark() || states.contains(MaterialState.disabled)
+                    return isDark() || states.contains(MaterialState.disabled)
                         ? RecipeAppTheme.colors.pinkLightLow
                         : colorScheme.primary;
                   }),
@@ -526,7 +496,7 @@ class CustomStepperControls extends StatelessWidget {
                     ? SmallText(
                         text: "Continue",
                         color: Colors.white,
-                        size: 14,
+                        fontSize: FontSize.smallPlus,
                       )
                     : BlocBuilder<FormDataCubit, FormDataState>(
                         builder: (context, state) {
@@ -535,12 +505,12 @@ class CustomStepperControls extends StatelessWidget {
                               return editMode
                                   ? SmallText(
                                       text: "Save",
-                                      size: 14,
+                                      fontSize: FontSize.smallPlus,
                                       color: Colors.white,
                                     )
                                   : SmallText(
                                       text: "Submit",
-                                      size: 14,
+                                      fontSize: FontSize.smallPlus,
                                       color: Colors.white,
                                     );
                             case DirectusRequestStatus.loading:

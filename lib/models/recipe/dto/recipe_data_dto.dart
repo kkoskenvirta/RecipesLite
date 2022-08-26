@@ -1,5 +1,7 @@
 import 'package:flutter_e_commerce/models/category/dto/category_id_dto.dart';
 import 'package:flutter_e_commerce/models/ingredient/dto/ingredient_id_dto.dart';
+import 'package:flutter_e_commerce/models/ingredient_group/dto/ingredient_group_id_dto.dart';
+import 'package:flutter_e_commerce/utils/string_extension.dart';
 
 import 'package:flutter_e_commerce/models/tag/dto/tag_id_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -23,6 +25,7 @@ class RecipeDataDTO with _$RecipeDataDTO {
     List<IngredientIdDTO>? ingredients,
     String? name,
     bool? featured,
+    @JsonKey(name: 'ingredient_groups') List<IngredientGroupIdDTO>? ingredientGroups,
     @JsonKey(name: 'favorites_count') String? favoritesCount,
     @JsonKey(name: 'preparation_time') int? preparationTime,
     @JsonKey(name: 'short_description') String? shortDescription,
@@ -43,7 +46,7 @@ class RecipeDataDTO with _$RecipeDataDTO {
       dateUpdated: dateUpdated,
       commentCount: commentCount,
       favoritesCount: favoritesCount,
-      difficulty: difficulty,
+      difficulty: difficulty!.capitalize(),
       featured: featured,
       name: name,
       blurhash: blurhash,
@@ -56,7 +59,9 @@ class RecipeDataDTO with _$RecipeDataDTO {
       instructions: instructions,
       categories: categories != null ? categories!.map((category) => category.toDomain()).toList() : [],
       tags: tags != null ? tags!.map((tag) => tag.toDomain()).toList() : [],
-      ingredients: ingredients != null ? ingredients!.map((ingredient) => ingredient.toDomain()).toList() : [],
+      ingredientGroups: ingredientGroups != null
+          ? ingredientGroups!.map((ingredientGroup) => ingredientGroup.toDomain()).toList()
+          : [],
     );
   }
 }

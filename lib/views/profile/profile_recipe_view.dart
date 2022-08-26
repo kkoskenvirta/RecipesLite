@@ -66,7 +66,7 @@ class ProfileRecipeViewBody extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 8.0),
                   child: ListView.separated(
                     separatorBuilder: (context, index) {
-                      return SizedBox(
+                      return const SizedBox(
                         height: 16,
                       );
                     },

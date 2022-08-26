@@ -1,26 +1,22 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
-import 'package:flutter_e_commerce/utils/int_extension.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/utils/scale_func.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/views/single_recipe/cubit/single_recipe_cubit.dart';
-import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/appbars/recipe_appbar.dart';
 import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
 import 'package:flutter_e_commerce/widgets/categorization_bar.dart';
 import 'package:flutter_e_commerce/widgets/ingredients_table.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
-import 'package:flutter_e_commerce/widgets/large_text.dart';
-import 'package:flutter_e_commerce/widgets/small_text.dart';
-
+import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/content_text.dart';
 import '../../models/recipe/recipe_model.dart';
-import '../../widgets/time_chip.dart';
 
 class RecipePage extends StatefulWidget {
   const RecipePage({
@@ -36,12 +32,23 @@ class RecipePage extends StatefulWidget {
   State<RecipePage> createState() => _RecipePageState();
 }
 
-class _RecipePageState extends State<RecipePage> {
+class _RecipePageState extends State<RecipePage> with TickerProviderStateMixin {
   ScrollController scrollController = ScrollController();
-  Future<double> get _height => Future<double>.value(Dimensions.recipeImgSize);
 
+  var _animateHeight = Dimensions.recipeImgSize + 0;
   var _currScrollPosition = 0.0;
   double _scaleFactor = 0.85;
+
+  @override
+  void initState() {
+    Future.delayed(Duration(milliseconds: 0)).then(
+      (value) => setState(() {
+        _animateHeight = Dimensions.recipeImgSize - 40;
+      }),
+    );
+    super.initState();
+  }
+
   @override
   void dispose() {
     scrollController.dispose();
@@ -76,7 +83,7 @@ class _RecipePageState extends State<RecipePage> {
       icon: icon,
       messageText: LargeText(
         text: message,
-        size: 15,
+        fontSize: FontSize.medium,
       ),
       backgroundColor: backgroundColor,
       duration: const Duration(seconds: 1, milliseconds: 500),
@@ -121,9 +128,11 @@ class _RecipePageState extends State<RecipePage> {
                       child: Column(
                         children: [
                           AnimatedContainer(
-                            curve: Curves.easeInCubic,
-                            duration: const Duration(milliseconds: 200),
-                            height: Dimensions.recipeImgSize,
+                            // curve: Curves.easeInOutSine,
+                            curve: Curves.easeInOutSine,
+                            duration: const Duration(milliseconds: 500),
+                            height: _animateHeight,
+                            // height: Dimensions.recipeImgSize,
                           ),
                           Container(
                             padding: EdgeInsets.symmetric(vertical: Dimensions.width15, horizontal: Dimensions.width20),
@@ -146,8 +155,7 @@ class _RecipePageState extends State<RecipePage> {
                                           children: [
                                             LargeText(
                                               text: recipe.name!,
-                                              size: 22,
-                                              fontWeight: FontWeight.w600,
+                                              fontSize: FontSize.veryLarge,
                                             ),
                                           ],
                                         ),
@@ -162,7 +170,7 @@ class _RecipePageState extends State<RecipePage> {
                                           children: [
                                             state.status == UserDataStateStatus.loaded
                                                 ? Container(
-                                                    padding: EdgeInsets.all(2),
+                                                    padding: const EdgeInsets.all(2),
                                                     decoration: BoxDecoration(
                                                       // color: RecipeAppTheme.colors.pinkLightLow,
                                                       borderRadius: BorderRadius.all(
@@ -223,23 +231,24 @@ class _RecipePageState extends State<RecipePage> {
                                 const Divider(
                                   height: 24,
                                 ),
-                                Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: LargeText(
-                                      size: 16,
-                                      text: "Ingredients",
-                                    )),
-                                IngredientsTable(ingredients: recipe.ingredients),
+                                if (recipe.ingredientGroups != null)
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: buildIngredientsTable(recipe.ingredientGroups!),
+                                  ),
                                 const SizedBox(
                                   height: 12,
                                 ),
-                                Align(
-                                    alignment: Alignment.centerLeft, child: LargeText(size: 16, text: "Instructions")),
+                                const Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: LargeText(fontSize: FontSize.mediumPlus, text: "Instructions"),
+                                ),
                                 const SizedBox(
                                   height: 12,
                                 ),
-                                Text(
-                                  recipe.instructions!,
+                                ContentText(
+                                  text: recipe.instructions!,
+                                  fontSize: FontSize.smallPlus,
                                 ),
                                 SizedBox(
                                   height: Dimensions.height45,

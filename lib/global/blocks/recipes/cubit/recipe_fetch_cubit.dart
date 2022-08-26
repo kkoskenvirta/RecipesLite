@@ -1,10 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter_e_commerce/models/recipe/dto/recipe_dto.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:flutter_e_commerce/models/recipe/failure_model.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 
 part 'recipe_fetch_cubit.freezed.dart';

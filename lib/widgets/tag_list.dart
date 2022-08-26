@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/models/category/category_model.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
-import 'package:flutter_e_commerce/widgets/tag_chip.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
+import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
 
 class TagList extends StatelessWidget {
-  TagList({Key? key, required this.categories, required this.tags, required this.tagFilters}) : super(key: key);
+  const TagList({Key? key, required this.categories, required this.tags, required this.tagFilters}) : super(key: key);
 
   final List<TagModel> tagFilters;
   final List<CategoryModel> categories;
@@ -33,7 +34,7 @@ class TagList extends StatelessWidget {
           backgroundColor: RecipeAppTheme.colors.pinkAccent,
           textColor: Colors.white,
           text: tagList[i].name,
-          size: 11,
+          fontSize: FontSize.verySmall,
         ));
         list.add(const SizedBox(
           width: 5,
@@ -44,7 +45,7 @@ class TagList extends StatelessWidget {
           backgroundColor: RecipeAppTheme.colors.pinkAccent,
           textColor: Colors.white,
           text: '+${tagList.length - 2} more',
-          size: 11,
+          fontSize: FontSize.verySmall,
         ));
       }
     }
@@ -57,5 +58,38 @@ class TagList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return getTagWidgets(categories, tags);
+  }
+}
+
+class TagChip extends StatelessWidget {
+  final String text;
+  final FontSize fontSize;
+  final double height;
+  final Color backgroundColor;
+  final Color textColor;
+
+  const TagChip({
+    Key? key,
+    required this.text,
+    this.fontSize = FontSize.small,
+    this.height = 1.2,
+    required this.backgroundColor,
+    required this.textColor,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: SmallText(
+        text: text,
+        fontSize: fontSize,
+        color: textColor,
+      ),
+    );
   }
 }

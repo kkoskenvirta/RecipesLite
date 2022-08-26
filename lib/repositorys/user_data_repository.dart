@@ -1,15 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:directus/directus.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_e_commerce/config/api_config.dart';
-import 'package:flutter_e_commerce/models/favorite/dto/favorite_dto.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
-import 'package:flutter_e_commerce/models/user/dto/user_object_dto.dart';
 import 'package:flutter_e_commerce/models/user/user_model.dart';
-import 'package:flutter_e_commerce/models/user_data/dto/user_data_dto.dart';
 import 'package:flutter_e_commerce/models/user_data/dto/user_data_object_dto.dart';
 import 'package:flutter_e_commerce/models/user_data/user_data_model.dart';
-import 'package:flutter_e_commerce/modules/directus_module.dart';
 import '../modules/dio_module.dart';
 
 enum UserDataError {
@@ -58,7 +53,6 @@ class UserDataRepository {
       final response = await _dio.get(
           "$userDataPath?filter[user][_eq]=${currentUser?.id}&fields=id,user,favorites.recipe_id.*,favorites.recipe_id.categories.category_id.*,favorites.recipe_id.tags.tag_id.*,favorites.recipe_id.ingredients.ingredient_id.*&limit=1");
       final userDataDTO = UserDataObjectDTO.fromJson(response.data);
-      print(userDataDTO);
       if (userDataDTO.data.isEmpty) {
         //If we cant find existing user_data with current user id, we create a new one
         userData = await createUserData();

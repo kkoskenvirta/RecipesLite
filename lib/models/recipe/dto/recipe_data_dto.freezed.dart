@@ -32,6 +32,9 @@ mixin _$RecipeDataDTO {
   List<IngredientIdDTO>? get ingredients => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   bool? get featured => throw _privateConstructorUsedError;
+  @JsonKey(name: 'ingredient_groups')
+  List<IngredientGroupIdDTO>? get ingredientGroups =>
+      throw _privateConstructorUsedError;
   @JsonKey(name: 'favorites_count')
   String? get favoritesCount => throw _privateConstructorUsedError;
   @JsonKey(name: 'preparation_time')
@@ -71,13 +74,22 @@ abstract class $RecipeDataDTOCopyWith<$Res> {
       List<IngredientIdDTO>? ingredients,
       String? name,
       bool? featured,
-      @JsonKey(name: 'favorites_count') String? favoritesCount,
-      @JsonKey(name: 'preparation_time') int? preparationTime,
-      @JsonKey(name: 'short_description') String? shortDescription,
-      @JsonKey(name: 'comment_count') int? commentCount,
-      @JsonKey(name: 'user_created') String? userCreated,
-      @JsonKey(name: 'date_created') DateTime? dateCreated,
-      @JsonKey(name: 'date_updated') dynamic dateUpdated});
+      @JsonKey(name: 'ingredient_groups')
+          List<IngredientGroupIdDTO>? ingredientGroups,
+      @JsonKey(name: 'favorites_count')
+          String? favoritesCount,
+      @JsonKey(name: 'preparation_time')
+          int? preparationTime,
+      @JsonKey(name: 'short_description')
+          String? shortDescription,
+      @JsonKey(name: 'comment_count')
+          int? commentCount,
+      @JsonKey(name: 'user_created')
+          String? userCreated,
+      @JsonKey(name: 'date_created')
+          DateTime? dateCreated,
+      @JsonKey(name: 'date_updated')
+          dynamic dateUpdated});
 }
 
 /// @nodoc
@@ -103,6 +115,7 @@ class _$RecipeDataDTOCopyWithImpl<$Res>
     Object? ingredients = freezed,
     Object? name = freezed,
     Object? featured = freezed,
+    Object? ingredientGroups = freezed,
     Object? favoritesCount = freezed,
     Object? preparationTime = freezed,
     Object? shortDescription = freezed,
@@ -160,6 +173,10 @@ class _$RecipeDataDTOCopyWithImpl<$Res>
           ? _value.featured
           : featured // ignore: cast_nullable_to_non_nullable
               as bool?,
+      ingredientGroups: ingredientGroups == freezed
+          ? _value.ingredientGroups
+          : ingredientGroups // ignore: cast_nullable_to_non_nullable
+              as List<IngredientGroupIdDTO>?,
       favoritesCount: favoritesCount == freezed
           ? _value.favoritesCount
           : favoritesCount // ignore: cast_nullable_to_non_nullable
@@ -212,13 +229,22 @@ abstract class _$$_RecipeDataDTOCopyWith<$Res>
       List<IngredientIdDTO>? ingredients,
       String? name,
       bool? featured,
-      @JsonKey(name: 'favorites_count') String? favoritesCount,
-      @JsonKey(name: 'preparation_time') int? preparationTime,
-      @JsonKey(name: 'short_description') String? shortDescription,
-      @JsonKey(name: 'comment_count') int? commentCount,
-      @JsonKey(name: 'user_created') String? userCreated,
-      @JsonKey(name: 'date_created') DateTime? dateCreated,
-      @JsonKey(name: 'date_updated') dynamic dateUpdated});
+      @JsonKey(name: 'ingredient_groups')
+          List<IngredientGroupIdDTO>? ingredientGroups,
+      @JsonKey(name: 'favorites_count')
+          String? favoritesCount,
+      @JsonKey(name: 'preparation_time')
+          int? preparationTime,
+      @JsonKey(name: 'short_description')
+          String? shortDescription,
+      @JsonKey(name: 'comment_count')
+          int? commentCount,
+      @JsonKey(name: 'user_created')
+          String? userCreated,
+      @JsonKey(name: 'date_created')
+          DateTime? dateCreated,
+      @JsonKey(name: 'date_updated')
+          dynamic dateUpdated});
 }
 
 /// @nodoc
@@ -246,6 +272,7 @@ class __$$_RecipeDataDTOCopyWithImpl<$Res>
     Object? ingredients = freezed,
     Object? name = freezed,
     Object? featured = freezed,
+    Object? ingredientGroups = freezed,
     Object? favoritesCount = freezed,
     Object? preparationTime = freezed,
     Object? shortDescription = freezed,
@@ -303,6 +330,10 @@ class __$$_RecipeDataDTOCopyWithImpl<$Res>
           ? _value.featured
           : featured // ignore: cast_nullable_to_non_nullable
               as bool?,
+      ingredientGroups: ingredientGroups == freezed
+          ? _value._ingredientGroups
+          : ingredientGroups // ignore: cast_nullable_to_non_nullable
+              as List<IngredientGroupIdDTO>?,
       favoritesCount: favoritesCount == freezed
           ? _value.favoritesCount
           : favoritesCount // ignore: cast_nullable_to_non_nullable
@@ -351,16 +382,26 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
       final List<IngredientIdDTO>? ingredients,
       this.name,
       this.featured,
-      @JsonKey(name: 'favorites_count') this.favoritesCount,
-      @JsonKey(name: 'preparation_time') this.preparationTime,
-      @JsonKey(name: 'short_description') this.shortDescription,
-      @JsonKey(name: 'comment_count') this.commentCount,
-      @JsonKey(name: 'user_created') this.userCreated,
-      @JsonKey(name: 'date_created') this.dateCreated,
-      @JsonKey(name: 'date_updated') this.dateUpdated})
+      @JsonKey(name: 'ingredient_groups')
+          final List<IngredientGroupIdDTO>? ingredientGroups,
+      @JsonKey(name: 'favorites_count')
+          this.favoritesCount,
+      @JsonKey(name: 'preparation_time')
+          this.preparationTime,
+      @JsonKey(name: 'short_description')
+          this.shortDescription,
+      @JsonKey(name: 'comment_count')
+          this.commentCount,
+      @JsonKey(name: 'user_created')
+          this.userCreated,
+      @JsonKey(name: 'date_created')
+          this.dateCreated,
+      @JsonKey(name: 'date_updated')
+          this.dateUpdated})
       : _categories = categories,
         _tags = tags,
         _ingredients = ingredients,
+        _ingredientGroups = ingredientGroups,
         super._();
 
   factory _$_RecipeDataDTO.fromJson(Map<String, dynamic> json) =>
@@ -412,6 +453,16 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
   final String? name;
   @override
   final bool? featured;
+  final List<IngredientGroupIdDTO>? _ingredientGroups;
+  @override
+  @JsonKey(name: 'ingredient_groups')
+  List<IngredientGroupIdDTO>? get ingredientGroups {
+    final value = _ingredientGroups;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   @JsonKey(name: 'favorites_count')
   final String? favoritesCount;
@@ -436,7 +487,7 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
 
   @override
   String toString() {
-    return 'RecipeDataDTO(id: $id, status: $status, difficulty: $difficulty, rating: $rating, blurhash: $blurhash, picture: $picture, instructions: $instructions, categories: $categories, tags: $tags, ingredients: $ingredients, name: $name, featured: $featured, favoritesCount: $favoritesCount, preparationTime: $preparationTime, shortDescription: $shortDescription, commentCount: $commentCount, userCreated: $userCreated, dateCreated: $dateCreated, dateUpdated: $dateUpdated)';
+    return 'RecipeDataDTO(id: $id, status: $status, difficulty: $difficulty, rating: $rating, blurhash: $blurhash, picture: $picture, instructions: $instructions, categories: $categories, tags: $tags, ingredients: $ingredients, name: $name, featured: $featured, ingredientGroups: $ingredientGroups, favoritesCount: $favoritesCount, preparationTime: $preparationTime, shortDescription: $shortDescription, commentCount: $commentCount, userCreated: $userCreated, dateCreated: $dateCreated, dateUpdated: $dateUpdated)';
   }
 
   @override
@@ -460,6 +511,8 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
                 .equals(other._ingredients, _ingredients) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.featured, featured) &&
+            const DeepCollectionEquality()
+                .equals(other._ingredientGroups, _ingredientGroups) &&
             const DeepCollectionEquality()
                 .equals(other.favoritesCount, favoritesCount) &&
             const DeepCollectionEquality()
@@ -492,6 +545,7 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
         const DeepCollectionEquality().hash(_ingredients),
         const DeepCollectionEquality().hash(name),
         const DeepCollectionEquality().hash(featured),
+        const DeepCollectionEquality().hash(_ingredientGroups),
         const DeepCollectionEquality().hash(favoritesCount),
         const DeepCollectionEquality().hash(preparationTime),
         const DeepCollectionEquality().hash(shortDescription),
@@ -516,26 +570,34 @@ class _$_RecipeDataDTO extends _RecipeDataDTO {
 
 abstract class _RecipeDataDTO extends RecipeDataDTO {
   factory _RecipeDataDTO(
-          {final String? id,
-          final String? status,
-          final String? difficulty,
-          final double? rating,
-          final String? blurhash,
-          final String? picture,
-          final String instructions,
-          final List<CategoryIdDTO>? categories,
-          final List<TagIdDTO>? tags,
-          final List<IngredientIdDTO>? ingredients,
-          final String? name,
-          final bool? featured,
-          @JsonKey(name: 'favorites_count') final String? favoritesCount,
-          @JsonKey(name: 'preparation_time') final int? preparationTime,
-          @JsonKey(name: 'short_description') final String? shortDescription,
-          @JsonKey(name: 'comment_count') final int? commentCount,
-          @JsonKey(name: 'user_created') final String? userCreated,
-          @JsonKey(name: 'date_created') final DateTime? dateCreated,
-          @JsonKey(name: 'date_updated') final dynamic dateUpdated}) =
-      _$_RecipeDataDTO;
+      {final String? id,
+      final String? status,
+      final String? difficulty,
+      final double? rating,
+      final String? blurhash,
+      final String? picture,
+      final String instructions,
+      final List<CategoryIdDTO>? categories,
+      final List<TagIdDTO>? tags,
+      final List<IngredientIdDTO>? ingredients,
+      final String? name,
+      final bool? featured,
+      @JsonKey(name: 'ingredient_groups')
+          final List<IngredientGroupIdDTO>? ingredientGroups,
+      @JsonKey(name: 'favorites_count')
+          final String? favoritesCount,
+      @JsonKey(name: 'preparation_time')
+          final int? preparationTime,
+      @JsonKey(name: 'short_description')
+          final String? shortDescription,
+      @JsonKey(name: 'comment_count')
+          final int? commentCount,
+      @JsonKey(name: 'user_created')
+          final String? userCreated,
+      @JsonKey(name: 'date_created')
+          final DateTime? dateCreated,
+      @JsonKey(name: 'date_updated')
+          final dynamic dateUpdated}) = _$_RecipeDataDTO;
   _RecipeDataDTO._() : super._();
 
   factory _RecipeDataDTO.fromJson(Map<String, dynamic> json) =
@@ -565,6 +627,9 @@ abstract class _RecipeDataDTO extends RecipeDataDTO {
   String? get name;
   @override
   bool? get featured;
+  @override
+  @JsonKey(name: 'ingredient_groups')
+  List<IngredientGroupIdDTO>? get ingredientGroups;
   @override
   @JsonKey(name: 'favorites_count')
   String? get favoritesCount;

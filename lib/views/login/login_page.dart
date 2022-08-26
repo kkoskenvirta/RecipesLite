@@ -1,19 +1,12 @@
-import 'dart:async';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_e_commerce/config/api_config.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
+import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
-import 'package:flutter_e_commerce/widgets/large_text.dart';
-import 'package:flutter_e_commerce/widgets/small_text.dart';
-import 'package:flutter_signin_button/button_view.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
 
 import '../../global/blocks/auth/cubit/auth_cubit.dart';
 import '../../repositorys/auth_repository.dart';
@@ -27,7 +20,6 @@ class LoginPage extends StatelessWidget {
     final passwordController = TextEditingController(text: '');
     final authCubit = BlocProvider.of<AuthCubit>(context);
     final router = AutoRouter.of(context);
-    final Completer<WebViewController> _completer = Completer<WebViewController>();
 
     return Scaffold(
       appBar: MainAppBar(
@@ -43,13 +35,12 @@ class LoginPage extends StatelessWidget {
               children: [
                 Container(
                   height: 200,
-                  // child: Image.asset(''),
                 ),
                 Align(
                   alignment: Alignment.center,
                   child: LargeText(
                     text: "🥘",
-                    size: 26,
+                    fontSize: FontSize.veryLarge,
                   ),
                 ),
                 const SizedBox(
@@ -59,7 +50,7 @@ class LoginPage extends StatelessWidget {
                   alignment: Alignment.center,
                   child: LargeText(
                     text: "Register or sign in",
-                    size: 26,
+                    fontSize: FontSize.veryLarge,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -90,13 +81,13 @@ class LoginPage extends StatelessWidget {
                             )
                           : LargeText(
                               text: 'LOGIN',
-                              size: 16,
+                              fontSize: FontSize.medium,
                               color: Colors.white,
                             ),
                     );
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 // SignInButton(
@@ -157,7 +148,7 @@ class LoginPage extends StatelessWidget {
                   alignment: Alignment.center,
                   child: SmallText(
                     text: "or",
-                    size: 14,
+                    fontSize: FontSize.smallPlus,
                   ),
                 ),
                 const SizedBox(
@@ -166,9 +157,11 @@ class LoginPage extends StatelessWidget {
                 Align(
                   alignment: Alignment.center,
                   child: TextButton(
-                    onPressed: () => router.navigate(const RegisterRoute()),
-                    child: const Text(
-                      "Create an account",
+                    onPressed: () => router.navigate(const SignUpRoute()),
+                    child: SmallText(
+                      text: "Create an account",
+                      fontSize: FontSize.medium,
+                      color: RecipeAppTheme.colors.pinkAccent,
                     ),
                   ),
                 ),
@@ -183,7 +176,7 @@ class LoginPage extends StatelessWidget {
                           return const Text('Wrong password');
 
                         default:
-                          return SizedBox();
+                          return const SizedBox();
                       }
                     },
                   ),
