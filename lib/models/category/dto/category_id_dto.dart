@@ -8,7 +8,7 @@ part 'category_id_dto.g.dart';
 @freezed
 class CategoryIdDTO with _$CategoryIdDTO {
   factory CategoryIdDTO({
-    @JsonKey(name: "id") required int relationId,
+    @JsonKey(name: "id") int? relationId,
     @JsonKey(name: "category_id") required CategoryDataDTO category,
   }) = _CategoryIdDTO;
 
@@ -23,7 +23,7 @@ class CategoryIdDTO with _$CategoryIdDTO {
       name: category.name,
       blurhash: category.blurhash,
       picture: category.picture,
-      status: category.sort,
+      status: category.status,
       sort: category.sort,
     );
   }

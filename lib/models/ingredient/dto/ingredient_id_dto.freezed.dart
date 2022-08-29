@@ -21,7 +21,7 @@ IngredientIdDTO _$IngredientIdDTOFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$IngredientIdDTO {
   @JsonKey(name: "id")
-  int get relationId => throw _privateConstructorUsedError;
+  int? get relationId => throw _privateConstructorUsedError;
   @JsonKey(name: "ingredient_id")
   IngredientDataDTO get ingredient => throw _privateConstructorUsedError;
 
@@ -37,7 +37,7 @@ abstract class $IngredientIdDTOCopyWith<$Res> {
           IngredientIdDTO value, $Res Function(IngredientIdDTO) then) =
       _$IngredientIdDTOCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: "id") int relationId,
+      {@JsonKey(name: "id") int? relationId,
       @JsonKey(name: "ingredient_id") IngredientDataDTO ingredient});
 
   $IngredientDataDTOCopyWith<$Res> get ingredient;
@@ -61,7 +61,7 @@ class _$IngredientIdDTOCopyWithImpl<$Res>
       relationId: relationId == freezed
           ? _value.relationId
           : relationId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       ingredient: ingredient == freezed
           ? _value.ingredient
           : ingredient // ignore: cast_nullable_to_non_nullable
@@ -85,7 +85,7 @@ abstract class _$$_IngredientIdDTOCopyWith<$Res>
       __$$_IngredientIdDTOCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: "id") int relationId,
+      {@JsonKey(name: "id") int? relationId,
       @JsonKey(name: "ingredient_id") IngredientDataDTO ingredient});
 
   @override
@@ -112,7 +112,7 @@ class __$$_IngredientIdDTOCopyWithImpl<$Res>
       relationId: relationId == freezed
           ? _value.relationId
           : relationId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       ingredient: ingredient == freezed
           ? _value.ingredient
           : ingredient // ignore: cast_nullable_to_non_nullable
@@ -125,7 +125,7 @@ class __$$_IngredientIdDTOCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_IngredientIdDTO extends _IngredientIdDTO {
   _$_IngredientIdDTO(
-      {@JsonKey(name: "id") required this.relationId,
+      {@JsonKey(name: "id") this.relationId,
       @JsonKey(name: "ingredient_id") required this.ingredient})
       : super._();
 
@@ -134,7 +134,7 @@ class _$_IngredientIdDTO extends _IngredientIdDTO {
 
   @override
   @JsonKey(name: "id")
-  final int relationId;
+  final int? relationId;
   @override
   @JsonKey(name: "ingredient_id")
   final IngredientDataDTO ingredient;
@@ -178,7 +178,7 @@ class _$_IngredientIdDTO extends _IngredientIdDTO {
 abstract class _IngredientIdDTO extends IngredientIdDTO {
   factory _IngredientIdDTO(
       {@JsonKey(name: "id")
-          required final int relationId,
+          final int? relationId,
       @JsonKey(name: "ingredient_id")
           required final IngredientDataDTO ingredient}) = _$_IngredientIdDTO;
   _IngredientIdDTO._() : super._();
@@ -188,7 +188,7 @@ abstract class _IngredientIdDTO extends IngredientIdDTO {
 
   @override
   @JsonKey(name: "id")
-  int get relationId;
+  int? get relationId;
   @override
   @JsonKey(name: "ingredient_id")
   IngredientDataDTO get ingredient;

@@ -109,7 +109,7 @@ class _HomePageBodyState extends State<HomePageBody> {
               ),
               TextButton(
                 onPressed: () {
-                  context.router.push(const RecipeListRoute());
+                  context.router.push(RecipeListRoute(categoryFilters: const []));
                 },
                 child: SmallText(
                   text: "SHOW ALL",

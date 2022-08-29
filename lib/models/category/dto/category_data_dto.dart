@@ -13,7 +13,7 @@ class CategoryDataDTO with _$CategoryDataDTO {
     @JsonKey(name: 'recipes_count') String? recipesCount,
     String? blurhash,
     String? status,
-    String? sort,
+    int? sort,
   }) = _CategoryDataDTO;
 
   const CategoryDataDTO._();

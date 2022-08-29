@@ -10,8 +10,6 @@ import 'package:flutter_e_commerce/views/profile/profile_page.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/recipe_creator.dart';
 import 'package:flutter_e_commerce/views/recipe_list/recipe_list_page.dart';
 import 'package:flutter_e_commerce/views/sign_up/sign_up_page.dart';
-import 'package:flutter_e_commerce/views/search/search_page.dart';
-import 'package:flutter_e_commerce/views/single_category/single_category_page.dart';
 import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 
 @MaterialAutoRouter(
@@ -47,10 +45,7 @@ import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
         children: [
           CustomRoute(path: '', page: CategoriesPage, transitionsBuilder: CustomTransitions.slideLeftWithFade),
           CustomRoute(
-              name: "CategoryRoute",
-              path: ':categoryId',
-              page: SingleCategoryPage,
-              transitionsBuilder: CustomTransitions.slideLeftWithFade),
+              name: "CategoryRoute", page: RecipeListPage, transitionsBuilder: CustomTransitions.slideLeftWithFade),
         ],
       ),
       CustomRoute(
@@ -61,7 +56,8 @@ import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
         children: [
           CustomRoute(
             path: '',
-            page: SearchPage,
+            name: "SearchRoute",
+            page: RecipeListPage,
             transitionsBuilder: CustomTransitions.slideLeftWithFade,
           ),
         ],

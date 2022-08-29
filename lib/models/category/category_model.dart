@@ -13,7 +13,7 @@ class CategoryModel with _$CategoryModel {
     String? picture,
     String? status,
     String? blurhash,
-    String? sort,
+    int? sort,
   }) = _CategoryModel;
 
   const CategoryModel._();

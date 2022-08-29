@@ -29,7 +29,7 @@ class AppBarFilterTags extends StatelessWidget {
       child: Column(
         children: [
           Wrap(
-            spacing: 8,
+            spacing: 12,
             alignment: WrapAlignment.center,
             direction: Axis.horizontal,
             children: tagList.map((tag) {
@@ -38,6 +38,7 @@ class AppBarFilterTags extends StatelessWidget {
               return FadeTransition(
                 opacity: _animationController,
                 child: FilterChip(
+                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 4),
                   selected: status,
                   showCheckmark: false,
                   label: SmallText(

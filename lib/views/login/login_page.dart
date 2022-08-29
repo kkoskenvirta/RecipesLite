@@ -36,7 +36,7 @@ class LoginPage extends StatelessWidget {
                 Container(
                   height: 200,
                 ),
-                Align(
+                const Align(
                   alignment: Alignment.center,
                   child: LargeText(
                     text: "🥘",
@@ -46,7 +46,7 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(
                   height: 4,
                 ),
-                Align(
+                const Align(
                   alignment: Alignment.center,
                   child: LargeText(
                     text: "Register or sign in",
@@ -54,14 +54,14 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                SmallText(text: 'Email'),
+                const SmallText(text: 'Email'),
                 const SizedBox(height: 4),
                 TextField(
                   controller: emailController,
                   textInputAction: TextInputAction.next,
                 ),
                 const SizedBox(height: 10),
-                SmallText(text: 'Password'),
+                const SmallText(text: 'Password'),
                 const SizedBox(height: 4),
                 TextField(
                   controller: passwordController,
@@ -72,14 +72,14 @@ class LoginPage extends StatelessWidget {
                   builder: (context, state) {
                     return ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(50), // NEW
+                        minimumSize: const Size.fromHeight(50),
                       ),
                       onPressed: () async => authCubit.login('kazu.kozu@hotmail.com', 'directustesti'),
                       child: state.inProgress
                           ? const CircularProgressIndicator(
                               color: Colors.white,
                             )
-                          : LargeText(
+                          : const LargeText(
                               text: 'LOGIN',
                               fontSize: FontSize.medium,
                               color: Colors.white,
@@ -144,7 +144,7 @@ class LoginPage extends StatelessWidget {
                   height: 10,
                 ),
 
-                Align(
+                const Align(
                   alignment: Alignment.center,
                   child: SmallText(
                     text: "or",

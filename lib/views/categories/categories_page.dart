@@ -65,7 +65,7 @@ class CategoriesPageBody extends StatelessWidget {
                         blurhash: category.blurhash,
                         recipesCount: category.recipesCount!,
                         onTap: () {
-                          router.push(CategoryRoute(categoryFilters: [category], categoryId: category.id));
+                          router.push(CategoryRoute(categoryFilters: [category]));
                         },
                       );
                     },

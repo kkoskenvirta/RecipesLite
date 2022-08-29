@@ -3,10 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
+import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
+import 'package:flutter_e_commerce/utils/sort.dart';
 import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/views/main/cubit/recipe_search_cubit.dart';
+import 'package:flutter_e_commerce/views/recipe_list/cubit/recipe_list_cubit.dart';
 import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class SliverSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
   SliverSearchAppBar({
@@ -64,7 +69,7 @@ class SliverSearchAppBar extends StatelessWidget implements PreferredSizeWidget 
       ),
       leading: showSearchButton
           ? IconButton(
-              onPressed: (() => router.push(const SearchRoute())),
+              onPressed: (() => router.push(SearchRoute())),
               icon: const Icon(
                 Icons.search,
                 size: 30,

@@ -8,6 +8,7 @@ import 'package:flutter_e_commerce/models/recipe/dto/recipe_dto.dart';
 import 'package:flutter_e_commerce/models/recipe/dto/recipe_post_request_dto.dart';
 import 'package:flutter_e_commerce/models/recipe/dto/recipe_single_dto.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
+import 'package:flutter_e_commerce/utils/sort.dart';
 import '../models/recipe/recipe_model.dart';
 import '../modules/dio_module.dart';
 
@@ -20,6 +21,27 @@ class RecipesRepository {
 
   final Dio _tokenDio;
   final Dio _dio;
+
+  String getSortString(SortBy sort) {
+    String sortString;
+    switch (sort) {
+      case SortBy.favoritesAsc:
+        sortString = "&sort=-count(favorites)";
+        break;
+      case SortBy.favoritesDesc:
+        sortString = "&sort=count(favorites)";
+        break;
+      case SortBy.newest:
+        sortString = "&sort=date_created";
+        break;
+      case SortBy.oldest:
+        sortString = "&sort=-date_created";
+        break;
+      default:
+        sortString = "";
+    }
+    return sortString;
+  }
 
   Future<Either<FetchError, List<RecipeModel>?>> getRecipesList({int? limit, int? page, String? filters}) async {
     try {
@@ -47,20 +69,36 @@ class RecipesRepository {
     }
   }
 
-  Future<Either<FetchError, List<RecipeModel>?>> getRecipesListWithFilters(
-      {int? limit, int? page, required List<TagModel> tags, required List<CategoryModel> categories}) async {
+  Future<Either<FetchError, List<RecipeModel>?>> getRecipesListWithFilters({
+    int? limit,
+    int? page,
+    required List<TagModel> tags,
+    required List<CategoryModel> categories,
+    required SortBy sort,
+    required String search,
+  }) async {
     try {
       String resultLimit = '&limit=-1';
       List<String> tagQueryList = [];
-      String tagQueryString = "";
       List<String> categoryQueryList = [];
+      String tagQueryString = "";
       String categoryQueryString = "";
+      String sortQuery = getSortString(sort);
+      String searchQuery = "";
       String filterQuery = "";
+
       if (limit != null) {
         resultLimit = '&limit=$limit';
       }
       if (page != null) {
         resultLimit = '$resultLimit&page=$page';
+      }
+
+      if (search.isNotEmpty) {
+        searchQuery =
+            ',{"_or":[{"name":{"_icontains":"$search"}},{"categories":{"category_id":{"name":{"_icontains":"$search"}}}},{"tags":{"tag_id":{"name":{"_icontains":"$search"}}}}';
+        filterQuery =
+            '&filter={"_and":[{"_and":[{"_and":[{"_or":[{"name":{"_icontains":"$search"}},{"categories":{"category_id":{"name":{"_icontains":"$search"}}}},{"tags":{"tag_id":{"name":{"_icontains":"$search"}}}}]}]}]},{"status":{"_neq":"archived"}}]}';
       }
 
       if (categories.isNotEmpty) {
@@ -69,6 +107,10 @@ class RecipesRepository {
         }).toList();
         categoryQueryString = categoryQueryList.join(',');
         filterQuery = '&filter={"_and":[{"_and":[{"_and":[$categoryQueryString]}]},{"status":{"_neq":"archived"}}]}';
+        if (searchQuery.isNotEmpty) {
+          filterQuery =
+              '&filter={"_and":[{"_and":[{"_and":[$categoryQueryString$searchQuery]}]},{"status":{"_neq":"archived"}}]}]}';
+        }
       }
 
       if (tags.isNotEmpty) {
@@ -77,14 +119,22 @@ class RecipesRepository {
         }).toList();
         tagQueryString = tagQueryList.join(',');
         filterQuery = '&filter={"_and":[{"_and":[{"_and":[$tagQueryString]}]},{"status":{"_neq":"archived"}}]}';
+        if (searchQuery.isNotEmpty) {
+          filterQuery =
+              '&filter={"_and":[{"_and":[{"_and":[$tagQueryString$searchQuery]}]},{"status":{"_neq":"archived"}}]}]}';
+        }
       }
 
       if (tags.isNotEmpty && categories.isNotEmpty) {
         filterQuery =
-            '&filter={"_and":[{"_and":[{"_and":[$tagQueryString,$categoryQueryString]}]},{"status":{"_neq":"archived"}}]}';
+            '&filter={"_and":[{"_and":[{"_and":[$tagQueryString,$categoryQueryString$searchQuery]}]},{"status":{"_neq":"archived"}}]}';
+        if (searchQuery.isNotEmpty) {
+          filterQuery =
+              '&filter={"_and":[{"_and":[{"_and":[$tagQueryString,$categoryQueryString$searchQuery]}]},{"status":{"_neq":"archived"}}]}]}';
+        }
       }
 
-      final Response response = await _tokenDio.get('$baseUrl$recipesPathFields$filterQuery$resultLimit');
+      final Response response = await _tokenDio.get('$baseUrl$recipesPathFields$filterQuery$sortQuery$resultLimit');
 
       final recipesDTO = RecipeDTO.fromJson(response.data);
       final recipes = recipesDTO.data.map((recipeDataDTO) => recipeDataDTO.toDomain()).toList();

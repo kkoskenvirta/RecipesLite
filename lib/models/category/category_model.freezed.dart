@@ -27,7 +27,7 @@ mixin _$CategoryModel {
   String? get picture => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   String? get blurhash => throw _privateConstructorUsedError;
-  String? get sort => throw _privateConstructorUsedError;
+  int? get sort => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,7 +48,7 @@ abstract class $CategoryModelCopyWith<$Res> {
       String? picture,
       String? status,
       String? blurhash,
-      String? sort});
+      int? sort});
 }
 
 /// @nodoc
@@ -103,7 +103,7 @@ class _$CategoryModelCopyWithImpl<$Res>
       sort: sort == freezed
           ? _value.sort
           : sort // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
     ));
   }
 }
@@ -123,7 +123,7 @@ abstract class _$$_CategoryModelCopyWith<$Res>
       String? picture,
       String? status,
       String? blurhash,
-      String? sort});
+      int? sort});
 }
 
 /// @nodoc
@@ -180,7 +180,7 @@ class __$$_CategoryModelCopyWithImpl<$Res>
       sort: sort == freezed
           ? _value.sort
           : sort // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
     ));
   }
 }
@@ -217,7 +217,7 @@ class _$_CategoryModel extends _CategoryModel {
   @override
   final String? blurhash;
   @override
-  final String? sort;
+  final int? sort;
 
   @override
   String toString() {
@@ -276,7 +276,7 @@ abstract class _CategoryModel extends CategoryModel {
       final String? picture,
       final String? status,
       final String? blurhash,
-      final String? sort}) = _$_CategoryModel;
+      final int? sort}) = _$_CategoryModel;
   _CategoryModel._() : super._();
 
   factory _CategoryModel.fromJson(Map<String, dynamic> json) =
@@ -297,7 +297,7 @@ abstract class _CategoryModel extends CategoryModel {
   @override
   String? get blurhash;
   @override
-  String? get sort;
+  int? get sort;
   @override
   @JsonKey(ignore: true)
   _$$_CategoryModelCopyWith<_$_CategoryModel> get copyWith =>

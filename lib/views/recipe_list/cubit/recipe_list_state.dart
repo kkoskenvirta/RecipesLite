@@ -16,6 +16,8 @@ class RecipeListState with _$RecipeListState {
     required List<TagModel>? tags,
     required List<TagModel> tagFilters,
     required List<CategoryModel> categoryFilters,
+    required SortBy sort,
+    required String searchString,
   }) = _RecipeListState;
 
   factory RecipeListState.initial() {
@@ -29,6 +31,8 @@ class RecipeListState with _$RecipeListState {
       tags: null,
       tagFilters: [],
       categoryFilters: [],
+      sort: SortBy.newest,
+      searchString: "",
     );
   }
 }

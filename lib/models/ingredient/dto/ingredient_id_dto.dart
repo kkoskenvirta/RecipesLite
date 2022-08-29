@@ -8,7 +8,7 @@ part 'ingredient_id_dto.g.dart';
 @freezed
 class IngredientIdDTO with _$IngredientIdDTO {
   factory IngredientIdDTO({
-    @JsonKey(name: "id") required int relationId,
+    @JsonKey(name: "id") int? relationId,
     @JsonKey(name: "ingredient_id") required IngredientDataDTO ingredient,
   }) = _IngredientIdDTO;
 

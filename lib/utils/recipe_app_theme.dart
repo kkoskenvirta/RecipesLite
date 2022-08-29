@@ -53,6 +53,7 @@ class RecipeAppTheme {
       visualDensity: const VisualDensity(vertical: -3),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
     ),
+
     chipTheme: ChipThemeData(
       backgroundColor: colors.pinkLightLow,
       selectedColor: colors.pinkAccent,

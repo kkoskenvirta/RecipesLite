@@ -8,7 +8,7 @@ part of 'ingredient_id_dto.dart';
 
 _$_IngredientIdDTO _$$_IngredientIdDTOFromJson(Map<String, dynamic> json) =>
     _$_IngredientIdDTO(
-      relationId: json['id'] as int,
+      relationId: json['id'] as int?,
       ingredient: IngredientDataDTO.fromJson(
           json['ingredient_id'] as Map<String, dynamic>),
     );
