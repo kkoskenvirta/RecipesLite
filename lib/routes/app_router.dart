@@ -16,35 +16,79 @@ import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 
 @MaterialAutoRouter(
   routes: [
-    MaterialRoute(page: LoginPage, path: '/login', initial: true),
-    MaterialRoute(page: SignUpPage, path: '/sign-up'),
+    CustomRoute(
+      page: LoginPage,
+      path: '/login',
+      initial: true,
+      transitionsBuilder: CustomTransitions.slideLeftWithFade,
+    ),
+    CustomRoute(
+      page: SignUpPage,
+      path: '/sign-up',
+      transitionsBuilder: CustomTransitions.slideLeftWithFade,
+    ),
     AutoRoute(page: MainPage, path: '/main', children: [
-      MaterialRoute(
+      CustomRoute(
         name: "HomeRouter",
         page: EmptyRouterPage,
         path: 'home',
+        transitionsBuilder: CustomTransitions.slideLeftWithFade,
         children: [
-          MaterialRoute(path: '', page: HomePage, maintainState: true),
-          MaterialRoute(path: 'browse', page: RecipeListPage),
+          CustomRoute(
+              path: '', page: HomePage, maintainState: true, transitionsBuilder: CustomTransitions.slideLeftWithFade),
+          CustomRoute(path: 'browse', page: RecipeListPage, transitionsBuilder: CustomTransitions.slideLeftWithFade),
         ],
       ),
-      MaterialRoute(
+      CustomRoute(
         name: "CategoriesRouter",
         page: EmptyRouterPage,
         path: 'categories',
+        transitionsBuilder: CustomTransitions.slideLeftWithFade,
         children: [
-          MaterialRoute(path: '', page: CategoriesPage),
-          MaterialRoute(name: "CategoryRoute", path: ':categoryId', page: SingleCategoryPage),
+          CustomRoute(path: '', page: CategoriesPage, transitionsBuilder: CustomTransitions.slideLeftWithFade),
+          CustomRoute(
+              name: "CategoryRoute",
+              path: ':categoryId',
+              page: SingleCategoryPage,
+              transitionsBuilder: CustomTransitions.slideLeftWithFade),
         ],
       ),
-      MaterialRoute(
+      CustomRoute(
+        name: "SearchRouter",
+        page: EmptyRouterPage,
+        path: 'search',
+        transitionsBuilder: CustomTransitions.slideLeftWithFade,
+        children: [
+          CustomRoute(
+            path: '',
+            page: SearchPage,
+            transitionsBuilder: CustomTransitions.slideLeftWithFade,
+          ),
+        ],
+      ),
+      CustomRoute(
         name: "ProfileRouter",
         page: EmptyRouterPage,
         path: 'profile',
+        transitionsBuilder: CustomTransitions.slideLeftWithFade,
         children: [
-          MaterialRoute(path: '', page: ProfilePage),
-          MaterialRoute(name: "FavoritesRoute", path: ':listMode', page: ProfileRecipeView),
-          MaterialRoute(name: "OwnedRoute", path: ':listMode', page: ProfileRecipeView),
+          CustomRoute(
+            path: '',
+            page: ProfilePage,
+            transitionsBuilder: CustomTransitions.slideLeftWithFade,
+          ),
+          CustomRoute(
+            name: "FavoritesRoute",
+            path: ':listMode',
+            page: ProfileRecipeView,
+            transitionsBuilder: CustomTransitions.slideLeftWithFade,
+          ),
+          CustomRoute(
+            name: "OwnedRoute",
+            path: ':listMode',
+            page: ProfileRecipeView,
+            transitionsBuilder: CustomTransitions.slideLeftWithFade,
+          ),
         ],
       ),
     ]),
@@ -53,12 +97,23 @@ import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
       page: RecipePage,
       transitionsBuilder: CustomTransitions.slideLeftWithFade,
     ),
-    MaterialRoute<RecipeModel>(name: "RecipeCreator", page: RecipeCreatorScreen, path: '/recipe-creator'),
-    MaterialRoute<RecipeModel>(name: "RecipeEditor", page: RecipeCreatorScreen, path: '/recipe-editor'),
-    MaterialRoute(
-      page: SearchPage,
-      path: '/search',
+    CustomRoute<RecipeModel>(
+      name: "RecipeCreator",
+      page: RecipeCreatorScreen,
+      path: '/recipe-creator',
+      transitionsBuilder: CustomTransitions.slideLeftWithFade,
     ),
+    CustomRoute<RecipeModel>(
+      name: "RecipeEditor",
+      page: RecipeCreatorScreen,
+      path: '/recipe-editor',
+      transitionsBuilder: CustomTransitions.slideLeftWithFade,
+    ),
+    // CustomRoute(
+    //   page: SearchPage,
+    //   path: '/search',
+    //   transitionsBuilder: CustomTransitions.slideLeftWithFade,
+    // ),
   ],
   replaceInRouteName: 'Page,Route',
 )

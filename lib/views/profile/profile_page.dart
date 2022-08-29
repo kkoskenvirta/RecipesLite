@@ -8,6 +8,7 @@ import 'package:flutter_e_commerce/routes/route_service.dart';
 import 'package:flutter_e_commerce/utils/typography.dart';
 
 import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
 import 'package:skeletons/skeletons.dart';
 import '../../widgets/appbars/main_appbar.dart';
 
@@ -70,9 +71,10 @@ class ProfileBody extends StatelessWidget {
               height: 8,
             ),
             ListTile(
-              title: const Text(
-                "Favorites",
-                textScaleFactor: 0.9,
+              title: const SmallText(
+                text: "Favorites",
+                fontSize: FontSize.smallPlus,
+                color: Colors.black87,
               ),
               tileColor: Colors.pink.shade50,
               trailing: const Icon(Icons.chevron_right_rounded),
@@ -84,9 +86,10 @@ class ProfileBody extends StatelessWidget {
               height: 8,
             ),
             ListTile(
-              title: const Text(
-                "Own recipes",
-                textScaleFactor: 0.9,
+              title: const SmallText(
+                text: "Own recipes",
+                fontSize: FontSize.smallPlus,
+                color: Colors.black87,
               ),
               tileColor: Colors.pink.shade50,
               trailing: const Icon(Icons.chevron_right_rounded),
@@ -98,9 +101,10 @@ class ProfileBody extends StatelessWidget {
               height: 8,
             ),
             ListTile(
-              title: const Text(
-                "Settings",
-                textScaleFactor: 0.9,
+              title: const SmallText(
+                text: "Settings",
+                fontSize: FontSize.smallPlus,
+                color: Colors.black87,
               ),
               tileColor: Colors.pink.shade50,
               trailing: const Icon(Icons.chevron_right_rounded),

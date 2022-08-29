@@ -13,10 +13,7 @@ class CustomTransitions {
           CurveTween(curve: Curves.easeInOutCubic),
         ),
       ),
-      child: FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
+      child: child,
     );
   }
 

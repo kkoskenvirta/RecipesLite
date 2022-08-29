@@ -105,9 +105,10 @@ class SearchBar extends StatelessWidget implements PreferredSizeWidget {
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
             placeholder: "Search for recipes",
             decoration: BoxDecoration(
-              color: RecipeAppTheme.colors.pinkLightLow,
-              borderRadius: BorderRadius.circular(8),
-            ),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+                // border: Border.all(color: RecipeAppTheme.colors.pinkLightLow, width: 2),
+                boxShadow: [RecipeAppTheme.shadows.wide]),
             itemSize: 26,
             controller: searchController,
             prefixIcon: const Icon(

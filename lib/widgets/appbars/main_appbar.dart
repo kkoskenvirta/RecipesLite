@@ -57,21 +57,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       scrolledUnderElevation: elevation ? null : 0,
       automaticallyImplyLeading: showBackButton ? true : false,
       leading: showSearchButton
-          ? IconButton(
-              // onPressed: () => showBarModalBottomSheet(
-              //   expand: true,
-              //   context: context,
-              //   backgroundColor: Colors.white,
-              //   elevation: 5,
-              //   barrierColor: Colors.black87,
-              //   builder: (context) => const SearchModal(),
-              // ),
-              onPressed: (() => router.navigate(const SearchRoute())),
-              icon: const Icon(
-                Icons.search,
-                size: 30,
-              ),
-            )
+          ? null
           : showBackButton
               ? const AutoLeadingButton()
               : null,

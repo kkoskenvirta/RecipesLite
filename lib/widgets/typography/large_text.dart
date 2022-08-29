@@ -27,6 +27,7 @@ class LargeText extends StatelessWidget {
       // style: GoogleFonts.barlowCondensed(
       style: GoogleFonts.barlowCondensed(
         textStyle: TextStyle(
+          height: 1.1,
           color: color,
           fontSize: largeTextFontSize(fontSize).toDouble(),
           fontWeight: fontWeight,
