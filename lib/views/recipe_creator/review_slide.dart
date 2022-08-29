@@ -137,7 +137,6 @@ class ReviewSlide extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: Dimensions.width15),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Dimensions.radius20),
-                  color: const Color.fromARGB(255, 252, 242, 246),
                 ),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Row(
@@ -176,9 +175,9 @@ class ReviewSlide extends StatelessWidget {
                   SizedBox(
                     height: Dimensions.height20,
                   ),
-                  Align(
+                  const Align(
                     alignment: Alignment.centerLeft,
-                    child: LargeText(fontSize: FontSize.medium, text: "Instructions"),
+                    child: LargeText(fontSize: FontSize.mediumPlus, text: "Instructions"),
                   ),
                   const SizedBox(
                     height: 12,

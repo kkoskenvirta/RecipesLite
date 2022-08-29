@@ -158,9 +158,15 @@ class AppColors {
 }
 
 class AppShadows {
-  final normal = const BoxShadow(
-    blurRadius: 5,
-    color: Colors.black12,
+  final normal = BoxShadow(
+    blurRadius: 6,
+    color: Colors.grey.shade300,
+  );
+  final wide = BoxShadow(
+    blurRadius: 8,
+    spreadRadius: 0,
+    color: Colors.grey.shade300,
+    // color: RecipeAppTheme.colors.pinkLightLow,
   );
 
   AppShadows();

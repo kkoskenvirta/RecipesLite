@@ -78,7 +78,7 @@ class RecipeItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(right: 20),
+                        padding: const EdgeInsets.only(right: 40),
                         child: LargeText(
                           text: recipe.name!,
                           overFlow: TextOverflow.ellipsis,

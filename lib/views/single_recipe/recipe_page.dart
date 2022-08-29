@@ -41,7 +41,7 @@ class _RecipePageState extends State<RecipePage> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    Future.delayed(Duration(milliseconds: 0)).then(
+    Future.delayed(const Duration(milliseconds: 50)).then(
       (value) => setState(() {
         _animateHeight = Dimensions.recipeImgSize - 40;
       }),
