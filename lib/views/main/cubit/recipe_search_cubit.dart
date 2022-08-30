@@ -52,21 +52,4 @@ class RecipeSearchCubit extends Cubit<RecipeSearchState> {
       ),
     );
   }
-
-  // updateAnimationCoordinates(GlobalKey chipKey, GlobalKey searchFieldKey) {
-  //   RenderBox? chip = chipKey.currentContext?.findRenderObject() as RenderBox?;
-  //   Offset? chipPosition = chip?.localToGlobal(Offset.zero);
-  //   RenderBox? searchField = searchFieldKey.currentContext?.findRenderObject() as RenderBox?;
-  //   Offset? searchFieldPosition = searchField?.localToGlobal(Offset.zero);
-  //   if (chipPosition != null && searchFieldPosition != null) {
-  //     emit(
-  //       state.copyWith(
-  //         chipX: chipPosition.dx,
-  //         chipY: chipPosition.dy,
-  //         searchFieldX: searchFieldPosition.dx,
-  //         searchFieldY: searchFieldPosition.dy,
-  //       ),
-  //     );
-  //   }
-  // }
 }

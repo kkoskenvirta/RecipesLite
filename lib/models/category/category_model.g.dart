@@ -15,7 +15,7 @@ _$_CategoryModel _$$_CategoryModelFromJson(Map<String, dynamic> json) =>
       picture: json['picture'] as String?,
       status: json['status'] as String?,
       blurhash: json['blurhash'] as String?,
-      sort: json['sort'] as String?,
+      sort: json['sort'] as int?,
     );
 
 Map<String, dynamic> _$$_CategoryModelToJson(_$_CategoryModel instance) =>

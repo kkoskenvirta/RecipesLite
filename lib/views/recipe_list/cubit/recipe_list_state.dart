@@ -15,7 +15,11 @@ class RecipeListState with _$RecipeListState {
     required bool noMoreResults,
     required List<TagModel>? tags,
     required List<TagModel> tagFilters,
+    required List<TagModel> futureTagFilters,
     required List<CategoryModel> categoryFilters,
+    required SortBy sort,
+    required SortBy futureSort,
+    required String searchString,
   }) = _RecipeListState;
 
   factory RecipeListState.initial() {
@@ -28,7 +32,11 @@ class RecipeListState with _$RecipeListState {
       noMoreResults: false,
       tags: null,
       tagFilters: [],
+      futureTagFilters: [],
       categoryFilters: [],
+      sort: SortBy.newest,
+      futureSort: SortBy.newest,
+      searchString: "",
     );
   }
 }

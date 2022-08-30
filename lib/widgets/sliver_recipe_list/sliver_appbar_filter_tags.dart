@@ -19,38 +19,34 @@ class AppBarFilterTags extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: 0.0,
-        bottom: 4.0,
-        left: 20.0,
-        right: 20.0,
-      ),
-      child: Column(
-        children: [
-          Wrap(
-            spacing: 8,
-            alignment: WrapAlignment.center,
-            direction: Axis.horizontal,
-            children: tagList.map((tag) {
-              final match = tagFilters.indexWhere((filter) => filter.id == tag.id);
-              final status = match == -1 ? false : true;
-              return FadeTransition(
-                opacity: _animationController,
-                child: FilterChip(
-                  selected: status,
-                  showCheckmark: false,
-                  label: SmallText(
-                    text: tag.name,
-                    color: status ? Colors.white : Colors.black87,
-                    fontSize: FontSize.small,
-                  ),
-                  onSelected: ((status) => onSelect(tag, status)),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: SizedBox(
+        width: 400,
+        child: Wrap(
+          spacing: 8,
+          alignment: WrapAlignment.start,
+          runSpacing: 0.0,
+          children: tagList.map((tag) {
+            final match = tagFilters.indexWhere((filter) => filter.id == tag.id);
+            final status = match == -1 ? false : true;
+            return FadeTransition(
+              opacity: _animationController,
+              child: FilterChip(
+                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 4),
+                selected: status,
+                showCheckmark: false,
+                visualDensity: VisualDensity(vertical: -1),
+                label: SmallText(
+                  text: tag.name,
+                  color: status ? Colors.white : Colors.black87,
+                  fontSize: FontSize.small,
                 ),
-              );
-            }).toList(),
-          ),
-        ],
+                onSelected: ((status) => onSelect(tag, status)),
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }

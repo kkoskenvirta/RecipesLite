@@ -8,7 +8,7 @@ part of 'category_id_dto.dart';
 
 _$_CategoryIdDTO _$$_CategoryIdDTOFromJson(Map<String, dynamic> json) =>
     _$_CategoryIdDTO(
-      relationId: json['id'] as int,
+      relationId: json['id'] as int?,
       category:
           CategoryDataDTO.fromJson(json['category_id'] as Map<String, dynamic>),
     );

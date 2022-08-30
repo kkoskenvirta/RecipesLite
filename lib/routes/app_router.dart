@@ -10,106 +10,96 @@ import 'package:flutter_e_commerce/views/profile/profile_page.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/recipe_creator.dart';
 import 'package:flutter_e_commerce/views/recipe_list/recipe_list_page.dart';
 import 'package:flutter_e_commerce/views/sign_up/sign_up_page.dart';
-import 'package:flutter_e_commerce/views/search/search_page.dart';
-import 'package:flutter_e_commerce/views/single_category/single_category_page.dart';
 import 'package:flutter_e_commerce/views/single_recipe/recipe_page.dart';
 
 @MaterialAutoRouter(
   routes: [
-    CustomRoute(
+    CupertinoRoute(
       page: LoginPage,
       path: '/login',
       initial: true,
-      transitionsBuilder: CustomTransitions.slideLeftWithFade,
     ),
-    CustomRoute(
+    CupertinoRoute(
       page: SignUpPage,
       path: '/sign-up',
-      transitionsBuilder: CustomTransitions.slideLeftWithFade,
     ),
     AutoRoute(page: MainPage, path: '/main', children: [
-      CustomRoute(
+      CupertinoRoute(
         name: "HomeRouter",
         page: EmptyRouterPage,
         path: 'home',
-        transitionsBuilder: CustomTransitions.slideLeftWithFade,
         children: [
-          CustomRoute(
-              path: '', page: HomePage, maintainState: true, transitionsBuilder: CustomTransitions.slideLeftWithFade),
-          CustomRoute(path: 'browse', page: RecipeListPage, transitionsBuilder: CustomTransitions.slideLeftWithFade),
+          CupertinoRoute(path: '', page: HomePage, maintainState: true),
+          CupertinoRoute(
+            path: 'browse',
+            page: RecipeListPage,
+          ),
         ],
       ),
-      CustomRoute(
+      CupertinoRoute(
         name: "CategoriesRouter",
         page: EmptyRouterPage,
         path: 'categories',
-        transitionsBuilder: CustomTransitions.slideLeftWithFade,
         children: [
-          CustomRoute(path: '', page: CategoriesPage, transitionsBuilder: CustomTransitions.slideLeftWithFade),
-          CustomRoute(
-              name: "CategoryRoute",
-              path: ':categoryId',
-              page: SingleCategoryPage,
-              transitionsBuilder: CustomTransitions.slideLeftWithFade),
+          CupertinoRoute(
+            path: '',
+            page: CategoriesPage,
+          ),
+          CupertinoRoute(
+            name: "CategoryRoute",
+            page: RecipeListPage,
+          ),
         ],
       ),
-      CustomRoute(
+      CupertinoRoute(
         name: "SearchRouter",
         page: EmptyRouterPage,
         path: 'search',
-        transitionsBuilder: CustomTransitions.slideLeftWithFade,
         children: [
-          CustomRoute(
+          CupertinoRoute(
             path: '',
-            page: SearchPage,
-            transitionsBuilder: CustomTransitions.slideLeftWithFade,
+            name: "SearchRoute",
+            page: RecipeListPage,
           ),
         ],
       ),
-      CustomRoute(
+      CupertinoRoute(
         name: "ProfileRouter",
         page: EmptyRouterPage,
         path: 'profile',
-        transitionsBuilder: CustomTransitions.slideLeftWithFade,
         children: [
-          CustomRoute(
+          CupertinoRoute(
             path: '',
             page: ProfilePage,
-            transitionsBuilder: CustomTransitions.slideLeftWithFade,
           ),
-          CustomRoute(
+          CupertinoRoute(
             name: "FavoritesRoute",
             path: ':listMode',
             page: ProfileRecipeView,
-            transitionsBuilder: CustomTransitions.slideLeftWithFade,
           ),
-          CustomRoute(
+          CupertinoRoute(
             name: "OwnedRoute",
             path: ':listMode',
             page: ProfileRecipeView,
-            transitionsBuilder: CustomTransitions.slideLeftWithFade,
           ),
         ],
       ),
     ]),
-    CustomRoute(
+    CupertinoRoute(
       path: '/recipes/:recipeId',
       page: RecipePage,
-      transitionsBuilder: CustomTransitions.slideLeftWithFade,
     ),
-    CustomRoute<RecipeModel>(
+    CupertinoRoute<RecipeModel>(
       name: "RecipeCreator",
       page: RecipeCreatorScreen,
       path: '/recipe-creator',
-      transitionsBuilder: CustomTransitions.slideLeftWithFade,
     ),
-    CustomRoute<RecipeModel>(
+    CupertinoRoute<RecipeModel>(
       name: "RecipeEditor",
       page: RecipeCreatorScreen,
       path: '/recipe-editor',
-      transitionsBuilder: CustomTransitions.slideLeftWithFade,
     ),
-    // CustomRoute(
+    // CupertinoRoute(
     //   page: SearchPage,
     //   path: '/search',
     //   transitionsBuilder: CustomTransitions.slideLeftWithFade,

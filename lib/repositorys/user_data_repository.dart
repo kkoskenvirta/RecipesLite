@@ -51,7 +51,7 @@ class UserDataRepository {
     try {
       final UserDataModel userData;
       final response = await _dio.get(
-          "$userDataPath?filter[user][_eq]=${currentUser?.id}&fields=id,user,favorites.recipe_id.*,favorites.recipe_id.categories.category_id.*,favorites.recipe_id.tags.tag_id.*,favorites.recipe_id.ingredients.ingredient_id.*&limit=1");
+          "$userDataPath?filter[user][_eq]=${currentUser?.id}&fields=id,user,favorites.recipe_id.*,favorites.recipe_id.categories.category_id.*,favorites.recipe_id.tags.tag_id.*,favorites.recipe_id.ingredient_groups.id,favorites.recipe_id.ingredient_groups.id.*,favorites.recipe_id.ingredient_groups.ingredient_group_id.ingredients.ingredient_id.*,favorites.recipe_id.ingredient_groups.ingredient_group_id.ingredients.id&limit=1");
       final userDataDTO = UserDataObjectDTO.fromJson(response.data);
       if (userDataDTO.data.isEmpty) {
         //If we cant find existing user_data with current user id, we create a new one
@@ -89,7 +89,7 @@ class UserDataRepository {
   Future<dynamic> updateFavoritesList(List<dynamic> newFavorites, UserModel user) async {
     try {
       final body = {'favorites': newFavorites};
-      final response = await _dio.patch("$userDataPath${userData!.id}", data: body);
+      final response = await _dio.patch("$userDataPath/${userData!.id}", data: body);
 
       return response;
     } catch (e) {

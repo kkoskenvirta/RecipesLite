@@ -21,7 +21,7 @@ CategoryIdDTO _$CategoryIdDTOFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CategoryIdDTO {
   @JsonKey(name: "id")
-  int get relationId => throw _privateConstructorUsedError;
+  int? get relationId => throw _privateConstructorUsedError;
   @JsonKey(name: "category_id")
   CategoryDataDTO get category => throw _privateConstructorUsedError;
 
@@ -37,7 +37,7 @@ abstract class $CategoryIdDTOCopyWith<$Res> {
           CategoryIdDTO value, $Res Function(CategoryIdDTO) then) =
       _$CategoryIdDTOCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: "id") int relationId,
+      {@JsonKey(name: "id") int? relationId,
       @JsonKey(name: "category_id") CategoryDataDTO category});
 
   $CategoryDataDTOCopyWith<$Res> get category;
@@ -61,7 +61,7 @@ class _$CategoryIdDTOCopyWithImpl<$Res>
       relationId: relationId == freezed
           ? _value.relationId
           : relationId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       category: category == freezed
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -85,7 +85,7 @@ abstract class _$$_CategoryIdDTOCopyWith<$Res>
       __$$_CategoryIdDTOCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: "id") int relationId,
+      {@JsonKey(name: "id") int? relationId,
       @JsonKey(name: "category_id") CategoryDataDTO category});
 
   @override
@@ -112,7 +112,7 @@ class __$$_CategoryIdDTOCopyWithImpl<$Res>
       relationId: relationId == freezed
           ? _value.relationId
           : relationId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       category: category == freezed
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -125,7 +125,7 @@ class __$$_CategoryIdDTOCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_CategoryIdDTO extends _CategoryIdDTO {
   _$_CategoryIdDTO(
-      {@JsonKey(name: "id") required this.relationId,
+      {@JsonKey(name: "id") this.relationId,
       @JsonKey(name: "category_id") required this.category})
       : super._();
 
@@ -134,7 +134,7 @@ class _$_CategoryIdDTO extends _CategoryIdDTO {
 
   @override
   @JsonKey(name: "id")
-  final int relationId;
+  final int? relationId;
   @override
   @JsonKey(name: "category_id")
   final CategoryDataDTO category;
@@ -177,7 +177,7 @@ class _$_CategoryIdDTO extends _CategoryIdDTO {
 abstract class _CategoryIdDTO extends CategoryIdDTO {
   factory _CategoryIdDTO(
       {@JsonKey(name: "id")
-          required final int relationId,
+          final int? relationId,
       @JsonKey(name: "category_id")
           required final CategoryDataDTO category}) = _$_CategoryIdDTO;
   _CategoryIdDTO._() : super._();
@@ -187,7 +187,7 @@ abstract class _CategoryIdDTO extends CategoryIdDTO {
 
   @override
   @JsonKey(name: "id")
-  int get relationId;
+  int? get relationId;
   @override
   @JsonKey(name: "category_id")
   CategoryDataDTO get category;

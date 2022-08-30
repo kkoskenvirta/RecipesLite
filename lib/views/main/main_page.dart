@@ -72,7 +72,7 @@ class _BottomNavigationItems extends StatelessWidget {
                   context.router.navigate(const CategoriesRoute());
                   break;
                 case 2:
-                  context.router.navigate(const SearchRoute());
+                  context.router.navigate(SearchRoute());
                   break;
                 case 3:
                   context.router.navigate(const ProfileRoute());

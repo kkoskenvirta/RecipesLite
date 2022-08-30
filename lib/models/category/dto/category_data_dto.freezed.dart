@@ -30,7 +30,7 @@ mixin _$CategoryDataDTO {
   String? get recipesCount => throw _privateConstructorUsedError;
   String? get blurhash => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
-  String? get sort => throw _privateConstructorUsedError;
+  int? get sort => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -50,7 +50,7 @@ abstract class $CategoryDataDTOCopyWith<$Res> {
       @JsonKey(name: 'recipes_count') String? recipesCount,
       String? blurhash,
       String? status,
-      String? sort});
+      int? sort});
 }
 
 /// @nodoc
@@ -100,7 +100,7 @@ class _$CategoryDataDTOCopyWithImpl<$Res>
       sort: sort == freezed
           ? _value.sort
           : sort // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
     ));
   }
 }
@@ -119,7 +119,7 @@ abstract class _$$_CategoryDataDTOCopyWith<$Res>
       @JsonKey(name: 'recipes_count') String? recipesCount,
       String? blurhash,
       String? status,
-      String? sort});
+      int? sort});
 }
 
 /// @nodoc
@@ -171,7 +171,7 @@ class __$$_CategoryDataDTOCopyWithImpl<$Res>
       sort: sort == freezed
           ? _value.sort
           : sort // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
     ));
   }
 }
@@ -209,7 +209,7 @@ class _$_CategoryDataDTO extends _CategoryDataDTO {
   @override
   final String? status;
   @override
-  final String? sort;
+  final int? sort;
 
   @override
   String toString() {
@@ -264,7 +264,7 @@ abstract class _CategoryDataDTO extends CategoryDataDTO {
       @JsonKey(name: 'recipes_count') final String? recipesCount,
       final String? blurhash,
       final String? status,
-      final String? sort}) = _$_CategoryDataDTO;
+      final int? sort}) = _$_CategoryDataDTO;
   _CategoryDataDTO._() : super._();
 
   factory _CategoryDataDTO.fromJson(Map<String, dynamic> json) =
@@ -287,7 +287,7 @@ abstract class _CategoryDataDTO extends CategoryDataDTO {
   @override
   String? get status;
   @override
-  String? get sort;
+  int? get sort;
   @override
   @JsonKey(ignore: true)
   _$$_CategoryDataDTOCopyWith<_$_CategoryDataDTO> get copyWith =>

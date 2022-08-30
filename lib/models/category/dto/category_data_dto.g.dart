@@ -14,7 +14,7 @@ _$_CategoryDataDTO _$$_CategoryDataDTOFromJson(Map<String, dynamic> json) =>
       recipesCount: json['recipes_count'] as String?,
       blurhash: json['blurhash'] as String?,
       status: json['status'] as String?,
-      sort: json['sort'] as String?,
+      sort: json['sort'] as int?,
     );
 
 Map<String, dynamic> _$$_CategoryDataDTOToJson(_$_CategoryDataDTO instance) =>

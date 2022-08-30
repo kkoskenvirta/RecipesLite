@@ -3,6 +3,7 @@ import 'package:flutter_e_commerce/models/category/category_model.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
+import 'package:flutter_e_commerce/utils/sort.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
 
@@ -20,7 +21,10 @@ class RecipeListCubit extends Cubit<RecipeListState> {
   final RecipesRepository _recipesRepository;
   final CategoryRepository _categoryRepository;
 
-  Future<void> getRecipes() async {
+  Future<void> getRecipes(List<CategoryModel>? category) async {
+    if (category != null) {
+      emit(state.copyWith(categoryFilters: [...category]));
+    }
     if (state.recipeListPage == 1) {
       emit(state.copyWith(listStatus: RecipeListStatus.loading));
     } else {
@@ -31,6 +35,8 @@ class RecipeListCubit extends Cubit<RecipeListState> {
       page: state.recipeListPage,
       tags: state.tagFilters,
       categories: state.categoryFilters,
+      sort: state.sort,
+      search: state.searchString,
     );
     errorOrRecipeList.fold(
       (err) => emit(state.copyWith(listStatus: RecipeListStatus.error)),
@@ -67,8 +73,20 @@ class RecipeListCubit extends Cubit<RecipeListState> {
     );
   }
 
+  updateSort(SortBy sort) {
+    emit(state.copyWith(
+      futureSort: sort,
+    ));
+  }
+
+  cancelSortUpdate() {
+    emit(state.copyWith(
+      futureSort: state.sort,
+    ));
+  }
+
   updateTagList(TagModel newTag, bool status) {
-    List<TagModel> filterList = [...state.tagFilters];
+    List<TagModel> filterList = [...state.futureTagFilters];
     final selected = filterList.where((tag) => tag.id == newTag.id);
     if (selected.isEmpty) {
       filterList.add(newTag);
@@ -76,11 +94,42 @@ class RecipeListCubit extends Cubit<RecipeListState> {
       filterList.removeWhere((tag) => tag.id == newTag.id);
     }
     emit(state.copyWith(
-      tagFilters: filterList,
+      futureTagFilters: filterList,
+    ));
+  }
+
+  cancelTagUpdate() {
+    emit(state.copyWith(futureTagFilters: state.tagFilters));
+  }
+
+  applyFilterChanges() {
+    emit(state.copyWith(
+      sort: state.futureSort,
+      tagFilters: state.futureTagFilters,
       recipeListPage: 1,
       recipeList: [],
       noMoreResults: false,
     ));
-    getRecipes();
+    getRecipes(state.categoryFilters);
+  }
+
+  updateSearchString(String string) {
+    emit(state.copyWith(
+      searchString: string,
+      recipeListPage: 1,
+      recipeList: [],
+    ));
+  }
+
+  resetSearch() {
+    emit(
+      state.copyWith(
+        listStatus: RecipeListStatus.initial,
+        recipeListPage: 1,
+        recipeList: [],
+        searchString: "",
+      ),
+    );
+    getRecipes(state.categoryFilters);
   }
 }

@@ -45,7 +45,6 @@ class CategorizationBar extends StatelessWidget {
                         CategoriesRouter(children: [
                           CategoryRoute(
                             categoryFilters: [category],
-                            categoryId: category.id,
                           )
                         ])
                       ],

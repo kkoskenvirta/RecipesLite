@@ -22,7 +22,6 @@ class RecipeDataDTO with _$RecipeDataDTO {
     @Default('') String instructions,
     List<CategoryIdDTO>? categories,
     List<TagIdDTO>? tags,
-    List<IngredientIdDTO>? ingredients,
     String? name,
     bool? featured,
     @JsonKey(name: 'ingredient_groups') List<IngredientGroupIdDTO>? ingredientGroups,
