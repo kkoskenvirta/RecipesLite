@@ -24,8 +24,10 @@ mixin _$RecipeListState {
   bool get noMoreResults => throw _privateConstructorUsedError;
   List<TagModel>? get tags => throw _privateConstructorUsedError;
   List<TagModel> get tagFilters => throw _privateConstructorUsedError;
+  List<TagModel> get futureTagFilters => throw _privateConstructorUsedError;
   List<CategoryModel> get categoryFilters => throw _privateConstructorUsedError;
   SortBy get sort => throw _privateConstructorUsedError;
+  SortBy get futureSort => throw _privateConstructorUsedError;
   String get searchString => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -47,8 +49,10 @@ abstract class $RecipeListStateCopyWith<$Res> {
       bool noMoreResults,
       List<TagModel>? tags,
       List<TagModel> tagFilters,
+      List<TagModel> futureTagFilters,
       List<CategoryModel> categoryFilters,
       SortBy sort,
+      SortBy futureSort,
       String searchString});
 }
 
@@ -71,8 +75,10 @@ class _$RecipeListStateCopyWithImpl<$Res>
     Object? noMoreResults = freezed,
     Object? tags = freezed,
     Object? tagFilters = freezed,
+    Object? futureTagFilters = freezed,
     Object? categoryFilters = freezed,
     Object? sort = freezed,
+    Object? futureSort = freezed,
     Object? searchString = freezed,
   }) {
     return _then(_value.copyWith(
@@ -108,6 +114,10 @@ class _$RecipeListStateCopyWithImpl<$Res>
           ? _value.tagFilters
           : tagFilters // ignore: cast_nullable_to_non_nullable
               as List<TagModel>,
+      futureTagFilters: futureTagFilters == freezed
+          ? _value.futureTagFilters
+          : futureTagFilters // ignore: cast_nullable_to_non_nullable
+              as List<TagModel>,
       categoryFilters: categoryFilters == freezed
           ? _value.categoryFilters
           : categoryFilters // ignore: cast_nullable_to_non_nullable
@@ -115,6 +125,10 @@ class _$RecipeListStateCopyWithImpl<$Res>
       sort: sort == freezed
           ? _value.sort
           : sort // ignore: cast_nullable_to_non_nullable
+              as SortBy,
+      futureSort: futureSort == freezed
+          ? _value.futureSort
+          : futureSort // ignore: cast_nullable_to_non_nullable
               as SortBy,
       searchString: searchString == freezed
           ? _value.searchString
@@ -140,8 +154,10 @@ abstract class _$$_RecipeListStateCopyWith<$Res>
       bool noMoreResults,
       List<TagModel>? tags,
       List<TagModel> tagFilters,
+      List<TagModel> futureTagFilters,
       List<CategoryModel> categoryFilters,
       SortBy sort,
+      SortBy futureSort,
       String searchString});
 }
 
@@ -166,8 +182,10 @@ class __$$_RecipeListStateCopyWithImpl<$Res>
     Object? noMoreResults = freezed,
     Object? tags = freezed,
     Object? tagFilters = freezed,
+    Object? futureTagFilters = freezed,
     Object? categoryFilters = freezed,
     Object? sort = freezed,
+    Object? futureSort = freezed,
     Object? searchString = freezed,
   }) {
     return _then(_$_RecipeListState(
@@ -203,6 +221,10 @@ class __$$_RecipeListStateCopyWithImpl<$Res>
           ? _value._tagFilters
           : tagFilters // ignore: cast_nullable_to_non_nullable
               as List<TagModel>,
+      futureTagFilters: futureTagFilters == freezed
+          ? _value._futureTagFilters
+          : futureTagFilters // ignore: cast_nullable_to_non_nullable
+              as List<TagModel>,
       categoryFilters: categoryFilters == freezed
           ? _value._categoryFilters
           : categoryFilters // ignore: cast_nullable_to_non_nullable
@@ -210,6 +232,10 @@ class __$$_RecipeListStateCopyWithImpl<$Res>
       sort: sort == freezed
           ? _value.sort
           : sort // ignore: cast_nullable_to_non_nullable
+              as SortBy,
+      futureSort: futureSort == freezed
+          ? _value.futureSort
+          : futureSort // ignore: cast_nullable_to_non_nullable
               as SortBy,
       searchString: searchString == freezed
           ? _value.searchString
@@ -231,12 +257,15 @@ class _$_RecipeListState implements _RecipeListState {
       required this.noMoreResults,
       required final List<TagModel>? tags,
       required final List<TagModel> tagFilters,
+      required final List<TagModel> futureTagFilters,
       required final List<CategoryModel> categoryFilters,
       required this.sort,
+      required this.futureSort,
       required this.searchString})
       : _recipeList = recipeList,
         _tags = tags,
         _tagFilters = tagFilters,
+        _futureTagFilters = futureTagFilters,
         _categoryFilters = categoryFilters;
 
   @override
@@ -274,6 +303,13 @@ class _$_RecipeListState implements _RecipeListState {
     return EqualUnmodifiableListView(_tagFilters);
   }
 
+  final List<TagModel> _futureTagFilters;
+  @override
+  List<TagModel> get futureTagFilters {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_futureTagFilters);
+  }
+
   final List<CategoryModel> _categoryFilters;
   @override
   List<CategoryModel> get categoryFilters {
@@ -284,11 +320,13 @@ class _$_RecipeListState implements _RecipeListState {
   @override
   final SortBy sort;
   @override
+  final SortBy futureSort;
+  @override
   final String searchString;
 
   @override
   String toString() {
-    return 'RecipeListState(listStatus: $listStatus, fetchingMore: $fetchingMore, tagStatus: $tagStatus, recipeList: $recipeList, recipeListPage: $recipeListPage, noMoreResults: $noMoreResults, tags: $tags, tagFilters: $tagFilters, categoryFilters: $categoryFilters, sort: $sort, searchString: $searchString)';
+    return 'RecipeListState(listStatus: $listStatus, fetchingMore: $fetchingMore, tagStatus: $tagStatus, recipeList: $recipeList, recipeListPage: $recipeListPage, noMoreResults: $noMoreResults, tags: $tags, tagFilters: $tagFilters, futureTagFilters: $futureTagFilters, categoryFilters: $categoryFilters, sort: $sort, futureSort: $futureSort, searchString: $searchString)';
   }
 
   @override
@@ -311,8 +349,12 @@ class _$_RecipeListState implements _RecipeListState {
             const DeepCollectionEquality()
                 .equals(other._tagFilters, _tagFilters) &&
             const DeepCollectionEquality()
+                .equals(other._futureTagFilters, _futureTagFilters) &&
+            const DeepCollectionEquality()
                 .equals(other._categoryFilters, _categoryFilters) &&
             const DeepCollectionEquality().equals(other.sort, sort) &&
+            const DeepCollectionEquality()
+                .equals(other.futureSort, futureSort) &&
             const DeepCollectionEquality()
                 .equals(other.searchString, searchString));
   }
@@ -328,8 +370,10 @@ class _$_RecipeListState implements _RecipeListState {
       const DeepCollectionEquality().hash(noMoreResults),
       const DeepCollectionEquality().hash(_tags),
       const DeepCollectionEquality().hash(_tagFilters),
+      const DeepCollectionEquality().hash(_futureTagFilters),
       const DeepCollectionEquality().hash(_categoryFilters),
       const DeepCollectionEquality().hash(sort),
+      const DeepCollectionEquality().hash(futureSort),
       const DeepCollectionEquality().hash(searchString));
 
   @JsonKey(ignore: true)
@@ -348,8 +392,10 @@ abstract class _RecipeListState implements RecipeListState {
       required final bool noMoreResults,
       required final List<TagModel>? tags,
       required final List<TagModel> tagFilters,
+      required final List<TagModel> futureTagFilters,
       required final List<CategoryModel> categoryFilters,
       required final SortBy sort,
+      required final SortBy futureSort,
       required final String searchString}) = _$_RecipeListState;
 
   @override
@@ -369,9 +415,13 @@ abstract class _RecipeListState implements RecipeListState {
   @override
   List<TagModel> get tagFilters;
   @override
+  List<TagModel> get futureTagFilters;
+  @override
   List<CategoryModel> get categoryFilters;
   @override
   SortBy get sort;
+  @override
+  SortBy get futureSort;
   @override
   String get searchString;
   @override

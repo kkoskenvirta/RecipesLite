@@ -14,9 +14,8 @@
 import 'package:auto_route/auto_route.dart' as _i6;
 import 'package:flutter/material.dart' as _i12;
 
-import '../models/category/category_model.dart' as _i15;
-import '../models/recipe/recipe_model.dart' as _i14;
-import '../utils/custom_transitions.dart' as _i13;
+import '../models/category/category_model.dart' as _i14;
+import '../models/recipe/recipe_model.dart' as _i13;
 import '../views/categories/categories_page.dart' as _i9;
 import '../views/login/login_page.dart' as _i1;
 import '../views/main/home_page.dart' as _i7;
@@ -35,20 +34,12 @@ class AppRouter extends _i6.RootStackRouter {
   @override
   final Map<String, _i6.PageFactory> pagesMap = {
     LoginRoute.name: (routeData) {
-      return _i6.CustomPage<dynamic>(
-          routeData: routeData,
-          child: const _i1.LoginPage(),
-          transitionsBuilder: _i13.CustomTransitions.slideLeftWithFade,
-          opaque: true,
-          barrierDismissible: false);
+      return _i6.CupertinoPageX<dynamic>(
+          routeData: routeData, child: const _i1.LoginPage());
     },
     SignUpRoute.name: (routeData) {
-      return _i6.CustomPage<dynamic>(
-          routeData: routeData,
-          child: const _i2.SignUpPage(),
-          transitionsBuilder: _i13.CustomTransitions.slideLeftWithFade,
-          opaque: true,
-          barrierDismissible: false);
+      return _i6.CupertinoPageX<dynamic>(
+          routeData: routeData, child: const _i2.SignUpPage());
     },
     MainRoute.name: (routeData) {
       return _i6.MaterialPageX<dynamic>(
@@ -59,155 +50,105 @@ class AppRouter extends _i6.RootStackRouter {
       final args = routeData.argsAs<RecipeRouteArgs>(
           orElse: () =>
               RecipeRouteArgs(recipeId: pathParams.getString('recipeId')));
-      return _i6.CustomPage<dynamic>(
+      return _i6.CupertinoPageX<dynamic>(
           routeData: routeData,
           child: _i4.RecipePage(
               key: args.key,
               recipeId: args.recipeId,
               recipe: args.recipe,
-              heroTag: args.heroTag),
-          transitionsBuilder: _i13.CustomTransitions.slideLeftWithFade,
-          opaque: true,
-          barrierDismissible: false);
+              heroTag: args.heroTag));
     },
     RecipeCreator.name: (routeData) {
       final args = routeData.argsAs<RecipeCreatorArgs>(
           orElse: () => const RecipeCreatorArgs());
-      return _i6.CustomPage<_i14.RecipeModel>(
+      return _i6.CupertinoPageX<_i13.RecipeModel>(
           routeData: routeData,
           child: _i5.RecipeCreatorScreen(
               key: args.key,
               title: args.title,
-              editableRecipe: args.editableRecipe),
-          transitionsBuilder: _i13.CustomTransitions.slideLeftWithFade,
-          opaque: true,
-          barrierDismissible: false);
+              editableRecipe: args.editableRecipe));
     },
     RecipeEditor.name: (routeData) {
       final args = routeData.argsAs<RecipeEditorArgs>(
           orElse: () => const RecipeEditorArgs());
-      return _i6.CustomPage<_i14.RecipeModel>(
+      return _i6.CupertinoPageX<_i13.RecipeModel>(
           routeData: routeData,
           child: _i5.RecipeCreatorScreen(
               key: args.key,
               title: args.title,
-              editableRecipe: args.editableRecipe),
-          transitionsBuilder: _i13.CustomTransitions.slideLeftWithFade,
-          opaque: true,
-          barrierDismissible: false);
+              editableRecipe: args.editableRecipe));
     },
     HomeRouter.name: (routeData) {
-      return _i6.CustomPage<dynamic>(
-          routeData: routeData,
-          child: const _i6.EmptyRouterPage(),
-          transitionsBuilder: _i13.CustomTransitions.slideLeftWithFade,
-          opaque: true,
-          barrierDismissible: false);
+      return _i6.CupertinoPageX<dynamic>(
+          routeData: routeData, child: const _i6.EmptyRouterPage());
     },
     CategoriesRouter.name: (routeData) {
-      return _i6.CustomPage<dynamic>(
-          routeData: routeData,
-          child: const _i6.EmptyRouterPage(),
-          transitionsBuilder: _i13.CustomTransitions.slideLeftWithFade,
-          opaque: true,
-          barrierDismissible: false);
+      return _i6.CupertinoPageX<dynamic>(
+          routeData: routeData, child: const _i6.EmptyRouterPage());
     },
     SearchRouter.name: (routeData) {
-      return _i6.CustomPage<dynamic>(
-          routeData: routeData,
-          child: const _i6.EmptyRouterPage(),
-          transitionsBuilder: _i13.CustomTransitions.slideLeftWithFade,
-          opaque: true,
-          barrierDismissible: false);
+      return _i6.CupertinoPageX<dynamic>(
+          routeData: routeData, child: const _i6.EmptyRouterPage());
     },
     ProfileRouter.name: (routeData) {
-      return _i6.CustomPage<dynamic>(
-          routeData: routeData,
-          child: const _i6.EmptyRouterPage(),
-          transitionsBuilder: _i13.CustomTransitions.slideLeftWithFade,
-          opaque: true,
-          barrierDismissible: false);
+      return _i6.CupertinoPageX<dynamic>(
+          routeData: routeData, child: const _i6.EmptyRouterPage());
     },
     HomeRoute.name: (routeData) {
-      return _i6.CustomPage<dynamic>(
-          routeData: routeData,
-          child: const _i7.HomePage(),
-          transitionsBuilder: _i13.CustomTransitions.slideLeftWithFade,
-          opaque: true,
-          barrierDismissible: false);
+      return _i6.CupertinoPageX<dynamic>(
+          routeData: routeData, child: const _i7.HomePage());
     },
     RecipeListRoute.name: (routeData) {
       final args = routeData.argsAs<RecipeListRouteArgs>(
           orElse: () => const RecipeListRouteArgs());
-      return _i6.CustomPage<dynamic>(
+      return _i6.CupertinoPageX<dynamic>(
           routeData: routeData,
           child: _i8.RecipeListPage(
-              key: args.key, categoryFilters: args.categoryFilters),
-          transitionsBuilder: _i13.CustomTransitions.slideLeftWithFade,
-          opaque: true,
-          barrierDismissible: false);
+              key: args.key, categoryFilters: args.categoryFilters));
     },
     CategoriesRoute.name: (routeData) {
-      return _i6.CustomPage<dynamic>(
-          routeData: routeData,
-          child: const _i9.CategoriesPage(),
-          transitionsBuilder: _i13.CustomTransitions.slideLeftWithFade,
-          opaque: true,
-          barrierDismissible: false);
+      return _i6.CupertinoPageX<dynamic>(
+          routeData: routeData, child: const _i9.CategoriesPage());
     },
     CategoryRoute.name: (routeData) {
       final args = routeData.argsAs<CategoryRouteArgs>(
           orElse: () => const CategoryRouteArgs());
-      return _i6.CustomPage<dynamic>(
+      return _i6.CupertinoPageX<dynamic>(
           routeData: routeData,
           child: _i8.RecipeListPage(
-              key: args.key, categoryFilters: args.categoryFilters),
-          transitionsBuilder: _i13.CustomTransitions.slideLeftWithFade,
-          opaque: true,
-          barrierDismissible: false);
+              key: args.key, categoryFilters: args.categoryFilters));
     },
     SearchRoute.name: (routeData) {
       final args = routeData.argsAs<SearchRouteArgs>(
           orElse: () => const SearchRouteArgs());
-      return _i6.CustomPage<dynamic>(
+      return _i6.CupertinoPageX<dynamic>(
           routeData: routeData,
           child: _i8.RecipeListPage(
-              key: args.key, categoryFilters: args.categoryFilters),
-          transitionsBuilder: _i13.CustomTransitions.slideLeftWithFade,
-          opaque: true,
-          barrierDismissible: false);
+              key: args.key, categoryFilters: args.categoryFilters));
     },
     ProfileRoute.name: (routeData) {
-      return _i6.CustomPage<dynamic>(
-          routeData: routeData,
-          child: const _i10.ProfilePage(),
-          transitionsBuilder: _i13.CustomTransitions.slideLeftWithFade,
-          opaque: true,
-          barrierDismissible: false);
+      return _i6.CupertinoPageX<dynamic>(
+          routeData: routeData, child: const _i10.ProfilePage());
     },
     FavoritesRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<FavoritesRouteArgs>(
           orElse: () =>
               FavoritesRouteArgs(listMode: pathParams.getString('listMode')));
-      return _i6.CustomPage<dynamic>(
+      return _i6.CupertinoPageX<dynamic>(
           routeData: routeData,
-          child: _i11.ProfileRecipeView(key: args.key, listMode: args.listMode),
-          transitionsBuilder: _i13.CustomTransitions.slideLeftWithFade,
-          opaque: true,
-          barrierDismissible: false);
+          child:
+              _i11.ProfileRecipeView(key: args.key, listMode: args.listMode));
     },
     OwnedRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<OwnedRouteArgs>(
           orElse: () =>
               OwnedRouteArgs(listMode: pathParams.getString('listMode')));
-      return _i6.CustomPage<dynamic>(
+      return _i6.CupertinoPageX<dynamic>(
           routeData: routeData,
-          child: _i11.ProfileRecipeView(key: args.key, listMode: args.listMode),
-          transitionsBuilder: _i13.CustomTransitions.slideLeftWithFade,
-          opaque: true,
-          barrierDismissible: false);
+          child:
+              _i11.ProfileRecipeView(key: args.key, listMode: args.listMode));
     }
   };
 
@@ -292,7 +233,7 @@ class RecipeRoute extends _i6.PageRouteInfo<RecipeRouteArgs> {
   RecipeRoute(
       {_i12.Key? key,
       required String recipeId,
-      _i14.RecipeModel? recipe,
+      _i13.RecipeModel? recipe,
       _i12.UniqueKey? heroTag})
       : super(RecipeRoute.name,
             path: '/recipes/:recipeId',
@@ -311,7 +252,7 @@ class RecipeRouteArgs {
 
   final String recipeId;
 
-  final _i14.RecipeModel? recipe;
+  final _i13.RecipeModel? recipe;
 
   final _i12.UniqueKey? heroTag;
 
@@ -327,7 +268,7 @@ class RecipeCreator extends _i6.PageRouteInfo<RecipeCreatorArgs> {
   RecipeCreator(
       {_i12.Key? key,
       String title = "New recipe",
-      _i14.RecipeModel? editableRecipe})
+      _i13.RecipeModel? editableRecipe})
       : super(RecipeCreator.name,
             path: '/recipe-creator',
             args: RecipeCreatorArgs(
@@ -344,7 +285,7 @@ class RecipeCreatorArgs {
 
   final String title;
 
-  final _i14.RecipeModel? editableRecipe;
+  final _i13.RecipeModel? editableRecipe;
 
   @override
   String toString() {
@@ -358,7 +299,7 @@ class RecipeEditor extends _i6.PageRouteInfo<RecipeEditorArgs> {
   RecipeEditor(
       {_i12.Key? key,
       String title = "New recipe",
-      _i14.RecipeModel? editableRecipe})
+      _i13.RecipeModel? editableRecipe})
       : super(RecipeEditor.name,
             path: '/recipe-editor',
             args: RecipeEditorArgs(
@@ -375,7 +316,7 @@ class RecipeEditorArgs {
 
   final String title;
 
-  final _i14.RecipeModel? editableRecipe;
+  final _i13.RecipeModel? editableRecipe;
 
   @override
   String toString() {
@@ -431,7 +372,7 @@ class HomeRoute extends _i6.PageRouteInfo<void> {
 /// generated route for
 /// [_i8.RecipeListPage]
 class RecipeListRoute extends _i6.PageRouteInfo<RecipeListRouteArgs> {
-  RecipeListRoute({_i12.Key? key, List<_i15.CategoryModel>? categoryFilters})
+  RecipeListRoute({_i12.Key? key, List<_i14.CategoryModel>? categoryFilters})
       : super(RecipeListRoute.name,
             path: 'browse',
             args: RecipeListRouteArgs(
@@ -445,7 +386,7 @@ class RecipeListRouteArgs {
 
   final _i12.Key? key;
 
-  final List<_i15.CategoryModel>? categoryFilters;
+  final List<_i14.CategoryModel>? categoryFilters;
 
   @override
   String toString() {
@@ -464,7 +405,7 @@ class CategoriesRoute extends _i6.PageRouteInfo<void> {
 /// generated route for
 /// [_i8.RecipeListPage]
 class CategoryRoute extends _i6.PageRouteInfo<CategoryRouteArgs> {
-  CategoryRoute({_i12.Key? key, List<_i15.CategoryModel>? categoryFilters})
+  CategoryRoute({_i12.Key? key, List<_i14.CategoryModel>? categoryFilters})
       : super(CategoryRoute.name,
             path: 'recipe-list-page',
             args:
@@ -478,7 +419,7 @@ class CategoryRouteArgs {
 
   final _i12.Key? key;
 
-  final List<_i15.CategoryModel>? categoryFilters;
+  final List<_i14.CategoryModel>? categoryFilters;
 
   @override
   String toString() {
@@ -489,7 +430,7 @@ class CategoryRouteArgs {
 /// generated route for
 /// [_i8.RecipeListPage]
 class SearchRoute extends _i6.PageRouteInfo<SearchRouteArgs> {
-  SearchRoute({_i12.Key? key, List<_i15.CategoryModel>? categoryFilters})
+  SearchRoute({_i12.Key? key, List<_i14.CategoryModel>? categoryFilters})
       : super(SearchRoute.name,
             path: '',
             args: SearchRouteArgs(key: key, categoryFilters: categoryFilters));
@@ -502,7 +443,7 @@ class SearchRouteArgs {
 
   final _i12.Key? key;
 
-  final List<_i15.CategoryModel>? categoryFilters;
+  final List<_i14.CategoryModel>? categoryFilters;
 
   @override
   String toString() {

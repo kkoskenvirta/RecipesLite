@@ -46,19 +46,24 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  // loginWithProvider(String provider) async {
-  //   emit(state.copyWith(status: AuthStateStatus.uninitialized, inProgress: true));
+  loginWithProvider(String token) async {
+    emit(state.copyWith(status: AuthStateStatus.uninitialized, inProgress: true));
 
-  //   final failureOrAuth = await _authRepository.loginWithProvider(provider: provider);
-  //   failureOrAuth.fold(
-  //     (error) => emit(state.copyWith(
-  //       inProgress: false,
-  //       status: AuthStateStatus.unauthenticated,
-  //       error: error,
-  //     )),
-  //     (_) {},
-  //   );
-  // }
+    final failureOrAuth = await _authRepository.refreshAccessToken(refreshToken: token);
+    failureOrAuth.fold(
+      (error) => emit(state.copyWith(
+        inProgress: false,
+        status: AuthStateStatus.unauthenticated,
+        error: error,
+      )),
+      (_) => emit(
+        state.copyWith(
+          inProgress: false,
+          status: AuthStateStatus.authenticated,
+        ),
+      ),
+    );
+  }
 
   logout() async {
     try {

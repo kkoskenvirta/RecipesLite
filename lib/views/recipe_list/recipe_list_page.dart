@@ -99,7 +99,7 @@ class _RecipeListScrollViewState extends State<RecipeListScrollView> {
           titleSpacing: 0.0,
           actions: const [SortButton()],
           floating: true,
-          pinned: true,
+          pinned: false,
           snap: true,
           scrolledUnderElevation: 0,
           title: widget.showSearchBar
@@ -110,7 +110,6 @@ class _RecipeListScrollViewState extends State<RecipeListScrollView> {
                   text: widget.categoryFilters != null ? widget.categoryFilters![0].name : "Browse",
                   fontSize: FontSize.large,
                 ),
-          bottom: FilterChips(size: 148.0),
         ),
         const _Body(),
       ],
@@ -276,7 +275,7 @@ class _FilterChipsState extends State<FilterChips> with TickerProviderStateMixin
             return AppBarFilterTags(
               tagList: tagList,
               animationController: _animationController,
-              tagFilters: state.tagFilters,
+              tagFilters: state.futureTagFilters,
               onSelect: BlocProvider.of<RecipeListCubit>(context).updateTagList,
             );
           default:
@@ -317,19 +316,34 @@ class SortModal extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RecipeListCubit, RecipeListState>(
       builder: (context, state) {
+        final changesMade = state.futureSort != state.sort || state.futureTagFilters != state.tagFilters;
         return Container(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(Dimensions.radius15)),
-          height: 320,
+          height: 340,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
             child: Column(children: [
+              const SizedBox(
+                height: 8,
+              ),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 2),
+                  child: SmallText(text: "Dietary tags:"),
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              FilterChips(size: 100.0),
               const SizedBox(
                 height: 12,
               ),
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.only(left: 16),
+                  padding: EdgeInsets.only(left: 2),
                   child: SmallText(text: "Sort by:"),
                 ),
               ),
@@ -342,74 +356,66 @@ class SortModal extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
-              RadioListTile(
-                visualDensity: const VisualDensity(horizontal: -2, vertical: -3),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-                title: const SmallText(
-                  text: "Most favorited",
-                  fontSize: FontSize.smallPlus,
-                  color: Colors.black87,
-                ),
-                value: SortBy.favoritesDesc,
-                groupValue: state.sort,
-                onChanged: <SortBy>(value) {
-                  changeSortMethod(context, value, state);
-                },
-              ),
-              RadioListTile(
-                visualDensity: const VisualDensity(horizontal: -2, vertical: -3),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-                title: const SmallText(
-                  text: "New",
-                  fontSize: FontSize.smallPlus,
-                  color: Colors.black87,
-                ),
-                value: SortBy.newest,
-                groupValue: state.sort,
-                onChanged: <SortBy>(value) {
-                  changeSortMethod(context, value, state);
-                },
-              ),
-              RadioListTile(
-                visualDensity: const VisualDensity(horizontal: -2, vertical: -3),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-                title: const SmallText(
-                  text: "Oldest",
-                  fontSize: FontSize.smallPlus,
-                  color: Colors.black87,
-                ),
-                value: SortBy.oldest,
-                groupValue: state.sort,
-                onChanged: <SortBy>(value) {
-                  changeSortMethod(context, value, state);
-                },
-              ),
-              RadioListTile(
-                visualDensity: const VisualDensity(horizontal: -2, vertical: -3),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-                title: const SmallText(
-                  text: "Least Liked",
-                  fontSize: FontSize.smallPlus,
-                  color: Colors.black87,
-                ),
-                value: SortBy.favoritesAsc,
-                groupValue: state.sort,
-                onChanged: <SortBy>(value) {
-                  changeSortMethod(context, value, state);
-                },
+              Row(
+                children: [
+                  ChoiceChip(
+                    label: SmallText(
+                      text: "Most liked",
+                      color: SortBy.favoritesDesc == state.futureSort ? Colors.white : Colors.black87,
+                      fontSize: FontSize.small,
+                    ),
+                    selected: SortBy.favoritesDesc == state.futureSort,
+                    onSelected: (value) {
+                      BlocProvider.of<RecipeListCubit>(context).updateSort(SortBy.favoritesDesc);
+                    },
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  ChoiceChip(
+                    label: SmallText(
+                      text: "Newest",
+                      color: SortBy.newest == state.futureSort ? Colors.white : Colors.black87,
+                      fontSize: FontSize.small,
+                    ),
+                    selected: SortBy.newest == state.futureSort,
+                    onSelected: (value) {
+                      BlocProvider.of<RecipeListCubit>(context).updateSort(SortBy.newest);
+                    },
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  ChoiceChip(
+                    label: SmallText(
+                      text: "Oldest",
+                      color: SortBy.oldest == state.futureSort ? Colors.white : Colors.black87,
+                      fontSize: FontSize.small,
+                    ),
+                    selected: SortBy.oldest == state.futureSort,
+                    onSelected: (value) {
+                      BlocProvider.of<RecipeListCubit>(context).updateSort(SortBy.oldest);
+                    },
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 10,
               ),
               ElevatedButton(
                 onPressed: () {
+                  if (changesMade) {
+                    BlocProvider.of<RecipeListCubit>(context).applyFilterChanges();
+                    Navigator.pop(context);
+                    return;
+                  }
                   Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size.fromHeight(50),
                 ),
-                child: const SmallText(
-                  text: "CLOSE",
+                child: SmallText(
+                  text: changesMade ? "APPLY " : "CLOSE",
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
                 ),
@@ -419,11 +425,5 @@ class SortModal extends StatelessWidget {
         );
       },
     );
-  }
-
-  void changeSortMethod(BuildContext context, value, RecipeListState state) {
-    BlocProvider.of<RecipeListCubit>(context).updateSort(value);
-    BlocProvider.of<RecipeListCubit>(context).getRecipes(state.categoryFilters);
-    Navigator.pop(context);
   }
 }

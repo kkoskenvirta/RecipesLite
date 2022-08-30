@@ -75,14 +75,18 @@ class RecipeListCubit extends Cubit<RecipeListState> {
 
   updateSort(SortBy sort) {
     emit(state.copyWith(
-      sort: sort,
-      recipeListPage: 1,
-      recipeList: [],
+      futureSort: sort,
+    ));
+  }
+
+  cancelSortUpdate() {
+    emit(state.copyWith(
+      futureSort: state.sort,
     ));
   }
 
   updateTagList(TagModel newTag, bool status) {
-    List<TagModel> filterList = [...state.tagFilters];
+    List<TagModel> filterList = [...state.futureTagFilters];
     final selected = filterList.where((tag) => tag.id == newTag.id);
     if (selected.isEmpty) {
       filterList.add(newTag);
@@ -90,7 +94,18 @@ class RecipeListCubit extends Cubit<RecipeListState> {
       filterList.removeWhere((tag) => tag.id == newTag.id);
     }
     emit(state.copyWith(
-      tagFilters: filterList,
+      futureTagFilters: filterList,
+    ));
+  }
+
+  cancelTagUpdate() {
+    emit(state.copyWith(futureTagFilters: state.tagFilters));
+  }
+
+  applyFilterChanges() {
+    emit(state.copyWith(
+      sort: state.futureSort,
+      tagFilters: state.futureTagFilters,
       recipeListPage: 1,
       recipeList: [],
       noMoreResults: false,

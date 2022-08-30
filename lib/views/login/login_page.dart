@@ -1,12 +1,16 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_e_commerce/config/api_config.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
 import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_web_auth/flutter_web_auth.dart';
 
 import '../../global/blocks/auth/cubit/auth_cubit.dart';
 import '../../repositorys/auth_repository.dart';
@@ -20,6 +24,7 @@ class LoginPage extends StatelessWidget {
     final passwordController = TextEditingController(text: '');
     final authCubit = BlocProvider.of<AuthCubit>(context);
     final router = AutoRouter.of(context);
+    FlutterAppAuth appAuth = FlutterAppAuth();
 
     return Scaffold(
       appBar: MainAppBar(
@@ -90,60 +95,38 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                // SignInButton(
-                //   elevation: 0,
-                //   Buttons.Google,
-                //   onPressed: () async => authCubit.loginWithProvider('google'),
-                // ),
-                // ElevatedButton.icon(
-                //   icon: FaIcon(
-                //     FontAwesomeIcons.google,
-                //     color: Colors.red,
-                //   ),
-                //   style: ElevatedButton.styleFrom(
-                //     minimumSize: const Size.fromHeight(50), // NEW
-                //     backgroundColor: RecipeAppTheme.colors.blueAccent,
-                //   ),
-                //   onPressed: () async => authCubit.loginWithProvider('google'),
-                //   // onPressed: () async => showBottom,
-                //   label: LargeText(
-                //     text: 'LOGIN WITH GOOGLE',
-                //     size: 16,
-                //     color: Colors.white,
-                //   ),
-                // ),
-                // ElevatedButton.icon(
-                //   icon: FaIcon(
-                //     FontAwesomeIcons.google,
-                //     color: Colors.red,
-                //   ),
-                //   style: ElevatedButton.styleFrom(
-                //     minimumSize: const Size.fromHeight(50), // NEW
-                //     backgroundColor: RecipeAppTheme.colors.blueAccent,
-                //   ),
-                //   onPressed: () async => showDialog(
-                //     context: context,
-                //     barrierDismissible: true,
-                //     builder: (context) => Container(
-                //       width: MediaQuery.of(context).size.width,
-                //       height: MediaQuery.of(context).size.height,
-                //       child: WebView(
-                //         initialUrl:
-                //             '${baseUrl}auth/login/google?redirect=recipeslite://?state=code=4/0AdQt8qhsiEuJwaLUQxDw2oziS6O8D-FRkBSqeZ9CvVNf6fxuwqyQIXYEbaPG83mkQcjsrg&scope=email+profile+openid+https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile&authuser=0&prompt=none',
-                //       ),
-                //     ),
-                //   ),
-                //   // onPressed: () async => showBottom,
-                //   label: LargeText(
-                //     text: 'LOGIN WITH GOOGLE',
-                //     size: 16,
-                //     color: Colors.white,
-                //   ),
-                // ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(50), // NEW
+                    backgroundColor: RecipeAppTheme.colors.blueAccent,
+                  ),
+                  onPressed: () async {
+                    try {
+                      // Present the dialog to the user
+                      final result = await FlutterWebAuth.authenticate(
+                          url:
+                              "https://directus-em2ehfwczq-ew.a.run.app/auth/login/google?prompt=consent&redirect=https://directus-em2ehfwczq-ew.a.run.app/redirect-with-token?redirect=recipeslite://login-callback?refresh_token=",
+                          callbackUrlScheme: "recipeslite");
+
+                      final refreshToken = Uri.parse(result).queryParameters['refresh_token'];
+                      print('response: $refreshToken');
+                      if (refreshToken != null) {
+                        authCubit.loginWithProvider(refreshToken);
+                      }
+                    } catch (e) {
+                      return;
+                    }
+                  },
+                  // onPressed: () async => showBottom,
+                  child: LargeText(
+                    text: 'LOGIN WITH GOOGLE',
+                    fontSize: FontSize.medium,
+                    color: Colors.white,
+                  ),
+                ),
                 const SizedBox(
                   height: 10,
                 ),
-
                 const Align(
                   alignment: Alignment.center,
                   child: SmallText(

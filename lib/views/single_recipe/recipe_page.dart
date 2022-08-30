@@ -200,16 +200,6 @@ class _RecipePageState extends State<RecipePage> with TickerProviderStateMixin {
                                                       size: 30,
                                                     ),
                                                   ),
-                                            // Positioned.fill(
-                                            //   bottom: 2,
-                                            //   child: Align(
-                                            //     alignment: Alignment.bottomCenter,
-                                            //     child: SmallText(
-                                            //         text: favorited
-                                            //             ? (int.parse(recipe.favoritesCount!) + 1).toString()
-                                            //             : recipe.favoritesCount!),
-                                            //   ),
-                                            // )
                                           ],
                                         );
                                       },
