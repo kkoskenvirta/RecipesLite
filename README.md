@@ -34,14 +34,13 @@ RecipesLite is a open recipes book built with Flutter!
 - Directus CMS
 - Google Cloud Run
 
+## Videos and screenshots
 
 https://user-images.githubusercontent.com/97504729/187674752-94cff9f4-df80-4771-9b89-095dcd8c8faf.mp4
 
 https://user-images.githubusercontent.com/97504729/187674552-cb876ec7-b42f-4f05-b5be-6e91dd2362ef.mp4
 
 
-
-## Screenshots
 <p float="left">
   <img src="https://user-images.githubusercontent.com/97504729/187646490-ee19b939-d14e-4ef7-bf75-d41ac5279f63.PNG" width="33%" />
   <img src="https://user-images.githubusercontent.com/97504729/187646530-ec192a6a-33df-45eb-99b4-bd8878cb5287.PNG" width="33%" /> 
