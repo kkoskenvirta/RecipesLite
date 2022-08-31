@@ -12,7 +12,7 @@ RecipesLite is a open recipes book built with Flutter!
 ## Functionalities
 - SSO Sign in
 - Sign in with google ✅ 
-- Apple sign in coming soon
+- Apple sign in coming soon ☠️
 - Email registration
 - Ability to browse recipe
 - Ability for users to create public recipes
