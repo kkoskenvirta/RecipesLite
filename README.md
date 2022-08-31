@@ -28,6 +28,7 @@ RecipesLite is a open recipes book built with Flutter!
 ### Flutter
 - Bloc
 - Autoroute
+- Freezed
 
 ### Backend
 - Directus CMS
