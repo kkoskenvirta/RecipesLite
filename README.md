@@ -1,16 +1,20 @@
-# flutter_e_commerce
+# RecipesLite
 
-A new Flutter project.
+RecipesLite is a open recipes book built with Flutter!
 
-## Getting Started
+## Goals
 
-This project is a starting point for a Flutter application.
+Building a bloat free recipes book for people to share their cooking recipes without the huge amounts of ads and blog texts that are far too common when searching for recipes online.
 
-A few resources to get you started if this is your first Flutter project:
+## Functionalities
+- SSO Sign in
+- Sign in with google ✅ 
+- Apple sign in coming soon. 
+- Email registration
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Ability to browse recipe
+- Ability for users to create and publicly shate recipes
+- Add image and categorization to recipes
+- Ability for users to modify their recipes
+- Sort, filter and search different recipes
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
