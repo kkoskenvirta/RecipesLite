@@ -21,6 +21,7 @@ RecipesLite is a open recipes book built with Flutter!
 - Sort, filter and search different recipes
 - Browse recipes by categories
 - Loader skeletons
+- Infinite scrolling and pagination
 
 ## Technical choices
 
