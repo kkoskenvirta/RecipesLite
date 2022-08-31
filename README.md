@@ -5,8 +5,8 @@ RecipesLite is a open recipes book built with Flutter!
 ## Goals
 - Open recipe book without bloat from ads or blogs
 - Open for all users
-- SSO authenticatino
-- Multiplatform
+- SSO authentication
+- Multiplatform support
 
 
 ## Functionalities
@@ -20,6 +20,16 @@ RecipesLite is a open recipes book built with Flutter!
 - Add image and categorization to recipes
 - Ability for users to modify their recipes
 - Sort, filter and search different recipes
+
+## Technical choices
+
+### Flutter
+- Bloc
+- Autoroute
+
+### Backend
+- Directus CMS
+- Google Cloud Run
 
 
 ## Screenshots
