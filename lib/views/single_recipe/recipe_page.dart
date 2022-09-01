@@ -97,7 +97,7 @@ class _RecipePageState extends State<RecipePage> with TickerProviderStateMixin {
                             // curve: Curves.easeInOutSine,
                             curve: Curves.easeInOutSine,
                             duration: const Duration(milliseconds: 500),
-                            height: _animateHeight,
+                            height: Dimensions.recipeImgSize - 80,
                             // height: Dimensions.recipeImgSize,
                           ),
                           Container(

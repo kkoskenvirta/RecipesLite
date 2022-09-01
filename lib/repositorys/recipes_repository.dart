@@ -26,10 +26,10 @@ class RecipesRepository {
     String sortString;
     switch (sort) {
       case SortBy.favoritesAsc:
-        sortString = "&sort=-count(favorites)";
+        sortString = "&sort=count(favorites)";
         break;
       case SortBy.favoritesDesc:
-        sortString = "&sort=count(favorites)";
+        sortString = "&sort=-count(favorites)";
         break;
       case SortBy.newest:
         sortString = "&sort=date_created";
@@ -85,7 +85,8 @@ class RecipesRepository {
       String categoryQueryString = "";
       String sortQuery = getSortString(sort);
       String searchQuery = "";
-      String filterQuery = "";
+      String filterQuery =
+          '&filter={"_and":[{"_and":[{"status":{"_eq":"published"}}]},{"status":{"_neq":"archived"}}]}';
 
       if (limit != null) {
         resultLimit = '&limit=$limit';
@@ -98,7 +99,7 @@ class RecipesRepository {
         searchQuery =
             ',{"_or":[{"name":{"_icontains":"$search"}},{"categories":{"category_id":{"name":{"_icontains":"$search"}}}},{"tags":{"tag_id":{"name":{"_icontains":"$search"}}}}';
         filterQuery =
-            '&filter={"_and":[{"_and":[{"_and":[{"_or":[{"name":{"_icontains":"$search"}},{"categories":{"category_id":{"name":{"_icontains":"$search"}}}},{"tags":{"tag_id":{"name":{"_icontains":"$search"}}}}]}]}]},{"status":{"_neq":"archived"}}]}';
+            '&filter={"_and":[{"_and":[{"_and":[{"_or":[{"name":{"_icontains":"$search"}},{"categories":{"category_id":{"name":{"_icontains":"$search"}}}},{"tags":{"tag_id":{"name":{"_icontains":"$search"}}}}]}]}]},{"status":{"_eq":"published"}}]}';
       }
 
       if (categories.isNotEmpty) {
@@ -106,10 +107,10 @@ class RecipesRepository {
           return '{"categories":{"category_id":{"id":{"_eq":"${category.id}"}}}}';
         }).toList();
         categoryQueryString = categoryQueryList.join(',');
-        filterQuery = '&filter={"_and":[{"_and":[{"_and":[$categoryQueryString]}]},{"status":{"_neq":"archived"}}]}';
+        filterQuery = '&filter={"_and":[{"_and":[{"_and":[$categoryQueryString]}]},{"status":{"_eq":"published"}}]}';
         if (searchQuery.isNotEmpty) {
           filterQuery =
-              '&filter={"_and":[{"_and":[{"_and":[$categoryQueryString$searchQuery]}]},{"status":{"_neq":"archived"}}]}]}';
+              '&filter={"_and":[{"_and":[{"_and":[$categoryQueryString$searchQuery]}]},{"status":{"_eq":"published"}}]}]}';
         }
       }
 
@@ -118,19 +119,19 @@ class RecipesRepository {
           return '{"tags":{"tag_id":{"id":{"_eq":"${tag.id}"}}}}';
         }).toList();
         tagQueryString = tagQueryList.join(',');
-        filterQuery = '&filter={"_and":[{"_and":[{"_and":[$tagQueryString]}]},{"status":{"_neq":"archived"}}]}';
+        filterQuery = '&filter={"_and":[{"_and":[{"_and":[$tagQueryString]}]},{"status":{"_eq":"published"}}]}';
         if (searchQuery.isNotEmpty) {
           filterQuery =
-              '&filter={"_and":[{"_and":[{"_and":[$tagQueryString$searchQuery]}]},{"status":{"_neq":"archived"}}]}]}';
+              '&filter={"_and":[{"_and":[{"_and":[$tagQueryString$searchQuery]}]},{"status":{"_eq":"published"}}]}]}';
         }
       }
 
       if (tags.isNotEmpty && categories.isNotEmpty) {
         filterQuery =
-            '&filter={"_and":[{"_and":[{"_and":[$tagQueryString,$categoryQueryString$searchQuery]}]},{"status":{"_neq":"archived"}}]}';
+            '&filter={"_and":[{"_and":[{"_and":[$tagQueryString,$categoryQueryString$searchQuery]}]},{"status":{"_eq":"published"}}]}';
         if (searchQuery.isNotEmpty) {
           filterQuery =
-              '&filter={"_and":[{"_and":[{"_and":[$tagQueryString,$categoryQueryString$searchQuery]}]},{"status":{"_neq":"archived"}}]}]}';
+              '&filter={"_and":[{"_and":[{"_and":[$tagQueryString,$categoryQueryString$searchQuery]}]},{"status":{"_eq":"published"}}]}]}';
         }
       }
 
@@ -150,7 +151,7 @@ class RecipesRepository {
   Future<Either<FetchError, List<RecipeModel>?>> getRecipesListWithCategory(CategoryModel category) async {
     try {
       final String filterQuery =
-          '&filter={"_and":[{"_and":[{"categories":{"category_id":{"id":{"_eq":"${category.id}"}}}}]},{"status":{"_neq":"archived"}}]}';
+          '&filter={"_and":[{"_and":[{"categories":{"category_id":{"id":{"_eq":"${category.id}"}}}}]},{"status":{"_eq":"published"}}]}';
       final Response response = await _tokenDio.get('$baseUrl$recipesPathFields$filterQuery');
 
       final recipesDTO = RecipeDTO.fromJson(response.data);

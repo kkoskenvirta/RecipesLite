@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/repositorys/auth_repository.dart';
 import 'package:flutter_e_commerce/repositorys/secure_storage_repository.dart';
+import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'auth_cubit.freezed.dart';
@@ -44,6 +45,23 @@ class AuthCubit extends Cubit<AuthState> {
         emit(state.copyWith(status: AuthStateStatus.authenticated));
       },
     );
+  }
+
+  loginWithGoogle() async {
+    try {
+      final result = await FlutterWebAuth.authenticate(
+          url:
+              "https://directus-em2ehfwczq-ew.a.run.app/auth/login/google?prompt=consent&redirect=https://directus-em2ehfwczq-ew.a.run.app/redirect-with-token?redirect=recipeslite://login-callback?refresh_token=",
+          callbackUrlScheme: "recipeslite");
+
+      final refreshToken = Uri.parse(result).queryParameters['refresh_token'];
+      print('response: $refreshToken');
+      if (refreshToken != null) {
+        loginWithProvider(refreshToken);
+      }
+    } catch (e) {
+      return;
+    }
   }
 
   loginWithProvider(String token) async {

@@ -17,10 +17,8 @@ class CategoryRepository {
   Future<Either<CategoryFetchError, List<CategoryModel>?>> getCategoryList() async {
     try {
       final Response response = await _dio.get(categoryPath);
-
       final categoriesDTO = CategoryDTO.fromJson(response.data);
       final categories = categoriesDTO.data.map((categoryDataDTO) => categoryDataDTO.toDomain()).toList();
-
       return right(categories);
     } catch (e) {
       if (e is DioError && e.response?.statusCode == 400) return left(CategoryFetchError.invalidPayload);
@@ -32,10 +30,8 @@ class CategoryRepository {
   Future<Either<CategoryFetchError, List<TagModel>?>> getTagList() async {
     try {
       final Response response = await _dio.get(tagPath);
-
       final tagsDTO = TagDTO.fromJson(response.data);
       final tags = tagsDTO.data.map((tagDataDTO) => tagDataDTO.toDomain()).toList();
-
       return right(tags);
     } catch (e) {
       if (e is DioError && e.response?.statusCode == 400) return left(CategoryFetchError.invalidPayload);

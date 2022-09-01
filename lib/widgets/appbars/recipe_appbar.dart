@@ -47,48 +47,53 @@ class RecipeAppBar extends StatelessWidget implements PreferredSizeWidget {
       builder: (context, state) {
         loadedRecipe = state.recipe;
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10.0,
+          ),
           child: AppBar(
             backgroundColor: transparent ? Colors.transparent : null,
             shadowColor: transparent ? Colors.transparent : null,
             elevation: transparent ? 0 : null,
-            leading: Material(
-              elevation: 4,
-              child: IconButton(
-                icon: Icon(
-                  Icons.chevron_left_rounded,
-                  color: RecipeAppTheme.colors.pinkAccent,
+            leading: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Material(
+                elevation: 2,
+                borderRadius: BorderRadius.circular(50),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.chevron_left_rounded,
+                    color: RecipeAppTheme.colors.pinkAccent,
+                  ),
+                  onPressed: () => Navigator.of(context).pop(),
                 ),
-                onPressed: () => Navigator.of(context).pop(),
               ),
             ),
             actions: [
               if (showEditButton && permission)
-                Container(
-                  height: 55,
-                  width: 55,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      color: Colors.white,
-                      boxShadow: [RecipeAppTheme.shadows.normal]),
-                  child: IconButton(
-                    onPressed: () async {
-                      final singleRecipeCubit = BlocProvider.of<SingleRecipeCubit>(context);
-                      final RecipeModel? editedRecipe = await router.push<dynamic>(
-                        RecipeEditor(
-                          title: "Edit recipe",
-                          editableRecipe: loadedRecipe,
-                        ),
-                      );
-                      if (editedRecipe != null) {
-                        singleRecipeCubit.emitUpdatedRecipe(editedRecipe);
-                      }
-                    },
-                    icon: Icon(
-                      Icons.edit,
-                      color: RecipeAppTheme.colors.pinkAccent,
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Material(
+                    borderRadius: BorderRadius.circular(50),
+                    elevation: 2,
+                    child: IconButton(
+                      onPressed: () async {
+                        final singleRecipeCubit = BlocProvider.of<SingleRecipeCubit>(context);
+                        final RecipeModel? editedRecipe = await router.push<dynamic>(
+                          RecipeEditor(
+                            title: "Edit recipe",
+                            editableRecipe: loadedRecipe,
+                          ),
+                        );
+                        if (editedRecipe != null) {
+                          singleRecipeCubit.emitUpdatedRecipe(editedRecipe);
+                        }
+                      },
+                      icon: Icon(
+                        Icons.edit,
+                        color: RecipeAppTheme.colors.pinkAccent,
+                      ),
+                      color: RecipeAppTheme.colors.pinkMedium,
                     ),
-                    color: RecipeAppTheme.colors.pinkMedium,
                   ),
                 )
             ],

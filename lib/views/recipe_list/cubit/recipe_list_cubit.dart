@@ -3,6 +3,7 @@ import 'package:flutter_e_commerce/models/category/category_model.dart';
 import 'package:flutter_e_commerce/models/tag/tag_model.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
+import 'package:flutter_e_commerce/utils/debouncer.dart';
 import 'package:flutter_e_commerce/utils/sort.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
@@ -51,6 +52,8 @@ class RecipeListCubit extends Cubit<RecipeListState> {
         }
         List<RecipeModel> recipeList = [...state.recipeList!];
         recipeList.addAll(newRecipes);
+        //Remove duplicates
+        recipeList = recipeList.toSet().toList();
         emit(state.copyWith(
           listStatus: RecipeListStatus.loaded,
           fetchingMore: RecipeListStatus.loaded,
@@ -114,22 +117,16 @@ class RecipeListCubit extends Cubit<RecipeListState> {
   }
 
   updateSearchString(String string) {
-    emit(state.copyWith(
-      searchString: string,
-      recipeListPage: 1,
-      recipeList: [],
-    ));
+    emit(state.copyWith(searchString: string, recipeListPage: 1, recipeList: []));
+    final debouncer = Debouncer(milliseconds: 250);
+    debouncer.run(() {
+      getRecipes(state.categoryFilters);
+    });
   }
 
   resetSearch() {
     emit(
-      state.copyWith(
-        listStatus: RecipeListStatus.initial,
-        recipeListPage: 1,
-        recipeList: [],
-        searchString: "",
-      ),
+      state.copyWith(searchString: ""),
     );
-    getRecipes(state.categoryFilters);
   }
 }

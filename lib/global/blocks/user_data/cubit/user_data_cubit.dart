@@ -47,7 +47,8 @@ class UserDataCubit extends Cubit<UserDataState> {
   }
 
   _getUserRecipes(UserModel currentUser) async {
-    final String filters = '&filter={"user_created":{"_eq": "${currentUser.id}"}}';
+    final String filters =
+        '&filter={"_and":[{"_and":[{"user_created":{"_eq": "${currentUser.id}"}}]},{"status":{"_neq":"archived"}}]}';
     final errorOrRecipes = await _recipesRepository.getRecipesList(filters: filters);
     errorOrRecipes.fold(
       (err) => emit(state.copyWith(status: UserDataStateStatus.error)),

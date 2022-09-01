@@ -5,10 +5,8 @@ import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
-import 'package:flutter_e_commerce/widgets/custom_toast.dart';
 import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
 import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
-import 'package:flutter_web_auth/flutter_web_auth.dart';
 
 import '../../global/blocks/auth/cubit/auth_cubit.dart';
 import '../../repositorys/auth_repository.dart';
@@ -108,16 +106,7 @@ class LoginPage extends StatelessWidget {
                   onPressed: () async {
                     try {
                       // Present the dialog to the user
-                      final result = await FlutterWebAuth.authenticate(
-                          url:
-                              "https://directus-em2ehfwczq-ew.a.run.app/auth/login/google?prompt=consent&redirect=https://directus-em2ehfwczq-ew.a.run.app/redirect-with-token?redirect=recipeslite://login-callback?refresh_token=",
-                          callbackUrlScheme: "recipeslite");
-
-                      final refreshToken = Uri.parse(result).queryParameters['refresh_token'];
-                      print('response: $refreshToken');
-                      if (refreshToken != null) {
-                        authCubit.loginWithProvider(refreshToken);
-                      }
+                      authCubit.loginWithGoogle();
                     } catch (e) {
                       return;
                     }

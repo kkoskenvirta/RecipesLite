@@ -106,28 +106,20 @@ class SearchBar extends StatelessWidget implements PreferredSizeWidget {
           ..selection = TextSelection.collapsed(offset: state.searchString.length);
         return Padding(
           padding: const EdgeInsets.only(left: 12.0, right: 12, top: 0, bottom: 8),
-          child: CupertinoSearchTextField(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-            placeholder: "Search for recipes",
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
-                // border: Border.all(color: RecipeAppTheme.colors.pinkLightLow, width: 2),
-                boxShadow: [RecipeAppTheme.shadows.wide]),
-            itemSize: 26,
-            controller: searchController,
-            prefixIcon: const Icon(
-              Icons.search,
+          child: TextField(
+            decoration: InputDecoration(
+              hintText: "Search for recipes",
+              suffixIcon: IconButton(
+                  onPressed: () {
+                    if (searchController.value.text.isEmpty) {
+                      Navigator.pop(context);
+                    } else {
+                      searchCubit.resetSearch();
+                      searchController.text = "";
+                    }
+                  },
+                  icon: const Icon(Icons.close_rounded)),
             ),
-            suffixIcon: const Icon(Icons.close_rounded),
-            onSuffixTap: () {
-              if (searchController.value.text.isEmpty) {
-                Navigator.pop(context);
-              } else {
-                searchCubit.resetSearch();
-                searchController.text = "";
-              }
-            },
             onChanged: ((value) async {
               if (value == "") {
                 searchCubit.resetSearch();
@@ -137,6 +129,40 @@ class SearchBar extends StatelessWidget implements PreferredSizeWidget {
               }
             }),
           ),
+          // child: CupertinoSearchTextField(
+          //   padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+          //   placeholder: "Search for recipes",
+          //   decoration: BoxDecoration(
+          //     color: Colors.white,
+          //     borderRadius: BorderRadius.circular(8),
+
+          //     // border: Border.all(color: RecipeAppTheme.colors.pinkLightLow, width: 2),
+          //     boxShadow: [RecipeAppTheme.shadows.wide],
+          //   ),
+
+          //   itemSize: 26,
+          //   controller: searchController,
+          //   prefixIcon: const Icon(
+          //     Icons.search,
+          //   ),
+          //   suffixIcon: const Icon(Icons.close_rounded),
+          //   onSuffixTap: () {
+          //     if (searchController.value.text.isEmpty) {
+          //       Navigator.pop(context);
+          //     } else {
+          //       searchCubit.resetSearch();
+          //       searchController.text = "";
+          //     }
+          //   },
+          //   onChanged: ((value) async {
+          //     if (value == "") {
+          //       searchCubit.resetSearch();
+          //     }
+          //     if (value.isNotEmpty) {
+          //       searchCubit.searchRecipes(value);
+          //     }
+          //   }),
+          // ),
         );
       },
     );

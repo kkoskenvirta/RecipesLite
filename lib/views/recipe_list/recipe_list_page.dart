@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/models/category/category_model.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
+import 'package:flutter_e_commerce/utils/debouncer.dart';
 import 'package:flutter_e_commerce/utils/dimensions.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/utils/sort.dart';
@@ -138,38 +139,33 @@ class SearchBar extends StatelessWidget implements PreferredSizeWidget {
           ..text = state.searchString
           ..selection = TextSelection.collapsed(offset: state.searchString.length);
         return Padding(
-          padding: const EdgeInsets.only(left: 16, right: 0, top: 0, bottom: 0),
-          child: CupertinoSearchTextField(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-            placeholder: "Search for recipes",
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: RecipeAppTheme.colors.pinkMedium, width: 1.5),
-            ),
-            itemSize: 26,
+          padding: const EdgeInsets.only(left: 12, right: 0, top: 0, bottom: 0),
+          child: TextField(
             controller: searchController,
-            prefixIcon: const Icon(
-              Icons.search,
-              size: 22,
+            textInputAction: TextInputAction.search,
+            decoration: InputDecoration(
+              fillColor: Colors.white,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  width: 2,
+                  color: RecipeAppTheme.colors.pinkMedium,
+                ),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              hintText: "Search for recipes",
+              suffixIcon: state.searchString.isNotEmpty
+                  ? IconButton(
+                      onPressed: () {
+                        recipeListCubit.resetSearch();
+                        searchController.text = "";
+                        FocusManager.instance.primaryFocus?.unfocus();
+                      },
+                      icon: const Icon(Icons.close_rounded),
+                    )
+                  : const SizedBox(),
             ),
-            suffixIcon: const Icon(Icons.close_rounded),
-            onSuffixTap: () {
-              if (searchController.value.text.isEmpty) {
-                Navigator.pop(context);
-              } else {
-                recipeListCubit.resetSearch();
-                searchController.text = "";
-              }
-            },
-            onSubmitted: ((value) async {
-              if (value == "") {
-                recipeListCubit.resetSearch();
-              }
-              if (value.isNotEmpty) {
-                recipeListCubit.updateSearchString(value);
-                recipeListCubit.getRecipes(state.categoryFilters);
-              }
+            onChanged: ((value) async {
+              recipeListCubit.updateSearchString(value);
             }),
           ),
         );

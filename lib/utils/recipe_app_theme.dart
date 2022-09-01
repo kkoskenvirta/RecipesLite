@@ -24,6 +24,13 @@ class RecipeAppTheme {
           style: BorderStyle.none,
         ),
       ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(
+          width: 2,
+          color: colors.pinkMedium,
+        ),
+      ),
       filled: true,
       fillColor: colors.pinkLightLow,
     ),
