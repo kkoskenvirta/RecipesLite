@@ -24,21 +24,21 @@ class ConfirmationDialog extends StatelessWidget {
       actions: <Widget>[
         TextButton(
           child: SmallText(
-            text: confirmText,
+            text: declineText,
             fontSize: FontSize.smallPlus,
           ),
           onPressed: () {
-            Navigator.pop(context, true);
+            Navigator.pop(context, false);
           },
         ),
         ElevatedButton(
           child: SmallText(
-            text: declineText,
+            text: confirmText,
             fontSize: FontSize.smallPlus,
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.pop(context, false);
+            Navigator.pop(context, true);
           },
         ),
       ],

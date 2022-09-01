@@ -43,6 +43,7 @@ class RecipeListPage extends StatelessWidget {
             body: RecipeListScrollView(
               recipeListCubit: recipeListCubit,
               showSearchBar: categoryFilters == null ? true : false,
+              categoryFilters: categoryFilters,
             ),
           );
         },
@@ -106,7 +107,9 @@ class _RecipeListScrollViewState extends State<RecipeListScrollView> {
                   size: 50.0,
                 )
               : LargeText(
-                  text: widget.categoryFilters != null ? widget.categoryFilters![0].name : "Browse",
+                  text: widget.categoryFilters != null && widget.categoryFilters!.isNotEmpty
+                      ? widget.categoryFilters![0].name
+                      : "Browse",
                   fontSize: FontSize.large,
                 ),
         ),

@@ -8,6 +8,8 @@ class RecipeAppTheme {
   static final shadows = AppShadows();
   ThemeData themeData = ThemeData(
     splashFactory: NoSplash.splashFactory,
+    splashColor: Colors.transparent,
+    highlightColor: Colors.transparent,
     inputDecorationTheme: InputDecorationTheme(
       labelStyle: TextStyle(
         decorationColor: colors.pinkMediumPlus,

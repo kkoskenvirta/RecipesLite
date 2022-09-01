@@ -17,6 +17,7 @@ import 'package:flutter_e_commerce/widgets/ingredients_table.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
 import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
 import 'package:flutter_e_commerce/widgets/typography/content_text.dart';
+import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
 import '../../models/recipe/recipe_model.dart';
 
 class RecipePage extends StatefulWidget {
@@ -93,12 +94,8 @@ class _RecipePageState extends State<RecipePage> with TickerProviderStateMixin {
                       controller: scrollController,
                       child: Column(
                         children: [
-                          AnimatedContainer(
-                            // curve: Curves.easeInOutSine,
-                            curve: Curves.easeInOutSine,
-                            duration: const Duration(milliseconds: 500),
+                          SizedBox(
                             height: Dimensions.recipeImgSize - 80,
-                            // height: Dimensions.recipeImgSize,
                           ),
                           Container(
                             padding: EdgeInsets.symmetric(vertical: Dimensions.width15, horizontal: Dimensions.width20),
@@ -107,7 +104,7 @@ class _RecipePageState extends State<RecipePage> with TickerProviderStateMixin {
                               color: Colors.white,
                             ),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Row(
@@ -129,12 +126,16 @@ class _RecipePageState extends State<RecipePage> with TickerProviderStateMixin {
                                     BlocBuilder<UserDataCubit, UserDataState>(
                                       builder: (context, state) {
                                         final userDataCubit = BlocProvider.of<UserDataCubit>(context);
+                                        final singleRecipeCubit = BlocProvider.of<SingleRecipeCubit>(context);
                                         final result = state.favorites.where((favorite) => favorite.id == recipe.id);
                                         final bool favorited = result.isEmpty ? false : true;
 
-                                        return Stack(
-                                          children: [
-                                            state.status == UserDataStateStatus.loaded
+                                        return Padding(
+                                          padding: const EdgeInsets.only(left: 8),
+                                          child: SizedBox(
+                                            height: 70,
+                                            width: 50,
+                                            child: state.status == UserDataStateStatus.loaded
                                                 ? Container(
                                                     padding: const EdgeInsets.all(2),
                                                     decoration: BoxDecoration(
@@ -146,6 +147,7 @@ class _RecipePageState extends State<RecipePage> with TickerProviderStateMixin {
                                                     child: IconButton(
                                                       onPressed: () {
                                                         userDataCubit.toggleFavorites(recipe);
+                                                        singleRecipeCubit.updateFavoriteCount(favorited);
                                                         // _showToast(context, !favorited);
                                                         if (!favorited == true) {
                                                           const CustomToast().showToast(
@@ -161,15 +163,36 @@ class _RecipePageState extends State<RecipePage> with TickerProviderStateMixin {
                                                           );
                                                         }
                                                       },
-                                                      icon: favorited
-                                                          ? const Icon(
-                                                              Icons.favorite,
-                                                              size: 30,
-                                                            )
-                                                          : const Icon(
-                                                              Icons.favorite_border_rounded,
-                                                              size: 30,
-                                                            ),
+                                                      icon:
+                                                          Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+                                                        favorited
+                                                            ? const Icon(
+                                                                Icons.favorite,
+                                                                size: 28,
+                                                              )
+                                                            : const Icon(
+                                                                Icons.favorite_border_rounded,
+                                                                size: 28,
+                                                              ),
+                                                        const SizedBox(
+                                                          height: 4,
+                                                        ),
+                                                        BlocBuilder<SingleRecipeCubit, SingleRecipeState>(
+                                                          builder: (context, state) {
+                                                            return Container(
+                                                              height: 16,
+                                                              width: 70,
+                                                              decoration: BoxDecoration(
+                                                                  color: RecipeAppTheme.colors.pinkLightLow,
+                                                                  borderRadius: BorderRadius.circular(8)),
+                                                              child: Center(
+                                                                  child: SmallText(
+                                                                      text:
+                                                                          '${singleRecipeCubit.state.favoriteCount}')),
+                                                            );
+                                                          },
+                                                        )
+                                                      ]),
                                                     ),
                                                   )
                                                 : IconButton(
@@ -179,7 +202,7 @@ class _RecipePageState extends State<RecipePage> with TickerProviderStateMixin {
                                                       size: 30,
                                                     ),
                                                   ),
-                                          ],
+                                          ),
                                         );
                                       },
                                     ),

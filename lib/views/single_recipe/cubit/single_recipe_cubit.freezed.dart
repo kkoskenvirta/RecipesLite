@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$SingleRecipeState {
   SingleRecipeStateStatus get status => throw _privateConstructorUsedError;
+  int? get favoriteCount => throw _privateConstructorUsedError;
   RecipeModel? get recipe => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -29,7 +30,10 @@ abstract class $SingleRecipeStateCopyWith<$Res> {
   factory $SingleRecipeStateCopyWith(
           SingleRecipeState value, $Res Function(SingleRecipeState) then) =
       _$SingleRecipeStateCopyWithImpl<$Res>;
-  $Res call({SingleRecipeStateStatus status, RecipeModel? recipe});
+  $Res call(
+      {SingleRecipeStateStatus status,
+      int? favoriteCount,
+      RecipeModel? recipe});
 
   $RecipeModelCopyWith<$Res>? get recipe;
 }
@@ -46,6 +50,7 @@ class _$SingleRecipeStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = freezed,
+    Object? favoriteCount = freezed,
     Object? recipe = freezed,
   }) {
     return _then(_value.copyWith(
@@ -53,6 +58,10 @@ class _$SingleRecipeStateCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as SingleRecipeStateStatus,
+      favoriteCount: favoriteCount == freezed
+          ? _value.favoriteCount
+          : favoriteCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       recipe: recipe == freezed
           ? _value.recipe
           : recipe // ignore: cast_nullable_to_non_nullable
@@ -79,7 +88,10 @@ abstract class _$$_SingleRecipeStateCopyWith<$Res>
           $Res Function(_$_SingleRecipeState) then) =
       __$$_SingleRecipeStateCopyWithImpl<$Res>;
   @override
-  $Res call({SingleRecipeStateStatus status, RecipeModel? recipe});
+  $Res call(
+      {SingleRecipeStateStatus status,
+      int? favoriteCount,
+      RecipeModel? recipe});
 
   @override
   $RecipeModelCopyWith<$Res>? get recipe;
@@ -99,6 +111,7 @@ class __$$_SingleRecipeStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = freezed,
+    Object? favoriteCount = freezed,
     Object? recipe = freezed,
   }) {
     return _then(_$_SingleRecipeState(
@@ -106,6 +119,10 @@ class __$$_SingleRecipeStateCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as SingleRecipeStateStatus,
+      favoriteCount: favoriteCount == freezed
+          ? _value.favoriteCount
+          : favoriteCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       recipe: recipe == freezed
           ? _value.recipe
           : recipe // ignore: cast_nullable_to_non_nullable
@@ -117,16 +134,21 @@ class __$$_SingleRecipeStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_SingleRecipeState implements _SingleRecipeState {
-  const _$_SingleRecipeState({required this.status, required this.recipe});
+  const _$_SingleRecipeState(
+      {required this.status,
+      required this.favoriteCount,
+      required this.recipe});
 
   @override
   final SingleRecipeStateStatus status;
+  @override
+  final int? favoriteCount;
   @override
   final RecipeModel? recipe;
 
   @override
   String toString() {
-    return 'SingleRecipeState(status: $status, recipe: $recipe)';
+    return 'SingleRecipeState(status: $status, favoriteCount: $favoriteCount, recipe: $recipe)';
   }
 
   @override
@@ -135,6 +157,8 @@ class _$_SingleRecipeState implements _SingleRecipeState {
         (other.runtimeType == runtimeType &&
             other is _$_SingleRecipeState &&
             const DeepCollectionEquality().equals(other.status, status) &&
+            const DeepCollectionEquality()
+                .equals(other.favoriteCount, favoriteCount) &&
             const DeepCollectionEquality().equals(other.recipe, recipe));
   }
 
@@ -142,6 +166,7 @@ class _$_SingleRecipeState implements _SingleRecipeState {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(status),
+      const DeepCollectionEquality().hash(favoriteCount),
       const DeepCollectionEquality().hash(recipe));
 
   @JsonKey(ignore: true)
@@ -154,10 +179,13 @@ class _$_SingleRecipeState implements _SingleRecipeState {
 abstract class _SingleRecipeState implements SingleRecipeState {
   const factory _SingleRecipeState(
       {required final SingleRecipeStateStatus status,
+      required final int? favoriteCount,
       required final RecipeModel? recipe}) = _$_SingleRecipeState;
 
   @override
   SingleRecipeStateStatus get status;
+  @override
+  int? get favoriteCount;
   @override
   RecipeModel? get recipe;
   @override

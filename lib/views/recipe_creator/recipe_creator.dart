@@ -184,7 +184,7 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                               context: context,
                               title: "Discard changes",
                               text: "Current changes done to the recipe will be lost, do you wish to quit?",
-                              confirmText: "Quit",
+                              confirmText: "Discard changes",
                               declineText: "Stay",
                             );
                             if (!mounted) return;
@@ -435,7 +435,7 @@ class CustomStepperControls extends StatelessWidget {
                   visualDensity: VisualDensity.comfortable,
                 ),
                 onPressed: details.onStepCancel,
-                child: details.currentStep > 0 ? const Text("Previous") : const Text("Cancel"),
+                child: details.currentStep > 0 ? const Text("Previous") : const Text("Discard"),
               ),
             ),
             ConstrainedBox(

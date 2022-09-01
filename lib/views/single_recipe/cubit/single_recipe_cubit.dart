@@ -11,7 +11,11 @@ class SingleRecipeCubit extends Cubit<SingleRecipeState> {
 
   initializeRecipe(RecipeModel? recipeModel) async {
     try {
-      emit(state.copyWith(status: SingleRecipeStateStatus.loaded, recipe: recipeModel));
+      emit(state.copyWith(
+        status: SingleRecipeStateStatus.loaded,
+        recipe: recipeModel,
+        favoriteCount: int.parse(recipeModel!.favoritesCount!),
+      ));
     } catch (e) {
       emit(state.copyWith(status: SingleRecipeStateStatus.error));
     }
@@ -24,4 +28,7 @@ class SingleRecipeCubit extends Cubit<SingleRecipeState> {
       emit(state.copyWith(status: SingleRecipeStateStatus.error));
     }
   }
+
+  updateFavoriteCount(bool favorited) =>
+      emit(state.copyWith(favoriteCount: state.favoriteCount! + (favorited ? -1 : 1)));
 }
