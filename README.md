@@ -8,7 +8,6 @@ RecipesLite is a open recipes book built with Flutter!
 - SSO authentication
 - Multiplatform support
 
-
 ## Functionalities
 - SSO Sign in
 - Sign in with google ✅ 
@@ -36,11 +35,6 @@ RecipesLite is a open recipes book built with Flutter!
 
 ## Videos and screenshots
 
-https://user-images.githubusercontent.com/97504729/187674752-94cff9f4-df80-4771-9b89-095dcd8c8faf.mp4
-
-https://user-images.githubusercontent.com/97504729/187674552-cb876ec7-b42f-4f05-b5be-6e91dd2362ef.mp4
-
-
 <p float="left">
   <img src="https://user-images.githubusercontent.com/97504729/187646490-ee19b939-d14e-4ef7-bf75-d41ac5279f63.PNG" width="32%" />
   <img src="https://user-images.githubusercontent.com/97504729/187646530-ec192a6a-33df-45eb-99b4-bd8878cb5287.PNG" width="32%" /> 
@@ -52,4 +46,12 @@ https://user-images.githubusercontent.com/97504729/187674552-cb876ec7-b42f-4f05-
   <img src="https://user-images.githubusercontent.com/97504729/187646597-65a5d853-28f4-445b-a424-caadfa384847.PNG" width="32%" /> 
   <img src="https://user-images.githubusercontent.com/97504729/187646618-97662380-a20c-406a-98c6-869902ea5768.PNG" width="32%" />
 </p>
+
+<div style="display: flex; flex-direction: row; ">
+  
+https://user-images.githubusercontent.com/97504729/187674752-94cff9f4-df80-4771-9b89-095dcd8c8faf.mp4
+
+https://user-images.githubusercontent.com/97504729/187674552-cb876ec7-b42f-4f05-b5be-6e91dd2362ef.mp4
+
+</div>
 
