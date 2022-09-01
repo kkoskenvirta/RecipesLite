@@ -17,6 +17,7 @@ enum AuthError {
   roleNoteFound,
   emailTaken,
   unexpected,
+  permissionError,
 }
 
 class AuthRepository {
@@ -58,6 +59,19 @@ class AuthRepository {
     } catch (e) {
       if (e is DioError && e.response?.statusCode == 400) return left(AuthError.userNotExist);
       if (e is DioError && e.response?.statusCode == 401) return left(AuthError.invalidCredentials);
+      return left(AuthError.unexpected);
+    }
+  }
+
+  Future<Either<AuthError, void>> deleteAccount({required String accountId}) async {
+    try {
+      await _dio.delete(
+        '/users/$accountId',
+      );
+      return right(null);
+    } catch (e) {
+      if (e is DioError && e.response?.statusCode == 400) return left(AuthError.userNotExist);
+      if (e is DioError && e.response?.statusCode == 401) return left(AuthError.permissionError);
       return left(AuthError.unexpected);
     }
   }

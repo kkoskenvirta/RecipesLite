@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_e_commerce/config/api_config.dart';
-import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
-import 'package:flutter_e_commerce/models/user/user_model.dart';
+import 'package:flutter_e_commerce/models/directus/dto/get_many_directus_items_dto.dart';
+import 'package:flutter_e_commerce/models/directus/dto/get_one_directus_item_dto.dart';
+import 'package:flutter_e_commerce/models/user_data/dto/user_data_dto.dart';
 import 'package:flutter_e_commerce/models/user_data/dto/user_data_object_dto.dart';
 import 'package:flutter_e_commerce/models/user_data/user_data_model.dart';
 import '../modules/dio_module.dart';
@@ -15,7 +16,8 @@ enum UserDataError {
   roleNoteFound,
   unexpected,
   itemNotFound,
-  noCurrentUser
+  noCurrentUser,
+  permissionError,
 }
 
 class UserDataRepository {
@@ -25,41 +27,13 @@ class UserDataRepository {
 
   final Dio _dio;
 
-  UserModel? currentUser;
-  UserDataModel? userData;
-
-  Future<Either<UserDataError, List<RecipeModel>>> getUserFavorites(UserModel user) async {
+  Future<Either<UserDataError, UserDataModel>> getUserData(String userId) async {
     try {
-      currentUser ??= user;
-      if (currentUser != null) {
-        if (userData == null) {
-          final failureOrUserData = await loadUserData(currentUser!.id);
-
-          failureOrUserData.fold((error) => print(error), (data) {
-            userData = data;
-          });
-        }
-        return right(userData!.favorites);
-      }
-      return left(UserDataError.noCurrentUser);
-    } catch (e) {
-      return left(UserDataError.unexpected);
-    }
-  }
-
-  Future<Either<UserDataError, UserDataModel>> loadUserData(String userId) async {
-    try {
-      final UserDataModel userData;
       final response = await _dio.get(
-          "$userDataPath?filter[user][_eq]=${currentUser?.id}&fields=id,user,favorites.recipe_id.*,favorites.recipe_id.categories.category_id.*,favorites.recipe_id.tags.tag_id.*,favorites.recipe_id.ingredient_groups.id,favorites.recipe_id.ingredient_groups.id.*,favorites.recipe_id.ingredient_groups.ingredient_group_id.ingredients.ingredient_id.*,favorites.recipe_id.ingredient_groups.ingredient_group_id.ingredients.id&limit=1");
+          "$userDataPath?filter[user][_eq]=$userId&fields=id,user,favorites.recipe_id.*,favorites.recipe_id.categories.category_id.*,favorites.recipe_id.tags.tag_id.*,favorites.recipe_id.ingredient_groups.id,favorites.recipe_id.ingredient_groups.id.*,favorites.recipe_id.ingredient_groups.ingredient_group_id.ingredients.ingredient_id.*,favorites.recipe_id.ingredient_groups.ingredient_group_id.ingredients.id&limit=1");
       final userDataDTO = UserDataObjectDTO.fromJson(response.data);
-      if (userDataDTO.data.isEmpty) {
-        //If we cant find existing user_data with current user id, we create a new one
-        userData = await createUserData();
-      } else {
-        userData = userDataDTO.data[0].toDomain();
-      }
-
+      final UserDataModel userData =
+          userDataDTO.data.isNotEmpty ? userDataDTO.data[0].toDomain() : await createUserData(userId);
       return right(userData);
     } catch (e) {
       if (e is DioError && e.response?.statusCode == 400) return left(UserDataError.invalidPayload);
@@ -68,29 +42,35 @@ class UserDataRepository {
     }
   }
 
-  Future<dynamic> createUserData() async {
+  Future<Either<UserDataError, void>> deleteUserData(String id) async {
     try {
-      final body = {'user': currentUser?.id, 'favorites': []};
+      await _dio.delete(
+        '/items/user_data/$id',
+      );
+      return right(null);
+    } catch (e) {
+      if (e is DioError && e.response?.statusCode == 400) return left(UserDataError.invalidPayload);
+      if (e is DioError && e.response?.statusCode == 401) return left(UserDataError.invalidCredentials);
+      return left(UserDataError.unexpected);
+    }
+  }
+
+  Future<dynamic> createUserData(String userId) async {
+    try {
+      final body = {'user': userId, 'favorites': []};
       final response = await _dio.post(userDataPath, data: body);
-
-      final userDataObjectDTO = UserDataObjectDTO(data: response.data);
-      final userData = userDataObjectDTO.data[0].toDomain();
-
+      final responseDTO = GetOneDirectusItemDTO.fromJson(response.data);
+      final userData = UserDataDTO.fromJson(responseDTO.data).toDomain();
       return userData;
     } catch (e) {
       throw UserDataError.unexpected;
     }
   }
 
-  updateLocalUserData(List<RecipeModel> favorites) {
-    userData = UserDataModel(id: userData!.id, userId: userData!.userId, favorites: favorites);
-  }
-
-  Future<dynamic> updateFavoritesList(List<dynamic> newFavorites, UserModel user) async {
+  Future<dynamic> updateFavoritesList(List<dynamic> newFavorites, String userId) async {
     try {
       final body = {'favorites': newFavorites};
-      final response = await _dio.patch("$userDataPath/${userData!.id}", data: body);
-
+      final response = await _dio.patch("$userDataPath/$userId", data: body);
       return response;
     } catch (e) {
       if (e is DioError && e.response?.statusCode == 400) return left(UserDataError.invalidPayload);

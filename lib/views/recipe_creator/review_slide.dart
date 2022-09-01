@@ -142,7 +142,13 @@ class ReviewSlide extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [if (recipe.name != null) LargeText(text: recipe.name!)],
+                    children: [
+                      if (recipe.name != null)
+                        LargeText(
+                          text: recipe.name!,
+                          fontSize: FontSize.large,
+                        )
+                    ],
                   ),
                   SizedBox(
                     height: Dimensions.height10,

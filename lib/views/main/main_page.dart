@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/navigation/navigation_cubit.dart';
+import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
@@ -12,14 +13,20 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AutoTabsScaffold(
-      routes: const [
-        HomeRouter(),
-        CategoriesRouter(),
-        SearchRouter(),
-        ProfileRouter(),
-      ],
-      bottomNavigationBuilder: (context, tabsRouter) => _BottomNavigationItems(tabsRouter: tabsRouter),
+    return BlocBuilder<UserDataCubit, UserDataState>(
+      buildWhen: (previous, current) => previous.user != current.user,
+      builder: (context, state) {
+        BlocProvider.of<UserDataCubit>(context).getUserData();
+        return AutoTabsScaffold(
+          routes: const [
+            HomeRouter(),
+            CategoriesRouter(),
+            SearchRouter(),
+            ProfileRouter(),
+          ],
+          bottomNavigationBuilder: (context, tabsRouter) => _BottomNavigationItems(tabsRouter: tabsRouter),
+        );
+      },
     );
   }
 }

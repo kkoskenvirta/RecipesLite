@@ -37,7 +37,7 @@ class GlobalBlocs extends StatelessWidget {
             recipesRepository: context.read<RecipesRepository>(),
             authRepository: context.read<AuthRepository>(),
             userDataRepository: context.read<UserDataRepository>(),
-          )..getUserData(),
+          ),
         ),
         BlocProvider<CategoriesCubit>(
           lazy: false,

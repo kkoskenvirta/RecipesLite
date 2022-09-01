@@ -17,9 +17,9 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$UserDataState {
   UserDataStateStatus get status => throw _privateConstructorUsedError;
-  UserDataStateStatus get favoriteQuery => throw _privateConstructorUsedError;
-  UserDataStateStatus get recipeQuery => throw _privateConstructorUsedError;
-  UserModel? get currUser => throw _privateConstructorUsedError;
+  UserDataStateStatus get recipeStatus => throw _privateConstructorUsedError;
+  UserModel? get user => throw _privateConstructorUsedError;
+  UserDataModel? get userData => throw _privateConstructorUsedError;
   List<RecipeModel> get favorites => throw _privateConstructorUsedError;
   List<RecipeModel> get recipes => throw _privateConstructorUsedError;
 
@@ -35,13 +35,14 @@ abstract class $UserDataStateCopyWith<$Res> {
       _$UserDataStateCopyWithImpl<$Res>;
   $Res call(
       {UserDataStateStatus status,
-      UserDataStateStatus favoriteQuery,
-      UserDataStateStatus recipeQuery,
-      UserModel? currUser,
+      UserDataStateStatus recipeStatus,
+      UserModel? user,
+      UserDataModel? userData,
       List<RecipeModel> favorites,
       List<RecipeModel> recipes});
 
-  $UserModelCopyWith<$Res>? get currUser;
+  $UserModelCopyWith<$Res>? get user;
+  $UserDataModelCopyWith<$Res>? get userData;
 }
 
 /// @nodoc
@@ -56,9 +57,9 @@ class _$UserDataStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = freezed,
-    Object? favoriteQuery = freezed,
-    Object? recipeQuery = freezed,
-    Object? currUser = freezed,
+    Object? recipeStatus = freezed,
+    Object? user = freezed,
+    Object? userData = freezed,
     Object? favorites = freezed,
     Object? recipes = freezed,
   }) {
@@ -67,18 +68,18 @@ class _$UserDataStateCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as UserDataStateStatus,
-      favoriteQuery: favoriteQuery == freezed
-          ? _value.favoriteQuery
-          : favoriteQuery // ignore: cast_nullable_to_non_nullable
+      recipeStatus: recipeStatus == freezed
+          ? _value.recipeStatus
+          : recipeStatus // ignore: cast_nullable_to_non_nullable
               as UserDataStateStatus,
-      recipeQuery: recipeQuery == freezed
-          ? _value.recipeQuery
-          : recipeQuery // ignore: cast_nullable_to_non_nullable
-              as UserDataStateStatus,
-      currUser: currUser == freezed
-          ? _value.currUser
-          : currUser // ignore: cast_nullable_to_non_nullable
+      user: user == freezed
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
               as UserModel?,
+      userData: userData == freezed
+          ? _value.userData
+          : userData // ignore: cast_nullable_to_non_nullable
+              as UserDataModel?,
       favorites: favorites == freezed
           ? _value.favorites
           : favorites // ignore: cast_nullable_to_non_nullable
@@ -91,13 +92,24 @@ class _$UserDataStateCopyWithImpl<$Res>
   }
 
   @override
-  $UserModelCopyWith<$Res>? get currUser {
-    if (_value.currUser == null) {
+  $UserModelCopyWith<$Res>? get user {
+    if (_value.user == null) {
       return null;
     }
 
-    return $UserModelCopyWith<$Res>(_value.currUser!, (value) {
-      return _then(_value.copyWith(currUser: value));
+    return $UserModelCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value));
+    });
+  }
+
+  @override
+  $UserDataModelCopyWith<$Res>? get userData {
+    if (_value.userData == null) {
+      return null;
+    }
+
+    return $UserDataModelCopyWith<$Res>(_value.userData!, (value) {
+      return _then(_value.copyWith(userData: value));
     });
   }
 }
@@ -111,14 +123,16 @@ abstract class _$$_UserDataStateCopyWith<$Res>
   @override
   $Res call(
       {UserDataStateStatus status,
-      UserDataStateStatus favoriteQuery,
-      UserDataStateStatus recipeQuery,
-      UserModel? currUser,
+      UserDataStateStatus recipeStatus,
+      UserModel? user,
+      UserDataModel? userData,
       List<RecipeModel> favorites,
       List<RecipeModel> recipes});
 
   @override
-  $UserModelCopyWith<$Res>? get currUser;
+  $UserModelCopyWith<$Res>? get user;
+  @override
+  $UserDataModelCopyWith<$Res>? get userData;
 }
 
 /// @nodoc
@@ -135,9 +149,9 @@ class __$$_UserDataStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = freezed,
-    Object? favoriteQuery = freezed,
-    Object? recipeQuery = freezed,
-    Object? currUser = freezed,
+    Object? recipeStatus = freezed,
+    Object? user = freezed,
+    Object? userData = freezed,
     Object? favorites = freezed,
     Object? recipes = freezed,
   }) {
@@ -146,18 +160,18 @@ class __$$_UserDataStateCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as UserDataStateStatus,
-      favoriteQuery: favoriteQuery == freezed
-          ? _value.favoriteQuery
-          : favoriteQuery // ignore: cast_nullable_to_non_nullable
+      recipeStatus: recipeStatus == freezed
+          ? _value.recipeStatus
+          : recipeStatus // ignore: cast_nullable_to_non_nullable
               as UserDataStateStatus,
-      recipeQuery: recipeQuery == freezed
-          ? _value.recipeQuery
-          : recipeQuery // ignore: cast_nullable_to_non_nullable
-              as UserDataStateStatus,
-      currUser: currUser == freezed
-          ? _value.currUser
-          : currUser // ignore: cast_nullable_to_non_nullable
+      user: user == freezed
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
               as UserModel?,
+      userData: userData == freezed
+          ? _value.userData
+          : userData // ignore: cast_nullable_to_non_nullable
+              as UserDataModel?,
       favorites: favorites == freezed
           ? _value._favorites
           : favorites // ignore: cast_nullable_to_non_nullable
@@ -175,9 +189,9 @@ class __$$_UserDataStateCopyWithImpl<$Res>
 class _$_UserDataState implements _UserDataState {
   const _$_UserDataState(
       {required this.status,
-      required this.favoriteQuery,
-      required this.recipeQuery,
-      required this.currUser,
+      required this.recipeStatus,
+      required this.user,
+      required this.userData,
       required final List<RecipeModel> favorites,
       required final List<RecipeModel> recipes})
       : _favorites = favorites,
@@ -186,11 +200,11 @@ class _$_UserDataState implements _UserDataState {
   @override
   final UserDataStateStatus status;
   @override
-  final UserDataStateStatus favoriteQuery;
+  final UserDataStateStatus recipeStatus;
   @override
-  final UserDataStateStatus recipeQuery;
+  final UserModel? user;
   @override
-  final UserModel? currUser;
+  final UserDataModel? userData;
   final List<RecipeModel> _favorites;
   @override
   List<RecipeModel> get favorites {
@@ -207,7 +221,7 @@ class _$_UserDataState implements _UserDataState {
 
   @override
   String toString() {
-    return 'UserDataState(status: $status, favoriteQuery: $favoriteQuery, recipeQuery: $recipeQuery, currUser: $currUser, favorites: $favorites, recipes: $recipes)';
+    return 'UserDataState(status: $status, recipeStatus: $recipeStatus, user: $user, userData: $userData, favorites: $favorites, recipes: $recipes)';
   }
 
   @override
@@ -217,10 +231,9 @@ class _$_UserDataState implements _UserDataState {
             other is _$_UserDataState &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality()
-                .equals(other.favoriteQuery, favoriteQuery) &&
-            const DeepCollectionEquality()
-                .equals(other.recipeQuery, recipeQuery) &&
-            const DeepCollectionEquality().equals(other.currUser, currUser) &&
+                .equals(other.recipeStatus, recipeStatus) &&
+            const DeepCollectionEquality().equals(other.user, user) &&
+            const DeepCollectionEquality().equals(other.userData, userData) &&
             const DeepCollectionEquality()
                 .equals(other._favorites, _favorites) &&
             const DeepCollectionEquality().equals(other._recipes, _recipes));
@@ -230,9 +243,9 @@ class _$_UserDataState implements _UserDataState {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(favoriteQuery),
-      const DeepCollectionEquality().hash(recipeQuery),
-      const DeepCollectionEquality().hash(currUser),
+      const DeepCollectionEquality().hash(recipeStatus),
+      const DeepCollectionEquality().hash(user),
+      const DeepCollectionEquality().hash(userData),
       const DeepCollectionEquality().hash(_favorites),
       const DeepCollectionEquality().hash(_recipes));
 
@@ -245,20 +258,20 @@ class _$_UserDataState implements _UserDataState {
 abstract class _UserDataState implements UserDataState {
   const factory _UserDataState(
       {required final UserDataStateStatus status,
-      required final UserDataStateStatus favoriteQuery,
-      required final UserDataStateStatus recipeQuery,
-      required final UserModel? currUser,
+      required final UserDataStateStatus recipeStatus,
+      required final UserModel? user,
+      required final UserDataModel? userData,
       required final List<RecipeModel> favorites,
       required final List<RecipeModel> recipes}) = _$_UserDataState;
 
   @override
   UserDataStateStatus get status;
   @override
-  UserDataStateStatus get favoriteQuery;
+  UserDataStateStatus get recipeStatus;
   @override
-  UserDataStateStatus get recipeQuery;
+  UserModel? get user;
   @override
-  UserModel? get currUser;
+  UserDataModel? get userData;
   @override
   List<RecipeModel> get favorites;
   @override

@@ -1,15 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_e_commerce/config/api_config.dart';
 import 'package:flutter_e_commerce/routes/app_router.gr.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
 import 'package:flutter_e_commerce/utils/typography.dart';
 import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
+import 'package:flutter_e_commerce/widgets/custom_toast.dart';
 import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
 import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 
 import '../../global/blocks/auth/cubit/auth_cubit.dart';
@@ -24,7 +22,6 @@ class LoginPage extends StatelessWidget {
     final passwordController = TextEditingController(text: '');
     final authCubit = BlocProvider.of<AuthCubit>(context);
     final router = AutoRouter.of(context);
-    FlutterAppAuth appAuth = FlutterAppAuth();
 
     return Scaffold(
       appBar: MainAppBar(
@@ -35,11 +32,14 @@ class LoginPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
               children: [
-                Container(
-                  height: 200,
+                const SizedBox(
+                  height: 100,
                 ),
                 const Align(
                   alignment: Alignment.center,
@@ -61,16 +61,21 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(height: 20),
                 const SmallText(text: 'Email'),
                 const SizedBox(height: 4),
-                TextField(
+                TextFormField(
+                  decoration: const InputDecoration(prefixIcon: Icon(Icons.mark_email_read_outlined)),
                   controller: emailController,
                   textInputAction: TextInputAction.next,
                 ),
                 const SizedBox(height: 10),
                 const SmallText(text: 'Password'),
                 const SizedBox(height: 4),
-                TextField(
+                TextFormField(
+                  decoration: const InputDecoration(prefixIcon: Icon(Icons.lock_outline_rounded)),
                   controller: passwordController,
                   textInputAction: TextInputAction.done,
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
                 ),
                 const SizedBox(height: 20),
                 BlocBuilder<AuthCubit, AuthState>(
@@ -79,7 +84,7 @@ class LoginPage extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size.fromHeight(50),
                       ),
-                      onPressed: () async => authCubit.login('kazu.kozu@hotmail.com', 'directustesti'),
+                      onPressed: () async => authCubit.login(emailController.text, passwordController.text),
                       child: state.inProgress
                           ? const CircularProgressIndicator(
                               color: Colors.white,
@@ -117,8 +122,7 @@ class LoginPage extends StatelessWidget {
                       return;
                     }
                   },
-                  // onPressed: () async => showBottom,
-                  child: LargeText(
+                  child: const LargeText(
                     text: 'LOGIN WITH GOOGLE',
                     fontSize: FontSize.medium,
                     color: Colors.white,
@@ -140,7 +144,7 @@ class LoginPage extends StatelessWidget {
                 Align(
                   alignment: Alignment.center,
                   child: TextButton(
-                    onPressed: () => router.navigate(const SignUpRoute()),
+                    onPressed: () => router.push(const SignUpRoute()),
                     child: SmallText(
                       text: "Create an account",
                       fontSize: FontSize.medium,

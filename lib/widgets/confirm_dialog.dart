@@ -45,3 +45,22 @@ class ConfirmationDialog extends StatelessWidget {
     );
   }
 }
+
+showConfirmationDialog(
+    {required BuildContext context,
+    required String title,
+    String? text,
+    required String confirmText,
+    required String declineText}) async {
+  final shouldPop = showDialog<bool>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) => ConfirmationDialog(
+      title: title,
+      text: text ?? "",
+      confirmText: confirmText,
+      declineText: declineText,
+    ),
+  );
+  return shouldPop;
+}

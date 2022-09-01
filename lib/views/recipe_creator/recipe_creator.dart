@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce/global/blocks/recipes/cubit/recipe_fetch_cubit.dart';
 import 'package:flutter_e_commerce/global/blocks/user_data/cubit/user_data_cubit.dart';
+import 'package:flutter_e_commerce/models/category/category_model.dart';
 import 'package:flutter_e_commerce/models/recipe/recipe_model.dart';
+import 'package:flutter_e_commerce/models/tag/tag_model.dart';
 import 'package:flutter_e_commerce/repositorys/category_repository.dart';
 import 'package:flutter_e_commerce/repositorys/recipes_repository.dart';
 import 'package:flutter_e_commerce/utils/recipe_app_theme.dart';
@@ -19,6 +21,7 @@ import 'package:flutter_e_commerce/views/recipe_creator/selectors/tag_selector.d
 import 'package:flutter_e_commerce/widgets/appbars/main_appbar.dart';
 import 'package:flutter_e_commerce/views/recipe_creator/stepper/custom_stepper.dart';
 import 'package:flutter_e_commerce/widgets/confirm_dialog.dart';
+import 'package:flutter_e_commerce/widgets/custom_toast.dart';
 import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
 import 'package:flutter_e_commerce/widgets/typography/small_text.dart';
 
@@ -79,51 +82,6 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
   //Form validation keys
   final detailsKey = GlobalKey<FormState>();
   final ingredientsKey = GlobalKey<FormState>();
-
-  void _showToast(BuildContext context) {
-    String message;
-    Icon icon;
-    Color backgroundColor;
-
-    message = "Recipe submitted for review!";
-    icon = const Icon(Icons.check_circle_outline_rounded, size: 28);
-    backgroundColor = Colors.pink.shade50;
-
-    Flushbar(
-      flushbarStyle: FlushbarStyle.FLOATING,
-      borderRadius: BorderRadius.circular(8),
-      margin: const EdgeInsets.all(8),
-      padding: const EdgeInsets.symmetric(vertical: 18),
-      boxShadows: [
-        BoxShadow(
-          color: Colors.black12.withOpacity(0.125),
-          spreadRadius: 4,
-          blurRadius: 4,
-        )
-      ],
-      icon: icon,
-      messageText: LargeText(
-        text: message,
-        fontSize: FontSize.medium,
-      ),
-      backgroundColor: backgroundColor,
-      duration: const Duration(seconds: 2, milliseconds: 500),
-    ).show(context);
-  }
-
-  _showCancelDialog() async {
-    final shouldPop = showDialog<bool>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) => const ConfirmationDialog(
-        title: "Discard changes",
-        text: "Current changes done to the recipe will be lost, do you wish to quit?",
-        confirmText: "Quit",
-        declineText: "Stay",
-      ),
-    );
-    return shouldPop;
-  }
 
   @override
   void dispose() {
@@ -203,19 +161,32 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                               userDataCubit.getUserData();
                               if (editMode) {
                                 Navigator.pop(context, formDataCubit.state.recipe);
-
-                                _showToast(context);
+                                const CustomToast().showToast(
+                                  context: context,
+                                  message: "Changes saved succesfully!",
+                                  icon: const Icon(Icons.check_circle_outline_rounded, size: 28),
+                                );
                               } else {
                                 if (!mounted) return;
                                 Navigator.pop(context);
-                                _showToast(context);
+                                const CustomToast().showToast(
+                                  context: context,
+                                  message: "Recipe submitted for review!",
+                                  icon: const Icon(Icons.check_circle_outline_rounded, size: 28),
+                                );
                               }
                             }
                           }
                         },
                         onStepCancel: () async {
                           if (state.index == 0) {
-                            final bool shouldPop = await _showCancelDialog();
+                            final bool shouldPop = await showConfirmationDialog(
+                              context: context,
+                              title: "Discard changes",
+                              text: "Current changes done to the recipe will be lost, do you wish to quit?",
+                              confirmText: "Quit",
+                              declineText: "Stay",
+                            );
                             if (!mounted) return;
                             shouldPop ? Navigator.pop(context) : null;
                           }
@@ -236,149 +207,10 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
                           );
                         },
                         steps: <CustomStep>[
-                          CustomStep(
-                            title: SmallText(text: 'Details'),
-                            content: Form(
-                              key: detailsKey,
-                              autovalidateMode: AutovalidateMode.disabled,
-                              child: Column(
-                                children: <Widget>[
-                                  Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: SmallText(text: "Recipe name (min 4 characters)")),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  TextFormField(
-                                    decoration: const InputDecoration(
-                                      hintText: "Recipe name",
-                                    ),
-                                    textInputAction: TextInputAction.next,
-                                    onChanged: (text) => BlocProvider.of<FormDataCubit>(context).updateRecipeName(text),
-                                    controller: nameFieldController,
-                                    validator: (value) {
-                                      if (value != null && value.length < 4) {
-                                        return 'Minimun name length is 4 characters';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: SmallText(text: "Recipe description (min 8 characters)")),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  TextFormField(
-                                    decoration: const InputDecoration(
-                                      hintText: "Recipe description",
-                                    ),
-                                    textInputAction: TextInputAction.next,
-                                    onChanged: (text) =>
-                                        BlocProvider.of<FormDataCubit>(context).updateRecipeDescription(text),
-                                    controller: descriptionFieldController,
-                                    validator: (value) {
-                                      if (value != null && value.length < 4) {
-                                        return 'Minimun description length is 8 characters';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Align(alignment: Alignment.centerLeft, child: SmallText(text: "Difficulty and time")),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  DifficultySelector(),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: SmallText(text: "Instructions (min 20 characters)")),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  TextFormField(
-                                    maxLines: null,
-                                    keyboardType: TextInputType.multiline,
-                                    decoration: const InputDecoration(
-                                      hintText: "Instructions on how to prepare the recipe",
-                                    ),
-                                    onChanged: (text) =>
-                                        BlocProvider.of<FormDataCubit>(context).updateRecipeInstructions(text),
-                                    controller: instructionFieldController,
-                                    validator: (value) {
-                                      if (value != null && value.length < 4) {
-                                        return 'Minimun instruction length is 20 characters';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            isActive: state.index >= 0,
-                            state: state.index >= 0 ? CustomStepState.complete : CustomStepState.disabled,
-                          ),
-                          CustomStep(
-                            title: SmallText(text: 'Ingredients'),
-                            content: Form(
-                              key: ingredientsKey,
-                              child: Column(
-                                children: [
-                                  IngredientsSelector(ingredientGroups: [...formDataCubit.state.ingredientGroups]),
-                                ],
-                              ),
-                            ),
-                            isActive: state.index >= 1,
-                            state: state.index >= 1 ? CustomStepState.complete : CustomStepState.disabled,
-                          ),
-                          CustomStep(
-                            title: SmallText(text: 'Categories'),
-                            content: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Align(alignment: Alignment.centerLeft, child: SmallText(text: "Special dietary")),
-                                const SizedBox(
-                                  height: 6,
-                                ),
-                                Align(alignment: Alignment.centerLeft, child: TagSelector(tags: tags)),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                Align(
-                                    alignment: Alignment.centerLeft, child: SmallText(text: "Categorize your recipe")),
-                                const SizedBox(
-                                  height: 6,
-                                ),
-                                CategorySelector(categories: categories),
-                              ],
-                            ),
-                            isActive: state.index >= 2,
-                            state: state.index >= 2 ? CustomStepState.complete : CustomStepState.disabled,
-                          ),
-                          CustomStep(
-                            title: SmallText(text: 'Review'),
-                            content: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                ReviewSlide(
-                                  editableRecipe: widget.editableRecipe,
-                                ),
-                              ],
-                            ),
-                            isActive: state.index >= 3,
-                            state: state.index >= 3 ? CustomStepState.complete : CustomStepState.disabled,
-                          )
+                          detailsStep(context, state),
+                          ingredientsStep(formDataCubit, state),
+                          categorizationStep(tags, categories, state),
+                          reviewStep(state)
                         ],
                       );
                     },
@@ -390,6 +222,139 @@ class _FormFetchScreenBodyState extends State<FormFetchScreenBody> {
             return const SizedBox();
         }
       },
+    );
+  }
+
+  CustomStep detailsStep(BuildContext context, StepperState state) {
+    return CustomStep(
+      title: const SmallText(text: 'Details'),
+      content: Form(
+        key: detailsKey,
+        autovalidateMode: AutovalidateMode.disabled,
+        child: Column(
+          children: <Widget>[
+            const Align(alignment: Alignment.centerLeft, child: SmallText(text: "Recipe name (min 4 characters)")),
+            const SizedBox(
+              height: 6,
+            ),
+            TextFormField(
+              decoration: const InputDecoration(hintText: "Recipe name"),
+              textInputAction: TextInputAction.next,
+              onChanged: (text) => BlocProvider.of<FormDataCubit>(context).updateRecipeName(text),
+              controller: nameFieldController,
+              validator: (value) {
+                if (value != null && value.length < 4) {
+                  return 'Minimun name length is 4 characters';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 20),
+            const Align(
+                alignment: Alignment.centerLeft, child: SmallText(text: "Recipe description (min 8 characters)")),
+            const SizedBox(height: 6),
+            TextFormField(
+              decoration: const InputDecoration(hintText: "Recipe description"),
+              textInputAction: TextInputAction.next,
+              onChanged: (text) => BlocProvider.of<FormDataCubit>(context).updateRecipeDescription(text),
+              controller: descriptionFieldController,
+              validator: (value) {
+                if (value != null && value.length < 4) {
+                  return 'Minimun description length is 8 characters';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 20),
+            const Align(alignment: Alignment.centerLeft, child: SmallText(text: "Difficulty and time")),
+            const SizedBox(height: 6),
+            DifficultySelector(),
+            const SizedBox(height: 20),
+            const Align(alignment: Alignment.centerLeft, child: SmallText(text: "Instructions (min 20 characters)")),
+            const SizedBox(
+              height: 6,
+            ),
+            TextFormField(
+              maxLines: null,
+              keyboardType: TextInputType.multiline,
+              decoration: const InputDecoration(
+                hintText: "Instructions on how to prepare the recipe",
+              ),
+              onChanged: (text) => BlocProvider.of<FormDataCubit>(context).updateRecipeInstructions(text),
+              controller: instructionFieldController,
+              validator: (value) {
+                if (value != null && value.length < 4) {
+                  return 'Minimun instruction length is 20 characters';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
+      ),
+      isActive: state.index >= 0,
+      state: state.index >= 0 ? CustomStepState.complete : CustomStepState.disabled,
+    );
+  }
+
+  CustomStep ingredientsStep(FormDataCubit formDataCubit, StepperState state) {
+    return CustomStep(
+      title: const SmallText(text: 'Ingredients'),
+      content: Form(
+        key: ingredientsKey,
+        child: Column(
+          children: [
+            IngredientsSelector(ingredientGroups: [...formDataCubit.state.ingredientGroups]),
+          ],
+        ),
+      ),
+      isActive: state.index >= 1,
+      state: state.index >= 1 ? CustomStepState.complete : CustomStepState.disabled,
+    );
+  }
+
+  CustomStep categorizationStep(List<TagModel> tags, List<CategoryModel> categories, StepperState state) {
+    return CustomStep(
+      title: const SmallText(text: 'Categories'),
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Align(alignment: Alignment.centerLeft, child: SmallText(text: "Special dietary")),
+          const SizedBox(
+            height: 6,
+          ),
+          Align(alignment: Alignment.centerLeft, child: TagSelector(tags: tags)),
+          const SizedBox(
+            height: 20,
+          ),
+          const Align(alignment: Alignment.centerLeft, child: SmallText(text: "Categorize your recipe")),
+          const SizedBox(
+            height: 6,
+          ),
+          CategorySelector(categories: categories),
+        ],
+      ),
+      isActive: state.index >= 2,
+      state: state.index >= 2 ? CustomStepState.complete : CustomStepState.disabled,
+    );
+  }
+
+  CustomStep reviewStep(StepperState state) {
+    return CustomStep(
+      title: const SmallText(text: 'Review'),
+      content: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          ReviewSlide(
+            editableRecipe: widget.editableRecipe,
+          ),
+        ],
+      ),
+      isActive: state.index >= 3,
+      state: state.index >= 3 ? CustomStepState.complete : CustomStepState.disabled,
     );
   }
 }
@@ -433,7 +398,6 @@ class CustomStepperControls extends StatelessWidget {
               description.length >= 8 &&
               instructions.length >= 20 &&
               time != null;
-
           return state;
         case 1:
           bool state;
@@ -493,7 +457,7 @@ class CustomStepperControls extends StatelessWidget {
                   shape: MaterialStateProperty.all<OutlinedBorder>(buttonShape),
                 ),
                 child: details.currentStep < 3
-                    ? SmallText(
+                    ? const SmallText(
                         text: "Continue",
                         color: Colors.white,
                         fontSize: FontSize.smallPlus,
@@ -503,12 +467,12 @@ class CustomStepperControls extends StatelessWidget {
                           switch (state.requestStatus) {
                             case DirectusRequestStatus.initial:
                               return editMode
-                                  ? SmallText(
+                                  ? const SmallText(
                                       text: "Save",
                                       fontSize: FontSize.smallPlus,
                                       color: Colors.white,
                                     )
-                                  : SmallText(
+                                  : const SmallText(
                                       text: "Submit",
                                       fontSize: FontSize.smallPlus,
                                       color: Colors.white,

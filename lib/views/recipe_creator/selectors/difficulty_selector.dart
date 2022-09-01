@@ -38,7 +38,7 @@ class DifficultySelector extends StatelessWidget {
             context: context,
             semanticsDismissible: true,
             builder: (BuildContext builder) {
-              Duration timer = currentTime != null ? Duration(minutes: currentTime) : const Duration(minutes: 0);
+              Duration timer = Duration(minutes: currentTime ?? 0);
               return Container(
                 height: 290,
                 color: Colors.white,
@@ -47,8 +47,7 @@ class DifficultySelector extends StatelessWidget {
                     CupertinoTimerPicker(
                       mode: CupertinoTimerPickerMode.hm,
                       minuteInterval: 5,
-                      initialTimerDuration:
-                          currentTime != null ? Duration(minutes: currentTime) : const Duration(minutes: 0),
+                      initialTimerDuration: timer,
                       onTimerDurationChanged: (value) {
                         if (value != currentTime) {
                           timer = value;
@@ -110,41 +109,33 @@ class DifficultySelector extends StatelessWidget {
           );
         }
 
-        return Column(children: [
-          Row(
-            children: [
-              Expanded(
-                flex: 3,
-                child: TextFormField(
-                  controller: difficultyController,
-                  decoration: const InputDecoration(
-                    hintText: "Difficulty",
-                    filled: true,
-                  ),
-                  validator: ((value) => null),
-                  readOnly: true,
-                  onTap: () => showDifficultyPicker(state.difficulty),
-                ),
+        return Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: TextFormField(
+                controller: difficultyController,
+                decoration: const InputDecoration(hintText: "Difficulty", filled: true),
+                validator: ((value) => null),
+                readOnly: true,
+                onTap: () => showDifficultyPicker(state.difficulty),
               ),
-              const SizedBox(
-                width: 6,
+            ),
+            const SizedBox(
+              width: 6,
+            ),
+            Expanded(
+              flex: 3,
+              child: TextFormField(
+                controller: preparationTimeController,
+                decoration: const InputDecoration(hintText: "Preparation time", filled: true),
+                validator: ((value) => null),
+                readOnly: true,
+                onTap: () => showDatePicker(state.preparationTime),
               ),
-              Expanded(
-                flex: 3,
-                child: TextFormField(
-                  controller: preparationTimeController,
-                  decoration: const InputDecoration(
-                    hintText: "Preparation time",
-                    filled: true,
-                  ),
-                  validator: ((value) => null),
-                  readOnly: true,
-                  onTap: () => showDatePicker(state.preparationTime),
-                ),
-              ),
-            ],
-          ),
-        ]);
+            ),
+          ],
+        );
       },
     );
   }

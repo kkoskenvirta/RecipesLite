@@ -38,13 +38,10 @@ class RecipeListPage extends StatelessWidget {
         builder: (context, state) {
           final recipeListCubit = BlocProvider.of<RecipeListCubit>(context);
 
-          return GestureDetector(
-            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-            child: Scaffold(
-              body: RecipeListScrollView(
-                recipeListCubit: recipeListCubit,
-                showSearchBar: categoryFilters == null ? true : false,
-              ),
+          return Scaffold(
+            body: RecipeListScrollView(
+              recipeListCubit: recipeListCubit,
+              showSearchBar: categoryFilters == null ? true : false,
             ),
           );
         },
@@ -93,6 +90,7 @@ class _RecipeListScrollViewState extends State<RecipeListScrollView> {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       controller: _scrollController,
       slivers: [
         SliverAppBar(
@@ -142,15 +140,12 @@ class SearchBar extends StatelessWidget implements PreferredSizeWidget {
         return Padding(
           padding: const EdgeInsets.only(left: 16, right: 0, top: 0, bottom: 0),
           child: CupertinoSearchTextField(
-            autofocus: true,
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
             placeholder: "Search for recipes",
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: RecipeAppTheme.colors.pinkMedium, width: 1.5),
-
-              // boxShadow: [RecipeAppTheme.shadows.wide],
             ),
             itemSize: 26,
             controller: searchController,

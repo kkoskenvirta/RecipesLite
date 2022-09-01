@@ -46,8 +46,6 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = BlocProvider.of<UserDataCubit>(context).state.currUser;
-    final permission = creator == currentUser?.id ? true : false;
     final authCubit = BlocProvider.of<AuthCubit>(context);
     final router = AutoRouter.of(context);
 
@@ -74,8 +72,6 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
               size: 30,
             ),
           )
-        else if (showEditButton && permission)
-          IconButton(onPressed: editRecipe, icon: const Icon(Icons.edit))
         else if (showCloseButton)
           TextButton(
             onPressed: () {

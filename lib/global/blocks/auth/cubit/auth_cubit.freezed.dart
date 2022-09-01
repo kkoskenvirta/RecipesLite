@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AuthState {
   AuthStateStatus get status => throw _privateConstructorUsedError;
+  RegisterStatus get registerStatus => throw _privateConstructorUsedError;
   AuthError? get error => throw _privateConstructorUsedError;
   AuthError? get registerError => throw _privateConstructorUsedError;
   bool get inProgress => throw _privateConstructorUsedError;
@@ -32,6 +33,7 @@ abstract class $AuthStateCopyWith<$Res> {
       _$AuthStateCopyWithImpl<$Res>;
   $Res call(
       {AuthStateStatus status,
+      RegisterStatus registerStatus,
       AuthError? error,
       AuthError? registerError,
       bool inProgress});
@@ -48,6 +50,7 @@ class _$AuthStateCopyWithImpl<$Res> implements $AuthStateCopyWith<$Res> {
   @override
   $Res call({
     Object? status = freezed,
+    Object? registerStatus = freezed,
     Object? error = freezed,
     Object? registerError = freezed,
     Object? inProgress = freezed,
@@ -57,6 +60,10 @@ class _$AuthStateCopyWithImpl<$Res> implements $AuthStateCopyWith<$Res> {
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as AuthStateStatus,
+      registerStatus: registerStatus == freezed
+          ? _value.registerStatus
+          : registerStatus // ignore: cast_nullable_to_non_nullable
+              as RegisterStatus,
       error: error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -81,6 +88,7 @@ abstract class _$$_AuthStateCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
   @override
   $Res call(
       {AuthStateStatus status,
+      RegisterStatus registerStatus,
       AuthError? error,
       AuthError? registerError,
       bool inProgress});
@@ -99,6 +107,7 @@ class __$$_AuthStateCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = freezed,
+    Object? registerStatus = freezed,
     Object? error = freezed,
     Object? registerError = freezed,
     Object? inProgress = freezed,
@@ -108,6 +117,10 @@ class __$$_AuthStateCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as AuthStateStatus,
+      registerStatus: registerStatus == freezed
+          ? _value.registerStatus
+          : registerStatus // ignore: cast_nullable_to_non_nullable
+              as RegisterStatus,
       error: error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -129,12 +142,15 @@ class __$$_AuthStateCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 class _$_AuthState implements _AuthState {
   const _$_AuthState(
       {required this.status,
+      required this.registerStatus,
       required this.error,
       required this.registerError,
       required this.inProgress});
 
   @override
   final AuthStateStatus status;
+  @override
+  final RegisterStatus registerStatus;
   @override
   final AuthError? error;
   @override
@@ -144,7 +160,7 @@ class _$_AuthState implements _AuthState {
 
   @override
   String toString() {
-    return 'AuthState(status: $status, error: $error, registerError: $registerError, inProgress: $inProgress)';
+    return 'AuthState(status: $status, registerStatus: $registerStatus, error: $error, registerError: $registerError, inProgress: $inProgress)';
   }
 
   @override
@@ -153,6 +169,8 @@ class _$_AuthState implements _AuthState {
         (other.runtimeType == runtimeType &&
             other is _$_AuthState &&
             const DeepCollectionEquality().equals(other.status, status) &&
+            const DeepCollectionEquality()
+                .equals(other.registerStatus, registerStatus) &&
             const DeepCollectionEquality().equals(other.error, error) &&
             const DeepCollectionEquality()
                 .equals(other.registerError, registerError) &&
@@ -164,6 +182,7 @@ class _$_AuthState implements _AuthState {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(status),
+      const DeepCollectionEquality().hash(registerStatus),
       const DeepCollectionEquality().hash(error),
       const DeepCollectionEquality().hash(registerError),
       const DeepCollectionEquality().hash(inProgress));
@@ -177,12 +196,15 @@ class _$_AuthState implements _AuthState {
 abstract class _AuthState implements AuthState {
   const factory _AuthState(
       {required final AuthStateStatus status,
+      required final RegisterStatus registerStatus,
       required final AuthError? error,
       required final AuthError? registerError,
       required final bool inProgress}) = _$_AuthState;
 
   @override
   AuthStateStatus get status;
+  @override
+  RegisterStatus get registerStatus;
   @override
   AuthError? get error;
   @override

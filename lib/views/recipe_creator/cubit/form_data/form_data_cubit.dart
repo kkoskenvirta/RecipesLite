@@ -234,6 +234,8 @@ class FormDataCubit extends Cubit<FormDataState> {
         final image = FormData.fromMap({
           'title': '${state.name}-${DateTime.now().toUtc().toString()}',
           'file': await MultipartFile.fromFile(state.image!.path, contentType: MediaType(mimee, type)),
+          'upload_by': null,
+          'modified_by': null,
         });
 
         final failureOrFile = await _recipesRepository.uploadImage(image);

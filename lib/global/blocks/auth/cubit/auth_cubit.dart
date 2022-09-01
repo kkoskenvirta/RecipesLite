@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/repositorys/auth_repository.dart';
 import 'package:flutter_e_commerce/repositorys/secure_storage_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -29,7 +30,6 @@ class AuthCubit extends Cubit<AuthState> {
 
   login(String email, String password) async {
     emit(state.copyWith(status: AuthStateStatus.uninitialized, inProgress: true));
-
     final failureOrAuth = await _authRepository.login(email: email, password: password);
     failureOrAuth.fold(
       (error) => emit(state.copyWith(
@@ -79,14 +79,28 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  register(String username, String email, String password) async {
-    emit(state.copyWith(inProgress: true));
+  register(String username, String email, String password, BuildContext context) async {
+    try {
+      emit(state.copyWith(inProgress: true, registerStatus: RegisterStatus.loading));
+      final failureOrUser = await _authRepository.register(username: username, email: email, password: password);
+      failureOrUser.fold(
+        (error) {
+          emit(state.copyWith(inProgress: false, registerStatus: RegisterStatus.error, registerError: error));
+        },
+        (user) {
+          emit(state.copyWith(inProgress: false, registerStatus: RegisterStatus.completed));
+        },
+      );
+    } catch (e) {
+      return RegisterStatus.error;
+    }
+  }
 
-    final failureOrUser = await _authRepository.register(username: username, email: email, password: password);
-    failureOrUser.fold(
-        (error) =>
-            emit(state.copyWith(inProgress: false, status: AuthStateStatus.unauthenticated, registerError: error)),
-        (user) => login(email, password));
+  Future<void> delete(String id) async {
+    final errorOrUserDeleted = await _authRepository.deleteAccount(accountId: id);
+    errorOrUserDeleted.fold((err) => print(err), (_) {
+      logout();
+    });
   }
 
   updateState(AuthStateStatus newState, bool inProgress) async =>

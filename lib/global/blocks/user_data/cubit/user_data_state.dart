@@ -6,9 +6,9 @@ enum UserDataStateStatus { initial, loading, loaded, error }
 class UserDataState with _$UserDataState {
   const factory UserDataState({
     required UserDataStateStatus status,
-    required UserDataStateStatus favoriteQuery,
-    required UserDataStateStatus recipeQuery,
-    required UserModel? currUser,
+    required UserDataStateStatus recipeStatus,
+    required UserModel? user,
+    required UserDataModel? userData,
     required List<RecipeModel> favorites,
     required List<RecipeModel> recipes,
   }) = _UserDataState;
@@ -16,9 +16,9 @@ class UserDataState with _$UserDataState {
   factory UserDataState.initial() {
     return const UserDataState(
       status: UserDataStateStatus.initial,
-      favoriteQuery: UserDataStateStatus.initial,
-      recipeQuery: UserDataStateStatus.initial,
-      currUser: null,
+      recipeStatus: UserDataStateStatus.initial,
+      user: null,
+      userData: null,
       favorites: [],
       recipes: [],
     );

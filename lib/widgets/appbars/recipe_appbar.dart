@@ -39,8 +39,8 @@ class RecipeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = BlocProvider.of<UserDataCubit>(context).state.currUser;
-    final permission = creator == currentUser?.id ? true : false;
+    final currentUser = BlocProvider.of<UserDataCubit>(context).state.userData;
+    final permission = creator == currentUser?.userId ? true : false;
     final router = AutoRouter.of(context);
 
     return BlocBuilder<SingleRecipeCubit, SingleRecipeState>(
@@ -52,14 +52,8 @@ class RecipeAppBar extends StatelessWidget implements PreferredSizeWidget {
             backgroundColor: transparent ? Colors.transparent : null,
             shadowColor: transparent ? Colors.transparent : null,
             elevation: transparent ? 0 : null,
-            leading: Container(
-              height: 55,
-              width: 55,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [RecipeAppTheme.shadows.normal],
-                borderRadius: BorderRadius.circular(50),
-              ),
+            leading: Material(
+              elevation: 4,
               child: IconButton(
                 icon: Icon(
                   Icons.chevron_left_rounded,

@@ -12,6 +12,7 @@ import 'package:flutter_e_commerce/views/single_recipe/cubit/single_recipe_cubit
 import 'package:flutter_e_commerce/widgets/appbars/recipe_appbar.dart';
 import 'package:flutter_e_commerce/widgets/blurhash_image.dart';
 import 'package:flutter_e_commerce/widgets/categorization_bar.dart';
+import 'package:flutter_e_commerce/widgets/custom_toast.dart';
 import 'package:flutter_e_commerce/widgets/ingredients_table.dart';
 import 'package:flutter_e_commerce/widgets/information_bar.dart';
 import 'package:flutter_e_commerce/widgets/typography/large_text.dart';
@@ -53,41 +54,6 @@ class _RecipePageState extends State<RecipePage> with TickerProviderStateMixin {
   void dispose() {
     scrollController.dispose();
     super.dispose();
-  }
-
-  void _showToast(BuildContext context, bool favorited) {
-    String message;
-    Icon icon;
-    Color backgroundColor;
-    if (favorited) {
-      message = "Added to favorites";
-      icon = const Icon(Icons.favorite_rounded, size: 28);
-      backgroundColor = RecipeAppTheme.colors.pinkLightLow;
-    } else {
-      message = "Removed from favorites";
-      icon = const Icon(Icons.favorite_outline_rounded, size: 28);
-      backgroundColor = RecipeAppTheme.colors.pinkLightLow;
-    }
-    Flushbar(
-      flushbarStyle: FlushbarStyle.FLOATING,
-      borderRadius: BorderRadius.circular(Dimensions.radius15),
-      margin: const EdgeInsets.all(8),
-      padding: const EdgeInsets.symmetric(vertical: 18),
-      boxShadows: [
-        BoxShadow(
-          color: Colors.black12.withOpacity(0.05),
-          spreadRadius: 2,
-          blurRadius: 2,
-        )
-      ],
-      icon: icon,
-      messageText: LargeText(
-        text: message,
-        fontSize: FontSize.medium,
-      ),
-      backgroundColor: backgroundColor,
-      duration: const Duration(seconds: 1, milliseconds: 500),
-    ).show(context);
   }
 
   @override
@@ -180,7 +146,20 @@ class _RecipePageState extends State<RecipePage> with TickerProviderStateMixin {
                                                     child: IconButton(
                                                       onPressed: () {
                                                         userDataCubit.toggleFavorites(recipe);
-                                                        _showToast(context, !favorited);
+                                                        // _showToast(context, !favorited);
+                                                        if (!favorited == true) {
+                                                          const CustomToast().showToast(
+                                                            context: context,
+                                                            message: "Added to favorites",
+                                                            icon: const Icon(Icons.favorite_rounded, size: 28),
+                                                          );
+                                                        } else {
+                                                          const CustomToast().showToast(
+                                                            context: context,
+                                                            message: "Removed from favorites",
+                                                            icon: const Icon(Icons.favorite_outline_rounded, size: 28),
+                                                          );
+                                                        }
                                                       },
                                                       icon: favorited
                                                           ? const Icon(
